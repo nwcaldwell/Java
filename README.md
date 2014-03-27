@@ -1,4 +1,3 @@
-========================
 # Java: The Game
 
 Software Implementation of the Board Game Java
