@@ -1,4 +1,3 @@
-ChokingHazard-Iteration2
 ========================
 # Java: The Game
 
