@@ -1,7 +1,15 @@
 package view.cgi.test;
 
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -12,6 +20,8 @@ public class LWJGLTest {
 
 	float pitch,yaw,roll;
 	float apitch,ayaw,aroll;
+	
+	int defTexture=0;
 	
 	public void start() {
 		try {
@@ -24,6 +34,15 @@ public class LWJGLTest {
 
 		// init OpenGL here
 
+		try {
+			loadTexture();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			System.exit(-1);
+		}
+		
+		
 		while (!Display.isCloseRequested()) {
 
 			pollInput();
@@ -39,8 +58,6 @@ public class LWJGLTest {
 			//enable face culling, so only the front of a shape is rendered
 			GL11.glCullFace(GL11.GL_FRONT);
 			GL11.glEnable(GL11.GL_CULL_FACE);
-			
-			pollInput();
 
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 			renderRectangle(new Rectangle(-5, -5, 10, 10),pitch,yaw,roll);
@@ -67,6 +84,48 @@ public class LWJGLTest {
 		Display.destroy();
 	}
 	
+	public void loadTexture() throws IOException{
+		
+		//load a texture to the graphics card
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, defTexture);
+		//prepare to recieve image data from RGB integers
+		GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
+		
+		//set the texture to wrap top and bottom.
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		GL11.glTexParameteri (GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+		//give it a nice linear filter (looks bettter than nearest filtering for most things)
+		GL11.glTexParameteri (GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+		GL11.glTexParameteri (GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+		
+		//modulate allows for shading
+		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
+		
+		BufferedImage image = ImageIO.read(new File("resources/Default.png"));
+		
+		int[] pixels = new int[image.getWidth() * image.getHeight()];
+		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0,
+				image.getWidth());
+
+		ByteBuffer buffer = BufferUtils.createByteBuffer(image.getWidth()
+				* image.getHeight() * 3); // 4 for RGBA, 3 for RGB
+
+		for (int y = 0; y < image.getHeight(); y++) {
+			for (int x = 0; x < image.getWidth(); x++) {
+				int pixel = pixels[y * image.getWidth() + x];
+				buffer.put((byte) ((pixel >> 16) & 0xFF)); // Red component
+				buffer.put((byte) ((pixel >> 8) & 0xFF)); // Green component
+				buffer.put((byte) (pixel & 0xFF)); // Blue component
+				buffer.put((byte) ((pixel >> 24) & 0xFF)); // Alpha component.
+															// Only for RGBA
+			}
+		}
+
+		buffer.flip(); // FOR THE LOVE OF GOD DO NOT FORGET THIS
+		
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, image.getWidth(), image.getHeight(), 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
+	}
+
 	
 	int prevx=0;
 	int prevy=0;
