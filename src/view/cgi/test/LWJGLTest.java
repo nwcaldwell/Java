@@ -33,8 +33,8 @@ public class LWJGLTest {
 			//load the identity matrix (no transformations)
 			GL11.glLoadIdentity();
 			//Creates an orthographic projection from -50,-50 to 50,50.
-			//the depth range is 1 ot infinity (-1)
-			GL11.glOrtho(-50, 50, -50, 50, -400, 400);
+			//the depth range is 1 to 400
+			GL11.glOrtho(-50, 50, -50, 50, 1, 400);
 			
 			//enable face culling, so only the front of a shape is rendered
 			GL11.glCullFace(GL11.GL_FRONT);
@@ -70,19 +70,20 @@ public class LWJGLTest {
 	
 	int prevx=0;
 	int prevy=0;
+	boolean mouseWasDown=false;
 	
 	public void pollInput(){
-		if (Mouse.getEventButtonState()){
-			System.out.println("buttonState!");
-			prevx=Mouse.getX();
-			prevy=Mouse.getY();
-		}
+		
 		if (Mouse.isButtonDown(0)){
-			System.out.println("button down!");
-			pitch+=(Mouse.getY()-prevy);
-			yaw+=(Mouse.getX()-prevx);
+			if (mouseWasDown) {
+				pitch += (Mouse.getY() - prevy);
+				yaw += (Mouse.getX() - prevx);
+			}
 			prevy=Mouse.getY();
 			prevx=Mouse.getX();
+			mouseWasDown=true;
+		}else{
+			mouseWasDown=false;
 		}
 	}
 	
@@ -94,7 +95,7 @@ public class LWJGLTest {
 		//then pop it when you're done.
 		GL11.glPushMatrix();
 		
-		GL11.glTranslatef(0, 0, 1);
+		GL11.glTranslatef(0, 0, -200);
 		
 		//Rotate rotates an angle about a given vector
 		//note that, by convention, x is positive to the right,
