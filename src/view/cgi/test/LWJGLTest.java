@@ -18,6 +18,8 @@ import org.lwjgl.opengl.GL11;
 
 public class LWJGLTest {
 
+	public static final int RGBA=4;
+	
 	float pitch,yaw,roll;
 	float apitch,ayaw,aroll;
 	
@@ -34,6 +36,8 @@ public class LWJGLTest {
 
 		// init OpenGL here
 
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		
 		try {
 			loadTexture();
 		} catch (IOException e1) {
@@ -59,6 +63,7 @@ public class LWJGLTest {
 			GL11.glCullFace(GL11.GL_FRONT);
 			GL11.glEnable(GL11.GL_CULL_FACE);
 
+			GL11.glClearColor(0.5f, 0, 0, 1);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 			renderRectangle(new Rectangle(-5, -5, 10, 10),pitch,yaw,roll);
 			GL11.glTranslatef(-20, 20, 0);
@@ -101,7 +106,7 @@ public class LWJGLTest {
 		//modulate allows for shading
 		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 		
-		BufferedImage image = ImageIO.read(new File("resources/Default.png"));
+		BufferedImage image = ImageIO.read(new File("resources/Fawkes.png"));
 		
 		int[] pixels = new int[image.getWidth() * image.getHeight()];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0,
@@ -116,14 +121,14 @@ public class LWJGLTest {
 				buffer.put((byte) ((pixel >> 16) & 0xFF)); // Red component
 				buffer.put((byte) ((pixel >> 8) & 0xFF)); // Green component
 				buffer.put((byte) (pixel & 0xFF)); // Blue component
-				buffer.put((byte) ((pixel >> 24) & 0xFF)); // Alpha component.
+				//buffer.put((byte) ((pixel >> 24) & 0xFF)); // Alpha component.
 															// Only for RGBA
 			}
 		}
-
+		
 		buffer.flip(); // FOR THE LOVE OF GOD DO NOT FORGET THIS
 		
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, image.getWidth(), image.getHeight(), 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, image.getWidth(), image.getHeight(), 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
 	}
 
 	
@@ -162,23 +167,32 @@ public class LWJGLTest {
 		GL11.glRotatef(yaw, 0, 1, 0);
 		GL11.glRotatef(pitch, 0, 0, 1);
 		GL11.glRotatef(roll, 1, 0, 0);
-		
+
+		GL11.glColor3f(1, 1, 1);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, defTexture);
 		GL11.glBegin(GL11.GL_QUADS);
 		
-		GL11.glColor3f(1, 1, 1);
 		
 		//If memory serves, the face will be in your direction if
 		//you order the vertexes clockwise
+		GL11.glTexCoord2f(0, 0);
 		GL11.glVertex2f(r.x, r.y+r.height);
+		GL11.glTexCoord2f(1, 0);
 		GL11.glVertex2f(r.x+r.width, r.y+r.height);
+		GL11.glTexCoord2f(1, 1);
 		GL11.glVertex2f(r.x+r.width, r.y);
+		GL11.glTexCoord2f(0, 1);
 		GL11.glVertex2f(r.x, r.y);
 		
 		//now to render the back
 		GL11.glColor3f(0.5f, 0.5f, 0.5f);
+		GL11.glTexCoord2f(0, 1);
 		GL11.glVertex2f(r.x, r.y);
+		GL11.glTexCoord2f(1, 1);
 		GL11.glVertex2f(r.x+r.width, r.y);
+		GL11.glTexCoord2f(1, 0);
 		GL11.glVertex2f(r.x+r.width, r.y+r.height);
+		GL11.glTexCoord2f(0, 0);
 		GL11.glVertex2f(r.x, r.y+r.height);
 		
 		
