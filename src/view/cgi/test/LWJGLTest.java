@@ -18,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 
 public class LWJGLTest {
 
+	public static final int RGB=3;
 	public static final int RGBA=4;
 	
 	float pitch,yaw,roll;
@@ -113,7 +114,7 @@ public class LWJGLTest {
 				image.getWidth());
 
 		ByteBuffer buffer = BufferUtils.createByteBuffer(image.getWidth()
-				* image.getHeight() * 3); // 4 for RGBA, 3 for RGB
+				* image.getHeight() * RGB); // 4 for RGBA, 3 for RGB
 
 		for (int y = 0; y < image.getHeight(); y++) {
 			for (int x = 0; x < image.getWidth(); x++) {
@@ -128,7 +129,7 @@ public class LWJGLTest {
 		
 		buffer.flip(); // FOR THE LOVE OF GOD DO NOT FORGET THIS
 		
-		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, image.getWidth(), image.getHeight(), 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, image.getWidth(), image.getHeight(), 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
 	}
 
 	
