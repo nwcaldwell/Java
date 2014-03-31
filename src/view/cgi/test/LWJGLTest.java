@@ -9,6 +9,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
+import view.cgi.Face3D;
 import view.cgi.TextureFactory;
 
 public class LWJGLTest {
@@ -21,6 +22,9 @@ public class LWJGLTest {
 	
 	int defTexture=TextureFactory.MISSING_TEXTURE;
 	int brokenTexture=TextureFactory.MISSING_TEXTURE;
+	
+	Face3D mask;
+	Face3D brokenFace;
 	
 	public void start() {
 		try {
@@ -44,6 +48,9 @@ public class LWJGLTest {
 		defTexture=TextureFactory.getTexture("resources/Fawkes.png");
 		brokenTexture=TextureFactory.getTexture("this.file.does.not.exist.txt");
 		
+		mask=Face3D.MakeQuad(defTexture, -5, -5, 10, 10);
+		brokenFace=Face3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
+		
 		while (!Display.isCloseRequested()) {
 
 			pollInput();
@@ -55,22 +62,22 @@ public class LWJGLTest {
 			//Creates an orthographic projection from -50,-50 to 50,50.
 			//the depth range is 1 to 400
 			GL11.glOrtho(-50, 50, -50, 50, 1, 400);
-			
+						
 			//enable face culling, so only the front of a shape is rendered
 			GL11.glCullFace(GL11.GL_FRONT);
 			GL11.glEnable(GL11.GL_CULL_FACE);
 
 			GL11.glClearColor(0.5f, 0, 0, 1);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-			renderRectangle(defTexture,new Rectangle(-5, -5, 10, 10),pitch,yaw,roll);
+			renderFace(mask,pitch,yaw,roll);
 			GL11.glTranslatef(-20, 20, 0);
-			renderRectangle(defTexture,new Rectangle(-5, -5, 10, 10),apitch,0,0);
+			renderFace(mask,apitch,0,0);
 			GL11.glTranslatef(20, 0, 0);
-			renderRectangle(defTexture,new Rectangle(-5, -5, 10, 10),0,ayaw,0);
+			renderFace(mask,0,ayaw,0);
 			GL11.glTranslatef(20, 0, 0);
-			renderRectangle(defTexture,new Rectangle(-5, -5, 10, 10),0,0,aroll);
+			renderFace(mask,0,0,aroll);
 			GL11.glTranslatef(-20, -40, 0);
-			renderRectangle(brokenTexture,new Rectangle(-5, -5, 10, 10),apitch,ayaw,aroll);
+			renderFace(brokenFace,apitch,ayaw,aroll);
 			
 			Display.update();
 			
@@ -112,13 +119,14 @@ public class LWJGLTest {
 	
 	/**renders a rectangle who'se front is understood to be in positive x
 	 * Pitch, yaw, and roll are all in degreess*/
-	public void renderRectangle(int texture, Rectangle r, float pitch, float yaw, float roll){
+	public void renderFace(Face3D face, float pitch, float yaw, float roll){
 		//you want to translate this object, but not the rest of the world,
 		//so you push a new transformation matrix for this object, 
 		//then pop it when you're done.
 		GL11.glPushMatrix();
 		
 		GL11.glTranslatef(0, 0, -200);
+		//GL11.glScalef(0.001f, 0.001f, 0.001f);
 		
 		//Rotate rotates an angle about a given vector
 		//note that, by convention, x is positive to the right,
@@ -127,35 +135,7 @@ public class LWJGLTest {
 		GL11.glRotatef(pitch, 0, 0, 1);
 		GL11.glRotatef(roll, 1, 0, 0);
 		
-		GL11.glColor3f(1, 1, 1);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
-		GL11.glBegin(GL11.GL_QUADS);
-		
-		
-		//If memory serves, the face will be in your direction if
-		//you order the vertexes clockwise
-		GL11.glTexCoord2f(0, 0);
-		GL11.glVertex2f(r.x, r.y+r.height);
-		GL11.glTexCoord2f(1, 0);
-		GL11.glVertex2f(r.x+r.width, r.y+r.height);
-		GL11.glTexCoord2f(1, 1);
-		GL11.glVertex2f(r.x+r.width, r.y);
-		GL11.glTexCoord2f(0, 1);
-		GL11.glVertex2f(r.x, r.y);
-		
-		//now to render the back
-		GL11.glColor3f(0.5f, 0.5f, 0.5f);
-		GL11.glTexCoord2f(0, 1);
-		GL11.glVertex2f(r.x, r.y);
-		GL11.glTexCoord2f(1, 1);
-		GL11.glVertex2f(r.x+r.width, r.y);
-		GL11.glTexCoord2f(1, 0);
-		GL11.glVertex2f(r.x+r.width, r.y+r.height);
-		GL11.glTexCoord2f(0, 0);
-		GL11.glVertex2f(r.x, r.y+r.height);
-		
-		
-		GL11.glEnd();
+		face.render();
 		
 		GL11.glPopMatrix();
 	}
