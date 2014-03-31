@@ -54,7 +54,7 @@ public class LWJGLTest {
 		
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
-		hills=Model3D.makeFromObj(new File("resources/test.obj"),brokenTexture);
+		hills=Model3D.makeFromObj(new File("resources/test.obj"),TextureFactory.getTexture("resources/Mount.png"));
 		
 		while (!Display.isCloseRequested()) {
 
