@@ -1,6 +1,6 @@
 package view.cgi.test;
 
-import java.awt.Rectangle;
+import java.io.File;
 import java.io.IOException;
 
 import org.lwjgl.LWJGLException;
@@ -10,7 +10,9 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import view.cgi.Face3D;
+import view.cgi.Model3D;
 import view.cgi.TextureFactory;
+import view.cgi.TexturedFace3D;
 
 public class LWJGLTest {
 
@@ -25,6 +27,7 @@ public class LWJGLTest {
 	
 	Face3D mask;
 	Face3D brokenFace;
+	Model3D hills;
 	
 	public void start() {
 		try {
@@ -38,6 +41,7 @@ public class LWJGLTest {
 		// init OpenGL here
 
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		
 		try {
 			TextureFactory.loadMissingTexture("resources/Default.png");
@@ -48,8 +52,9 @@ public class LWJGLTest {
 		defTexture=TextureFactory.getTexture("resources/Fawkes.png");
 		brokenTexture=TextureFactory.getTexture("this.file.does.not.exist.txt");
 		
-		mask=Face3D.MakeQuad(defTexture, -5, -5, 10, 10);
-		brokenFace=Face3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
+		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
+		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
+		hills=Model3D.makeFromObj(new File("resources/test.obj"),brokenTexture);
 		
 		while (!Display.isCloseRequested()) {
 
@@ -69,7 +74,8 @@ public class LWJGLTest {
 
 			GL11.glClearColor(0.5f, 0, 0, 1);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-			renderFace(mask,pitch,yaw,roll);
+			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+			renderModel(hills,pitch,yaw,roll);
 			GL11.glTranslatef(-20, 20, 0);
 			renderFace(mask,apitch,0,0);
 			GL11.glTranslatef(20, 0, 0);
@@ -86,7 +92,7 @@ public class LWJGLTest {
 			aroll+=1;
 			
 			try {
-				Thread.currentThread().sleep(5);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -126,6 +132,30 @@ public class LWJGLTest {
 		GL11.glPushMatrix();
 		
 		GL11.glTranslatef(0, 0, -200);
+		//GL11.glScalef(0.001f, 0.001f, 0.001f);
+		
+		//Rotate rotates an angle about a given vector
+		//note that, by convention, x is positive to the right,
+		//y is positive up, and z is positive towards the camera.
+		GL11.glRotatef(yaw, 0, 1, 0);
+		GL11.glRotatef(pitch, 0, 0, 1);
+		GL11.glRotatef(roll, 1, 0, 0);
+		
+		face.render();
+		
+		GL11.glPopMatrix();
+	}
+	
+	/**renders a rectangle who'se front is understood to be in positive x
+	 * Pitch, yaw, and roll are all in degreess*/
+	public void renderModel(Model3D face, float pitch, float yaw, float roll){
+		//you want to translate this object, but not the rest of the world,
+		//so you push a new transformation matrix for this object, 
+		//then pop it when you're done.
+		GL11.glPushMatrix();
+		
+		GL11.glTranslatef(0, 0, -200);
+		GL11.glScalef(8, 8, 8);
 		//GL11.glScalef(0.001f, 0.001f, 0.001f);
 		
 		//Rotate rotates an angle about a given vector
