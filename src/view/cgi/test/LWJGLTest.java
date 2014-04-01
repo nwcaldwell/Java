@@ -2,6 +2,7 @@ package view.cgi.test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
@@ -14,7 +15,7 @@ import view.cgi.Model3D;
 import view.cgi.TextureFactory;
 import view.cgi.TexturedFace3D;
 
-public class LWJGLTest {
+public class LWJGLTest{
 
 	public static final int RGB=3;
 	public static final int RGBA=4;
@@ -54,7 +55,7 @@ public class LWJGLTest {
 		
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
-		hills=Model3D.makeFromObj(new File("resources/test.obj"),TextureFactory.getTexture("resources/Mount.png"));
+		hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
 		
 		while (!Display.isCloseRequested()) {
 
@@ -155,7 +156,7 @@ public class LWJGLTest {
 		GL11.glPushMatrix();
 		
 		GL11.glTranslatef(0, 0, -200);
-		GL11.glScalef(8, 8, 8);
+		GL11.glScalef(4, 4, 4);
 		//GL11.glScalef(0.001f, 0.001f, 0.001f);
 		
 		//Rotate rotates an angle about a given vector
