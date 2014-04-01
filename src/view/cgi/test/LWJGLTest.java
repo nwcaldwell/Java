@@ -1,8 +1,12 @@
 package view.cgi.test;
 
+import java.awt.Canvas;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
@@ -26,13 +30,26 @@ public class LWJGLTest{
 	int defTexture=TextureFactory.MISSING_TEXTURE;
 	int brokenTexture=TextureFactory.MISSING_TEXTURE;
 	
+	JFrame frame;
+	Canvas cgiCanvas;
+	
 	Face3D mask;
 	Face3D brokenFace;
 	Model3D hills;
 	
-	public void start() {
+	public void start() throws LWJGLException {
+		
+		JFrame frame = new JFrame();
+		frame.setSize(800, 800);
+		
+		cgiCanvas = new Canvas();
+		cgiCanvas.setSize(100,100);
+		frame.add(cgiCanvas);
+		
 		try {
-			Display.setDisplayMode(new DisplayMode(800, 800));
+			Display.setDisplayMode(new DisplayMode(100, 100));
+			frame.setVisible(true);
+			Display.setParent(cgiCanvas);
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -55,7 +72,8 @@ public class LWJGLTest{
 		
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
-		hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
+		//hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
+		hills=Model3D.makeFromObj(new File("resources/test.obj"));
 		
 		while (!Display.isCloseRequested()) {
 
@@ -171,7 +189,7 @@ public class LWJGLTest{
 		GL11.glPopMatrix();
 	}
 
-	public static void main(String[] argv) {
+	public static void main(String[] argv) throws LWJGLException {
 		LWJGLTest displayExample = new LWJGLTest();
 		displayExample.start();
 	}
