@@ -72,7 +72,7 @@ public class Model3D {
 				}
 			}
 		}
-		
+		scan.close();
 		return new Model3D(faces);
 	}
 	
@@ -141,6 +141,7 @@ public class Model3D {
 			}
 		}
 		
+		scan.close();
 		return new Model3D(faces);
 	}
 	

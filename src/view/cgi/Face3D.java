@@ -51,19 +51,9 @@ public class Face3D {
 				Vector3D normal=
 						vertices[0].negate().translate(vertices[1]).cross(
 						vertices[0].negate().translate(vertices[2]));
-				System.out.println("first vert"+faceVerts+":"+vertices[0].negate());//.translate(vertices[1]));
-				System.out.println("second vert"+faceVerts+":"+vertices[1].negate());
-				System.out.println("third vert"+faceVerts+":"+vertices[2].negate());
-				System.out.println("edge1: "+vertices[0].negate().translate(vertices[1]));
-				System.out.println("edge2: "+vertices[0].negate().translate(vertices[2]));
-				System.out.println(normal.toString());
 				for (int j=0;j<faceVerts;j++){
 					normals[i+j]=normal;
 				}
-			}
-		}
-		if (faceVerts==4){
-			for (Vector3D v:normals){
 			}
 		}
 	}
