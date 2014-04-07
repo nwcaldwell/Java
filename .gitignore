@@ -4,3 +4,7 @@
 *.jar
 *.war
 *.ear
+
+# intellij stuff #
+.idea/
+out/
