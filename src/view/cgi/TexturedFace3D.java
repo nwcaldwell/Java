@@ -1,12 +1,6 @@
 package view.cgi;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glTexCoord2f;
-import static org.lwjgl.opengl.GL11.glVertex3f;
+import static org.lwjgl.opengl.GL11.*;
 
 /**Represents a face in 3D space
  * with texture information.*/
@@ -50,6 +44,7 @@ public class TexturedFace3D extends Face3D{
 		glBegin(renderType);
 		for (int i=0;i<vertices.length;i++){
 			glTexCoord2f(texCoords[i].x, texCoords[i].y);
+			glNormal3f(normals[i].x, normals[i].y, normals[i].z);
 			glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
 		}
 		glEnd();

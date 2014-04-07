@@ -49,4 +49,16 @@ public class Vector3D {
 	public Vector3D scale(float scaleX, float scaleY, float scaleZ){
 		return new Vector3D(x*scaleX,y*scaleY, z*scaleZ);
 	}
+	
+	/**computes the cross product of two vectors.*/
+	public Vector3D cross(Vector3D other){
+		return new Vector3D(
+				this.y*other.z-this.z*other.y, 
+				this.z*other.x-this.x*other.z, 
+				this.x*other.y-this.y*other.x);
+	}
+	
+	public String toString(){
+		return "Vector3D: "+x+", "+y+", "+z;
+	}
 }

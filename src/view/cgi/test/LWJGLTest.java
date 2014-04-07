@@ -3,10 +3,8 @@ package view.cgi.test;
 import java.awt.Canvas;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
@@ -58,8 +56,13 @@ public class LWJGLTest{
 
 		// init OpenGL here
 
+		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		GL11.glLoadIdentity();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_LIGHT0);
+		GL11.glEnable(GL11.GL_NORMALIZE);
 		
 		try {
 			TextureFactory.loadMissingTexture("resources/Default.png");
@@ -73,16 +76,19 @@ public class LWJGLTest{
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
 		//hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
-		hills=Model3D.makeFromObj(new File("resources/test.obj"));
+		hills=Model3D.makeFromObj(new File("resources/hex.obj"));
 		
 		while (!Display.isCloseRequested()) {
 
 			pollInput();
-			
-			//switch to the projection matrix
-			GL11.glMatrixMode(GL11.GL_PROJECTION);
-			//load the identity matrix (no transformations)
+
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 			GL11.glLoadIdentity();
+//			//switch to the projection matrix
+//			GL11.glMatrixMode(GL11.GL_PROJECTION);
+//			//load the identity matrix (no transformations)
+//			GL11.glLoadIdentity();
+			
 			//Creates an orthographic projection from -50,-50 to 50,50.
 			//the depth range is 1 to 400
 			GL11.glOrtho(-50, 50, -50, 50, 1, 400);
