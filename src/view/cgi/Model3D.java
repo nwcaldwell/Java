@@ -65,6 +65,7 @@ public class Model3D {
 					}
 					try {
 						faces.add(new Face3D(fv, rendType));
+						//faces.get(faces.size()-1).generateSphereNormals();
 					} catch (Exception e) {
 						System.err.println("OBJ file parsing: impossible error: complain to Christopher");
 						e.printStackTrace();

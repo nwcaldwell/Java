@@ -3,6 +3,9 @@ package view.cgi.test;
 import java.awt.Canvas;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
 import javax.swing.JFrame;
 
@@ -63,6 +66,8 @@ public class LWJGLTest{
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_LIGHT0);
 		GL11.glEnable(GL11.GL_NORMALIZE);
+		//GL11.glShadeModel(GL11.GL_SMOOTH);
+		//GL11.glLight(light, pname, params)
 		
 		try {
 			TextureFactory.loadMissingTexture("resources/Default.png");
@@ -82,8 +87,20 @@ public class LWJGLTest{
 
 			pollInput();
 
+//			GL11.glMatrixMode(GL11.GL_PROJECTION);
+//			GL11.glLoadIdentity();
+			
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 			GL11.glLoadIdentity();
+			
+
+			float[] lightPos={1f,1f,-1f,0f};
+			ByteBuffer temp = ByteBuffer.allocateDirect(16);
+			temp.order(ByteOrder.nativeOrder());
+			FloatBuffer lightPosition=(FloatBuffer) temp.asFloatBuffer().put(lightPos).flip();
+			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, (FloatBuffer)(lightPosition));
+			GL11.glEnable(GL11.GL_LIGHT0);
+			
 //			//switch to the projection matrix
 //			GL11.glMatrixMode(GL11.GL_PROJECTION);
 //			//load the identity matrix (no transformations)

@@ -35,7 +35,12 @@ public class Face3D {
 		generateDefaultNormals();
 	}
 	
-	protected void generateDefaultNormals(){
+	/**generates normals for GL_TRIANGLES and GL_QUADS faces
+	 * using the cross product of vectors between the points.
+	 * No handling exists for GL_TRIANGLE_STRIP or GL_QUAD_STRIP,
+	 * and any unrecognized render type will default to sphere normals
+	 * (see generateSphereNormals).*/
+	public void generateDefaultNormals(){
 		int faceVerts=0;
 		if (renderType==GL_TRIANGLES){
 			faceVerts=3;
@@ -49,8 +54,8 @@ public class Face3D {
 			normals=new Vector3D[vertices.length];
 			for (int i=0;i<=vertices.length-faceVerts;i+=faceVerts){
 				Vector3D normal=
-						vertices[0].negate().translate(vertices[1]).cross(
-						vertices[0].negate().translate(vertices[2]));
+						vertices[0].negate().translate(vertices[2]).cross(
+						vertices[0].negate().translate(vertices[1]));
 				for (int j=0;j<faceVerts;j++){
 					normals[i+j]=normal;
 				}
@@ -58,6 +63,8 @@ public class Face3D {
 		}
 	}
 	
+	/**generates normals for a sphere centered at the origin.
+	 * In other words, each vertex is its own normal.*/
 	public void generateSphereNormals(){
 		normals=new Vector3D[vertices.length];
 		for (int i=0;i<vertices.length;i++){
