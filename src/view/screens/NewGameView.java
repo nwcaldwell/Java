@@ -4,9 +4,9 @@ import view.MediaController;
 import view.View;
 import view.ViewController;
 
-public class StartGameView extends View {
+public class NewGameView extends View {
 
-    public StartGameView(ViewController viewC, MediaController mediaC) {
+    public NewGameView(ViewController viewC, MediaController mediaC) {
         super(viewC, mediaC);
     }
 
