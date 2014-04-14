@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 
 import view.cgi.Face3D;
 import view.cgi.Model3D;
+import view.cgi.ModelFactory;
 import view.cgi.TextureFactory;
 import view.cgi.TexturedFace3D;
 
@@ -81,7 +82,7 @@ public class LWJGLTest{
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
 		//hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
-		hills=Model3D.makeFromObj(new File("resources/hex.obj"));
+		hills=ModelFactory.makeFromObj(new File("resources/hex.obj"));
 		
 		while (!Display.isCloseRequested()) {
 
@@ -147,6 +148,7 @@ public class LWJGLTest{
 	int prevx=0;
 	int prevy=0;
 	boolean mouseWasDown=false;
+	boolean rmouseWasDown=false;
 	
 	public void pollInput(){
 		
@@ -160,6 +162,17 @@ public class LWJGLTest{
 			mouseWasDown=true;
 		}else{
 			mouseWasDown=false;
+		}
+		
+		if (Mouse.isButtonDown(1)){
+			if (rmouseWasDown) {
+				roll += (Mouse.getY() - prevy);
+			}
+			prevy=Mouse.getY();
+			prevx=Mouse.getX();
+			rmouseWasDown=true;
+		}else{
+			rmouseWasDown=false;
 		}
 	}
 	
