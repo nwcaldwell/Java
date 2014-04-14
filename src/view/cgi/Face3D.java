@@ -2,7 +2,9 @@ package view.cgi;
 
 import static org.lwjgl.opengl.GL11.*;
 
-/**Represents a face in 3D space*/
+/**Represents a face in 3D space.
+   This includes a render type, a list of face vertices,
+   and a list of normals for lighting.*/
 public class Face3D {
 
 	Vector3D[] vertices;
@@ -35,7 +37,9 @@ public class Face3D {
 		generateDefaultNormals();
 	}
 	
-	/**generates normals for GL_TRIANGLES and GL_QUADS faces
+	/**Generates lighting direction information.
+	 * 
+	 * generates normals for GL_TRIANGLES and GL_QUADS faces
 	 * using the cross product of vectors between the points.
 	 * No handling exists for GL_TRIANGLE_STRIP or GL_QUAD_STRIP,
 	 * and any unrecognized render type will default to sphere normals
@@ -72,7 +76,8 @@ public class Face3D {
 		}
 	}
 	
-	/**renders this texture*/
+	/**renders this face.  Any transformations to this face should be
+	   applied before this method is called.*/
 	public void render(){
 		glBegin(renderType);
 		for (int i=0;i<vertices.length;i++){
