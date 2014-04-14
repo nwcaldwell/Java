@@ -149,6 +149,7 @@ public class LWJGLTest{
 	int prevy=0;
 	boolean mouseWasDown=false;
 	boolean rmouseWasDown=false;
+	boolean mmouseWasDown=false;
 	
 	public void pollInput(){
 		
@@ -173,6 +174,17 @@ public class LWJGLTest{
 			rmouseWasDown=true;
 		}else{
 			rmouseWasDown=false;
+		}
+		
+		if (Mouse.isButtonDown(2)){
+			if (mmouseWasDown) {
+				hills.setTranslation(hills.getTranslation().translate((Mouse.getX()-prevx)*0.025f, (Mouse.getY()-prevy)*0.025f, 0));
+			}
+			prevy=Mouse.getY();
+			prevx=Mouse.getX();
+			mmouseWasDown=true;
+		}else{
+			mmouseWasDown=false;
 		}
 	}
 	
@@ -216,10 +228,8 @@ public class LWJGLTest{
 		//Rotate rotates an angle about a given vector
 		//note that, by convention, x is positive to the right,
 		//y is positive up, and z is positive towards the camera.
-		GL11.glRotatef(yaw, 0, 1, 0);
-		GL11.glRotatef(pitch, 0, 0, 1);
-		GL11.glRotatef(roll, 1, 0, 0);
-		
+		face.setRotation(pitch, yaw, roll);
+	
 		face.render();
 		
 		GL11.glPopMatrix();

@@ -34,4 +34,30 @@ public class Model3D {
 			GL11.glPopMatrix();
 		}
 	}
+	
+	public void setRotation(float pitch, float yaw, float roll){
+		this.pitch=pitch;
+		this.yaw=yaw;
+		this.roll=roll;
+	}
+	
+	public void setTranslation(Vector3D translation){
+		this.translation=translation;
+	}
+	
+	public float getPitch(){
+		return pitch;
+	}
+	
+	public float getYaw(){
+		return yaw;
+	}
+	
+	public float getRoll(){
+		return roll;
+	}
+	
+	public Vector3D getTranslation(){
+		return translation;
+	}
 }
