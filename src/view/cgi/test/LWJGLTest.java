@@ -63,6 +63,7 @@ public class LWJGLTest{
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glLoadIdentity();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_LIGHT0);
@@ -82,51 +83,40 @@ public class LWJGLTest{
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
 		//hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
-		hills=ModelFactory.makeFromObj(new File("resources/hex.obj"));
+		hills=ModelFactory.makeFromObj(new File("resources/icosphere.obj"));
+		hills.setSphere();
 		
 		while (!Display.isCloseRequested()) {
 
 			pollInput();
-
-//			GL11.glMatrixMode(GL11.GL_PROJECTION);
-//			GL11.glLoadIdentity();
 			
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 			GL11.glLoadIdentity();
 			
-
-			float[] lightPos={1f,1f,-1f,0f};
-			ByteBuffer temp = ByteBuffer.allocateDirect(16);
-			temp.order(ByteOrder.nativeOrder());
-			FloatBuffer lightPosition=(FloatBuffer) temp.asFloatBuffer().put(lightPos).flip();
-			GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, (FloatBuffer)(lightPosition));
-			GL11.glEnable(GL11.GL_LIGHT0);
-			
-//			//switch to the projection matrix
-//			GL11.glMatrixMode(GL11.GL_PROJECTION);
-//			//load the identity matrix (no transformations)
-//			GL11.glLoadIdentity();
 			
 			//Creates an orthographic projection from -50,-50 to 50,50.
 			//the depth range is 1 to 400
 			GL11.glOrtho(-50, 50, -50, 50, 1, 400);
+			
+			setLighting();
 						
 			//enable face culling, so only the front of a shape is rendered
 			GL11.glCullFace(GL11.GL_FRONT);
 			GL11.glEnable(GL11.GL_CULL_FACE);
-
+			
+			
 			GL11.glClearColor(0.5f, 0, 0, 1);
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 			renderModel(hills,pitch,yaw,roll);
 			GL11.glTranslatef(-20, 20, 0);
-			renderFace(mask,apitch,0,0);
+			//renderFace(mask,apitch,0,0);
 			GL11.glTranslatef(20, 0, 0);
-			renderFace(mask,0,ayaw,0);
+			//renderFace(mask,0,ayaw,0);
 			GL11.glTranslatef(20, 0, 0);
-			renderFace(mask,0,0,aroll);
+			//renderFace(mask,0,0,aroll);
 			GL11.glTranslatef(-20, -40, 0);
-			renderFace(brokenFace,apitch,ayaw,aroll);
+			//renderFace(brokenFace,apitch,ayaw,aroll);
 			
 			Display.update();
 			
@@ -165,7 +155,7 @@ public class LWJGLTest{
 			mouseWasDown=false;
 		}
 		
-		if (Mouse.isButtonDown(1)){
+		if (Mouse.isButtonDown(2)){
 			if (rmouseWasDown) {
 				roll += (Mouse.getY() - prevy);
 			}
@@ -176,7 +166,7 @@ public class LWJGLTest{
 			rmouseWasDown=false;
 		}
 		
-		if (Mouse.isButtonDown(2)){
+		if (Mouse.isButtonDown(1)){
 			if (mmouseWasDown) {
 				hills.setTranslation(hills.getTranslation().translate((Mouse.getX()-prevx)*0.025f, (Mouse.getY()-prevy)*0.025f, 0));
 			}
@@ -188,7 +178,37 @@ public class LWJGLTest{
 		}
 	}
 	
-	
+	private void setLighting(){
+		float[] lightPos={1f,1f,yaw,0f};
+		
+		//material colors
+		float[] matspecular={1,1,1,0};
+		float[] matambient={1,1,1,0};
+		float[] matdiffuse={0.5f,0.5f,0.5f,0};
+		
+		//light colors
+		float[] lightspecular={1f,1f,1f,1};
+		float[] lightdiffuse={0.5f,0.5f,0.5f,0};
+		float[] lightambient={0.1f,0.1f,0.1f,0};
+		
+
+		GL11.glEnable(GL11.GL_LIGHT0);
+		
+		ByteBuffer temp = ByteBuffer.allocateDirect(16);
+		temp.order(ByteOrder.nativeOrder());
+		FloatBuffer lightPosition=(FloatBuffer) temp.asFloatBuffer().put(lightPos).flip();
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, (FloatBuffer)(lightPosition));
+		
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, (FloatBuffer) temp.asFloatBuffer().put(lightspecular).flip());
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, (FloatBuffer) temp.asFloatBuffer().put(lightambient).flip());
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, (FloatBuffer) temp.asFloatBuffer().put(lightdiffuse).flip());
+		
+		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, (FloatBuffer) temp.asFloatBuffer().put(matspecular).flip());
+		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, (FloatBuffer) temp.asFloatBuffer().put(matdiffuse).flip());
+		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT, (FloatBuffer) temp.asFloatBuffer().put(matambient).flip());
+		
+		GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, 2f);
+	}
 	
 	/**renders a rectangle who'se front is understood to be in positive x
 	 * Pitch, yaw, and roll are all in degreess*/
@@ -198,7 +218,7 @@ public class LWJGLTest{
 		//then pop it when you're done.
 		GL11.glPushMatrix();
 		
-		GL11.glTranslatef(0, 0, -200);
+		GL11.glTranslatef(0, 0, -20);
 		//GL11.glScalef(0.001f, 0.001f, 0.001f);
 		
 		//Rotate rotates an angle about a given vector
@@ -221,7 +241,7 @@ public class LWJGLTest{
 		//then pop it when you're done.
 		GL11.glPushMatrix();
 		
-		GL11.glTranslatef(0, 0, -200);
+		GL11.glTranslatef(0, 0, -20);
 		GL11.glScalef(4, 4, 4);
 		//GL11.glScalef(0.001f, 0.001f, 0.001f);
 		

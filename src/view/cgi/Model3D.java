@@ -60,4 +60,11 @@ public class Model3D {
 	public Vector3D getTranslation(){
 		return translation;
 	}
+	
+	/**TODO: redesign this:
+	 * generate spherical normals.*/
+	public void setSphere(){
+		for (Face3D f:faces)
+			f.generateSphereNormals();
+	}
 }
