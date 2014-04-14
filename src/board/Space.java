@@ -23,5 +23,5 @@ public abstract class Space<SpaceType extends Space, TileType extends Tile> {
 	/**returns true if and only if all the spaces that would
 	 * be covered by the given tile graph are the same height.
 	 * This will likely be done recursively.*/
-	public abstract boolean veriyHeights(TileType tile);
+	public abstract boolean verifyHeights(TileType tile);
 }
