@@ -14,7 +14,17 @@ public class HexSpace extends Space<HexSpace,HexTile>{
 		
 	}
 
-	@Override
+    @Override
+    public HexSpace getAdjacentSpace(int direction) {
+        return null;
+    }
+
+    @Override
+    public void placeTileComponent(TileComponent tile) {
+
+    }
+
+    @Override
 	public int getHeight() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -26,7 +36,17 @@ public class HexSpace extends Space<HexSpace,HexTile>{
 		return false;
 	}
 
-	@Override
+    @Override
+    public boolean neighborExists(Direction direction) {
+        return false;
+    }
+
+    @Override
+    public boolean veriyHeights(TileComponent tile) {
+        return false;
+    }
+
+    @Override
 	public boolean verifyHeights(HexTile tile) {
 		// TODO Auto-generated method stub
 		return false;

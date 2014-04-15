@@ -1,12 +1,9 @@
 package gamecontrollers;
 
-import models.board.Board;
-import models.board.Developer;
-import models.board.Space;
-import models.board.TileComponent;
+import models.board.*;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardLogicController {
 	private Board board;

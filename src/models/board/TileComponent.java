@@ -7,5 +7,5 @@ public abstract class TileComponent <TC extends TileComponent, D extends Directi
 	
 	public abstract void rotateAround(TC tileComponent);
 	
-	private abstract void rotate(TC tileComponent);
+	protected abstract void rotate(TC tileComponent);
 }
