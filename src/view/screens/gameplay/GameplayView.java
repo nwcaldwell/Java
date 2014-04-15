@@ -27,7 +27,7 @@ public class GameplayView extends View {
         return playerViews;
     }
 
-    protected BoardView getMapView() {
+    protected BoardView getBoardView() {
         return boardView;
     }
 
