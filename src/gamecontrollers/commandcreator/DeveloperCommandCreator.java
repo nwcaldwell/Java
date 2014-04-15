@@ -3,7 +3,7 @@ package gamecontrollers.commandcreator;
 /**
  * //TODO [Kevin][Jorge]
  */
-abstract class DeveloperCommandCreator implements GameplayCommandCreator{
+public abstract class DeveloperCommandCreator implements GameplayCommandCreator{
 
 
 }

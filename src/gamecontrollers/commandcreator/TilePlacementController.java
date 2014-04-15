@@ -52,7 +52,6 @@ public class TilePlacementController <A extends Space, B extends Tile> extends T
 
        throw new UnsupportedOperationException();
 
-       return null;
     }
 
     /*
