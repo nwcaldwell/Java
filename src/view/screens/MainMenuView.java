@@ -6,6 +6,8 @@ import view.ViewController;
 
 import javax.swing.*;
 
+//TODO [Sydney][Jorge]
+
 public class MainMenuView extends View {
     private JButton newGameButton, loadGameButton, quitGameButton;
 

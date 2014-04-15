@@ -1,15 +1,18 @@
 package view;
 
-import view.commands.Command;
+import view.commands.InputCommand;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+//TODO [Jorge][Sydney]
+
 public class JavaKeyListener implements KeyListener {
 
-    private Command command;
+    private InputCommand command;
     private int keyCode;
 
-    public JavaKeyListener( int key, Command action ) {
+    public JavaKeyListener( int key, InputCommand action ) {
         this.command = action;
         this.keyCode = key;
     }

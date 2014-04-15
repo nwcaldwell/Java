@@ -1,11 +1,12 @@
 package gamecontrollers.commandcreator;
 
+import gamecontrollers.Response;
+import gamecontrollers.commands.GameplayActionCommand;
 import models.board.Direction;
 import models.board.Space;
-import models.board.Tile;
 import models.board.TileComponent;
 
-public class TilePlacementController <A extends Space, B extends Tile> {
+public class TilePlacementController <A extends Space, B extends TileComponent> extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
 	
@@ -41,6 +42,31 @@ public class TilePlacementController <A extends Space, B extends Tile> {
 	public void rotateCurrentTileComponent() {
 		
 	}
-	
+
+
+    /*
+    This method will return the constructed command
+ */
+    public GameplayActionCommand getCommand(){
+
+        // TODO implement
+        return null;
+
+    }
+
+    /*
+        This method will return the AP cost of the command that would
+        be required to perform the command
+     */
+    public int getCost(){
+        return 0;
+    }
+
+    /*
+
+     */
+    public Response checkPossible(){
+        return null;
+    }
 	
 }

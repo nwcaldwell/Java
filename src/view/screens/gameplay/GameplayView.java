@@ -11,6 +11,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
+//TODO [Sydney][Jorge]
+
 public class GameplayView extends View {
 
     private ConsoleView consoleView;

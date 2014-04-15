@@ -1,12 +1,18 @@
 package view.controls;
 
+import view.MediaController;
+
 import javax.swing.*;
 
+//TODO [Sydney] [Jorge]
+
 public class SharedResourcesView extends JPanel {
+    private MediaController mediaC;
     private JLabel threeTiles, irrigationTiles;
     private JLabel palace2Tiles, palace4Tiles, palace6Tiles, palace8Tiles, palace10Tiles;
 
-    public SharedResourcesView(){
+    public SharedResourcesView(MediaController media){
+        this.mediaC = media;
         initLayout();
     }
 
