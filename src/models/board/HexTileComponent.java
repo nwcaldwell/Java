@@ -13,7 +13,6 @@ public class HexTileComponent extends TileComponent<HexTileComponent, HexDirecti
 		
 	}
 
-	@Override
 	private void rotate(HexTileComponent tileComponent) {
 
 	}

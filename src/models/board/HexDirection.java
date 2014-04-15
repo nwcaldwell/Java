@@ -5,6 +5,15 @@ public enum HexDirection implements Direction {
 
 	@Override
 	public HexDirection rotate() {
-		return values()[(this.ordinal() + 1) % this.values().length];
+		return getDirection((this.ordinal() + 1) % this.values().length);
+	}
+	public HexDirection getDirection(int dir)
+	{
+		return values()[dir];
+	}
+	public int getIntValue()
+	{
+		return this.ordinal();
+
 	}
 }
