@@ -1,10 +1,20 @@
 package models.board;
 
-public abstract class TileComponent <TC extends TileComponent, D extends Direction> {
-	private TC[] conjoinedParts;
+public class TileComponent {
+    private Direction direction;
+    private TileComponent[] conjoinedParts;
+
+    TileComponent(Direction d){
+        this.direction = d;
+        conjoinedParts = new TileComponent[d.getIntValue()];
+    }
 	
-	public abstract TC getConjoinedTile(D direction);
+	public TileComponent getConjoinedTile(Direction direction){
+        return conjoinedParts[direction.getIntValue()];
+    }
 	
-	public abstract void rotateAround(TC tileComponent);
+	public void rotateAround(TileComponent tileComponent){
+
+    }
 }
 
