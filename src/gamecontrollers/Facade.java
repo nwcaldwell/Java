@@ -24,8 +24,14 @@ public class Facade {
     private Facade() {
 
     }
+
+    // getters
     public static Facade getInstance() {
         return FacadeInstance;
+    }
+
+    public static Board<HexSpace, HexTileComponent, HexDirection> getBoard(){
+        throw new UnsupportedOperationException();
     }
 
     public void placeTileComponent(TileComponent tileComponent) {
