@@ -8,6 +8,8 @@ import view.controls.SharedResourcesView;
 
 import java.util.List;
 
+//TODO [Sydney][Jorge]
+
 public class GameplayView extends View {
 
     private ConsoleView consoleView;
@@ -27,7 +29,7 @@ public class GameplayView extends View {
         return playerViews;
     }
 
-    protected BoardView getMapView() {
+    protected BoardView getBoardView() {
         return boardView;
     }
 
