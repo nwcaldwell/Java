@@ -12,7 +12,7 @@ public class PlanningView extends GameplayView {
     private JButton togglePlayMode;
 
     public PlanningView(ViewController viewC, MediaController mediaC) {
-        super(viewC, mediaC);
+        super(viewC);
 
         togglePlayMode = new JButton("Play Mode"); //TODO media controller
         toggleButtonContainer.add(togglePlayMode, BorderLayout.NORTH);

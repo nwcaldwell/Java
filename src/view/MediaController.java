@@ -12,13 +12,18 @@ import java.util.HashMap;
 
 public class MediaController {
 
+    private static MediaController mediaControllerInstance = new MediaController();
     private HashMap<String, String> stringTemplates;
     private HashMap<String, BufferedImage> loadedImages;
     // TODO implement private HashMap<String, Audio> loadedAudio
     // TODO implement private HashMap<String, 3DModel> loaded3DModel
 
-    public MediaController() {
+    private MediaController() {
         initStrings();
+    }
+
+    public static MediaController getInstance() {
+        return mediaControllerInstance;
     }
 
     public String getString( String alias, Object... data) {
