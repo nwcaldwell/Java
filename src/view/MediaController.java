@@ -13,8 +13,8 @@ import java.util.HashMap;
 public class MediaController {
 
     private static MediaController mediaControllerInstance = new MediaController();
-    private HashMap<String, String> stringTemplates;
-    private HashMap<String, BufferedImage> loadedImages;
+    private HashMap<String, String> stringTemplates = new HashMap<String,String>();
+    private HashMap<String, BufferedImage> loadedImages = new HashMap<String, BufferedImage>();
     // TODO implement private HashMap<String, Audio> loadedAudio
     // TODO implement private HashMap<String, 3DModel> loaded3DModel
 
