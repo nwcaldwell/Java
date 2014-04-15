@@ -30,4 +30,18 @@ public abstract class Space<A extends Space, B extends TileComponent, D extends 
 	public abstract boolean verifyHeights(B tile);
 	
 	public abstract boolean neighborExists(D direction);
+
+    protected void setNeighbors(B[] array){
+        this.neighbors = array;
+    }
+
+    protected B getNeighbor(D direction){
+        return neighbors[direction.ordinal()];
+    }
+
+    protected void setNeigbor(D direction, A space){
+        neighbors[direction.ordinal()] = space;
+    }
+
+
 }
