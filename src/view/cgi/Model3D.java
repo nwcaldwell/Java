@@ -60,4 +60,12 @@ public class Model3D {
 	public Vector3D getTranslation(){
 		return translation;
 	}
+	
+	/**creates a copy of this model*/
+	public Model3D clone(){
+		Model3D clone=new Model3D(faces);
+		clone.setTranslation(translation);
+		clone.setRotation(pitch, yaw, roll);
+		return clone;
+	}
 }
