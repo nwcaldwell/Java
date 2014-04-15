@@ -1,6 +1,7 @@
 package gamecontrollers.turn;
 
 
+import view.commands.Command;
 
 public abstract class TurnState {
 

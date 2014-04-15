@@ -2,6 +2,7 @@ package gamecontrollers.turn;
 
 
 import models.board.Player;
+import view.commands.Command;
 
 public class LastTurn extends TurnState {
 
@@ -19,6 +20,6 @@ public class LastTurn extends TurnState {
     }
 
     public Command endTurn(){
-
+        
     }
 }
