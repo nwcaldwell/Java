@@ -1,7 +1,7 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
-import view.commands.Command;
+import view.commands.gameplaycommands.MoveDeveloperCommand;
 
 /**
  * Created by jorgep on 4/14/14.
@@ -11,7 +11,7 @@ public class MoveDeveloperController extends DeveloperCommandCreator {
     /*
       This method will return the constructed command
    */
-    public Command getCommand(){
+    public MoveDeveloperCommand getCommand(){
 
         throw new UnsupportedOperationException();
 
