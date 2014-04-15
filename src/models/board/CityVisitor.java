@@ -1,8 +1,9 @@
 package models.board;
 
-public class TilePlacementVisitor extends TileVisitor {
 
-    public TilePlacementVisitor(){
+public class CityVisitor extends TileVisitor{
+
+    public CityVisitor(){
 
     }
 
@@ -25,5 +26,4 @@ public class TilePlacementVisitor extends TileVisitor {
     public void visit(Irrigation i){
 
     }
-
 }
