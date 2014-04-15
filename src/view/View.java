@@ -1,13 +1,14 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public abstract class View extends JPanel {
 
     private MediaController mediaController;
 
     protected View( ViewController viewC, MediaController mediaC ) {
-
+        super(new BorderLayout());
         mediaController = mediaC;
     }
 
