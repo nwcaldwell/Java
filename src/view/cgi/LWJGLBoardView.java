@@ -14,10 +14,8 @@ import view.controls.BoardView;
 /**an implementation of BoardView that uses an LWJGL canvas*/
 public class LWJGLBoardView extends BoardView{
 
-	Board<HexSpace,HexTileComponent,HexDirection> board;
-	
 	public LWJGLBoardView(ViewController vc, MediaController media, Board<HexSpace,HexTileComponent,HexDirection> b) {
-		super(vc, media);
+		super(vc, media,b);
 		// TODO Auto-generated constructor stub
 	}
 	
