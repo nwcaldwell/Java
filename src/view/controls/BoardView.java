@@ -30,8 +30,8 @@ public abstract class BoardView extends JPanel {
     public abstract void update();
     
     /**draws a hilighted space*/
-    public abstract void hilightSpace(ArrayList<HexDirection> dir, int height);
+    public abstract void hilightSpace(ArrayList<HexDirection> path, int height);
     
     /**draws a developer*/
-    public abstract void displayDev(ArrayList<HexDirection> dir);
+    public abstract void displayDev(ArrayList<HexDirection> path, int height);
 }
