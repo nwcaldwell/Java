@@ -1,6 +1,4 @@
-package view.commands.gameplayInput.menuInputCommands;
-
-import view.commands.InputCommand;
+package view.commands;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

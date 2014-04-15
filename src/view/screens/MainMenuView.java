@@ -1,13 +1,14 @@
 package view.screens;
 
-import view.MediaController;
 import view.View;
 import view.ViewController;
 import view.commands.NavCommand;
-import view.commands.gameplayInput.menuInputCommands.JavaButtonListener;
+import view.commands.JavaButtonListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //TODO [Sydney][Jorge]
 
@@ -24,6 +25,12 @@ public class MainMenuView extends View {
         loadGameButton.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new LoadGameView(this.getViewController()))));
 
         quitGameButton = new JButton("Quit Game");
+        quitGameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        });
 
         initializeLayout();
     }
