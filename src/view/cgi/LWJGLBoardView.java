@@ -1,17 +1,18 @@
 package view.cgi;
 
-import java.util.ArrayList;
-
 import models.board.Board;
 import models.board.Developer;
 import models.board.Direction;
 import models.board.HexSpace;
 import models.board.HexDirection;
+import models.board.HexSpace;
 import models.board.HexTileComponent;
 import models.board.Space;
 import view.MediaController;
 import view.ViewController;
 import view.controls.BoardView;
+
+import java.util.ArrayList;
 
 /**an implementation of BoardView that uses an LWJGL canvas*/
 public class LWJGLBoardView extends BoardView{
@@ -50,8 +51,8 @@ public class LWJGLBoardView extends BoardView{
 	ArrayList<Model3D> developers=new ArrayList<Model3D>();
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
 	
-	public LWJGLBoardView(ViewController vc, MediaController media, Board<HexSpace,HexTileComponent,HexDirection> b) {
-		super(vc, media,b);
+	public LWJGLBoardView(ViewController vc, Board<HexSpace,HexTileComponent,HexDirection> b) {
+		super(vc, b);
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -1,27 +1,22 @@
 package view.controls;
 
-import java.util.ArrayList;
-
-import view.MediaController;
-import view.ViewController;
-
-import javax.swing.*;
-
 import models.board.Board;
 import models.board.HexDirection;
 import models.board.HexSpace;
 import models.board.HexTileComponent;
+import view.ViewController;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 //TODO [Sydney Christopher] [Jorge]
 
 public abstract class BoardView extends JPanel {
-    
-	protected MediaController mediaC;
+
 	protected ViewController viewC;
 	protected Board<HexSpace, HexTileComponent, HexDirection> board;
     
-    public BoardView(ViewController vc, MediaController media, Board<HexSpace, HexTileComponent, HexDirection> board){
-        this.mediaC = media;
+    public BoardView(ViewController vc, Board<HexSpace, HexTileComponent, HexDirection> board){
         this.viewC = vc;
         this.board = board;
     }

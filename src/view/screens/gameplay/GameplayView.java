@@ -1,7 +1,11 @@
 package view.screens.gameplay;
 
-import view.*;
+import gamecontrollers.Facade;
 import view.controls.ConsoleView;
+import view.MediaController;
+import view.View;
+import view.ViewController;
+import view.cgi.LWJGLBoardView;
 import view.controls.BoardView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
@@ -13,21 +17,21 @@ import java.util.ArrayList;
 
 //TODO [Sydney][Jorge]
 
-public class GameplayView extends View {
-
+public abstract class GameplayView extends View {
     private ConsoleView consoleView;
     private ArrayList<PlayerView> playerViews;
     private BoardView boardView;
     private SharedResourcesView sharedResourcesView;
     JPanel playerContainer;
+    JPanel toggleButtonContainer;
 
-    protected GameplayView(ViewController viewC, MediaController mediaC) {
-        super(viewC, mediaC);
+    protected GameplayView(ViewController viewC) {
+        super(viewC);
 
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        boardView = new BoardView();
+        BoardView boardView = new LWJGLBoardView(viewC, Facade.getInstance().getBoard());
         sharedResourcesView = new SharedResourcesView();
 
         //setup view sizes
@@ -45,6 +49,8 @@ public class GameplayView extends View {
         leftSide.setMinimumSize(new Dimension(500, 500));
 
         //the shared resources and the console are on the left panel. add them in the respective order
+        toggleButtonContainer = new JPanel();
+        leftSide.add(toggleButtonContainer);
         leftSide.add(sharedResourcesView);
         leftSide.add(consoleView);
         add(leftSide, BorderLayout.WEST);
@@ -56,7 +62,7 @@ public class GameplayView extends View {
 
         JPanel rightSide = new JPanel();
         rightSide.setMinimumSize(new Dimension()); //this includes the BoardView and the Player Views
-        rightSide.add(boardView);
+        //rightSide.add(boardView);
         rightSide.add(playerContainer);
 
         add(rightSide, BorderLayout.EAST);

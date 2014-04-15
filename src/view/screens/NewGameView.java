@@ -8,8 +8,8 @@ import view.ViewController;
 
 public class NewGameView extends View {
 
-    public NewGameView(ViewController viewC, MediaController mediaC) {
-        super(viewC, mediaC);
+    public NewGameView(ViewController viewC) {
+        super(viewC);
     }
 
 }
