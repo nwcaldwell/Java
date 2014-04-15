@@ -49,14 +49,14 @@ public class BoardLogicController {
 	}
 	
 	public List<Space> getAllPlacedPalaces() {
-		
+		return null;
 	}
 	
 	public Developer getNextDeveloper(Developer d) {
-		
+		return null;
 	}
 	
 	public boolean hasDeveloper(Space s, Developer d) {
-		
+		return false;
 	}
 }

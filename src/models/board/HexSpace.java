@@ -1,12 +1,6 @@
 package models.board;
 
-public class HexSpace extends Space<HexSpace,HexTile>{
-
-	@Override
-	public HexSpace getAdjacent(int direction) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public class HexSpace extends Space<HexSpace, HexTile, HexDirection>{
 
 	@Override
 	public void placeTile(HexTile tile) {
@@ -15,13 +9,8 @@ public class HexSpace extends Space<HexSpace,HexTile>{
 	}
 
     @Override
-    public HexSpace getAdjacentSpace(int direction) {
+    public HexSpace getAdjacentSpace(HexDirection direction) {
         return null;
-    }
-
-    @Override
-    public void placeTileComponent(TileComponent tile) {
-
     }
 
     @Override
@@ -37,12 +26,7 @@ public class HexSpace extends Space<HexSpace,HexTile>{
 	}
 
     @Override
-    public boolean neighborExists(Direction direction) {
-        return false;
-    }
-
-    @Override
-    public boolean veriyHeights(TileComponent tile) {
+    public boolean neighborExists(HexDirection direction) {
         return false;
     }
 
