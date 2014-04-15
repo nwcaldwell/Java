@@ -50,7 +50,7 @@ public abstract class Space<A extends Space, B extends TileComponent, D extends 
         return neighbors[direction.ordinal()];
     }
 
-    protected void setNeigbor(D direction, A space){
+    protected void setNeighbor(D direction, A space){
         neighbors[direction.ordinal()] = space;
     }
 
