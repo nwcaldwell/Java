@@ -44,6 +44,9 @@ public class Space<D extends Direction> {
     protected void setNeighbor(D direction, Space space){
         neighbors[direction.getIntValue()] = space;
     }
-
+    
+    public void removeTile() {
+    	tileStack.pop();
+    }
 
 }
