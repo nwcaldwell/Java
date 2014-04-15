@@ -1,15 +1,18 @@
 package board;
 
-public abstract class Space<SpaceType extends Space, TileType extends Tile> {
+public abstract class Space<A extends Space, B extends TileComponent, D extends Direction> {
 
+	private B[] neighbors;
+	private boolean[] neighborExists;
+	
 	/**returns the space adjacent to this space in the given int direction.
 	 * As this class is implemented, its subclasses may have their own conventions
 	 * for how direction works.*/
-	public abstract SpaceType getAdjacent(int direction);
+	public abstract A getAdjacentSpace(int direction);
 	
 	/**places a tile on this space.  As tile is a graph, this
 	 * method will probably be implemented recursively.*/
-	public abstract void placeTile(TileType tile);
+	public abstract void placeTileComponent(B tile);
 	
 	/**returns the height of the uppermost tile on this space*/
 	public abstract int getHeight();
@@ -18,10 +21,13 @@ public abstract class Space<SpaceType extends Space, TileType extends Tile> {
 	 * graph may be placed on this space and its graph without
 	 * covering an identical tile graph.
 	 * This will likely be done recursively.*/
-	public abstract boolean verifyStacking(TileType tile);
+	public abstract boolean verifyStacking(B tile);
 	
 	/**returns true if and only if all the spaces that would
 	 * be covered by the given tile graph are the same height.
 	 * This will likely be done recursively.*/
-	public abstract boolean veriyHeights(TileType tile);
+
+	public abstract boolean veriyHeights(B tile);
+	
+	public abstract boolean neighborExists(D direction);
 }

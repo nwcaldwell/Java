@@ -27,7 +27,7 @@ public class HexSpace extends Space<HexSpace,HexTile>{
 	}
 
 	@Override
-	public boolean veriyHeights(HexTile tile) {
+	public boolean verifyHeights(HexTile tile) {
 		// TODO Auto-generated method stub
 		return false;
 	}
