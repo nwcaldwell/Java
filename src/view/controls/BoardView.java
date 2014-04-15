@@ -9,8 +9,6 @@ import javax.swing.*;
 
 import models.board.Board;
 import models.board.HexDirection;
-import models.board.Space;
-import models.board.HexTileComponent;
 
 //TODO [Sydney Christopher] [Jorge]
 

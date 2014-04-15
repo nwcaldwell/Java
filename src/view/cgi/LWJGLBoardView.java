@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import models.board.Board;
 import models.board.HexDirection;
-import models.board.Space;
-import models.board.HexTileComponent;
 import view.MediaController;
 import view.ViewController;
 import view.controls.BoardView;
