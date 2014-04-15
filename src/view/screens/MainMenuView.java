@@ -43,6 +43,8 @@ public class MainMenuView extends View {
         buttons.add(loadGameButton);
         buttons.add(quitGameButton);
 
+        add(buttons, BorderLayout.CENTER);
+
     }
 }
 
