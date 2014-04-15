@@ -20,4 +20,8 @@ public class Developer {
 	public void updateLocation(Space s) {
 		
 	}
+
+	public boolean notNull() {
+		return this == null;
+	}
 }

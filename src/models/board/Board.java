@@ -22,6 +22,12 @@ public class Board <A extends Space, B extends Tile, C extends Direction> {
 	}
 	
 	public Developer getFirstDeveloper(Player p) {
+		for (Developer dev : developers) {
+			if (dev.notNull()) {
+				return dev;
+			}
+		}
+		
 		return null;
 	}
 }
