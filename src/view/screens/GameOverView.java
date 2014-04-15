@@ -4,6 +4,8 @@ import view.MediaController;
 import view.View;
 import view.ViewController;
 
+//TODO [Sydney][Jorge]
+
 public class GameOverView extends View {
 
     public GameOverView(ViewController viewC, MediaController mediaC) {

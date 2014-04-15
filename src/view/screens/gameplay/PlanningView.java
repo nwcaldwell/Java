@@ -3,6 +3,8 @@ package view.screens.gameplay;
 import view.MediaController;
 import view.ViewController;
 
+//TODO [Sydney][Jorge]
+
 public class PlanningView extends GameplayView {
 
     public PlanningView(ViewController viewC, MediaController mediaC) {

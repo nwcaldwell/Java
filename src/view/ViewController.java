@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO [Jorge][Sydney]
+
 public class ViewController {
 
     private static final int  WINDOW_WIDTH = 800;
@@ -58,9 +60,21 @@ public class ViewController {
         gameWindow.addKeyListener( listener );
     }
 
+    public void addKeyListener(List<JavaKeyListener> listeners){
+        for (JavaKeyListener listener : listeners){
+            addKeyListener(listener);
+        }
+    }
+
     public void removeKeyListener ( JavaKeyListener listener ) {
 
         currentListeners.remove( listener );
         gameWindow.removeKeyListener( listener );
+    }
+
+    public void removeKeyListener(List<JavaKeyListener> listeners) {
+        for (JavaKeyListener listener : listeners){
+            removeKeyListener(listener);
+        }
     }
 }
