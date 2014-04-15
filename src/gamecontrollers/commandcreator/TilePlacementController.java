@@ -51,8 +51,8 @@ public class TilePlacementController <A extends Space, B extends Tile> extends T
     public PlaceTileCommand getCommand(){
 
         // TODO implement
+        return null;
 
-       return null;
     }
 
     /*

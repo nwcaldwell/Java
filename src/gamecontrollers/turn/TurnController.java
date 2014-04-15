@@ -1,12 +1,13 @@
-package gamecontrollers;
+package gamecontrollers.turn;
 
+import gamecontrollers.commandcreator.GameplayCommandCreator;
 import models.board.Player;
 
 /**
  * Created by jorgep on 4/14/14.
  */
 public class TurnController {
-    private CommandCreator currentCommandCreator;
+    private GameplayCommandCreator currentCommandCreator;
     private TurnState turnState;
     private Player currentPlayer;
 

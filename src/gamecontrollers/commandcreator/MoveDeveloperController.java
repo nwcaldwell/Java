@@ -14,8 +14,6 @@ public class MoveDeveloperController extends DeveloperCommandCreator {
     public MoveDeveloperCommand getCommand(){
 
         throw new UnsupportedOperationException();
-
-        return null;
     }
 
     /*
