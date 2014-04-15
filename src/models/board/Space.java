@@ -2,24 +2,29 @@ package models.board;
 
 import java.util.Stack;
 
-public abstract class Space<A extends Space, B extends TileComponent, D extends Direction> {
+public class Space<D extends Direction> {
 
-	private A[] neighbors;
+	private Space[] neighbors = new Space[D.numDirections()];
 	private boolean[] neighborExists;
-    private Stack<B> tileStack = new Stack<B>();
-	
+    private Stack<TileComponent> tileStack = new Stack<TileComponent>();
+    protected int numNeighbors;
+
+
 	/**returns the space adjacent to this space in the given int direction.
 	 * As this class is implemented, its subclasses may have their own conventions
 	 * for how direction works.*/
-	public abstract A getAdjacentSpace(D direction);
+	public Space getAdjacentSpace(D direction){
+        return neighbors[direction.getIntValue()];
+    }
+
 	
 	/**places a tile on this space.  As tile is a graph, this
 	 * method will probably be implemented recursively.*/
-	public void placeTile(B tile){
+	public void placeTile(TileComponent tile){
         tileStack.push(tile);
     }
 
-    public B getTile(){
+    public TileComponent getTile(){
         return tileStack.peek();
     }
 	
@@ -27,30 +32,16 @@ public abstract class Space<A extends Space, B extends TileComponent, D extends 
 	public int getHeight(){
         return tileStack.size();
     }
-	
-	/**returns true if and only if the given tile and it's
-	 * graph may be placed on this space and its graph without
-	 * covering an identical tile graph.
-	 * This will likely be done recursively.*/
-	public abstract boolean verifyStacking(B tile);
-	
-	/**returns true if and only if all the spaces that would
-	 * be covered by the given tile graph are the same height.
-	 * This will likely be done recursively.*/
 
-	public abstract boolean verifyHeights(B tile);
-	
-	public abstract boolean neighborExists(D direction);
-
-    protected void setNeighbors(A[] array){
+    protected void setNeighbors(Space[] array){
         this.neighbors = array;
     }
 
-    protected A getNeighbor(D direction){
+    protected Space getNeighbor(D direction){
         return neighbors[direction.getIntValue()];
     }
 
-    protected void setNeighbor(D direction, A space){
+    protected void setNeighbor(D direction, Space space){
         neighbors[direction.getIntValue()] = space;
     }
 

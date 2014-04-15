@@ -2,8 +2,10 @@ package models.board;
 
 public class HexSpace extends Space<HexSpace, HexTileComponent, HexDirection>{
 
+
     public HexSpace(){
-        super.setNeighbors(new HexSpace[6]);
+        numNeighbors = 6;
+        super.setNeighbors(new HexSpace[numNeighbors]);
     }
 
     @Override
