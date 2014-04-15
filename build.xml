@@ -11,8 +11,10 @@
     <property name="source" value="1.7"/>
     <path id="Java.classpath">
         <pathelement location="bin"/>
-        <pathelement location="libs/jinput.jar"/>
+        <pathelement location="libs/junit-4.11.jar"/>
+        <pathelement location="libs/mockito-all-1.9.5.jar"/>
         <pathelement location="libs/lwjgl.jar"/>
+        <pathelement location="libs/jinput.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
