@@ -2,18 +2,26 @@ package models.board;
 
 import java.util.Stack;
 
-public class Space<D extends Direction> {
+//TODO [Kevin][Jorge, Kevin]
 
-	private Space[] neighbors = new Space[D.numDirections()];
+public class Space {
+
+	private Space[] neighbors;
 	private boolean[] neighborExists;
     private Stack<TileComponent> tileStack = new Stack<TileComponent>();
     protected int numNeighbors;
+    private Direction direction;
 
+    Space(Direction d)
+    {
+        direction = d;
+        neighbors = new Space[d.numDirections()];
+    }
 
 	/**returns the space adjacent to this space in the given int direction.
 	 * As this class is implemented, its subclasses may have their own conventions
 	 * for how direction works.*/
-	public Space getAdjacentSpace(D direction){
+	public Space getAdjacentSpace(Direction direction){
         return neighbors[direction.getIntValue()];
     }
 
@@ -37,11 +45,11 @@ public class Space<D extends Direction> {
         this.neighbors = array;
     }
 
-    protected Space getNeighbor(D direction){
+    protected Space getNeighbor(Direction direction){
         return neighbors[direction.getIntValue()];
     }
 
-    protected void setNeighbor(D direction, Space space){
+    protected void setNeighbor(Direction direction, Space space){
         neighbors[direction.getIntValue()] = space;
     }
     
