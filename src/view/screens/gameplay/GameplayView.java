@@ -8,6 +8,8 @@ import view.controls.SharedResourcesView;
 
 import java.util.List;
 
+//TODO [Sydney][Jorge]
+
 public class GameplayView extends View {
 
     private ConsoleView consoleView;

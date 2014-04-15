@@ -9,6 +9,8 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO [Jorge][Sydney]
+
 public class ViewController {
 
 // TODO delete if we stick to using the toolkit class private static final int  WINDOW_WIDTH = 800;

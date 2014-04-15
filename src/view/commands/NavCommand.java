@@ -1,13 +1,9 @@
-package view.commands.gameplayInput;
+package view.commands;
 
-import view.commands.Command;
 import view.View;
 import view.ViewController;
 
-/**
- * Created by jorgep on 4/6/14.
- */
-public class NavCommand extends Command {
+public class NavCommand implements InputCommand {
 
     private ViewController viewController;
     private View viewToGoTo;

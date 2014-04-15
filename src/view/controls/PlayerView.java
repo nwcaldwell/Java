@@ -1,13 +1,18 @@
 package view.controls;
 
+import view.MediaController;
+
 import javax.swing.*;
+
+//TODO [Sydney][Jorge]
 
 public class PlayerView extends JPanel{
 
+    private MediaController mediaC;
     private JLabel actionPoints, famePoints, developers, twoTiles, riceTiles, villageTiles, actionTokens, palaceCards;
 
-    public PlayerView(){
-
+    public PlayerView(MediaController media){
+        this.mediaC = media;
     }
 
     public void setNumActionPoints(int num){
@@ -41,4 +46,8 @@ public class PlayerView extends JPanel{
     public void setNumPalaceCards(int num){
         palaceCards.setText(""+num);
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 431fd82980edfe8871d4a8071a9fd9a8273d3d52
 }

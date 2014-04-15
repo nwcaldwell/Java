@@ -1,6 +1,6 @@
 package models.board;
 
-public abstract class Space<A extends Space, B extends Tile, D extends Direction> {
+public abstract class Space<A extends Space, B extends TileComponent, D extends Direction> {
 
 	private B[] neighbors;
 	private boolean[] neighborExists;

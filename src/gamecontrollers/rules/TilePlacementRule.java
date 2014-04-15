@@ -1,7 +1,8 @@
 package gamecontrollers.rules;
 
 /**
- * Created by jorgep on 4/14/14.
+ * //TODO [Nathan, Kevin, Will][Chris]
  */
-public class TilePlacementRule {
+ public abstract class TilePlacementRule extends Rule {
+
 }
