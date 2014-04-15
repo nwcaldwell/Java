@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
+import view.MediaController;
+
 /**This class will be used to load resources into the graphics card.
  * The texture factory allows a program to access a texture, while
  * ensuring that textures are only loaded once.
@@ -97,6 +99,8 @@ public class TextureFactory {
 		
 		//load the image
 		BufferedImage image = ImageIO.read(new File(filename));
+		//TODO:
+		//BufferedImage image = MediaController.getInstance().getImage(filename);
 		
 		int[] pixels = new int[image.getWidth() * image.getHeight()];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0,
