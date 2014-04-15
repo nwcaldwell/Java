@@ -1,6 +1,6 @@
 package models.board;
 
-public class Board <A extends Space, B extends Tile, C extends Direction> {
+public class Board <A extends Space, B extends TileComponent, C extends Direction> {
 	private Space<A,B,C> rootNode;
 	private Developer[] developers;
 	
