@@ -1,12 +1,22 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
+import models.board.Developer;
+import models.board.Direction;
+import models.board.Space;
 import view.commands.Command;
 
 /**
  * Created by jorgep on 4/14/14.
  */
-public class MoveDeveloperController extends DeveloperCommandCreator {
+public class DevMoveController extends DeveloperCommandCreator {
+    private Space desiredSpace;
+    private Developer currentDeveloper;
+
+    public DevMoveController(){
+
+    }
+
 
     /*
       This method will return the constructed command
@@ -29,5 +39,17 @@ public class MoveDeveloperController extends DeveloperCommandCreator {
      */
     public Response checkPossible(){
         return null;
+    }
+
+    public void setCurrentDeveloper(){
+
+    }
+
+    public void iterateThroughBoardDevelopers(){
+
+    }
+
+    public void move(Direction direction){
+
     }
 }
