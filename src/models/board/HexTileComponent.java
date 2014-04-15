@@ -10,11 +10,10 @@ public class HexTileComponent extends TileComponent<HexTileComponent, HexDirecti
 
 	@Override
 	public void rotateAround(HexTileComponent tileComponent) {
-
+		
 	}
 
-	@Override
-	protected void rotate(HexTileComponent tileComponent) {
+	private void rotate(HexTileComponent tileComponent) {
 
 	}
 }
