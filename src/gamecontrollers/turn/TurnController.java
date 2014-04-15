@@ -1,4 +1,4 @@
-package gamecontrollers;
+package gamecontrollers.turn;
 
 import models.board.Player;
 
