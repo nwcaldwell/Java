@@ -1,11 +1,17 @@
 // TODO developer [ Sydney ], test [ Jorge ]
-package view.commands.gameplaycommands;
+package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 
-public class StartFestivalCommand implements GameplayActionCommand {
+import gamecontrollers.save.CommandSaveVisitor;public class StartFestivalCommand implements GameplayActionCommand {
 
 	@Override	public void execute() {
+		throw new UnsupportedOperationException();
+	}
+	@Override	public void undo() {
+		throw new UnsupportedOperationException();
+	}
+	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();
 	}
 }
