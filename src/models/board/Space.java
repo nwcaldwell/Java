@@ -53,6 +53,9 @@ public abstract class Space<A extends Space, B extends TileComponent, D extends 
     protected void setNeighbor(D direction, A space){
         neighbors[direction.getIntValue()] = space;
     }
-
+    
+    public void removeTile() {
+    	tileStack.pop();
+    }
 
 }
