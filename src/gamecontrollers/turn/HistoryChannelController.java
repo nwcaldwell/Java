@@ -1,9 +1,10 @@
 package gamecontrollers.turn;
 
 import gamecontrollers.commands.GameplayActionCommand;
-import models.board.Player;
 import java.util.List;
 import java.util.Stack;
+import models.palacefestival.JavaPlayer;
+
 
 public class HistoryChannelController {
     private Stack<GameplayActionCommand> commandHistory;
@@ -23,7 +24,7 @@ public class HistoryChannelController {
 
     }
 
-    public List<GameplayActionCommand> getLastRound(Player p){
+    public List<GameplayActionCommand> getLastRound(JavaPlayer p){
         // TODO implemente
         return null;
     }

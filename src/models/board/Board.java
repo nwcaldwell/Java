@@ -1,5 +1,7 @@
 package models.board;
 
+import models.palacefestival.JavaPlayer;
+
 public class Board <A extends Space, B extends TileComponent, C extends Direction> {
 	private Space<A,B,C> rootNode;
 	private Developer[] developers;
@@ -21,7 +23,7 @@ public class Board <A extends Space, B extends TileComponent, C extends Directio
 		return null;
 	}
 	
-	public Developer getFirstDeveloper(Player p) {
+	public Developer getFirstDeveloper(JavaPlayer p) {
 		for (Developer dev : developers) {
 			if (dev.notNull()) {
 				return dev;

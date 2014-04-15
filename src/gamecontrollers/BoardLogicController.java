@@ -1,6 +1,7 @@
 package gamecontrollers;
 
 import models.board.*;
+import models.palacefestival.JavaPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +37,11 @@ public class BoardLogicController {
 		return false;
 	}
 	
-	public int findShortestPath(Player p, Space origin, Space destination, List<Space> path) {
+	public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path) {
 		return 0;
 	}
 	
-	public void moveDeveloperOnBoard(Player p, Space s) {
+	public void moveDeveloperOnBoard(JavaPlayer p, Space s) {
 		
 	}
 	
