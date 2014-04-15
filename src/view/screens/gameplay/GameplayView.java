@@ -33,7 +33,7 @@ public abstract class GameplayView extends View {
         //create the attributes
         consoleView = new ConsoleView(mediaController);
         playerViews = new ArrayList<PlayerView>();
-        boardView = new BoardView(viewController, mediaController, Facade.getInstance().getBoard()); //TODO need to get the Board
+        //boardView = new BoardView(viewController, mediaController, Facade.getInstance().getBoard()); //TODO need to get the Board
         sharedResourcesView = new SharedResourcesView(mediaController);
 
         //setup view sizes
@@ -64,7 +64,7 @@ public abstract class GameplayView extends View {
 
         JPanel rightSide = new JPanel();
         rightSide.setMinimumSize(new Dimension()); //this includes the BoardView and the Player Views
-        rightSide.add(boardView);
+        //rightSide.add(boardView);
         rightSide.add(playerContainer);
 
         add(rightSide, BorderLayout.EAST);

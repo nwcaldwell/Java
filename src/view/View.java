@@ -7,14 +7,14 @@ import java.awt.*;
 
 public abstract class View extends JPanel {
 
-    private MediaController mediaController;
+    private ViewController viewController;
 
-    protected View( ViewController viewC, MediaController mediaC ) {
+    protected View( ViewController viewC ) {
         super(new BorderLayout());
-        mediaController = mediaC;
+        viewController = viewC;
     }
 
-    protected MediaController getMediaController() {
-        return mediaController;
+    protected ViewController getViewController() {
+        return viewController;
     }
 }
