@@ -1,7 +1,11 @@
 package view;
 
 import view.screens.MainMenuView;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +13,8 @@ import java.util.List;
 
 public class ViewController {
 
-    private static final int  WINDOW_WIDTH = 800;
-    private static final int  WINDO_HEIGHT = 800;
+// TODO delete if we stick to using the toolkit class private static final int  WINDOW_WIDTH = 800;
+// TODO delete if we stick to using the toolkit class private static final int  WINDO_HEIGHT = 800;
     private View currentView;
     private JFrame gameWindow;
     private List<JavaKeyListener> currentListeners;
@@ -22,13 +26,39 @@ public class ViewController {
         currentListeners = new ArrayList<JavaKeyListener>();
         mediaController = new MediaController();
         gameWindow = new JFrame();
-        gameWindow.setSize( WINDOW_WIDTH, WINDO_HEIGHT );
-        gameWindow.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
-        gameWindow.setVisible( true );
     }
 
     public void start() {
-       setCurrentView( new MainMenuView(this, mediaController));
+        // This toolkit class allow us to get the size of the screen to go fullscreen
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        // Setup the game window
+        gameWindow.setUndecorated(true);
+        gameWindow.setSize((int) tk.getScreenSize().getWidth(), (int) tk.getScreenSize().getHeight());
+        gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameWindow.setVisible(true);
+
+        // set the game window to the main view
+        setCurrentView( new MainMenuView(this, mediaController));
+
+        // TODO remove this keylistener when the real quit is implemented
+        gameWindow.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     public void setCurrentView( View newView ) {
