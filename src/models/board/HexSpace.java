@@ -2,10 +2,13 @@ package models.board;
 
 public class HexSpace extends Space<HexSpace, HexTileComponent, HexDirection>{
 
+    public HexSpace(){
+        super.setNeighbors(new HexSpace[6]);
+    }
 
     @Override
     public HexSpace getAdjacentSpace(HexDirection direction) {
-        return null;
+        return super.getNeighbor(direction);
     }
 
 	@Override
