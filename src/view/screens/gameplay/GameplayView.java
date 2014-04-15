@@ -1,8 +1,12 @@
 package view.screens.gameplay;
 
-import view.*;
-import view.controls.ConsoleView;
+import gamecontrollers.Facade;
+import view.MediaController;
+import view.View;
+import view.ViewController;
+import view.cgi.LWJGLBoardView;
 import view.controls.BoardView;
+import view.controls.ConsoleView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
 
@@ -27,7 +31,7 @@ public class GameplayView extends View {
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        boardView = new BoardView();
+        BoardView boardView = new LWJGLBoardView(viewC, Facade.getInstance().getBoard());
         sharedResourcesView = new SharedResourcesView();
 
         //setup view sizes
