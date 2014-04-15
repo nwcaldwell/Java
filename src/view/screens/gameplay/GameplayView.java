@@ -1,9 +1,11 @@
 package view.screens.gameplay;
 
 import gamecontrollers.Facade;
-import models.board.Board;
-import view.*;
 import view.controls.ConsoleView;
+import view.MediaController;
+import view.View;
+import view.ViewController;
+import view.cgi.LWJGLBoardView;
 import view.controls.BoardView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
@@ -16,8 +18,6 @@ import java.util.ArrayList;
 //TODO [Sydney][Jorge]
 
 public abstract class GameplayView extends View {
-    private MediaController mediaController;
-    private ViewController viewController;
     private ConsoleView consoleView;
     private ArrayList<PlayerView> playerViews;
     private BoardView boardView;
@@ -25,16 +25,14 @@ public abstract class GameplayView extends View {
     JPanel playerContainer;
     JPanel toggleButtonContainer;
 
-    protected GameplayView(ViewController viewC, MediaController mediaC) {
-        super(viewC, mediaC);
+    protected GameplayView(ViewController viewC) {
+        super(viewC);
 
-        this.viewController = viewC;
-        this.mediaController = mediaC;
         //create the attributes
-        consoleView = new ConsoleView(mediaController);
+        consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        //boardView = new BoardView(viewController, mediaController, Facade.getInstance().getBoard()); //TODO need to get the Board
-        sharedResourcesView = new SharedResourcesView(mediaController);
+        BoardView boardView = new LWJGLBoardView(viewC, Facade.getInstance().getBoard());
+        sharedResourcesView = new SharedResourcesView();
 
         //setup view sizes
         setMaximumSize(new Dimension(500, 500)); //TODO what these numbers are and where to find them?

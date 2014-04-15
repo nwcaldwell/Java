@@ -7,10 +7,7 @@ import gamecontrollers.turn.HistoryChannelController;
 import gamecontrollers.turn.PlanningController;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
-import models.board.Developer;
-import models.board.Direction;
-import models.board.Space;
-import models.board.TileComponent;
+import models.board.*;
 
 public class Facade {
 
@@ -63,5 +60,10 @@ public class Facade {
     // Festival Methods
     public void ASkForPalaceFestivalTie () {
         throw new UnsupportedOperationException();
+    }
+
+    public Board<HexSpace, HexTileComponent, HexDirection> getBoard() {
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return null;
     }
 }
