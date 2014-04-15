@@ -1,14 +1,17 @@
 package view.controls;
 
+import view.MediaController;
+
 import javax.swing.*;
 
 //TODO [Sydney][Jorge]
 
 public class PlayerView extends JPanel{
+    private MediaController mediaC;
     private JLabel actionPoints, famePoints, developers, twoTiles, riceTiles, villageTiles, actionTokens, palaceCards;
 
-    public PlayerView(){
-
+    public PlayerView(MediaController media){
+        this.mediaC = media;
     }
 
     public void setNumActionPoints(int num){
