@@ -1,6 +1,6 @@
 package view;
 
-import commands.Command;
+import view.commands.Command;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
