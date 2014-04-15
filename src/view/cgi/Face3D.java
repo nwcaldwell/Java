@@ -31,7 +31,7 @@ public class Face3D {
 	/**creates a new renderable face with the given texture, local cooridinates,
 	 * texture coordinates, and RenderType (e.g. GL11.GL_TRIANGLES or GL11.GL_QUADS.)
 	 * @throws Exception */
-	public Face3D(Vector3D[] vertices, int renderType) throws Exception{
+	public Face3D(Vector3D[] vertices, int renderType){
 		this.renderType=renderType;
 		this.vertices=vertices;
 		generateDefaultNormals();
@@ -85,5 +85,13 @@ public class Face3D {
 			glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
 		}
 		glEnd();
+	}
+
+	public void setNormals(Vector3D[] fn) {
+		if (fn.length!=vertices.length){
+			throw new ArrayIndexOutOfBoundsException("Face3D: normals must be the same lenght as vertices.");
+		}else{
+			this.normals=fn;
+		}
 	}
 }

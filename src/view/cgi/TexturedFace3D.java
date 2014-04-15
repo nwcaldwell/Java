@@ -12,10 +12,10 @@ public class TexturedFace3D extends Face3D{
 	/**creates a new renderable face with the given texture, local cooridinates,
 	 * texture coordinates, and RenderType (e.g. GL11.GL_TRIANGLES or GL11.GL_QUADS.)
 	 * @throws Exception */
-	public TexturedFace3D(int texture, Vector3D[] vertices, Vector2D[] textureCoords, int renderType) throws Exception{
+	public TexturedFace3D(int texture, Vector3D[] vertices, Vector2D[] textureCoords, int renderType){
 		super(vertices, renderType);
 		if (textureCoords.length!=vertices.length){
-			throw new Exception("Face3D requires the same number of vectors and texture coordinates.");
+			throw new ArrayIndexOutOfBoundsException("Face3D requires the same number of vectors and texture coordinates.");
 		}
 		this.texture=texture;
 		this.texCoords=textureCoords;

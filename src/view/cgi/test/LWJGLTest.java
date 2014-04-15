@@ -83,8 +83,8 @@ public class LWJGLTest{
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
 		//hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
-		hills=ModelFactory.makeFromObj(new File("resources/icosphere.obj"));
-		hills.setSphere();
+		hills=ModelFactory.makeFromObj(new File("resources/icosphere.obj"),1);
+		//hills.setSphere();
 		
 		while (!Display.isCloseRequested()) {
 
@@ -110,13 +110,13 @@ public class LWJGLTest{
 			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
 			renderModel(hills,pitch,yaw,roll);
 			GL11.glTranslatef(-20, 20, 0);
-			//renderFace(mask,apitch,0,0);
+			renderFace(mask,apitch,0,0);
 			GL11.glTranslatef(20, 0, 0);
-			//renderFace(mask,0,ayaw,0);
+			renderFace(mask,0,ayaw,0);
 			GL11.glTranslatef(20, 0, 0);
-			//renderFace(mask,0,0,aroll);
+			renderFace(mask,0,0,aroll);
 			GL11.glTranslatef(-20, -40, 0);
-			//renderFace(brokenFace,apitch,ayaw,aroll);
+			renderFace(brokenFace,apitch,ayaw,aroll);
 			
 			Display.update();
 			
@@ -179,7 +179,7 @@ public class LWJGLTest{
 	}
 	
 	private void setLighting(){
-		float[] lightPos={1f,1f,yaw,0f};
+		float[] lightPos={1f,1f,1f,0f};
 		
 		//material colors
 		float[] matspecular={1,1,1,0};
@@ -203,6 +203,7 @@ public class LWJGLTest{
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, (FloatBuffer) temp.asFloatBuffer().put(lightambient).flip());
 		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, (FloatBuffer) temp.asFloatBuffer().put(lightdiffuse).flip());
 		
+		//GL11.glColorMaterial(GL11.GL_FRONT, GL11.GL_EMISSION);
 		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, (FloatBuffer) temp.asFloatBuffer().put(matspecular).flip());
 		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, (FloatBuffer) temp.asFloatBuffer().put(matdiffuse).flip());
 		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT, (FloatBuffer) temp.asFloatBuffer().put(matambient).flip());
