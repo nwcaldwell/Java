@@ -1,17 +1,17 @@
 // TODO developer [ Jorge ], test [ Sydney ]
-package view.commands.gameplaycommands;
+package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.save.CommandSaveVisitor;
 import models.board.Developer;
 import models.board.Space;
 
-public class MoveDeveloperCommand implements GameplayActionCommand {
+public class DevMoveCommand implements GameplayActionCommand {
     private Developer developer;
     private Space origin;
     private Space destination;
 
-    public MoveDeveloperCommand(Developer d, Space o, Space dest) {
+    public DevMoveCommand(Developer d, Space o, Space dest) {
         this.developer = d;
         this.origin = o;
         this.destination = dest;

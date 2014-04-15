@@ -48,22 +48,19 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void doCommand(){
+    // Festival Methods
+    public void drawCardFromDeck() {
         throw new UnsupportedOperationException();
     }
 
-    public boolean validPlacement(TileComponent tile, Space space){
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return false;
-    }
-
-    // Festival Methods
     public void ASkForPalaceFestivalTie () {
         throw new UnsupportedOperationException();
     }
 
-    public Board<HexSpace, HexTileComponent, HexDirection> getBoard() {
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return null;
+    // Actually execute the action being built
+    // It returns a response that has messages for rules violation if any
+    // if the action is executed successfully the response.hasErrors is set to true
+    public Response doCommand(){
+        throw new UnsupportedOperationException();
     }
 }
