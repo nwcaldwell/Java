@@ -1,7 +1,7 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 import models.board.Player;
-import view.commands.gameplaycommands.EndTurnCommand;
 
 public class LastTurn extends TurnState {
 

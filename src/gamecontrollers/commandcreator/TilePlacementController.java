@@ -1,11 +1,11 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
+import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import models.board.Direction;
 import models.board.Space;
 import models.board.Tile;
 import models.board.TileComponent;
-import view.commands.gameplaycommands.PlaceTileCommand;
 
 public class TilePlacementController <A extends Space, B extends Tile> extends TileCommandCreator {
 	private Space currentSpace;

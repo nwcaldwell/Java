@@ -1,6 +1,6 @@
 package gamecontrollers.turn;
 
-import view.commands.gameplaycommands.EndTurnCommand;
+import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 
 public class NormalTurn extends TurnState{
     private TurnController turnController;
