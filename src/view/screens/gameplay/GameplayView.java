@@ -1,5 +1,7 @@
 package view.screens.gameplay;
 
+import gamecontrollers.Facade;
+import models.board.Board;
 import view.*;
 import view.controls.ConsoleView;
 import view.controls.BoardView;
@@ -13,22 +15,26 @@ import java.util.ArrayList;
 
 //TODO [Sydney][Jorge]
 
-public class GameplayView extends View {
-
+public abstract class GameplayView extends View {
+    private MediaController mediaController;
+    private ViewController viewController;
     private ConsoleView consoleView;
     private ArrayList<PlayerView> playerViews;
     private BoardView boardView;
     private SharedResourcesView sharedResourcesView;
     JPanel playerContainer;
+    JPanel toggleButtonContainer;
 
     protected GameplayView(ViewController viewC, MediaController mediaC) {
         super(viewC, mediaC);
 
+        this.viewController = viewC;
+        this.mediaController = mediaC;
         //create the attributes
-        consoleView = new ConsoleView();
+        consoleView = new ConsoleView(mediaController);
         playerViews = new ArrayList<PlayerView>();
-        boardView = new BoardView();
-        sharedResourcesView = new SharedResourcesView();
+        boardView = new BoardView(viewController, mediaController, Facade.getInstance().getBoard()); //TODO need to get the Board
+        sharedResourcesView = new SharedResourcesView(mediaController);
 
         //setup view sizes
         setMaximumSize(new Dimension(500, 500)); //TODO what these numbers are and where to find them?
@@ -45,6 +51,8 @@ public class GameplayView extends View {
         leftSide.setMinimumSize(new Dimension(500, 500));
 
         //the shared resources and the console are on the left panel. add them in the respective order
+        toggleButtonContainer = new JPanel();
+        leftSide.add(toggleButtonContainer);
         leftSide.add(sharedResourcesView);
         leftSide.add(consoleView);
         add(leftSide, BorderLayout.WEST);
