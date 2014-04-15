@@ -5,6 +5,8 @@ import view.controls.FestivalPlayerView;
 
 import java.util.List;
 
+//TODO [Sydney][Jorge]
+
 public class FestivalView extends View {
 
     private List<FestivalPlayerView> playersList;
