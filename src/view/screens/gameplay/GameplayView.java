@@ -2,7 +2,7 @@ package view.screens.gameplay;
 
 import view.*;
 import view.controls.ConsoleView;
-import view.controls.MapView;
+import view.controls.BoardView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
 
@@ -12,7 +12,7 @@ public class GameplayView extends View {
 
     private ConsoleView consoleView;
     private List<PlayerView> playerViews;
-    private MapView mapView;
+    private BoardView boardView;
     private SharedResourcesView sharedResourcesView;
 
     protected GameplayView(ViewController viewC, MediaController mediaC) {
@@ -27,8 +27,8 @@ public class GameplayView extends View {
         return playerViews;
     }
 
-    protected MapView getMapView() {
-        return mapView;
+    protected BoardView getMapView() {
+        return boardView;
     }
 
     protected SharedResourcesView getSharedResourcesView() {
