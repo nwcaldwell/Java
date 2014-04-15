@@ -8,6 +8,7 @@ import gamecontrollers.turn.PlanningController;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
+import models.palacefestival.JavaPlayer;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class Facade {
         return false;
     }
 
-    public int findShortestPath(Player p, Space origin, Space destination, List<Space> path){
+    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path){
 
         return 0;
     }
