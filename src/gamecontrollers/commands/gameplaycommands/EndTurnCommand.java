@@ -3,7 +3,15 @@ package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 
-import gamecontrollers.save.CommandSaveVisitor;public class EndTurnCommand implements GameplayActionCommand {
+import gamecontrollers.save.CommandSaveVisitor;
+import models.palacefestival.JavaPlayer;
+
+public class EndTurnCommand implements GameplayActionCommand {
+    private JavaPlayer player;
+
+    public EndTurnCommand(JavaPlayer p){
+        this.player = p;
+    }
 
 	@Override	public void execute() {
 		throw new UnsupportedOperationException();

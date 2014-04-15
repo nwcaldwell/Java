@@ -3,7 +3,15 @@ package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 
-import gamecontrollers.save.CommandSaveVisitor;public class DropOutOfFestivalCommand implements GameplayActionCommand {
+import gamecontrollers.save.CommandSaveVisitor;
+import models.palacefestival.FestivalPlayer;
+
+public class DropOutOfFestivalCommand implements GameplayActionCommand {
+    private FestivalPlayer player;
+
+    public DropOutOfFestivalCommand(FestivalPlayer p){
+        this.player = p;
+    }
 
 	@Override	public void execute() {
 		throw new UnsupportedOperationException();

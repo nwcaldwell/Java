@@ -3,7 +3,16 @@ package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 
-import gamecontrollers.save.CommandSaveVisitor;public class ShuffleDeckCommand implements GameplayActionCommand {
+import gamecontrollers.save.CommandSaveVisitor;
+import models.palacefestival.Deck;
+
+public class ShuffleDeckCommand implements GameplayActionCommand {
+    private Deck originalDeck;
+    private Deck resultingDeck;
+
+    public ShuffleDeckCommand(Deck original, Deck newDeck){
+
+    }
 
 	@Override	public void execute() {
 		throw new UnsupportedOperationException();

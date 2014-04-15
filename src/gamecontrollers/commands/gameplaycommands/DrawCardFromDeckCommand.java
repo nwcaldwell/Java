@@ -10,6 +10,11 @@ public class DrawCardFromDeckCommand implements GameplayActionCommand {
     private JavaPlayer player;
     private PalaceCard card;
 
+    public DrawCardFromDeckCommand(JavaPlayer p, PalaceCard c){
+        this.player = p;
+        this.card = c;
+    }
+
     @Override	public void execute() {
         throw new UnsupportedOperationException();
     }

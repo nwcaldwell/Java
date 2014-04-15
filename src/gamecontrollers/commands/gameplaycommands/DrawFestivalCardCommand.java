@@ -10,6 +10,11 @@ public class DrawFestivalCardCommand implements GameplayActionCommand {
     private JavaPlayer player;
     private PalaceCard festivalCard;
 
+    public DrawFestivalCardCommand(JavaPlayer p, PalaceCard fest){
+        this.player = p;
+        this.festivalCard = fest;
+    }
+
 	@Override	public void execute() {
 		throw new UnsupportedOperationException();
 	}
