@@ -1,8 +1,8 @@
 package gamecontrollers.save;
 
-/**
- * Created by alejndrofrnndz on 4/14/14.
- */
+import view.commands.Command;
+
+
 public abstract class CommandVisitor {
 
     public CommandVisitor(){
