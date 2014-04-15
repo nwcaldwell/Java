@@ -46,12 +46,4 @@ public class PlayerView extends JPanel{
     public void setNumPalaceCards(int num){
         palaceCards.setText(""+num);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 431fd82980edfe8871d4a8071a9fd9a8273d3d52
-=======
-
->>>>>>> ef6f00223008b65a7b3d5f04158d6385a31a382a
 }
