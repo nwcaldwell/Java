@@ -1,9 +1,12 @@
 package models.board;
 
+import java.util.Stack;
+
 public abstract class Space<A extends Space, B extends TileComponent, D extends Direction> {
 
-	private B[] neighbors;
+	private A[] neighbors;
 	private boolean[] neighborExists;
+    private Stack<B> tileStack = new Stack<B>();
 	
 	/**returns the space adjacent to this space in the given int direction.
 	 * As this class is implemented, its subclasses may have their own conventions
@@ -12,10 +15,18 @@ public abstract class Space<A extends Space, B extends TileComponent, D extends 
 	
 	/**places a tile on this space.  As tile is a graph, this
 	 * method will probably be implemented recursively.*/
-	public abstract void placeTile(B tile);
+	public void placeTile(B tile){
+        tileStack.push(tile);
+    }
+
+    public B getTile(){
+        return tileStack.peek();
+    }
 	
 	/**returns the height of the uppermost tile on this space*/
-	public abstract int getHeight();
+	public int getHeight(){
+        return tileStack.size();
+    }
 	
 	/**returns true if and only if the given tile and it's
 	 * graph may be placed on this space and its graph without
@@ -39,7 +50,7 @@ public abstract class Space<A extends Space, B extends TileComponent, D extends 
         return neighbors[direction.ordinal()];
     }
 
-    protected void setNeigbor(D direction, A space){
+    protected void setNeighbor(D direction, A space){
         neighbors[direction.ordinal()] = space;
     }
 
