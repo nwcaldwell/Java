@@ -2,8 +2,9 @@ package view.controls;
 
 import javax.swing.*;
 
+//TODO [Sydney][Jorge]
+
 public class PlayerView extends JPanel{
-<<<<<<< HEAD
     private JLabel actionPoints, famePoints, developers, twoTiles, riceTiles, villageTiles, actionTokens, palaceCards;
 
     public PlayerView(){
@@ -41,10 +42,5 @@ public class PlayerView extends JPanel{
     public void setNumPalaceCards(int num){
         palaceCards.setText(""+num);
     }
-=======
 
-    public PlayerView() {
-
-    }
->>>>>>> master
 }

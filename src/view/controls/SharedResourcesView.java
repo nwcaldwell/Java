@@ -2,6 +2,8 @@ package view.controls;
 
 import javax.swing.*;
 
+//TODO [Sydney] [Jorge]
+
 public class SharedResourcesView extends JPanel {
     private JLabel threeTiles, irrigationTiles;
     private JLabel palace2Tiles, palace4Tiles, palace6Tiles, palace8Tiles, palace10Tiles;

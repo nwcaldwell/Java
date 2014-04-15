@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO [Jorge][Sydney]
+
 public class ViewController {
 
     private static final int  WINDOW_WIDTH = 800;
