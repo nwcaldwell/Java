@@ -1,7 +1,7 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
-import view.commands.Command;
+import gamecontrollers.commands.GameplayActionCommand;
 
 /**
  * //TODO [Kevin][Jorge]
@@ -11,7 +11,7 @@ public interface GameplayCommandCreator {
     /*
         This method will return the constructed command
      */
-    public Command  getCommand();
+    public GameplayActionCommand getCommand();
 
     /*
         This method will return the AP cost of the command that would

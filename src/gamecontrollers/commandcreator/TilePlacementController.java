@@ -5,7 +5,7 @@ import models.board.Direction;
 import models.board.Space;
 import models.board.Tile;
 import models.board.TileComponent;
-import view.commands.Command;
+import view.commands.gameplaycommands.PlaceTileCommand;
 
 public class TilePlacementController <A extends Space, B extends Tile> extends TileCommandCreator {
 	private Space currentSpace;
@@ -48,9 +48,10 @@ public class TilePlacementController <A extends Space, B extends Tile> extends T
     /*
     This method will return the constructed command
  */
-    public Command getCommand(){
+    public PlaceTileCommand getCommand(){
 
-       throw new UnsupportedOperationException();
+        // TODO implement
+        return null;
 
     }
 

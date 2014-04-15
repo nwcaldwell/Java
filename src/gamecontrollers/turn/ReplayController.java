@@ -1,5 +1,7 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.commands.GameplayActionCommand;
+import java.util.List;
 
 public class ReplayController {
     private List<GameplayActionCommand> replayList;
@@ -20,7 +22,7 @@ public class ReplayController {
 
     }
 
-    public void setReplayList(List<GameplayActionCommand>){
+    public void setReplayList(List<GameplayActionCommand> replayList){
 
     }
 }

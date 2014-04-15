@@ -1,7 +1,8 @@
 package gamecontrollers.turn;
 
 
-import view.commands.Command;
+import gamecontrollers.commands.GameplayActionCommand;
+import java.util.Stack;
 
 public class PlanningController {
     private Stack<GameplayActionCommand> plannedMoves;
@@ -15,7 +16,7 @@ public class PlanningController {
         return plannedMoves;
     }
 
-    public void planCommand(Command c){
+    public void planCommand(GameplayActionCommand c){
 
     }
 

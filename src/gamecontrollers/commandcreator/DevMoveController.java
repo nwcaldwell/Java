@@ -1,14 +1,11 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
+import view.commands.gameplaycommands.MoveDeveloperCommand;
 import models.board.Developer;
 import models.board.Direction;
 import models.board.Space;
-import view.commands.Command;
 
-/**
- * Created by jorgep on 4/14/14.
- */
 public class DevMoveController extends DeveloperCommandCreator {
     private Space desiredSpace;
     private Developer currentDeveloper;
@@ -21,7 +18,7 @@ public class DevMoveController extends DeveloperCommandCreator {
     /*
       This method will return the constructed command
    */
-    public Command getCommand(){
+    public MoveDeveloperCommand getCommand(){
 
         throw new UnsupportedOperationException();
     }

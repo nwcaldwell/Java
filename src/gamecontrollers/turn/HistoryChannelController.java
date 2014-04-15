@@ -1,7 +1,9 @@
 package gamecontrollers.turn;
 
-
+import gamecontrollers.commands.GameplayActionCommand;
 import models.board.Player;
+import java.util.List;
+import java.util.Stack;
 
 public class HistoryChannelController {
     private Stack<GameplayActionCommand> commandHistory;
@@ -16,10 +18,13 @@ public class HistoryChannelController {
     }
 
     public Stack<GameplayActionCommand> getGameHistory(){
+        // TODO implemente
+        return null;
 
     }
 
     public List<GameplayActionCommand> getLastRound(Player p){
-
+        // TODO implemente
+        return null;
     }
 }
