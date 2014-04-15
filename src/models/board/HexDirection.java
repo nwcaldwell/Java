@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 //TODO [Nathan, Will, Kevin] [Jorge]
 
-public enum HexDirection implements Direction, Iterable<HexDirection>{
+public enum HexDirection implements Direction, Iterable<Direction>{
 	N,NE,SE,S,SW,NW;
 
 	@Override
@@ -19,12 +19,12 @@ public enum HexDirection implements Direction, Iterable<HexDirection>{
 	{
 		return this.values().length;
 	}
-	public Iterator<HexDirection> iterator()
+	public Iterator<Direction> iterator()
 	{
 		return new HexDirectionIterator();
 	}
 
-	private class HexDirectionIterator implements Iterator<HexDirection>
+	private class HexDirectionIterator implements Iterator<Direction>
 	{
 
 		@Override
@@ -39,7 +39,7 @@ public enum HexDirection implements Direction, Iterable<HexDirection>{
 
 		@Override
 		public void remove() {
-			throw new UnsupportedOperationException("You can't remove.");
+			throw new UnsupportedOperationException("Iterator removal of a direction not supported.");
 		}
 	}
 
