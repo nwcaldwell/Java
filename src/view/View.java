@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 
+//TODO [Sydney][Jorge]
+
 public abstract class View extends JPanel {
 
     private MediaController mediaController;
