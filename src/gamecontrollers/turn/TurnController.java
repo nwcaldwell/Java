@@ -3,7 +3,7 @@ package gamecontrollers.turn;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
 import models.palacefestival.JavaPlayer;
 /**
- * Created by jorgep on 4/14/14.
+ * //TODO [Will][Kevin]
  */
 public class TurnController {
     private GameplayCommandCreator currentCommandCreator;
