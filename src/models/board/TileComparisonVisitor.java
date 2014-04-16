@@ -26,7 +26,11 @@ public class TileComparisonVisitor implements TileVisitor {
     }
 
     public boolean compare(TileComponentContent t1, TileComponentContent t2) {
-        return false;
+        t1.accept(this);
+        int firstTileVal = value;
+        t2.accept(this);
+
+        return (firstTileVal == value);
     }
 
     public int getValue(){

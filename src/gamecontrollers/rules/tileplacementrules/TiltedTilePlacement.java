@@ -1,4 +1,4 @@
-package gamecontrollers.rules;
+package gamecontrollers.rules.tileplacementrules;
 
 /**
  * Created by williammacfarlane on 4/14/14.
