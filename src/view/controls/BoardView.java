@@ -7,18 +7,23 @@ import models.board.HexTileComponent;
 import view.ViewController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 //TODO [Sydney Christopher] [Jorge]
 
 public abstract class BoardView extends JPanel {
-
+    private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - 25);
+    private final int HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - 25); //see GameplayView BORDER for number
 	protected ViewController viewC;
 	protected Board<HexSpace, HexTileComponent, HexDirection> board;
     
     public BoardView(ViewController vc, Board<HexSpace, HexTileComponent, HexDirection> board){
         this.viewC = vc;
         this.board = board;
+
+        setPreferredSize(new Dimension(3 * WIDTH / 4 - 25 / 2, 3*HEIGHT/4- 25));
+        setBackground(Color.DARK_GRAY);
     }
     
     /**redraws the entire board*/

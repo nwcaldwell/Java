@@ -6,6 +6,7 @@ import view.commands.NavCommand;
 import view.commands.JavaButtonListener;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +38,7 @@ public class MainMenuView extends View {
 
     private void initializeLayout(){
         JPanel buttons = new JPanel();
-        buttons.setMinimumSize(new Dimension(150, 300));
+        buttons.setBorder(new EmptyBorder(getScreenHeight()/2, 0, 0, 0));
 
         buttons.add(newGameButton);
         buttons.add(loadGameButton);

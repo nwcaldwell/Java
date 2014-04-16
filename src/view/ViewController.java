@@ -1,5 +1,7 @@
 package view;
 
+import view.screens.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -34,7 +36,8 @@ public class ViewController {
         gameWindow.setVisible(true);
 
         // set the game window to the main view
-        // setCurrentView( new MainMenuView(this));
+        setCurrentView( new MainMenuView(this));
+
 
         // TODO remove this keylistener when the real quit is implemented
         gameWindow.addKeyListener(new KeyListener() {
@@ -56,7 +59,7 @@ public class ViewController {
             }
         });
 
-        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
+//        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
         gameWindow.validate();
     }
 
