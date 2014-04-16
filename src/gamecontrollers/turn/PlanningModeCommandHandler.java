@@ -4,12 +4,16 @@ package gamecontrollers.turn;
 import gamecontrollers.commands.GameplayActionCommand;
 import java.util.Stack;
 
-public class PlanningController {
+public class PlanningModeCommandHandler implements CommandHandler {
     private Stack<GameplayActionCommand> plannedMoves;
     private TurnState turnState;
 
-    private PlanningController(){
+    private PlanningModeCommandHandler(){
 
+    }
+
+    public void handleCommand(GameplayActionCommand c){
+        plannedMoves.push(c);
     }
 
     public Stack<GameplayActionCommand> getPlannedMoves(){
