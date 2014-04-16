@@ -1,7 +1,7 @@
 package models.board;
 
 
-public class CityVisitor extends TileVisitor{
+public class CityVisitor implements TileVisitor {
 
     public CityVisitor(){
 
