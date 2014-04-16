@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class PlanningModeCommandHandler implements CommandHandler {
     private Stack<GameplayActionCommand> plannedMoves;
-    private TurnState turnState;
+
 
     private PlanningModeCommandHandler(){
 
@@ -18,10 +18,6 @@ public class PlanningModeCommandHandler implements CommandHandler {
 
     public Stack<GameplayActionCommand> getPlannedMoves(){
         return plannedMoves;
-    }
-
-    public void planCommand(GameplayActionCommand c){
-        plannedMoves.push(c);
     }
 
     public void cancelCommand(){

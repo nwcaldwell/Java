@@ -9,6 +9,8 @@ public class PlayModeCommandHandler implements CommandHandler {
 
 
     public void handleCommand(GameplayActionCommand gac) {
-
+        gac.execute();
     }
+
+
 }
