@@ -86,6 +86,8 @@ public class LastTurn extends TurnState {
         clearCounters();
     }
 
+    //TODO end game checks and stuff
+
     public EndFinalTurnCommand endTurn(){
         return new EndFinalTurnCommand(scoreCalculator.calculateScore(), turnController.getCurrentPlayer());
     }
