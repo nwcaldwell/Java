@@ -1,5 +1,6 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 
 public abstract class TurnState {
@@ -41,10 +42,7 @@ public abstract class TurnState {
 
 
     //create EndTurnCommand and return it
-    public EndTurnCommand endTurn(){
-        // TODO implement
-        return null;
-    }
+    public abstract GameplayActionCommand endTurn();
 
 
      /*
