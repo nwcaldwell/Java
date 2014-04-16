@@ -7,6 +7,7 @@ import javax.swing.*;
 //TODO [Sydney][Jorge]
 
 public class PlayerView extends JPanel{
+
     private MediaController mediaC;
     private JLabel actionPoints, famePoints, developers, twoTiles, riceTiles, villageTiles, actionTokens, palaceCards;
 
@@ -45,5 +46,4 @@ public class PlayerView extends JPanel{
     public void setNumPalaceCards(int num){
         palaceCards.setText(""+num);
     }
-
 }

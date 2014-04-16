@@ -1,6 +1,6 @@
 package models.board;
 
-public class TilePlacementVisitor extends TileVisitor {
+public class TilePlacementVisitor implements TileVisitor {
 
     public TilePlacementVisitor(){
 

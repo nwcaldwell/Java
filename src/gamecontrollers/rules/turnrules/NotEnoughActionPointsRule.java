@@ -1,9 +1,10 @@
-package gamecontrollers.rules;
+package gamecontrollers.rules.turnrules;
 
 /**
  * Created by kevinnieman on 4/14/14.
  */
-public class TargetInvalidRule extends DeveloperMovementRule{
+public class NotEnoughActionPointsRule extends TurnRule {
+
     public void update(){
 
     }

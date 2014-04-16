@@ -1,8 +1,9 @@
 package models.board;
 
-public class Rice extends Walkable implements VisitableTile {
+public class Rice extends Walkable {
 
-	public void accept(TilePlacementVisitor v) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void accept(TileVisitor v) {
+        throw new UnsupportedOperationException();
+    }
 }
