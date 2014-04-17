@@ -17,7 +17,7 @@ import java.util.ArrayList;
 //TODO [Sydney][Jorge]
 
 public abstract class GameplayView extends View {
-    private static final int BORDER = 25;
+    private static final int BORDER = 10;
     protected ConsoleView consoleView;
     protected ArrayList<PlayerView> playerViews;
     //protected BoardView boardView;
@@ -51,15 +51,14 @@ public abstract class GameplayView extends View {
 
         //the shared resources and the console are on the left panel. add them in the respective order
         toggleButtonContainer = new JPanel();
-        leftSide.add(toggleButtonContainer);
         leftSide.add(sharedResourcesView);
+        sharedResourcesView.add(toggleButtonContainer);
         leftSide.add(consoleView);
         add(leftSide, BorderLayout.WEST);
 
         //the player views need to have something to encapsulate them all
         playerContainer = new JPanel();
         playerContainer.setMinimumSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, this.getScreenHeight()/4- BORDER));
-        playerContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         //this includes the BoardView and the Player Views
         JPanel rightSide = new JPanel();

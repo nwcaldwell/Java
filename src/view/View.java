@@ -23,6 +23,6 @@ public abstract class View extends JPanel {
     }
 
     protected int getScreenHeight(){
-        return (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        return (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 50;
     }
 }

@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class PlayerView extends JPanel{
     private final int BORDER = 10;
-    private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - 25)/4 - BORDER*2;
+    private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - BORDER)/4 - BORDER*2;
     private final int HEIGHT = 250; //see GameplayView BORDER for number
 
     private JLabel playerName, actionPoints, famePoints, developers, twoTiles, riceTiles, villageTiles, actionTokens, palaceCards;
@@ -53,6 +53,7 @@ public class PlayerView extends JPanel{
         actionPoints.setPreferredSize(new Dimension(WIDTH/2 - BORDER*2, 40));
         actionPoints.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
         add(actionPoints);
+        disableActionPointLabel();
 
         JSeparator jSeparator1 = new JSeparator();
         jSeparator1.setForeground(new Color(112, 102, 102));

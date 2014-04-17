@@ -13,8 +13,9 @@ import java.util.ArrayList;
 //TODO [Sydney Christopher] [Jorge]
 
 public abstract class BoardView extends JPanel {
-    private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - 25);
-    private final int HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - 25); //see GameplayView BORDER for number
+    private final int BORDER = 10;
+    private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - BORDER/2);
+    private final int HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 300 - BORDER); //see PlayerView for Height
 	protected ViewController viewC;
 	protected Board<HexSpace, HexTileComponent, HexDirection> board;
     
@@ -22,7 +23,7 @@ public abstract class BoardView extends JPanel {
         this.viewC = vc;
         this.board = board;
 
-        setPreferredSize(new Dimension(3 * WIDTH / 4 - 25 / 2, 3*HEIGHT/4- 25));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.DARK_GRAY);
     }
     

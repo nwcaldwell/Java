@@ -2,6 +2,8 @@ package view.screens.gameplay;
 
 import view.MediaController;
 import view.ViewController;
+import view.commands.JavaButtonListener;
+import view.commands.NavCommand;
 import view.controls.PlayerView;
 
 import javax.swing.*;
@@ -16,6 +18,9 @@ public class PlayView extends GameplayView {
         super(viewC);
 
         togglePlanningMode = new JButton("Planning Mode"); //TODO
+        togglePlanningMode.setFocusable(false);
+//        disablePlanningModeButton();
+        togglePlanningMode.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlanningView(this.getViewController()))));
         toggleButtonContainer.add(togglePlanningMode, BorderLayout.NORTH);
 
         //TODO delete after testing is done/after figure out how to get this incorporated:
@@ -23,6 +28,14 @@ public class PlayView extends GameplayView {
             PlayerView player = new PlayerView();
             this.addPlayerView(player);
         }
+    }
+
+    public void enablePlanningModeButton(){
+        togglePlanningMode.setEnabled(true);
+    }
+
+    public void disablePlanningModeButton(){
+        togglePlanningMode.setEnabled(false);
     }
 
 
