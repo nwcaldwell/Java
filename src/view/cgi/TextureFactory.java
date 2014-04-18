@@ -5,9 +5,12 @@ import org.lwjgl.opengl.GL11;
 import view.MediaController;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 /**This class will be used to load resources into the graphics card.
  * The texture factory allows a program to access a texture, while
@@ -94,7 +97,8 @@ public class TextureFactory {
 		GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 		
 		//load the image
-		BufferedImage image = MediaController.getInstance().getImage( filename );
+		//BufferedImage image = MediaController.getInstance().getImage( filename );
+		BufferedImage image = ImageIO.read(new File(filename));
 		
 		int[] pixels = new int[image.getWidth() * image.getHeight()];
 		image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0,
