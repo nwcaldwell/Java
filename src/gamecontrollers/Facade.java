@@ -4,7 +4,7 @@ import gamecontrollers.commandcreator.DevMoveController;
 import gamecontrollers.commandcreator.TilePlacementController;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.turn.HistoryChannelController;
-import gamecontrollers.turn.PlanningController;
+import gamecontrollers.turn.PlanningModeCommandHandler;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
@@ -23,7 +23,7 @@ public class Facade {
     private DevMoveController devMoveController;
     private TurnController turnController;
     private ReplayController replayController;
-    private PlanningController planningController;
+    private PlanningModeCommandHandler planningModeCommandHandler;
 
     private Facade() {
 
@@ -34,7 +34,7 @@ public class Facade {
         return FacadeInstance;
     }
 
-    public static Board<HexSpace, HexTileComponent, HexDirection> getBoard(){
+    public static Board getBoard(){
         throw new UnsupportedOperationException();
     }
 
@@ -73,6 +73,9 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
+    public void ASkForPalaceFestivalTie(){
+        throw new UnsupportedOperationException();
+    }
 
     // Actually execute the action being built
     // It returns a response that has messages for rules violation if any

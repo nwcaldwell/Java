@@ -3,7 +3,7 @@ package models.board;
 public class Palace extends NotWalkable {
 	
 	public void accept(TilePlacementVisitor v) {
-		throw new UnsupportedOperationException();
+		v.visit(this);
 	}
 
     @Override

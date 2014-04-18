@@ -2,8 +2,6 @@ package view.controls;
 
 import models.board.Board;
 import models.board.HexDirection;
-import models.board.HexSpace;
-import models.board.HexTileComponent;
 import view.ViewController;
 
 import javax.swing.*;
@@ -14,9 +12,9 @@ import java.util.ArrayList;
 public abstract class BoardView extends JPanel {
 
 	protected ViewController viewC;
-	protected Board<HexSpace, HexTileComponent, HexDirection> board;
-    
-    public BoardView(ViewController vc, Board<HexSpace, HexTileComponent, HexDirection> board){
+	protected Board board;
+
+    public BoardView(ViewController vc, Board board){
         this.viewC = vc;
         this.board = board;
     }

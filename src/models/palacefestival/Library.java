@@ -23,4 +23,8 @@ public class Library {
         cards.addAll(newCards);
         Collections.shuffle(cards);
     }
+
+    public void returnCard(PalaceCard card){
+        cards.push(card);
+    }
 }
