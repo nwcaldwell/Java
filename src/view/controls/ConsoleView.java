@@ -16,6 +16,7 @@ public class ConsoleView extends JPanel {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         consoleLog = new JTextArea();
         consoleLog.setPreferredSize(new Dimension(WIDTH - 2*BORDER, HEIGHT - 2*BORDER));
+        consoleLog.setFont(new Font("Arial", 0, 12));
         consoleLog.setEditable(false);
         consoleLog.setFocusable(false);
         consoleLog.setLineWrap(true);
@@ -29,7 +30,37 @@ public class ConsoleView extends JPanel {
         updateText("Console created, this is a placeholder.");
     }
 
-    public void updateText(String alert) {
+    private void updateText(String alert) {
         consoleLog.append("\n" + alert);
+    }
+    private void setRedText(){
+        consoleLog.setForeground(Color.RED);
+    }
+    private void setGreenText(){
+        consoleLog.setForeground(Color.GREEN);
+    }
+    private void setBlackText(){
+        consoleLog.setForeground(Color.BLACK);
+    }
+
+    public void displayErrorMessage(String message){
+        //set color to red
+        setRedText();
+        //update the text
+        updateText(message);
+    }
+
+    public void displaySuccessMessage(String message){
+        //set the color to green
+        setGreenText();
+        //update the text
+        updateText(message);
+    }
+
+    public void displayNormalMessage(String message){
+        //set the color to black
+        setBlackText();
+        //update the text
+        updateText(message);
     }
 }

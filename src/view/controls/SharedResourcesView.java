@@ -1,5 +1,7 @@
 package view.controls;
 
+import view.MediaController;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -10,6 +12,8 @@ public class SharedResourcesView extends JPanel {
     private final int BORDER = 10;
     private final int WIDTH = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth()/ 4 - BORDER/2);
     private final int HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 300 - BORDER*2);
+    private final String source = "layout_%s.png";
+
     private JLabel threeTiles, irrigationTiles;
     private JLabel palace2Tiles, palace4Tiles, palace6Tiles, palace8Tiles, palace10Tiles;
     private JButton palaceDeck, festivalCard;
@@ -38,50 +42,48 @@ public class SharedResourcesView extends JPanel {
     }
 
     private void initializeLayout(){
-        setLayout(threeTiles, 100);
+        setLayout(threeTiles, 100, "three");
         add(threeTiles);
 
-        setLayout(irrigationTiles, 100);
-        irrigationTiles.setPreferredSize(new Dimension(WIDTH/4 + WIDTH/2 - BORDER*2, 100));
-        irrigationTiles.setBorder(new EmptyBorder(0, WIDTH/2- BORDER, 0, 0));
+        setLayout(irrigationTiles, 100, "irrigation");
         add(irrigationTiles);
 
-        setLayout(palace2Tiles, 75);
-        add(palace2Tiles);
-
-        setLayout(palace4Tiles, 75);
-        add(palace4Tiles);
-
-        setLayout(palace6Tiles, 75);
-        add(palace6Tiles);
-
-        setLayout(palace8Tiles, 75);
-        add(palace8Tiles);
-
-        setLayout(palace10Tiles, 75);
-        add(palace10Tiles);
-
-        setLayout(palaceDeck, 100);
+        setLayout(palaceDeck, 100, "card_back");
         add(palaceDeck);
 
-        setLayout(festivalCard, 100);
+        setLayout(festivalCard, 100, "card_drum");
         add(festivalCard);
+
+        setLayout(palace2Tiles, 75, "palace_2");
+        add(palace2Tiles);
+
+        setLayout(palace4Tiles, 75, "palace_4");
+        add(palace4Tiles);
+
+        setLayout(palace6Tiles, 75, "palace_6");
+        add(palace6Tiles);
+
+        setLayout(palace8Tiles, 75, "palace_8");
+        add(palace8Tiles);
+
+        setLayout(palace10Tiles, 75, "palace_10");
+        add(palace10Tiles);
     }
 
-    private void setLayout(JLabel comp, int height){
+    private void setLayout(JLabel comp, int height, String imageName){
+        comp.setPreferredSize(new Dimension(WIDTH/5 - BORDER, height));
+        comp.setHorizontalTextPosition(SwingConstants.CENTER);
+        comp.setVerticalTextPosition(SwingConstants.BOTTOM);
+        comp.setVerticalAlignment(SwingConstants.BOTTOM);
+        comp.setIcon(new ImageIcon(MediaController.getInstance().getImage(String.format(source, imageName))));
+    }
+
+    private void setLayout(JButton comp, int height, String imageName){
         comp.setPreferredSize(new Dimension(WIDTH/4 - BORDER, height));
         comp.setHorizontalTextPosition(SwingConstants.CENTER);
         comp.setVerticalTextPosition(SwingConstants.BOTTOM);
         comp.setVerticalAlignment(SwingConstants.BOTTOM);
-        //comp.setIcon(icon);
-    }
-
-    private void setLayout(JButton comp, int height){
-        comp.setPreferredSize(new Dimension(WIDTH/4 - BORDER, height));
-        comp.setHorizontalTextPosition(SwingConstants.CENTER);
-        comp.setVerticalTextPosition(SwingConstants.BOTTOM);
-        comp.setVerticalAlignment(SwingConstants.BOTTOM);
-        //comp.setIcon(icon);
+        comp.setIcon(new ImageIcon(MediaController.getInstance().getImage(String.format(source, imageName))));
     }
 
     /* TEXT SETTERS */

@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.lang.reflect.Field;
 
 //TODO [Sydney][Jorge]
 
@@ -13,10 +14,16 @@ public class PlayerView extends JPanel{
     private final int BORDER = 10;
     private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - BORDER)/4 - BORDER*2;
     private final int HEIGHT = 250; //see GameplayView BORDER for number
+    private final String source = "layout_%s.png";
 
     private JLabel playerName, actionPoints, famePoints, developers, twoTiles, riceTiles, villageTiles, actionTokens, palaceCards;
+    private String colorString;
+    private Color color;
 
-    public PlayerView(){
+    public PlayerView(String playerColor){
+        colorString = playerColor.toLowerCase();
+        color = convertStringToColor(colorString);
+
         playerName = new JLabel("Sydney");
         actionPoints = new JLabel("6 ap");
         famePoints = new JLabel("300");
@@ -28,9 +35,8 @@ public class PlayerView extends JPanel{
         palaceCards = new JLabel("3");
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-//        setBorder(new EmptyBorder(BORDER, BORDER, BORDER, BORDER));
-        setBorder(new LineBorder(Color.BLACK, 2));
         setBackground(Color.WHITE);
+        setNotPlayerTurn();
 
         initializeLayout();
     }
@@ -38,19 +44,19 @@ public class PlayerView extends JPanel{
     private void initializeLayout(){
         playerName.setFont(new Font("Arial", 0, 18));
         playerName.setHorizontalAlignment(SwingConstants.CENTER);
-        playerName.setPreferredSize(new Dimension(WIDTH - 90, 30));
+        playerName.setPreferredSize(new Dimension(WIDTH - 90, 25));
         playerName.setBorder(new EmptyBorder(5, 0, 5, 0));
         add(playerName);
 
         famePoints.setFont(new Font("Arial", 0, 30));
         famePoints.setHorizontalAlignment(SwingConstants.CENTER);
-        famePoints.setPreferredSize(new Dimension(WIDTH/2 - BORDER*2, 40));
+        famePoints.setPreferredSize(new Dimension(WIDTH/2 - BORDER*2, 35));
         famePoints.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
         add(famePoints);
 
         actionPoints.setFont(new Font("Arial", 0, 30));
         actionPoints.setHorizontalAlignment(SwingConstants.CENTER);
-        actionPoints.setPreferredSize(new Dimension(WIDTH/2 - BORDER*2, 40));
+        actionPoints.setPreferredSize(new Dimension(WIDTH/2 - BORDER*2, 35));
         actionPoints.setBorder(BorderFactory.createLineBorder(new Color(0, 0, 0)));
         add(actionPoints);
         disableActionPointLabel();
@@ -60,31 +66,49 @@ public class PlayerView extends JPanel{
         jSeparator1.setPreferredSize(new Dimension(WIDTH - BORDER, BORDER));
         add(jSeparator1);
 
-        setLayout(developers);
+        setLayout(developers, "developer_"+colorString);
         add(developers);
 
-        setLayout(twoTiles);
+        setLayout(twoTiles, "two");
         add(twoTiles);
 
-        setLayout(riceTiles);
+        setLayout(riceTiles ,"rice");
         add(riceTiles);
 
-        setLayout(villageTiles);
+        setLayout(villageTiles, "village");
         add(villageTiles);
 
-        setLayout(actionTokens);
+        setLayout(actionTokens, "token");
         add(actionTokens);
 
-        setLayout(palaceCards);
+        setLayout(palaceCards, "card_back");
         add(palaceCards);
     }
 
-    private void setLayout(JLabel label){
-        label.setPreferredSize(new Dimension(WIDTH/2 - BORDER, 50));
-        System.out.println(label.getPreferredSize());
-        //label.setIcon(icon);
+    private void setLayout(JLabel label, String imageName){
+        label.setPreferredSize(new Dimension(WIDTH/2 - BORDER, 45));
+        label.setIcon(new ImageIcon(MediaController.getInstance().getImage(String.format(source, imageName))));
     }
 
+    private Color convertStringToColor(String colorString){
+        Color newColor = Color.black;
+        try {
+            Field field = Color.class.getField(colorString);
+            newColor = (Color)field.get(null);
+        } catch (Exception e) {
+            System.out.println("There was an image parsing the color string to a color");
+        }
+
+        return newColor;
+    }
+
+    public void setPlayerTurn(){
+        setBorder(new LineBorder(color, 2));
+    }
+
+    public void setNotPlayerTurn(){
+        setBorder(new LineBorder(Color.BLACK, 2));
+    }
 
     public void setPlayerName(String name){
         playerName.setText(name);

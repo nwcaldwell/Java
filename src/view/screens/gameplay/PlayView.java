@@ -25,7 +25,7 @@ public class PlayView extends GameplayView {
 
         //TODO delete after testing is done/after figure out how to get this incorporated:
         for(int i = 0; i < 4; i++){
-            PlayerView player = new PlayerView();
+            PlayerView player = new PlayerView("Red");
             this.addPlayerView(player);
         }
     }
