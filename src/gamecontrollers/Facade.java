@@ -63,6 +63,18 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
+    public void drawTheFestivalCard() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void dropOutOfFestival() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void acceptTieRequest() {
+        throw new UnsupportedOperationException();
+    }
+
     public boolean validPlacement(TileComponent tile, Space space){
         System.out.println("Facade.findShortestPath is not implemented yet");
         return false;
