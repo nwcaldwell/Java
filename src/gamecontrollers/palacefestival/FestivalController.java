@@ -25,6 +25,6 @@ public class FestivalController {
     }
 
     public void playCard(PalaceCard card){
-        
+
     }
 }
