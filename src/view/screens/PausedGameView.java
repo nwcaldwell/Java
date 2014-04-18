@@ -9,6 +9,6 @@ import view.ViewController;
 public class PausedGameView extends View {
 
     public PausedGameView(ViewController viewC, MediaController mediaC) {
-        super(viewC, mediaC);
+        super(viewC);
     }
 }
