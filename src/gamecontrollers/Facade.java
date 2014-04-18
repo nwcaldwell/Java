@@ -30,7 +30,7 @@ public class Facade {
         return FacadeInstance;
     }
 
-    public static Board<HexSpace, HexTileComponent, HexDirection> getBoard(){
+    public static Board getBoard(){
         throw new UnsupportedOperationException();
     }
 

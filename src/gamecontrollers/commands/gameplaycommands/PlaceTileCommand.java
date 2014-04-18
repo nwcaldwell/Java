@@ -16,13 +16,18 @@ public class PlaceTileCommand implements GameplayActionCommand {
         this.space = s;
     }
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+	@Override	
+	public void execute() {
+		space.placeTile(tile);
 	}
-	@Override	public void undo() {
-		throw new UnsupportedOperationException();
+	
+	@Override	
+	public void undo() {
+		space.removeTile();
 	}
-	@Override	public void accept(CommandSaveVisitor visitor) {
+	
+	@Override	
+	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();
 	}
 }

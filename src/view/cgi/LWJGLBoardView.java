@@ -1,19 +1,12 @@
 package view.cgi;
 
 import models.board.Board;
-import models.board.Developer;
-import models.board.Direction;
-import models.board.HexSpace;
 import models.board.HexDirection;
-import models.board.HexSpace;
-import models.board.HexTileComponent;
 import models.board.Space;
-import view.MediaController;
 import view.ViewController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
@@ -63,7 +56,7 @@ public class LWJGLBoardView extends BoardView{
 	ArrayList<Model3D> developers=new ArrayList<Model3D>();
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
 	
-	public LWJGLBoardView(ViewController vc, Board<HexSpace,HexTileComponent,HexDirection> b) {
+	public LWJGLBoardView(ViewController vc, Board b) {
 		super(vc, b);
 	}
 	
@@ -137,17 +130,17 @@ public class LWJGLBoardView extends BoardView{
 	@Override
 	public void update() {
 		spaces.clear();
-		ArrayList<HexSpace> preTraversed=new ArrayList<HexSpace>();
+		ArrayList<Space> preTraversed=new ArrayList<Space>();
 		board.getRoot();
 	}
 	
 	/**updates the model data for the spaces on the
 	 * board recursively.*/
-	private void updateRecursive(HexSpace root, ArrayList<HexSpace> preTraversed, Vector2D offset){
+	private void updateRecursive(Space root, ArrayList<Space> preTraversed, Vector2D offset){
 		updateSpace(root, offset);
 		preTraversed.add(root);
 		for (int i=0;i<HexDirection.values().length;i++){
-			HexSpace adjacent=root.getAdjacentSpace(HexDirection.values()[i]);
+			Space adjacent=root.getAdjacentSpace(HexDirection.values()[i]);
 			if (adjacent!=null&&!preTraversed.contains(adjacent)){
 				updateRecursive(adjacent, preTraversed, offset.translate(offsets[i]));
 			}
@@ -156,7 +149,7 @@ public class LWJGLBoardView extends BoardView{
 	
 	/**adds model data for a given space.
 	 * May be more than one Model3D.*/
-	private void updateSpace(HexSpace space, Vector2D offset){
+	private void updateSpace(Space space, Vector2D offset){
 		for (int i=0;i<space.getHeight()-1;i++){
 			Model3D newModel=buriedSpace.clone();
 			newModel.setTranslation(new Vector3D(offset.x, i*spaceHeight, offset.y));
