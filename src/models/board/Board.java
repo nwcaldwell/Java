@@ -1,5 +1,7 @@
 package models.board;
 
+//TODO [Nathan, WIll, Kevin][Jorge]
+
 public class Board <A extends Space, B extends Tile, C extends Direction> {
 	private Space<A,B,C> rootNode;
 	private Developer[] developers;
@@ -24,4 +26,5 @@ public class Board <A extends Space, B extends Tile, C extends Direction> {
 	public Developer getFirstDeveloper(Player p) {
 		return null;
 	}
+
 }
