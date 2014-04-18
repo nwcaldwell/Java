@@ -2,16 +2,19 @@ package models.board;
 
 //TODO [Nathan, WIll, Kevin][Jorge]
 
-public class Board <A extends Space, B extends Tile, C extends Direction> {
-	private Space<A,B,C> rootNode;
+
+import models.palacefestival.JavaPlayer;
+
+public class Board  {
+	private Space rootNode;
 	private Developer[] developers;
 	
-	public Board (Space<A,B,C> rootNode, Developer[] developers) {
+	public Board (Space rootNode, Developer[] developers) {
 		this.rootNode = rootNode;
 		this.developers = new Developer[12];
 	}
 
-	public Space<A, B, C> getRoot() {
+	public Space getRoot() {
 		return rootNode;
 	}
 
@@ -23,7 +26,13 @@ public class Board <A extends Space, B extends Tile, C extends Direction> {
 		return null;
 	}
 	
-	public Developer getFirstDeveloper(Player p) {
+	public Developer getFirstDeveloper(JavaPlayer p) {
+		for (Developer dev : developers) {
+			if (dev.notNull()) {
+				return dev;
+			}
+		}
+		
 		return null;
 	}
 

@@ -4,10 +4,11 @@ import gamecontrollers.commandcreator.DevMoveController;
 import gamecontrollers.commandcreator.TilePlacementController;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.turn.HistoryChannelController;
-import gamecontrollers.turn.PlanningController;
+import gamecontrollers.turn.PlanningModeCommandHandler;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
+import models.palacefestival.JavaPlayer;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Facade {
     private DevMoveController devMoveController;
     private TurnController turnController;
     private ReplayController replayController;
-    private PlanningController planningController;
+    private PlanningModeCommandHandler planningModeCommandHandler;
 
     private Facade() {
 
@@ -59,12 +60,13 @@ public class Facade {
         return false;
     }
 
-    // Festival Methods
+
     public void ASkForPalaceFestivalTie(){
         throw new UnsupportedOperationException();
     }
 
-    public int findShortestPath(Player player, Space origin, Space destination, List<Space> path){
+    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path){
+
         System.out.println("Facade.findShortestPath is not implemented yet");
         return 0;
     }
