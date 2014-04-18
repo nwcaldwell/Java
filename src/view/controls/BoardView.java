@@ -9,8 +9,6 @@ import javax.swing.*;
 
 import models.board.Board;
 import models.board.HexDirection;
-import models.board.HexSpace;
-import models.board.HexTileComponent;
 
 //TODO [Sydney Christopher] [Jorge]
 
@@ -18,9 +16,9 @@ public abstract class BoardView extends JPanel {
     
 	protected MediaController mediaC;
 	protected ViewController viewC;
-	protected Board<HexSpace, HexTileComponent, HexDirection> board;
+	protected Board board;
     
-    public BoardView(ViewController vc, MediaController media, Board<HexSpace, HexTileComponent, HexDirection> board){
+    public BoardView(ViewController vc, MediaController media, Board board){
         this.mediaC = media;
         this.viewC = vc;
         this.board = board;

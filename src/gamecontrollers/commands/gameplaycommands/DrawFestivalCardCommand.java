@@ -3,23 +3,33 @@ package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.save.CommandSaveVisitor;
+import models.palacefestival.Deck;
 import models.palacefestival.JavaPlayer;
 import models.palacefestival.PalaceCard;
 
 public class DrawFestivalCardCommand implements GameplayActionCommand {
     private JavaPlayer player;
-    private PalaceCard festivalCard;
+    private Deck deck;
+    private PalaceCard card;
 
-    public DrawFestivalCardCommand(JavaPlayer p, PalaceCard fest){
+    public DrawFestivalCardCommand(JavaPlayer p, Deck deck){
         this.player = p;
-        this.festivalCard = fest;
+        this.deck = deck;
     }
 
+
 	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+		//draw the festival card and store it
+        card = deck.drawFestivalCard();
+        //give the card to the player
+        player.drawCard(card);
+
 	}
 	@Override	public void undo() {
-		throw new UnsupportedOperationException();
+        //put that card back onto the festival card
+        player.takeBackCard(card);
+        //replace the festival card on the deck
+        deck.returnFestivalCard(card);
 	}
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();

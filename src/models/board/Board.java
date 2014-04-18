@@ -1,17 +1,20 @@
 package models.board;
 
+//TODO [Nathan, WIll, Kevin][Jorge]
+
+
 import models.palacefestival.JavaPlayer;
 
-public class Board <A extends Space, B extends TileComponent, C extends Direction> {
-	private Space<A,B,C> rootNode;
+public class Board  {
+	private Space rootNode;
 	private Developer[] developers;
 	
-	public Board (Space<A,B,C> rootNode, Developer[] developers) {
+	public Board (Space rootNode, Developer[] developers) {
 		this.rootNode = rootNode;
 		this.developers = new Developer[12];
 	}
 
-	public Space<A, B, C> getRoot() {
+	public Space getRoot() {
 		return rootNode;
 	}
 
@@ -32,4 +35,5 @@ public class Board <A extends Space, B extends TileComponent, C extends Directio
 		
 		return null;
 	}
+
 }

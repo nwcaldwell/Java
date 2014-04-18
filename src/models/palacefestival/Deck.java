@@ -30,4 +30,13 @@ public class Deck {
         return fest;
     }
 
+    public void returnCard(PalaceCard card){
+        library.returnCard(card);
+    }
+
+    public void returnFestivalCard(PalaceCard card){
+        library.returnCard(festivalCard);
+        this.festivalCard = card;
+    }
+
 }
