@@ -58,18 +58,18 @@ public class MediaController {
         return img;
     }
 
-//    public File getFile( String imgName ) {
-//
-//        BufferedImage img = loadedFiles.get( imgName );
-//
-//        if( img == null )
-//        {
-//            loadImage( imgName );
-//            img = loadedImages.get( imgName );
-//        }
-//
-//        return img;
-//    }
+    public File getFile( String fileName ) {
+
+        File file = loadedFiles.get( fileName );
+
+        if( file == null )
+        {
+            loadFile(fileName);
+            file = loadedFiles.get(fileName);
+        }
+
+        return file;
+    }
 
     private void initStrings() {
 
@@ -114,8 +114,6 @@ public class MediaController {
         BufferedImage newImage;
 
         try {
-
-            // TODO modify the file location for the project
             InputStream imgInput = getClass().getResourceAsStream( IMGS_FOLDER + imgName );
             newImage  = ImageIO.read( imgInput );
 
@@ -125,6 +123,24 @@ public class MediaController {
             }
 
             loadedImages.put( imgName, newImage );
+
+        } catch (Exception e) {
+            System.out.println( e.getMessage() );
+        }
+    }
+
+    private void loadFile(String fileName) {
+        File newFile;
+
+        try {
+            newFile = new File( getClass().getResource( fileName ).getPath() );
+
+            if (newFile == null) {
+
+                throw new Exception( "No image found with the name:" + fileName );
+            }
+
+            loadedFiles.put( fileName, newFile );
 
         } catch (Exception e) {
             System.out.println( e.getMessage() );
