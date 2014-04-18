@@ -27,7 +27,7 @@ public class Response {
         return messages;
     }
 
-    public boolean hastErrors(){
+    public boolean hasErrors(){
         return hasErrors;
     }
 
