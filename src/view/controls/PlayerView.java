@@ -81,6 +81,7 @@ public class PlayerView extends JPanel{
 
     private void setLayout(JLabel label){
         label.setPreferredSize(new Dimension(WIDTH/2 - BORDER, 50));
+        System.out.println(label.getPreferredSize());
         //label.setIcon(icon);
     }
 
