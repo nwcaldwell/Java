@@ -60,7 +60,11 @@ public class Facade {
     }
 
     // Festival Methods
-    public void ASkForPalaceFestivalTie(){
+    public void askForPalaceFestivalTie(){
+        throw new UnsupportedOperationException();
+    }
+
+    public void drawcardFromDeck() {
         throw new UnsupportedOperationException();
     }
 

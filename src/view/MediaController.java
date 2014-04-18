@@ -2,10 +2,7 @@ package view;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 
 //TODO [Jorge][Sydney]
@@ -14,8 +11,7 @@ public class MediaController {
 
     private HashMap<String, String> stringTemplates;
     private HashMap<String, BufferedImage> loadedImages;
-    // TODO implement private HashMap<String, Audio> loadedAudio
-    // TODO implement private HashMap<String, 3DModel> loaded3DModel
+    private HashMap<File, String> loadedFiles;
 
     public MediaController() {
         initStrings();
@@ -54,6 +50,19 @@ public class MediaController {
 
         return img;
     }
+
+//    public File getFile( String imgName ) {
+//
+//        BufferedImage img = loadedFiles.get( imgName );
+//
+//        if( img == null )
+//        {
+//            loadImage( imgName );
+//            img = loadedImages.get( imgName );
+//        }
+//
+//        return img;
+//    }
 
     private void initStrings() {
 
