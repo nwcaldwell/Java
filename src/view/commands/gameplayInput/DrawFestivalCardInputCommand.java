@@ -6,6 +6,6 @@ import view.commands.InputCommand;
 public class DrawFestivalCardInputCommand implements InputCommand {
 
 	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException();
 	}
 }

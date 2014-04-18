@@ -8,6 +8,10 @@ import gamecontrollers.turn.PlanningController;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
+import models.board.Developer;
+import models.board.Direction;
+import models.board.Space;
+import models.board.TileComponent;
 
 public class Facade {
 
@@ -69,9 +73,6 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void drawcardFromDeck() {
-        throw new UnsupportedOperationException();
-    }
 
     // Actually execute the action being built
     // It returns a response that has messages for rules violation if any

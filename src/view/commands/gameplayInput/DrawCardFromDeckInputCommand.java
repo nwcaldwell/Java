@@ -7,6 +7,6 @@ import view.commands.InputCommand;
 public class DrawCardFromDeckInputCommand implements InputCommand {
 
 	@Override	public void execute() {
-        Facade.getInstance().drawcardFromDeck();
+        Facade.getInstance().drawCardFromDeck();
 	}
 }
