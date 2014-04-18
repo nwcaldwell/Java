@@ -8,6 +8,7 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
@@ -33,6 +34,7 @@ public class LWJGLTest{
 	int brokenTexture=TextureFactory.MISSING_TEXTURE;
 	
 	JFrame frame;
+	JPanel parentPanel;
 	Canvas cgiCanvas;
 	
 	Face3D mask;
@@ -41,16 +43,26 @@ public class LWJGLTest{
 	
 	public void start() throws LWJGLException {
 		
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		frame.setSize(800, 800);
 		
+		parentPanel = new JPanel(false);
+		parentPanel.setSize(frame.getSize());
+		
 		cgiCanvas = new Canvas();
-		cgiCanvas.setSize(100,100);
-		frame.add(cgiCanvas);
+		cgiCanvas.setSize(parentPanel.getSize());
+		
+		if (true){
+			frame.add(parentPanel);
+			parentPanel.add(cgiCanvas);
+		}else{
+			frame.add(cgiCanvas);
+		}
+		
 		
 		try {
-			Display.setDisplayMode(new DisplayMode(100, 100));
 			frame.setVisible(true);
+			Display.setDisplayMode(new DisplayMode(100, 100));
 			Display.setParent(cgiCanvas);
 			Display.create();
 		} catch (LWJGLException e) {
@@ -68,22 +80,26 @@ public class LWJGLTest{
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_LIGHT0);
 		GL11.glEnable(GL11.GL_NORMALIZE);
+		//enable face culling, so only the front of a shape is rendered
+		GL11.glCullFace(GL11.GL_FRONT);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		
 		//GL11.glShadeModel(GL11.GL_SMOOTH);
 		//GL11.glLight(light, pname, params)
 		
 		try {
-			TextureFactory.loadMissingTexture("resources/Default.png");
+			TextureFactory.loadMissingTexture("resources/imgs/Default.png");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			System.exit(-1);
 		}
-		defTexture=TextureFactory.getTexture("resources/Fawkes.png");
+		defTexture=TextureFactory.getTexture("resources/imgs/Fawkes.png");
 		brokenTexture=TextureFactory.getTexture("this.file.does.not.exist.txt");
 		
 		mask=TexturedFace3D.MakeQuad(defTexture, -5, -5, 10, 10);
 		brokenFace=TexturedFace3D.MakeQuad(brokenTexture, -5, -5, 10, 10);
 		//hills=Model3D.makeFromObj(new File("resources/18665_Bobblehead_Lumberjack_v1.obj"));
-		hills=ModelFactory.makeFromObj(new File("resources/icosphere.obj"),1);
+		hills=ModelFactory.makeFromObj(new File("resources/hex.obj"),TextureFactory.getTexture("resources/imgs/GenericHex.png"));
 		//hills.setSphere();
 		
 		while (!Display.isCloseRequested()) {
@@ -99,10 +115,6 @@ public class LWJGLTest{
 			GL11.glOrtho(-50, 50, -50, 50, 1, 400);
 			
 			setLighting();
-						
-			//enable face culling, so only the front of a shape is rendered
-			GL11.glCullFace(GL11.GL_FRONT);
-			GL11.glEnable(GL11.GL_CULL_FACE);
 			
 			
 			GL11.glClearColor(0.5f, 0, 0, 1);
@@ -243,7 +255,7 @@ public class LWJGLTest{
 		GL11.glPushMatrix();
 		
 		GL11.glTranslatef(0, 0, -20);
-		GL11.glScalef(4, 4, 4);
+		GL11.glScalef(8, 8, 8);
 		//GL11.glScalef(0.001f, 0.001f, 0.001f);
 		
 		//Rotate rotates an angle about a given vector
