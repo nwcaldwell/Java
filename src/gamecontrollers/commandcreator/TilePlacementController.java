@@ -36,7 +36,9 @@ public class TilePlacementController extends TileCommandCreator {
 	}
 
 	public void setCurrentSpace(Space currentSpace) {
-		this.currentSpace = currentSpace;
+        this.currentSpace = currentSpace;
+        //update rules
+        notifyRules();
 	}
 
 	public TileComponent getCurrentTile() {
@@ -45,6 +47,8 @@ public class TilePlacementController extends TileCommandCreator {
 
 	public void setCurrentTile(TileComponent currentTile) {
 		this.currentTile = currentTile;
+        //update rules
+        notifyRules();
 	}
 
 
@@ -57,10 +61,12 @@ public class TilePlacementController extends TileCommandCreator {
 	public void move(Direction direction) {
 		//traverse in the space direction
         currentSpace = currentSpace.getAdjacentSpace(direction);
+        notifyRules();
 	}
 	
 	public void rotateCurrentTileComponent() {
 		currentTile.rotateAround(currentTile);
+        notifyRules();
 	}
 
 
@@ -90,9 +96,22 @@ public class TilePlacementController extends TileCommandCreator {
         Response response = new Response();
 
         for(Rule rool : rules) {
-            //response.addMessage(rool.getErrorMessage());
+            response.addMessage(rool.getErrorMessage());
         }
         return response;
     }
-	
+
+
+   /*
+  ========================================================================
+     PRIVATE METHODS
+  ========================================================================
+   */
+
+    private void notifyRules(){
+        for(Rule rool : rules){
+            rool.update();
+        }
+    }
+
 }
