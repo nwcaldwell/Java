@@ -7,32 +7,59 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
 /**
  * Created by williammacfarlane on 4/17/14.
  */
-public class HexBoardConstructionCrew extends BoardConstructionCrew {
-	static Direction dir = HexDirection.N;
-	@Override
+class HexBoardConstructionCrew {
+	private static Direction dir = HexDirection.N;
 	public Space buildBoard(String boardFileName) {
 		//BufferedReader br = new BufferedReader(new FileReader(boardFileName));
 		ArrayList<ArrayList<Space>> grid = putBoardInGrid(boardFileName);
-		Space root = connectedBoard(grid);
+		Space root = connectBoard(grid);
 		return root;
 	}
-
-	Space connectedBoard(ArrayList<ArrayList<Space>> grid)
+	private static boolean inBounds(int r, int c, int numRows, int numCols)
+	{
+		if(r < 0 || r >= numRows || c < 0 || c >= numCols)
+			return false;
+		return true;
+	}
+	private static boolean isAWorkingTile(Space s)
+	{
+		return (s != null);
+	}
+	private Space connectBoard(ArrayList<ArrayList<Space>> grid)
 	{
 		int numRows = grid.size();
-		int numCols = grid.get(0).size();
-		for(int i = 0; i < numRows; i++)
-		{
-			for(int j = 0; j < numCols; j++)
-			{
 
+		//               N  NE SE S  SW NW
+		int[] cDelta = { 0, 1, 1, 0, -1, -1};
+		int[] rDelta = { -2, -1, 1, 2, 1, -1};
+		for(int r = 0; r < numRows; r++)
+		{
+			int numCols = grid.get(r).size();
+			for(int c = 0; c < numCols; c++)
+			{
+				Space a = grid.get(r).get(c);
+				if(!isAWorkingTile(a))
+					continue;
+				Space[] neighbors = new Space[dir.numDirections()];
+				for(int i = 0; i < rDelta.length; i++)
+				{
+					int rChanged = r + rDelta[i];
+					int cChanged = c + cDelta[i];
+					if(rChanged < 0 || cChanged < 0)
+						continue;
+					if(!inBounds(rChanged, cChanged, numRows, grid.get(rChanged%2).size()))
+						continue;
+					Space b = grid.get(rChanged).get(cChanged);
+					if(isAWorkingTile(b))
+						neighbors[i] = b;
+				}
+				a.setNeighbors(neighbors);
 			}
 		}
-		throw new UnsupportedOperationException();
+		return grid.get(0).get(0);
 	}
 
 	ArrayList<ArrayList<Space>> putBoardInGrid(String boardFileName)
@@ -47,6 +74,7 @@ public class HexBoardConstructionCrew extends BoardConstructionCrew {
 			int lineNum = 0;
 			while((line = br.readLine()) != null)
 			{
+				grid.add(new ArrayList<Space>());
 				int startingIndex = lineNum % 2;
 				for(int j = startingIndex; j < line.length(); j += 2)
 				{
@@ -67,6 +95,7 @@ public class HexBoardConstructionCrew extends BoardConstructionCrew {
 		{
 			e.printStackTrace();
 		}
+
 		return grid;
 	}
 }
