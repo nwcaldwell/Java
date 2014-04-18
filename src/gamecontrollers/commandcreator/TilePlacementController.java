@@ -2,13 +2,18 @@ package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
+import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
+import gamecontrollers.rules.Rule;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
 
+import java.util.ArrayList;
+
 public class TilePlacementController extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
+    private ArrayList<Rule> rules;
 
     /*
   ========================================================================
@@ -55,18 +60,18 @@ public class TilePlacementController extends TileCommandCreator {
 	}
 	
 	public void rotateCurrentTileComponent() {
-		
+		currentTile.rotateAround(currentTile);
 	}
 
 
     /*
-    This method will return the constructed command
- */
+        This method will return the constructed command
+    */
     public GameplayActionCommand getCommand(){
 
-        // TODO implement
-        return null;
+        GameplayActionCommand command = new PlaceTileCommand(currentTile, currentSpace);
 
+        return command;
     }
 
     /*
@@ -78,10 +83,16 @@ public class TilePlacementController extends TileCommandCreator {
     }
 
     /*
-
+        This method will poll the current rules and then construct a response
+        from them and return it to stuff
      */
     public Response checkPossible(){
-        return null;
+        Response response = new Response();
+
+        for(Rule rool : rules) {
+            //response.addMessage(rool.getErrorMessage());
+        }
+        return response;
     }
 	
 }
