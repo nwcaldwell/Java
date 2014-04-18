@@ -1,4 +1,6 @@
-package gamecontrollers.rules;
+package gamecontrollers.rules.tileplacementrules;
+
+import gamecontrollers.rules.Rule;
 
 /**
  * //TODO [Nathan, Kevin, Will][Chris]
