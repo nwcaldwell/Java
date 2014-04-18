@@ -61,7 +61,7 @@ public class TurnController {
 
         //check from CommandCreator if it is possible
         Response response = currentCommandCreator.checkPossible();
-        if(response.getErrors()){
+        if(response.hasErrors()){
             //Command is possible so fetch it and have it handled
             commandHandler.handleCommand(currentCommandCreator.getCommand());
         }
