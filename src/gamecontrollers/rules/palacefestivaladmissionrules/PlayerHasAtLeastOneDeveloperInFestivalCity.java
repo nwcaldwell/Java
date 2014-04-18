@@ -1,4 +1,6 @@
-package gamecontrollers.rules;
+package gamecontrollers.rules.palacefestivaladmissionrules;
+
+import gamecontrollers.rules.palacefestivaladmissionrules.PalaceFestivalAdmissionRule;
 
 /**
  * Created by williammacfarlane on 4/15/14.

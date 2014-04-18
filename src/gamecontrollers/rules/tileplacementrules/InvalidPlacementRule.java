@@ -1,10 +1,10 @@
-package gamecontrollers.rules;
+package gamecontrollers.rules.tileplacementrules;
+
 
 /**
- * Created by williammacfarlane on 4/15/14.
+ * Created by williammacfarlane on 4/14/14.
  */
-public class NoMoreTilesOfThisType extends TilePlacementRule{
-
+public class InvalidPlacementRule extends TilePlacementRule {
 	@Override
 	public void update() {
 		throw new UnsupportedOperationException();

@@ -7,60 +7,56 @@ import gamecontrollers.turn.HistoryChannelController;
 import gamecontrollers.turn.PlanningController;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
-import models.board.*;
-import models.palacefestival.JavaPlayer;
+import models.board.Developer;
+import models.board.Direction;
+import models.board.Space;
+import models.board.TileComponent;
 
-import java.util.List;
-
-/**
- * Created by jorgep on 4/14/14.
- */
 public class Facade {
-    private TilePlacementController tpc;
-    private BoardLogicController blc;
-    private FestivalController fc;
-    private HistoryChannelController hcc;
-    private DevMoveController dmc;
-    private TurnController tc;
-    private ReplayController rc;
-    private PlanningController pc;
 
-    public Facade(){
+    private static Facade FacadeInstance = new Facade();
+    private TilePlacementController tilePlacementController;
+    private BoardLogicController boardLogicController;
+    private FestivalController festivalController;
+    private HistoryChannelController historyChannelController;
+    private DevMoveController devMoveController;
+    private TurnController turnController;
+    private ReplayController replayController;
+    private PlanningController planningController;
 
-    }
-
-    public void placeTileComponent(TileComponent t){
+    private Facade() {
 
     }
-
-    public void placeDeveloper(Developer d, Space s){
-
+    public static Facade getInstance() {
+        return FacadeInstance;
     }
 
-    public void moveTile(Direction d){
-
+    public void placeTileComponent(TileComponent tileComponent) {
+        throw new UnsupportedOperationException();
     }
 
-    public void moveDeveloper(Direction d){
+    public void placeDeveloper(Developer direction, Space space){
+        throw new UnsupportedOperationException();
+    }
 
+    public void moveTile(Direction direction){
+        throw new UnsupportedOperationException();
+    }
+
+    public void moveDeveloper(Direction direction){
+        throw new UnsupportedOperationException();
     }
 
     public void planCommand(){
-
+        throw new UnsupportedOperationException();
     }
 
     public void doCommand(){
-
+        throw new UnsupportedOperationException();
     }
 
-    public boolean validPlacement(TileComponent t, Space s){
-
-        return false;
+    // Festival Methods
+    public void ASkForPalaceFestivalTie(){
+        throw new UnsupportedOperationException();
     }
-
-    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path){
-
-        return 0;
-    }
-
 }
