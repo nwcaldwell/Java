@@ -1,13 +1,12 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
-import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
+import gamecontrollers.commands.GameplayActionCommand;
 import models.board.Direction;
 import models.board.Space;
-import models.board.Tile;
 import models.board.TileComponent;
 
-public class TilePlacementController <A extends Space, B extends Tile> extends TileCommandCreator {
+public class TilePlacementController <A extends Space, B extends TileComponent> extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
 	
@@ -48,7 +47,7 @@ public class TilePlacementController <A extends Space, B extends Tile> extends T
     /*
     This method will return the constructed command
  */
-    public PlaceTileCommand getCommand(){
+    public GameplayActionCommand getCommand(){
 
         // TODO implement
         return null;

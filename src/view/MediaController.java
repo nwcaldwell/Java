@@ -9,17 +9,24 @@ import java.util.HashMap;
 
 public class MediaController {
 
-    private HashMap<String, String> stringTemplates;
-    private HashMap<String, BufferedImage> loadedImages;
-    private HashMap<File, String> loadedFiles;
+    private static MediaController mediaControllerInstance = new MediaController();
+    private HashMap<String, String> stringTemplates = new HashMap<String,String>();
+    private HashMap<String, BufferedImage> loadedImages = new HashMap<String, BufferedImage>();
+    private HashMap<String,File> loadedFiles  = new HashMap<String, File>();
+    private static final String STRINGS_FILE_NAME = "/strings.txt";
+    private static final String IMGS_FOLDER = "/imgs/";
 
-    public MediaController() {
+    private MediaController() {
         initStrings();
+    }
+
+    public static MediaController getInstance() {
+        return mediaControllerInstance;
     }
 
     public String getString( String alias, Object... data) {
 
-        String stringTemplate = null;
+        String stringTemplate;
 
         try
         {
@@ -68,8 +75,7 @@ public class MediaController {
 
         try
         {
-            // TODO modify the file location for the project
-            BufferedReader br = new BufferedReader(new FileReader("strings.txt"));
+            BufferedReader br = new BufferedReader(new FileReader( getClass().getResource(STRINGS_FILE_NAME).getPath() )  );
             String currentLine;
             int splitIndex;
             String stringAlias;
@@ -110,7 +116,7 @@ public class MediaController {
         try {
 
             // TODO modify the file location for the project
-            InputStream imgInput = getClass().getResourceAsStream( imgName );
+            InputStream imgInput = getClass().getResourceAsStream( IMGS_FOLDER + imgName );
             newImage  = ImageIO.read( imgInput );
 
             if (newImage == null) {

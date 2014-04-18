@@ -2,11 +2,11 @@ package gamecontrollers.turn;
 
 
 import gamecontrollers.BoardLogicController;
-import models.board.Player;
+import models.palacefestival.JavaPlayer;
 
 public class FinalScoreCalculator {
     private BoardLogicController boardLogic;
-    private Player playerToScore;
+    private JavaPlayer playerToScore;
 
     public FinalScoreCalculator(){
 
@@ -17,7 +17,7 @@ public class FinalScoreCalculator {
         return 0;
     }
 
-    public void setPlayer(Player p){
+    public void setPlayer(JavaPlayer p){
 
     }
 }

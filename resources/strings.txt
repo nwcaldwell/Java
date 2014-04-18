@@ -1,0 +1,1 @@
+exampleKey,template string with data decimal %d and data string %s
