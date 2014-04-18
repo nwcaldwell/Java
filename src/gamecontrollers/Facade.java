@@ -74,4 +74,9 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
+    //Starting a new game
+    public void beginNewGame(String[] playerNames, String[] playerColors){
+        throw new UnsupportedOperationException();
+    }
+
 }
