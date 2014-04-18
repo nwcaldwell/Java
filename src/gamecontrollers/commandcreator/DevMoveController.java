@@ -14,8 +14,11 @@ public class DevMoveController extends DeveloperCommandCreator {
 
     }
 
+    public Space getDesiredSpace() {
+		return desiredSpace;
+	}
 
-    /*
+	/*
       This method will return the constructed command
    */
     public MoveDeveloperCommand getCommand(){
@@ -30,10 +33,7 @@ public class DevMoveController extends DeveloperCommandCreator {
     public int getCost(){
         return 0;
     }
-
-    /*
-
-     */
+    
     public Response checkPossible(){
         return null;
     }
