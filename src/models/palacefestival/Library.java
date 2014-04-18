@@ -1,6 +1,8 @@
 package models.palacefestival;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 public class Library {
@@ -10,6 +12,10 @@ public class Library {
         this.cards = new Stack<PalaceCard>();
 
 	}
+
+    public Library(List<PalaceCard> cardList){
+        this.cards.addAll(cardList);
+    }
 
     public PalaceCard draw(){
         return cards.pop();
@@ -27,4 +33,10 @@ public class Library {
     public void returnCard(PalaceCard card){
         cards.push(card);
     }
+
+    public List<PalaceCard> getCards(){
+        ArrayList<PalaceCard> deckCopy = new ArrayList<PalaceCard>(cards);
+       return deckCopy;
+    }
+
 }

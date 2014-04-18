@@ -1,5 +1,6 @@
 package models.palacefestival;
 
+import java.util.List;
 import java.util.Stack;
 
 public class Graveyard {
@@ -8,6 +9,11 @@ public class Graveyard {
 	public Graveyard(){
 
 	}
+
+    public Graveyard(List<PalaceCard> cardList){
+        this.discardedCards.addAll(cardList);
+    }
+
 
     public void discard(PalaceCard card){
         discardedCards.push(card);
