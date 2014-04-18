@@ -34,4 +34,9 @@ public class Deck {
         library.returnCard(card);
     }
 
+    public void returnFestivalCard(PalaceCard card){
+        library.returnCard(festivalCard);
+        this.festivalCard = card;
+    }
+
 }
