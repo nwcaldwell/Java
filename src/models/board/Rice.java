@@ -1,8 +1,9 @@
 package models.board;
 
-public class Rice extends Walkable implements VisitableTile {
+public class Rice extends Walkable {
 
-	public void accept(TilePlacementVisitor v) {
-		v.visit(this);
-	}
+    @Override
+    public void accept(TileVisitor v) {
+        v.visit(this);
+    }
 }

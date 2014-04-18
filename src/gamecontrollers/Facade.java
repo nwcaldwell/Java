@@ -8,6 +8,10 @@ import gamecontrollers.turn.PlanningController;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
+import models.board.Developer;
+import models.board.Direction;
+import models.board.Space;
+import models.board.TileComponent;
 
 public class Facade {
 
@@ -69,4 +73,5 @@ public class Facade {
     public Response doCommand(){
         throw new UnsupportedOperationException();
     }
+
 }

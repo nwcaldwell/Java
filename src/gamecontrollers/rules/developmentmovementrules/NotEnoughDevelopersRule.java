@@ -1,4 +1,6 @@
-package gamecontrollers.rules;
+package gamecontrollers.rules.developmentmovementrules;
+
+import gamecontrollers.rules.inventoryrules.InventoryRule;
 
 /**
  * Created by kevinnieman on 4/14/14.
