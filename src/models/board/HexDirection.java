@@ -13,6 +13,7 @@ public enum HexDirection implements Direction, Iterable<Direction>{
 		return preferredBoardConstructionCrew;
 	}
 
+
 	@Override
 	public HexDirection rotate() {
 		return values()[(this.ordinal() + 1) % numDirections()];
