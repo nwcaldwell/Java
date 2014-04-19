@@ -48,4 +48,10 @@ public class Vector2D {
 	public Vector2D scale(float scaleX, float scaleY){
 		return new Vector2D(x*scaleX,y*scaleY);
 	}
+	
+	public Vector2D rotate(float angle){
+		return new Vector2D(
+				(float)(x*Math.cos(angle)-y*Math.sin(angle)),
+				(float)(x*Math.sin(angle)-y*Math.cos(angle)));
+	}
 }

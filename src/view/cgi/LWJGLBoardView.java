@@ -2,11 +2,13 @@ package view.cgi;
 
 import models.board.Board;
 import models.board.HexDirection;
+import models.board.Direction;
 import models.board.Space;
 import view.ViewController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
+import java.io.File;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
@@ -23,34 +25,40 @@ public class LWJGLBoardView extends BoardView{
 	
 	private Canvas lwjglCanvas;
 	
-	final Vector2D[] offsets = new Vector2D[HexDirection.values().length];
-	/*
+	protected static final Vector2D[] offsets = new Vector2D[HexDirection.values().length];
+	
+	private static final float HEX_DISTANCE=(float) Math.sin(60*2*Math.PI/360);
+	
+	private static final float HEX_ANGLE=(float)Math.PI/3f;
+	
+	//initialize offsets
 	static{
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D()	
+		Vector2D north = new Vector2D(HEX_DISTANCE,0);
+		offsets[HexDirection.N.getIntValue()]=north;
+		offsets[HexDirection.NE.getIntValue()]=north.rotate(HEX_ANGLE);
+		offsets[HexDirection.SE.getIntValue()]=north.rotate(HEX_ANGLE*2);
+		offsets[HexDirection.S.getIntValue()]=north.rotate(HEX_ANGLE*3);
+		offsets[HexDirection.SW.getIntValue()]=north.rotate(HEX_ANGLE*4);
+		offsets[HexDirection.SE.getIntValue()]=north.rotate(HEX_ANGLE*5);
 	};
-	*/
+	
 	
 	/**the height, in local units, of a hex tile*/
-	final float spaceHeight=1;
+	final float spaceHeight=0.2f;
 
 	/**represents a model of a developer.*/
-	final Model3D developer=null;
+	Model3D developer=null;
 	
 	/**represents a model that represents a hilighted space*/
-	final Model3D hilight=null;
+	Model3D hilight=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D buriedSpace=null;
+	Model3D buriedSpace=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D rice=null;
+	Model3D rice=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D village=null;
+	Model3D village=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D irrigation=null;
+	Model3D irrigation=null;
 	
 	ArrayList<Model3D> spaces=new ArrayList<Model3D>();
 	ArrayList<Model3D> developers=new ArrayList<Model3D>();
@@ -104,24 +112,25 @@ public class LWJGLBoardView extends BoardView{
 	}
 	
 	private void loadResources(){
-		
+		buriedSpace=ModelFactory.makeFromObj(new File("resources/hex.obj"), 
+				TextureFactory.getTexture("resources/imgs/GenericHex.png"));
 	}
 	
 	@Override
-	public void hilightSpace(ArrayList<HexDirection> path, int height) {
+	public void hilightSpace(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
-		for (HexDirection d:path){
-			offset.translate(offsets[d.ordinal()]);
+		for (Direction d:path){
+			offset.translate(offsets[d.getIntValue()]);
 		}
 		Model3D newModel=hilight.clone();
 		newModel.setTranslation(new Vector3D(offset.x, height*spaceHeight, offset.y));
 	}
 	
 	@Override
-	public void displayDev(ArrayList<HexDirection> path, int height) {
+	public void displayDev(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
-		for (HexDirection d:path){
-			offset.translate(offsets[d.ordinal()]);
+		for (Direction d:path){
+			offset.translate(offsets[d.getIntValue()]);
 		}
 		Model3D newModel=developer.clone();
 		newModel.setTranslation(new Vector3D(offset.x, height*spaceHeight, offset.y));
@@ -131,7 +140,7 @@ public class LWJGLBoardView extends BoardView{
 	public void update() {
 		spaces.clear();
 		ArrayList<Space> preTraversed=new ArrayList<Space>();
-		board.getRoot();
+		updateRecursive(board.getRoot(), preTraversed, new Vector2D(0, 0));
 	}
 	
 	/**updates the model data for the spaces on the
