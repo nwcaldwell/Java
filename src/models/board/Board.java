@@ -5,25 +5,33 @@ package models.board;
 
 import models.palacefestival.JavaPlayer;
 
+import java.util.ArrayList;
+
+/*
+
+	We added a Board Construction Crew class in order to be able to boards composed of different shapes (squares, triangles, &c.)
+
+ */
 public class Board  {
 	private Space rootNode;
-	private Developer[] developers;
-	
-	public Board (Space rootNode, Developer[] developers) {
-		this.rootNode = rootNode;
-		this.developers = new Developer[12];
+	private ArrayList<Developer> developers;
+
+	public Board (Direction d, String boardFilePath) {
+		//this.rootNode; set this!
+		developers = new ArrayList<Developer>();
+		rootNode = d.getPreferredBoardConstructionCrew().buildBoard(boardFilePath);
 	}
 
 	public Space getRoot() {
 		return rootNode;
 	}
 
-	public Developer[] getDevelopers() {
+	public ArrayList<Developer> getDevelopers() {
 		return developers;
 	}
 	
 	public Developer getNextDeveloper(Developer currentDeveloper) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Developer getFirstDeveloper(JavaPlayer p) {
