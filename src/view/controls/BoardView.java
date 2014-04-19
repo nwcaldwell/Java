@@ -5,18 +5,24 @@ import models.board.HexDirection;
 import view.ViewController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 //TODO [Sydney Christopher] [Jorge]
 
 public abstract class BoardView extends JPanel {
-
+    private final int BORDER = 10;
+    private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - BORDER/2);
+    private final int HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 300 - BORDER); //see PlayerView for Height
 	protected ViewController viewC;
 	protected Board board;
 
     public BoardView(ViewController vc, Board board){
         this.viewC = vc;
         this.board = board;
+
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setBackground(Color.DARK_GRAY);
     }
     
     /**redraws the entire board*/

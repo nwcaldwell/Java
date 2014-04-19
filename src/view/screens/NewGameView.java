@@ -2,6 +2,10 @@ package view.screens;
 
 import view.View;
 import view.ViewController;
+import view.commands.InputCommand;
+import view.commands.JavaButtonListener;
+import view.commands.NavCommand;
+import view.screens.gameplay.PlayView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +24,8 @@ public class NewGameView extends View {
         playersNames = new JTextField[4];
         colorSelections = new JComboBox[4];
         startGame = new JButton("Let's Play!");
-        setBackground(Color.BLUE);
+        startGame.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlayView(this.getViewController()))));
+        //TODO How I start new game?
 
         initializeView();
     }
@@ -29,12 +34,10 @@ public class NewGameView extends View {
         JLabel title = new JLabel("New Game");
         title.setFont(new Font("Arial", 0, 18));
 
-        String[] colors = {"Red", "Orange", "Yellow", "Green", "Blue", "Purple"}; //TODO add these to the media controller?
+        String[] colors = {"Red", "Yellow", "Green", "Blue"}; //TODO add these to the media controller?
 
         JPanel container = new JPanel();
         container.setPreferredSize(new Dimension(480, 500));
-        container.setMinimumSize(new Dimension(480, 500));
-        container.setMaximumSize(new Dimension(480, 500));
         container.add(title);
 
         JPanel[] playerColorContainers = new JPanel[4];

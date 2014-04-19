@@ -17,4 +17,12 @@ public abstract class View extends JPanel {
     protected ViewController getViewController() {
         return viewController;
     }
+
+    protected int getScreenWidth(){
+        return (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+    }
+
+    protected int getScreenHeight(){
+        return (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 50;
+    }
 }

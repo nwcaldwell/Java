@@ -63,9 +63,8 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void drawTheFestivalCard() {
-        throw new UnsupportedOperationException();
-    }
+    public void drawTheFestivalCard() {}
+
 
     public void dropOutOfFestival() {
         throw new UnsupportedOperationException();
@@ -95,4 +94,9 @@ public class Facade {
     public Response doCommand(){
         throw new UnsupportedOperationException();
     }
+    //Starting a new game
+    public void beginNewGame(String[] playerNames, String[] playerColors){
+        throw new UnsupportedOperationException();
+    }
+
 }
