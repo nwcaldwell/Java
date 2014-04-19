@@ -22,4 +22,20 @@ public class Graveyard {
     public Stack<PalaceCard> getDiscardedCards(){
         return discardedCards;
     }
+
+    //empty the stack and return it
+    public Stack<PalaceCard> takeDiscardedCards(){
+        Stack<PalaceCard> temp = new Stack<PalaceCard>();
+        Stack<PalaceCard> reverse = new Stack<PalaceCard>();
+
+        while(!discardedCards.empty()){
+            reverse.push(discardedCards.pop());
+        }
+
+        while(!reverse.empty()){
+            temp.push(reverse.pop());
+        }
+
+        return temp;
+    }
 }

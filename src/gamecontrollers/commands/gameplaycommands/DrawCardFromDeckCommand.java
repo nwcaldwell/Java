@@ -23,7 +23,10 @@ public class DrawCardFromDeckCommand implements GameplayActionCommand {
 
     @Override	public void execute() {
         //save state of deck before execution
-        oldDeck = deck.createMemento();
+        if(oldDeck == null)
+            oldDeck = deck.createMemento();
+        else
+            deck.restoreFromMemento(oldDeck);
         //draw card from deck and store it for later
         card = deck.drawFromDeck();
         //give card to player now
