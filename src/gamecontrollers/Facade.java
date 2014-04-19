@@ -4,13 +4,18 @@ import gamecontrollers.commandcreator.DevMoveController;
 import gamecontrollers.commandcreator.TilePlacementController;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.turn.HistoryChannelController;
-import gamecontrollers.turn.PlanningController;
+import gamecontrollers.turn.PlanningModeCommandHandler;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
+import models.board.*;
 import models.board.Developer;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
+import models.palacefestival.JavaPlayer;
+
+import java.util.List;
+
 
 public class Facade {
 
@@ -22,13 +27,19 @@ public class Facade {
     private DevMoveController devMoveController;
     private TurnController turnController;
     private ReplayController replayController;
-    private PlanningController planningController;
+    private PlanningModeCommandHandler planningModeCommandHandler;
 
     private Facade() {
 
     }
+
+    // getters
     public static Facade getInstance() {
         return FacadeInstance;
+    }
+
+    public static Board getBoard(){
+        throw new UnsupportedOperationException();
     }
 
     public void placeTileComponent(TileComponent tileComponent) {
@@ -51,12 +62,53 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void doCommand(){
+    // Festival Methods
+    public void drawCardFromDeck() {
         throw new UnsupportedOperationException();
     }
 
-    // Festival Methods
-    public void ASkForPalaceFestivalTie(){
+    public void drawTheFestivalCard() {}
+
+
+    public void dropOutOfFestival() {
         throw new UnsupportedOperationException();
     }
+
+    public void acceptTieRequest() {
+        throw new UnsupportedOperationException();
+    }
+
+
+    public boolean validPlacement(TileComponent tile, Space space){
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return false;
+    }
+
+    // Festival Methods
+    public void askForPalaceFestivalTie(){
+        throw new UnsupportedOperationException();
+    }
+
+    public void ASkForPalaceFestivalTie() {
+        throw new UnsupportedOperationException();
+    }
+
+    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path) {
+
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return 0;
+    }
+
+    // Actually execute the action being built
+    // It returns a response that has messages for rules violation if any
+    // if the action is executed successfully the response.hasErrors is set to true
+    public Response doCommand(){
+        throw new UnsupportedOperationException();
+
+    }
+    //Starting a new game
+    public void beginNewGame(String[] playerNames, String[] playerColors){
+        throw new UnsupportedOperationException();
+    }
+
 }

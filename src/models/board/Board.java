@@ -1,26 +1,37 @@
 package models.board;
 
+//TODO [Nathan, WIll, Kevin][Jorge]
+
+
 import models.palacefestival.JavaPlayer;
 
-public class Board <A extends Space, B extends TileComponent, C extends Direction> {
-	private Space<A,B,C> rootNode;
-	private Developer[] developers;
-	
-	public Board (Space<A,B,C> rootNode, Developer[] developers) {
-		this.rootNode = rootNode;
-		this.developers = new Developer[12];
+import java.util.ArrayList;
+
+/*
+
+	We added a Board Construction Crew class in order to be able to boards composed of different shapes (squares, triangles, &c.)
+
+ */
+public class Board  {
+	private Space rootNode;
+	private ArrayList<Developer> developers;
+
+	public Board (Direction d, String boardFilePath) {
+		//this.rootNode; set this!
+		developers = new ArrayList<Developer>();
+		rootNode = d.getPreferredBoardConstructionCrew().buildBoard(boardFilePath);
 	}
 
-	public Space<A, B, C> getRoot() {
+	public Space getRoot() {
 		return rootNode;
 	}
 
-	public Developer[] getDevelopers() {
+	public ArrayList<Developer> getDevelopers() {
 		return developers;
 	}
 	
 	public Developer getNextDeveloper(Developer currentDeveloper) {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public Developer getFirstDeveloper(JavaPlayer p) {
@@ -32,4 +43,5 @@ public class Board <A extends Space, B extends TileComponent, C extends Directio
 		
 		return null;
 	}
+
 }
