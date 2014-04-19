@@ -20,6 +20,14 @@ public class Model3D {
 		this.faces=faces;
 	}
 	
+	/**Creates a new Model3D with the composite faces of
+	 * a set of provided models.*/
+	public Model3D(Model3D... others){
+		for (Model3D other:others){
+			this.faces.addAll(other.faces);
+		}
+	}
+	
 	/**renders this model with local transformations.*/
 	public void render(){
 		for (Face3D f:faces){

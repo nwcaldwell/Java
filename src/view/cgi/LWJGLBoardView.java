@@ -21,6 +21,8 @@ public class LWJGLBoardView extends BoardView{
 	
 	public static final float CANVAS_WIDTH=10;
 	public static final float CANVAS_HEIGHT=10;
+	public static final float CANVAS_FAR=21;
+	public static final float CANVAS_NEAR=1;
 	final float CLOSE=0.01f;
 	final float FAR=1;
 	
@@ -28,7 +30,8 @@ public class LWJGLBoardView extends BoardView{
 	
 	protected static final Vector2D[] offsets = new Vector2D[HexDirection.values().length];
 	
-	private static final float HEX_DISTANCE=(float) Math.sin(60*2*Math.PI/360)*2;
+	/**marks the distance between two hex tiles in rendering (disregards scene scale)*/
+	private static final float HEX_DISTANCE=(float) Math.sin(60*2*Math.PI/360)*2*3.461961f;
 	
 	private static final float HEX_ANGLE=(float)Math.PI/3f;
 	
@@ -45,11 +48,21 @@ public class LWJGLBoardView extends BoardView{
 	
 	
 	/**the height, in local units, of a hex tile*/
-	final float spaceHeight=0.2f;
+	public static final float SPACE_HEIGHT=0.882757f;
 
 	/**represents a model of a developer.*/
 	Model3D developer=null;
 	
+	/**represents a model of the ground beneath a space on central Java*/
+	Model3D ground=null;
+	/**represents a model of highland terrain*/
+	Model3D highland=null;
+	/**represents a model of lowland terrain*/
+	Model3D lowland=null;
+	
+	/**represents palaces of various size.
+	 * each size is doubled.*/
+	Model3D palace[]=new Model3D[5];
 	/**represents a model that represents a hilighted space*/
 	Model3D hilight=null;
 	/**represents the model of a space whose surface is not seen*/
@@ -71,6 +84,8 @@ public class LWJGLBoardView extends BoardView{
 	private double sceneYaw=0;
 	/**for perspective, the pitch of the scene*/
 	private double scenePitch=0;
+	/**for perspective, the scale of the scene*/
+	private double sceneScale=0.25f;
 	
 	public LWJGLBoardView(ViewController vc, Board b) {
 		super(vc, b);
@@ -92,7 +107,7 @@ public class LWJGLBoardView extends BoardView{
 		
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
-		Display.setDisplayMode(new DisplayMode(100,100));//(int)CANVAS_WIDTH, (int)CANVAS_HEIGHT));
+		Display.setDisplayMode(new DisplayMode((int)CANVAS_WIDTH, (int)CANVAS_HEIGHT));
 		Display.setParent(lwjglCanvas);
 		Display.create();
 		//enable all of the OpenGL stuff
@@ -122,8 +137,25 @@ public class LWJGLBoardView extends BoardView{
 	}
 	
 	private void loadResources(){
-		buriedSpace=ModelFactory.makeFromObj(new File("resources/hex.obj"), 
-				TextureFactory.getTexture("resources/imgs/GenericHex.png"));
+//		buriedSpace=ModelFactory.makeFromObj(new File("resources/hex.obj"), 
+//				TextureFactory.getTexture("resources/imgs/GenericHex.png"));
+		Model3D riceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/rice_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/rice_hex_texture.png"));
+		this.rice=new Model3D(riceHex);
+		this.buriedSpace=new Model3D(riceHex);
+		buriedSpace.setRotation(0, 30, 0);
+		this.highland=new Model3D(riceHex);
+		highland.setRotation(0, 30, 0);
+		this.lowland=new Model3D(riceHex);
+		lowland.setRotation(0, 30, 0);
+		this.ground=new Model3D(riceHex);
+		ground.setRotation(0, 30, 0);
+		Model3D villageHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
+		Model3D village=ModelFactory.makeFromObj(new File("resources/3Dobjects/village.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/village_texture.png"));
+		this.village=new Model3D(village,villageHex);
+		this.village.setRotation(0, 30, 0);
 	}
 	
 	@Override
@@ -133,7 +165,7 @@ public class LWJGLBoardView extends BoardView{
 			offset.translate(offsets[d.getIntValue()]);
 		}
 		Model3D newModel=hilight.clone();
-		newModel.setTranslation(new Vector3D(offset.x, height*spaceHeight, offset.y));
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 	
 	@Override
@@ -143,7 +175,7 @@ public class LWJGLBoardView extends BoardView{
 			offset.translate(offsets[d.getIntValue()]);
 		}
 		Model3D newModel=developer.clone();
-		newModel.setTranslation(new Vector3D(offset.x, height*spaceHeight, offset.y));
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 
 	@Override
@@ -169,15 +201,22 @@ public class LWJGLBoardView extends BoardView{
 	/**adds model data for a given space.
 	 * May be more than one Model3D.*/
 	private void updateSpace(Space space, Vector2D offset){
+
+		if (space.getHeight()==0){
+			Model3D terrain=ground.clone();//buriedSpace.clone();
+			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
+			spaces.add(terrain);
+		}
+		
 		for (int i=0;i<space.getHeight()-1;i++){
 			Model3D newModel=buriedSpace.clone();
-			newModel.setTranslation(new Vector3D(offset.x, i*spaceHeight, offset.y));
+			newModel.setTranslation(new Vector3D(offset.x, i*SPACE_HEIGHT, offset.y));
 			spaces.add(newModel);
 		}
-		if (space.getHeight()>0||true){
+		if (space.getHeight()>0){
 			//render the top tile
 			Model3D newModel=buriedSpace.clone();
-			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*spaceHeight, offset.y));
+			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*SPACE_HEIGHT, offset.y));
 			spaces.add(newModel);
 		}
 	}
@@ -192,7 +231,7 @@ public class LWJGLBoardView extends BoardView{
 		//reset the transformation matrix
 		glLoadIdentity();
 		//Creates an orthographic projection from 0,0 to CANVAS_WIDTH, CANVAS_HEIGHT
-		glOrtho(0, CANVAS_WIDTH, 0, CANVAS_HEIGHT, 1, 100);
+		glOrtho(-CANVAS_WIDTH/2, CANVAS_WIDTH/2, -CANVAS_HEIGHT/2, CANVAS_HEIGHT/2, CANVAS_NEAR, CANVAS_FAR);
 		//setLighting();
 		//clear the background
 		glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -202,9 +241,11 @@ public class LWJGLBoardView extends BoardView{
 		glClear(GL11.GL_DEPTH_BUFFER_BIT);
 		
 		//things too close will not be rendered
-		glTranslated(0, 0, -50);
+		glTranslated(0, 0, -(CANVAS_FAR+CANVAS_NEAR)/2);
 		
 		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
+
+		glScaled(sceneScale, sceneScale, sceneScale);
 		
 		glRotated(scenePitch, 1, 0, 0);
 		
@@ -247,5 +288,13 @@ public class LWJGLBoardView extends BoardView{
 
 	public void setScenePitch(double scenePitch) {
 		this.scenePitch = scenePitch;
+	}
+
+	public double getSceneScale() {
+		return sceneScale;
+	}
+
+	public void setSceneScale(double sceneScale) {
+		this.sceneScale = sceneScale;
 	}
 }
