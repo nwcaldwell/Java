@@ -35,7 +35,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 			return false;
 		return true;
 	}
-	private static boolean isAWorkingTile(Space s)
+	private static boolean spaceExists(Space s)
 	{
 		return (s != null);
 	}
@@ -60,7 +60,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 			for(int c = 0; c < numCols; c++)
 			{
 				Space a = grid.get(r).get(c);
-				if(!isAWorkingTile(a))
+				if(!spaceExists(a))
 					continue;
 				Space[] neighbors = new Space[dir.numDirections()];
 				for(int i = 0; i < rDelta.length; i++)
@@ -72,13 +72,22 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 					if(!inBounds(rChanged, cChanged, numRows, grid.get(rChanged%2).size()))
 						continue;
 					Space b = grid.get(rChanged).get(cChanged);
-					if(isAWorkingTile(b))
+					if(spaceExists(b))
 						neighbors[i] = b;
 				}
 				a.setNeighbors(neighbors);
 			}
 		}
-		return grid.get(0).get(0);
+
+		//Hexes should all reference each other at this point
+
+		//Return the first space that exists
+		for(int i = 0; i < grid.size(); i++)
+			for(int j = 0; j < grid.get(i).size(); j++)
+				if(spaceExists(grid.get(i).get(j)))
+					return grid.get(i).get(j);
+
+		throw new IllegalStateException();
 	}
 
 	ArrayList<ArrayList<Space>> putBoardInGrid(String boardFileName)
