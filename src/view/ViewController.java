@@ -1,6 +1,10 @@
 package view;
 
+
+import view.screens.MainMenuView;
+
 import view.screens.*;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,14 +57,16 @@ public class ViewController {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     System.exit(0);
                 }
             }
         });
 
+
 //        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
         gameWindow.validate();
+
     }
 
     public void setCurrentView( View newView ) {

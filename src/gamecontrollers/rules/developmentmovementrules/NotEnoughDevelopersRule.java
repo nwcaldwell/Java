@@ -1,5 +1,6 @@
 package gamecontrollers.rules.developmentmovementrules;
 
+import gamecontrollers.Message;
 import gamecontrollers.rules.inventoryrules.InventoryRule;
 
 /**
@@ -10,7 +11,7 @@ public class NotEnoughDevelopersRule extends InventoryRule {
     public void update(){
 
     }
-    public String getErrorMessage(){
+    public Message getErrorMessage(){
         return null;
     }
 }

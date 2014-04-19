@@ -89,6 +89,8 @@ public class LWJGLBoardView extends BoardView{
 	
 	public LWJGLBoardView(ViewController vc, Board b) {
 		super(vc, b);
+		// TODO Auto-generated constructor stub
+
 	}
 	
 	/**initializes OpenGL Must be called after this object is added to something

@@ -1,5 +1,8 @@
 package models.board;
 
+//TODO [Nathan, WIll, Kevin][Jorge]
+
+
 import models.palacefestival.JavaPlayer;
 
 import java.util.ArrayList;
@@ -40,4 +43,5 @@ public class Board  {
 		
 		return null;
 	}
+
 }
