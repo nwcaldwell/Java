@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 /**an implementation of BoardView that uses an LWJGL canvas*/
 public class LWJGLBoardView extends BoardView{
 	
-	final float CANVAS_WIDTH=1;
-	final float CANVAS_HEIGHT=1;
+	public static final float CANVAS_WIDTH=10;
+	public static final float CANVAS_HEIGHT=10;
 	final float CLOSE=0.01f;
 	final float FAR=1;
 	
@@ -27,7 +28,7 @@ public class LWJGLBoardView extends BoardView{
 	
 	protected static final Vector2D[] offsets = new Vector2D[HexDirection.values().length];
 	
-	private static final float HEX_DISTANCE=(float) Math.sin(60*2*Math.PI/360);
+	private static final float HEX_DISTANCE=(float) Math.sin(60*2*Math.PI/360)*2;
 	
 	private static final float HEX_ANGLE=(float)Math.PI/3f;
 	
@@ -39,7 +40,7 @@ public class LWJGLBoardView extends BoardView{
 		offsets[HexDirection.SE.getIntValue()]=north.rotate(HEX_ANGLE*2);
 		offsets[HexDirection.S.getIntValue()]=north.rotate(HEX_ANGLE*3);
 		offsets[HexDirection.SW.getIntValue()]=north.rotate(HEX_ANGLE*4);
-		offsets[HexDirection.SE.getIntValue()]=north.rotate(HEX_ANGLE*5);
+		offsets[HexDirection.NW.getIntValue()]=north.rotate(HEX_ANGLE*5);
 	};
 	
 	
@@ -64,6 +65,13 @@ public class LWJGLBoardView extends BoardView{
 	ArrayList<Model3D> developers=new ArrayList<Model3D>();
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
 	
+	/**for perspective, the translation of the scene*/
+	private Vector3D sceneTranslation;
+	/**for perspective, the yaw of the scene*/
+	private double sceneYaw=0;
+	/**for perspective, the pitch of the scene*/
+	private double scenePitch=0;
+	
 	public LWJGLBoardView(ViewController vc, Board b) {
 		super(vc, b);
 	}
@@ -77,9 +85,6 @@ public class LWJGLBoardView extends BoardView{
 					"specifically, it must return true for the \"isDisplayable\" call");
 		}
 		
-		//try loading the default texture.  If this doesn't work, you're screwed.
-		TextureFactory.loadMissingTexture("resources/imgs/Default.png");
-		
 		//create a canvas to hold the LWJGL Display
 		lwjglCanvas = new Canvas();
 		add(lwjglCanvas);
@@ -87,28 +92,33 @@ public class LWJGLBoardView extends BoardView{
 		
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
-		Display.setDisplayMode(new DisplayMode((int)CANVAS_WIDTH, (int)CANVAS_HEIGHT));
+		Display.setDisplayMode(new DisplayMode(100,100));//(int)CANVAS_WIDTH, (int)CANVAS_HEIGHT));
 		Display.setParent(lwjglCanvas);
 		Display.create();
 		//enable all of the OpenGL stuff
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 		//we need textures
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		glEnable(GL_TEXTURE_2D);
 		//depth test ensures that close stuff is in front of far stuff.
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
 		//enable lighting (specifically light 0)
-		GL11.glEnable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_LIGHT0);
+		//glEnable(GL_LIGHTING);
+		//glEnable(GL_LIGHT0);
 		//ensures normalization of all norms
 		//a bit slow.  Can be removed and fixed in face for optimization.
-		GL11.glEnable(GL11.GL_NORMALIZE);
+		glEnable(GL_NORMALIZE);
 		//enable face culling, so only the front of a shape is rendered
 		//EASY way to optimize
-		GL11.glCullFace(GL11.GL_FRONT);
-		GL11.glEnable(GL11.GL_CULL_FACE);
+		glCullFace(GL_FRONT);
+		glEnable(GL_CULL_FACE);
 
-		GL11.glClearColor(0.5f, 0, 0, 1);
+		glClearColor(0.5f, 0, 0, 1);
+		
+		//try loading the default texture.  If this doesn't work, you're screwed.
+		TextureFactory.loadMissingTexture("resources/imgs/Default.png");
+		
+		loadResources();
 	}
 	
 	private void loadResources(){
@@ -164,7 +174,7 @@ public class LWJGLBoardView extends BoardView{
 			newModel.setTranslation(new Vector3D(offset.x, i*spaceHeight, offset.y));
 			spaces.add(newModel);
 		}
-		if (space.getHeight()>0){
+		if (space.getHeight()>0||true){
 			//render the top tile
 			Model3D newModel=buriedSpace.clone();
 			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*spaceHeight, offset.y));
@@ -178,18 +188,27 @@ public class LWJGLBoardView extends BoardView{
 	public void renderScene(){
 		
 		//modelview doesn't translate lights
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		glMatrixMode(GL11.GL_MODELVIEW);
 		//reset the transformation matrix
-		GL11.glLoadIdentity();
+		glLoadIdentity();
 		//Creates an orthographic projection from 0,0 to CANVAS_WIDTH, CANVAS_HEIGHT
-		GL11.glOrtho(0, CANVAS_WIDTH, 0, CANVAS_HEIGHT, 1, 400);
+		glOrtho(0, CANVAS_WIDTH, 0, CANVAS_HEIGHT, 1, 100);
 		//setLighting();
 		//clear the background
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+		glClear(GL11.GL_COLOR_BUFFER_BIT);
 		//if we want a skybox, we should put it here
 		//SKYBOX!!!
 		//clear depth buffers
-		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+		glClear(GL11.GL_DEPTH_BUFFER_BIT);
+		
+		//things too close will not be rendered
+		glTranslated(0, 0, -50);
+		
+		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
+		
+		glRotated(scenePitch, 1, 0, 0);
+		
+		glRotated(sceneYaw, 0, 1, 0);
 		
 		for (Model3D model: spaces){
 			model.render();
@@ -200,5 +219,33 @@ public class LWJGLBoardView extends BoardView{
 		for (Model3D model: hilights){
 			model.render();
 		}
+		
+		Display.update();
+	}
+
+	////////////////getters and setters////////////////
+	
+	public Vector3D getSceneTranslation() {
+		return sceneTranslation;
+	}
+
+	public void setSceneTranslation(Vector3D sceneTranslation) {
+		this.sceneTranslation = sceneTranslation;
+	}
+
+	public double getSceneYaw() {
+		return sceneYaw;
+	}
+
+	public void setSceneYaw(double sceneYaw) {
+		this.sceneYaw = sceneYaw;
+	}
+
+	public double getScenePitch() {
+		return scenePitch;
+	}
+
+	public void setScenePitch(double scenePitch) {
+		this.scenePitch = scenePitch;
 	}
 }
