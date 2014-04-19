@@ -8,4 +8,10 @@ public class Rice extends Walkable {
         v.visit(this);
     }
 
+
+	public void accept(TilePlacementVisitor v) {
+		v.visit(this);
+	}
+
+
 }

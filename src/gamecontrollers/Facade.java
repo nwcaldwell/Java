@@ -12,6 +12,10 @@ import models.board.Developer;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
+import models.palacefestival.JavaPlayer;
+
+import java.util.List;
+
 
 public class Facade {
 
@@ -74,6 +78,7 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
+
     public boolean validPlacement(TileComponent tile, Space space){
         System.out.println("Facade.findShortestPath is not implemented yet");
         return false;
@@ -84,8 +89,14 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void ASkForPalaceFestivalTie(){
+    public void ASkForPalaceFestivalTie() {
         throw new UnsupportedOperationException();
+    }
+
+    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path) {
+
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return 0;
     }
 
     // Actually execute the action being built
@@ -93,6 +104,7 @@ public class Facade {
     // if the action is executed successfully the response.hasErrors is set to true
     public Response doCommand(){
         throw new UnsupportedOperationException();
+
     }
     //Starting a new game
     public void beginNewGame(String[] playerNames, String[] playerColors){
