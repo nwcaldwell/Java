@@ -12,6 +12,8 @@ import models.board.Developer;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
+import models.palacefestival.JavaPlayer;
+import models.palacefestival.PalaceCard;
 
 public class Facade {
 
@@ -66,6 +68,14 @@ public class Facade {
     public void ASkForPalaceFestivalTie () {
         throw new UnsupportedOperationException();
     }
+
+    public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
+        festivalController.startFestival(players, festivalCard, palaceAssociated);
+    }
+
+    public void endFestival(){ throw new UnsupportedOperationException(); }
+
+
 
     // Actually execute the action being built
     // It returns a response that has messages for rules violation if any

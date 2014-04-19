@@ -1,6 +1,7 @@
 // TODO developer [ Sydney ], test [ Jorge ]
 package gamecontrollers.commands.gameplaycommands;
 
+import gamecontrollers.Facade;
 import gamecontrollers.commands.GameplayActionCommand;
 
 import gamecontrollers.save.CommandSaveVisitor;
@@ -21,7 +22,9 @@ public class EndFestivalCommand implements GameplayActionCommand {
     }
 
 	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+        Facade.getInstance().endFestival();
+        //TODO - just a little confused about whether the Facade calls the view to change?
+        throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {
 		throw new UnsupportedOperationException();

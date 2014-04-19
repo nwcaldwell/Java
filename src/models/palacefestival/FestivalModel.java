@@ -29,4 +29,37 @@ public class FestivalModel {
     public void calculateHighestBid(){
 
     }
+
+    public void setHighestBid(int bid){
+        highestBid = bid;
+    }
+
+    public void setPlayers(ArrayList<FestivalPlayer> p){
+        players = p;
+    }
+
+    public void setFestivalCard(PalaceCard card){
+        festivalCard = card;
+    }
+
+    public void setPalaceValue(int value){
+        palaceValue = value;
+    }
+
+    public ArrayList<FestivalPlayer> getPlayers(){
+        return players;
+    }
+
+    public PalaceCard getFestivalCard(){
+        return festivalCard;
+    }
+
+    public int getPalaceValue(){
+        return palaceValue;
+    }
+
+    public int getHighestBid(){
+        return highestBid;
+    }
+
 }
