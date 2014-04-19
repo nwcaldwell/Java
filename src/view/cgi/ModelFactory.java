@@ -71,7 +71,8 @@ public class ModelFactory {
 					//it's a vertex
 					float x=Float.parseFloat(tokens[1]);
 					float y=Float.parseFloat(tokens[2]);
-					coords.add(new Vector2D(x, y));
+					//y values must flip
+					coords.add(new Vector2D(x, 1-y));
 				}
 				if (tokens[0].equalsIgnoreCase(OBJ_FACE)){
 					//it's a vertex
