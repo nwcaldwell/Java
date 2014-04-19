@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by williammacfarlane on 4/17/14.
  */
-class HexBoardConstructionCrew {
+class HexBoardConstructionCrew extends BoardConstructionCrew{
 	private static Direction dir = HexDirection.N;
 	public Space buildBoard(String boardFileName) {
 		//BufferedReader br = new BufferedReader(new FileReader(boardFileName));
