@@ -1,6 +1,6 @@
 package models.board;
 
-public class PoolAndBeachVisitor extends TileVisitor {
+public class PoolAndBeachVisitor implements TileVisitor {
 
     public PoolAndBeachVisitor(){
 

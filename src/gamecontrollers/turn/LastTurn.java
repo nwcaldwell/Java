@@ -1,11 +1,10 @@
 package gamecontrollers.turn;
 
-import models.board.Player;
-import view.commands.gameplaycommands.EndTurnCommand;
-
+import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
+import models.palacefestival.JavaPlayer;
 public class LastTurn extends TurnState {
 
-    private Player firstLastTurn;
+    private JavaPlayer firstLastTurn;
     private FinalScoreCalculator scoreCalculator;
     private TurnController turnController;
     private TurnState otherState;

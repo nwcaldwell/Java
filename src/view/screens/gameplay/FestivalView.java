@@ -15,7 +15,7 @@ public class FestivalView extends View {
     private JLabel highestBid;
 
     public FestivalView(ViewController viewC, MediaController mediaC){
-        super(viewC, mediaC);
+        super(viewC);
 
     }
 }

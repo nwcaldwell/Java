@@ -1,15 +1,14 @@
 package gamecontrollers.turn;
 
 import gamecontrollers.commandcreator.GameplayCommandCreator;
-import models.board.Player;
-
+import models.palacefestival.JavaPlayer;
 /**
  * Created by jorgep on 4/14/14.
  */
 public class TurnController {
     private GameplayCommandCreator currentCommandCreator;
     private TurnState turnState;
-    private Player currentPlayer;
+    private JavaPlayer currentPlayer;
 
     public TurnController(){
 
@@ -20,8 +19,8 @@ public class TurnController {
         return 0;
     }
 
-    public Player getCurrentPlayer(){
-        return new Player();
+    public JavaPlayer getCurrentPlayer(){
+        return new JavaPlayer();
     }
 
     public void commitMove(){}
