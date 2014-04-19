@@ -6,9 +6,14 @@ import models.board.Developer;
 import models.board.Direction;
 import models.board.Space;
 
+import java.util.List;
+
 public class DevMoveController extends DeveloperCommandCreator {
     private Space desiredSpace;
+    private Space originalSpace;
     private Developer currentDeveloper;
+    private List<Space> path;
+    private int cost;
 
     public DevMoveController(){
 
@@ -28,7 +33,7 @@ public class DevMoveController extends DeveloperCommandCreator {
         be required to perform the command
      */
     public int getCost(){
-        return 0;
+        return cost;
     }
 
     /*
