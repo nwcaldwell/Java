@@ -1,27 +1,20 @@
 package view.controls;
 
-import java.util.ArrayList;
-
-import view.MediaController;
+import models.board.Board;
+import models.board.HexDirection;
 import view.ViewController;
 
 import javax.swing.*;
-
-import models.board.Board;
-import models.board.HexDirection;
-import models.board.HexSpace;
-import models.board.HexTileComponent;
+import java.util.ArrayList;
 
 //TODO [Sydney Christopher] [Jorge]
 
 public abstract class BoardView extends JPanel {
-    
-	protected MediaController mediaC;
+
 	protected ViewController viewC;
-	protected Board<HexSpace, HexTileComponent, HexDirection> board;
-    
-    public BoardView(ViewController vc, MediaController media, Board<HexSpace, HexTileComponent, HexDirection> board){
-        this.mediaC = media;
+	protected Board board;
+
+    public BoardView(ViewController vc, Board board){
         this.viewC = vc;
         this.board = board;
     }
@@ -30,8 +23,8 @@ public abstract class BoardView extends JPanel {
     public abstract void update();
     
     /**draws a hilighted space*/
-    public abstract void hilightSpace(ArrayList<HexDirection> dir, int height);
+    public abstract void hilightSpace(ArrayList<HexDirection> path, int height);
     
     /**draws a developer*/
-    public abstract void displayDev(ArrayList<HexDirection> dir);
+    public abstract void displayDev(ArrayList<HexDirection> path, int height);
 }

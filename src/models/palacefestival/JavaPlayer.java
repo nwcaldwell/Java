@@ -59,5 +59,11 @@ public class JavaPlayer {
         return this.palaceCards;
     }
 
+    public void drawCard(PalaceCard card) {
+        palaceCards.add(card);
+    }
 
+    public void takeBackCard(PalaceCard card){
+        palaceCards.remove(card);
+    }
 }
