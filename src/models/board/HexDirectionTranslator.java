@@ -1,6 +1,6 @@
 package models.board;
 
-import javafx.util.Pair;
+import models.Pair;
 
 import java.util.HashMap;
 

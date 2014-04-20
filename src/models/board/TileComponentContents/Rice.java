@@ -1,4 +1,7 @@
-package models.board;
+package models.board.TileComponentContents;
+
+import models.board.TileVisitor;
+import models.board.Walkable;
 
 public class Rice extends Walkable {
     @Override

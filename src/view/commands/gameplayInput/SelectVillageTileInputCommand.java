@@ -4,7 +4,7 @@ package view.commands.gameplayInput;
 import gamecontrollers.Facade;
 import models.board.HexDirection;
 import models.board.TileComponent;
-import models.board.Village;
+import models.board.TileComponentContents.Village;
 import view.commands.InputCommand;
 
 public class SelectVillageTileInputCommand implements InputCommand {

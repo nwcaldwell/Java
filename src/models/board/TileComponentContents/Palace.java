@@ -1,4 +1,8 @@
-package models.board;
+package models.board.TileComponentContents;
+
+import models.board.NotWalkable;
+import models.board.TilePlacementVisitor;
+import models.board.TileVisitor;
 
 public class Palace extends NotWalkable {
 	

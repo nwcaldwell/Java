@@ -7,7 +7,12 @@ import java.util.Iterator;
 public enum HexDirection implements Direction, Iterable<Direction>{
 	N,NE,SE,S,SW,NW;
 	static BoardConstructionCrew preferredBoardConstructionCrew = new HexBoardConstructionCrew();
+	static TileConstructionCrew preferredTileConstructionCrew = new HexTileConstructionCrew();
 
+	@Override
+	public TileConstructionCrew getPreferredTileConstructionCrew() {
+		return preferredTileConstructionCrew;
+	}
 	@Override
 	public BoardConstructionCrew getPreferredBoardConstructionCrew() {
 		return preferredBoardConstructionCrew;

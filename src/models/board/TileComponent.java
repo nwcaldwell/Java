@@ -8,9 +8,11 @@ public class TileComponent {
     private Direction direction;
     private TileComponent[] conjoinedParts;
 
-    public TileComponent(Direction d, TileComponentContent tcc){
+
+
+	//Facade should NOT call this line. Only TileConstructionCrews.
+    public TileComponent(Direction d, TileComponentContent tileComponentContent){
         this.direction = d;
-        conjoinedParts = new TileComponent[d.numDirections()];
 	    this.tcc = tcc;
     }
 	
@@ -20,6 +22,10 @@ public class TileComponent {
 	public boolean siblingExists(Direction direction)
 	{
 		return (conjoinedParts[direction.getIntValue()] != null) ? true : false;
+	}
+	public void setSiblings(TileComponent[] siblings)
+	{
+		conjoinedParts = siblings;
 	}
 	public void rotateAround(TileComponent tileComponent){ //The tileComponent passed in does NOT have to be a center
 		rotate(tileComponent, new HashSet<TileComponent>());

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class TilePlacementCommandCreator extends TileCommandCreator {
 	private Space currentSpace;
-	private TileComponent currentTile;
+	private TileComponent currentTileComponent;
     private ArrayList<TilePlacementRule> rules;
     private int cost;
 
@@ -22,9 +22,9 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
      CONSTRUCTORS
   ========================================================================
    */
-	public TilePlacementCommandCreator(Space currentSpace, TileComponent currentTile) {
+	public TilePlacementCommandCreator(Space currentSpace, TileComponent currentTileComponent) {
 		this.currentSpace = currentSpace;
-		this.currentTile = currentTile;
+		this.currentTileComponent = currentTileComponent;
 	}
 
     /*
@@ -43,12 +43,12 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         notifyRules();
 	}
 
-	public TileComponent getCurrentTile() {
-		return currentTile;
+	public TileComponent getCurrentTileComponent() {
+		return currentTileComponent;
 	}
 
-	public void setCurrentTile(TileComponent currentTile) {
-		this.currentTile = currentTile;
+	public void setCurrentTileComponent(TileComponent currentTileComponent) {
+		this.currentTileComponent = currentTileComponent;
         //update rules
         notifyRules();
 	}
@@ -67,7 +67,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
 	}
 	
 	public void rotateCurrentTileComponent() {
-		currentTile.rotateAround(currentTile);
+		currentTileComponent.rotateAround(currentTileComponent);
         notifyRules();
 	}
 
@@ -77,7 +77,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
     */
     public GameplayActionCommand getCommand(){
 
-        GameplayActionCommand command = new PlaceTileCommand(currentTile, currentSpace);
+        GameplayActionCommand command = new PlaceTileCommand(currentTileComponent, currentSpace);
 
         return command;
     }
