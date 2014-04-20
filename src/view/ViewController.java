@@ -77,6 +77,7 @@ public class ViewController {
 
         //get the listeners from the view
         currentListeners = currentView.getJavaKeyListeners();
+        System.out.println(currentListeners.size());
 
         // Add listeners of the new view
         for ( JavaKeyListener listener : currentListeners ) {

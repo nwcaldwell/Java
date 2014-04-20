@@ -3,6 +3,7 @@ package view;
 import view.commands.JavaKeyListener;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 
@@ -25,6 +26,7 @@ public abstract class View extends JPanel {
     protected View( ViewController viewC ) {
         super(new BorderLayout());
         viewController = viewC;
+        keyListeners = new ArrayList<JavaKeyListener>();
     }
 
     /*
