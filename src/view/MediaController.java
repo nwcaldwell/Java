@@ -75,6 +75,7 @@ public class MediaController {
 
         try
         {
+        	System.out.println(getClass().getResource(STRINGS_FILE_NAME));
             BufferedReader br = new BufferedReader(new FileReader( getClass().getResource(STRINGS_FILE_NAME).getPath() )  );
             String currentLine;
             int splitIndex;
@@ -133,6 +134,7 @@ public class MediaController {
         File newFile;
 
         try {
+        	System.out.println(getClass().getResource( "/" + filepath ).getPath());
             newFile = new File( getClass().getResource( "/" + filepath ).getPath() );
 
             if (newFile == null) {

@@ -22,7 +22,7 @@ public class LWJGLBoardViewTest {
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		board=new Board(HexDirection.N, "guessworkBoard.txt");
+		board=new Board(HexDirection.N, "board.txt");
 		viewController=new ViewController();
 		view = new LWJGLBoardView(board);
 		frame.add(view);
