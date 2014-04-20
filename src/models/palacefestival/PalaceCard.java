@@ -37,4 +37,13 @@ public class PalaceCard {
 
         return points;
     }
+
+    @Override
+    public String toString() {
+        String toString = "palaceCard";
+        for(Symbol sym : symbols){
+            toString.concat("_"+sym.toString());
+        }
+        return toString;
+    }
 }
