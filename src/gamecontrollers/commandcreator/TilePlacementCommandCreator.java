@@ -13,7 +13,7 @@ import models.board.TileComponent;
 
 import java.util.ArrayList;
 
-public class TilePlacementController extends TileCommandCreator {
+public class TilePlacementCommandCreator extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
     private ArrayList<TilePlacementRule> rules;
@@ -27,11 +27,13 @@ public class TilePlacementController extends TileCommandCreator {
      CONSTRUCTORS
   ========================================================================
    */
-	public TilePlacementController(TurnController controller, SharedResources resources) {
+
+	public TilePlacementCommandCreator(TurnController controller, SharedResources resources) {
         this.controller = controller;
         visitor = new TileCreationVisitor(controller, resources);
         this.resources = resources;
-	}
+    }
+
 
     /*
    ========================================================================
