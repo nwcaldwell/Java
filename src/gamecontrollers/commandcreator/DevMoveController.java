@@ -58,6 +58,10 @@ public class DevMoveController extends DeveloperCommandCreator {
         return cost;
     }
 
+    public List<Space> getPath(){
+        return path;
+    }
+
     public Response setCurrentDeveloper(){
         Response response = new Response();
 
@@ -77,6 +81,8 @@ public class DevMoveController extends DeveloperCommandCreator {
         //return the response
         return response;
     }
+
+
 
    /*
   ========================================================================
@@ -98,10 +104,10 @@ public class DevMoveController extends DeveloperCommandCreator {
         updateState();
     }
 
-    public Response checkPossible(){
+    public Response checkPossible() {
         Response response = new Response();
 
-        for(Rule rool : rules) {
+        for (Rule rool : rules) {
             response.addMessage(rool.getErrorMessage());
         }
         return response;

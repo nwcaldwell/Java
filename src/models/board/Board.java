@@ -59,4 +59,13 @@ public class Board  {
 		return null;
 	}
 
+    public boolean hasDeveloperOn(Space s){
+        for(Developer dev : developers){
+            if(dev.getSpace() == s)
+                return true;
+        }
+
+        return false;
+    }
+
 }
