@@ -1,5 +1,18 @@
 package view.commands;
 
-public interface InputCommand {
-    public  void execute();
+import view.ViewController;
+
+public abstract class InputCommand {
+
+    private ViewController viewController;
+
+    public InputCommand(ViewController viewController) {
+        this.viewController = viewController;
+    }
+
+    public abstract void execute();
+
+    protected ViewController getViewController(){
+        return viewController;
+    }
 }

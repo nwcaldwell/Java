@@ -1,15 +1,17 @@
 package view.commands.gameplayInput;
 
+import view.ViewController;
 import view.commands.InputCommand;
-import view.screens.gameplay.GameplayView;
 
 // TODO verify is need
-public abstract class GameplayInputCommand implements InputCommand {
+public abstract class GameplayInputCommand extends InputCommand {
 
-    private GameplayView view;
+    public GameplayInputCommand(ViewController viewController) {
+        super(viewController);
+    }
 
     @Override
     public void execute() {
-        view.update();
+        getViewController().update();
     }
 }
