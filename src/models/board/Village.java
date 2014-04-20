@@ -1,6 +1,10 @@
 package models.board;
 
 public class Village extends Walkable {
+
+    public Village(){
+        setCanAcceptPalace(true);
+    }
 	
 	public void accept(TilePlacementVisitor v) {
 		v.visit(this);
@@ -9,5 +13,9 @@ public class Village extends Walkable {
     @Override
     public void accept(TileVisitor v) {
         throw new UnsupportedOperationException();
+    }
+
+    public boolean canAcceptPalace(Palace p){
+        return getCanAcceptPalace();
     }
 }

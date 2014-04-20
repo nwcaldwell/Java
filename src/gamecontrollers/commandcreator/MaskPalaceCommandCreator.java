@@ -111,6 +111,10 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
         return response;
     }
 
+    public Space getSpace(){
+        return desiredSpace;
+    }
+
 
    /*
   ========================================================================
