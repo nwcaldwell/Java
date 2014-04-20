@@ -106,18 +106,42 @@ public class ModelFactory {
 					if (fv.length==4){
 						rendType=GL11.GL_QUADS;
 					}
-					if (fv.length>4){
-						rendType=GL11.GL_TRIANGLE_STRIP;
-						System.out.println("trisrip");
-					}
 					try {
-						if (fullTextureData){
-							faces.add(new TexturedFace3D(texture, fv, fc, rendType));
-						}else{
-							faces.add(new Face3D(fv, rendType));
-						}
-						if (fullNormalData){
-							faces.get(faces.size()-1).setNormals(fn);
+						//simple triangulatioin for concave shapes.
+						if (rendType!=GL11.GL_QUADS){
+							for (int i=2;i<fv.length;i++){
+								Vector3D[] triverts=new Vector3D[3];
+								triverts[0]=fv[0];
+								triverts[1]=fv[i-1];
+								triverts[2]=fv[i];
+								if (fullTextureData){
+									Vector2D[] tritex=new Vector2D[3];
+									tritex[0]=fc[0];
+									tritex[1]=fc[i-1];
+									tritex[2]=fc[i];
+									faces.add(new TexturedFace3D(texture, triverts, tritex, rendType));
+								}else{
+									faces.add(new Face3D(triverts, rendType));
+								}
+								if (fullNormalData){
+									Vector3D[] trinorms=new Vector3D[3];
+									trinorms[0]=fv[0];
+									trinorms[1]=fv[i-1];
+									trinorms[2]=fv[i];
+									faces.get(faces.size()-1).setNormals(trinorms);
+								}
+							}
+						} else {
+							for (int i=2;i<fv.length;i++){
+								if (fullTextureData){
+									faces.add(new TexturedFace3D(texture, fv, fc, rendType));
+								}else{
+									faces.add(new Face3D(fv, rendType));
+								}
+								if (fullNormalData){
+									faces.get(faces.size()-1).setNormals(fn);
+								}
+							}
 						}
 					} catch (Exception e) {
 						System.err.println("OBJ file parsing: impossible error: complain to Christopher");
