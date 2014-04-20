@@ -5,6 +5,7 @@ import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import gamecontrollers.rules.Rule;
 import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
+import gamecontrollers.turn.TurnController;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
@@ -15,6 +16,7 @@ public class TilePlacementController extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
     private ArrayList<TilePlacementRule> rules;
+    private TurnController controller;
     private int cost;
 
     /*
@@ -22,9 +24,8 @@ public class TilePlacementController extends TileCommandCreator {
      CONSTRUCTORS
   ========================================================================
    */
-	public TilePlacementController(Space currentSpace, TileComponent currentTile) {
-		this.currentSpace = currentSpace;
-		this.currentTile = currentTile;
+	public TilePlacementController(TurnController controller) {
+        this.controller = controller;
 	}
 
     /*
@@ -77,7 +78,7 @@ public class TilePlacementController extends TileCommandCreator {
     */
     public GameplayActionCommand getCommand(){
 
-        GameplayActionCommand command = new PlaceTileCommand(currentTile, currentSpace);
+        GameplayActionCommand command = new PlaceTileCommand(currentTile, currentSpace, controller);
 
         return command;
     }

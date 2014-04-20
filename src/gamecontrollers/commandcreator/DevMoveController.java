@@ -28,8 +28,9 @@ public class DevMoveController extends DeveloperCommandCreator {
        CONSTRUCTORS
   ========================================================================
    */
-    public DevMoveController(){
-
+    public DevMoveController(TurnController controller, BoardLogicController logicController){
+        this.turnController = controller;
+        this.logicController = logicController;
     }
 
 
@@ -47,7 +48,7 @@ public class DevMoveController extends DeveloperCommandCreator {
    */
     public DevMoveCommand getCommand(){
 
-        return new DevMoveCommand(currentDeveloper, currentDeveloper.getSpace(), desiredSpace);
+        return new DevMoveCommand(currentDeveloper, currentDeveloper.getSpace(), desiredSpace, turnController);
     }
 
     /*
