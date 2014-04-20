@@ -2,8 +2,8 @@ package gamecontrollers;
 
 import gamecontrollers.commandcreator.DevMoveController;
 import gamecontrollers.commandcreator.TilePlacementController;
-import gamecontrollers.commands.gameplaycommands.PlayPalaceCardCommand;
 import gamecontrollers.palacefestival.FestivalController;
+import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.HistoryChannelController;
 import gamecontrollers.turn.PlanningModeCommandHandler;
 import gamecontrollers.turn.ReplayController;
@@ -26,6 +26,7 @@ public class Facade {
     private TilePlacementController tilePlacementController;
     private BoardLogicController boardLogicController;
     private FestivalController festivalController;
+    private FestivalTurnController festivalTurnController;
     private HistoryChannelController historyChannelController;
     private DevMoveController devMoveController;
     private TurnController turnController;
@@ -43,6 +44,12 @@ public class Facade {
     // start
     public void startGame(List<Pair<String,String>> playersData, String boardFile){
         game = new JavaGame(playersData, boardFile);
+        historyChannelController = new HistoryChannelController(game.getPlayers().length + 1);
+        boardLogicController = new BoardLogicController(game.getBoard());
+        festivalController = new FestivalController(historyChannelController);
+        festivalTurnController = festivalController.getTurnController();
+        devMoveController = new DevMoveController();
+
     }
 
     /*
@@ -127,17 +134,19 @@ public class Facade {
     }
 
     public void tabPalaceCard(){
-        festivalController.tabPalaceCard();
+        festivalTurnController.tabThroughPalaceCards();
     }
 
     public void playPalaceCard(){
-//        PlayPalaceCardCommand cmd = new PlayPalaceCardCommand()
-//        historyChannelController.addCommand();
-//        festivalController.playSelectedPalaceCard();
+        festivalTurnController.playPalaceCard();
     }
 
     public void dropOutOfFestival() {
-//        FestivalController.dropCurrentPlayerFromFestival();
+        festivalTurnController.dropOut();
+    }
+
+    public void endFestivalTurn(){
+        festivalTurnController.endTurn();
     }
 
     public void acceptTieRequest() {
