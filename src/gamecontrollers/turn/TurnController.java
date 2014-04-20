@@ -27,8 +27,7 @@ public class TurnController {
     //This is the order of players in the turn
     private ArrayList<JavaPlayer> turnOrder;
 
-    //Turn rules
-    private List<TurnRule> rules;
+
 
 
     /*
@@ -57,7 +56,7 @@ public class TurnController {
     //Response incase of error
     public Response commitMove(){
         //check this turns rules stuff real quick
-        Response response = checkRules();
+        Response response = turnState.checkRules();
 
 
         //check from CommandCreator if it is possible and add it to current response
@@ -134,14 +133,5 @@ public class TurnController {
    ========================================================================
     */
 
-    private Response checkRules(){
-        Response response = new Response();
-        for(Rule rool : rules){
-            rool.update();
-            response.addMessage(rool.getErrorMessage());
-        }
 
-
-        return response;
-    }
 }

@@ -1,7 +1,12 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
+import gamecontrollers.rules.Rule;
+import gamecontrollers.rules.turnrules.TurnRule;
+
+import java.util.List;
 
 public abstract class TurnState {
     private int actionPoints;
@@ -10,6 +15,12 @@ public abstract class TurnState {
     private int numTilesPlaced;
     private int numCardsDrawn;
     private int numExtraActionTokensUsed;
+    private int maxCardsDrawn;
+    private int minTilesPlaced;
+    private int maxExtraActionTokensPlayed;
+    //Turn rules
+    private List<TurnRule> rules;
+
 
     /*
    ========================================================================
@@ -17,12 +28,8 @@ public abstract class TurnState {
    ========================================================================
     */
 
-    //return number of action points
-    //This takes into account if you can end your turn
-    //return false unless canEndTurn has been set to true
-    public boolean hasEnoughActionPoints( int i ){
-        return actionPoints <= i && canEndTurn;
-    }
+
+
 
     //increase action points for Extra action tokens or undo
     public void increaseActionPoints( int i ){
@@ -60,6 +67,9 @@ public abstract class TurnState {
 
     public abstract boolean canDrawCard();
     public abstract boolean canPlayExtraActionToken();
+    public abstract boolean hasEnoughActionPoints( int i );
+
+
 
     //clears out turn state for next action
     public abstract void clear();
@@ -104,31 +114,81 @@ public abstract class TurnState {
         numExtraActionTokensUsed--;
     }
 
+    protected void setMaxCardsPerTurn(int i){
+        this.maxCardsDrawn = i;
+    }
+    protected void setMaxExtraActionTokensPerTurn(int i){
+        this.maxExtraActionTokensPlayed = i;
+    }
+    protected void setMinTilesPlacePerTurn(int i){
+        this.minTilesPlaced = i;
+    }
+
     protected void clearCounters() {
         numTilesPlaced = 0;
         numCardsDrawn = 0;
         numExtraActionTokensUsed = 0;
     }
 
+    /*
+        RULE METHODS
+     */
+
+    protected void setRules(List<TurnRule> rules){
+        this.rules = rules;
+    }
+
+    protected void addRules(TurnRule ... rules){
+        for(TurnRule rool : rules){
+            this.rules.add(rool);
+        }
+    }
+
+    protected void notifyRules(){
+        for(Rule rool : rules){
+            rool.update();
+        }
+    }
+
+    public Response checkRules(){
+        Response response = new Response();
+
+        for(Rule rool : rules){
+            response.addMessage(rool.getErrorMessage());
+        }
+
+        return response;
+    }
+
      /*
     ========================================================================
-        PROTECTED GET METHODS
+        PUBLIC GET METHODS
     ========================================================================
      */
 
-    protected int getNumExtraActionTokensUsed(){
+    public int getNumExtraActionTokensUsed(){
         return numExtraActionTokensUsed;
     }
 
-    protected int getActionPoints(){
+    public int getActionPoints(){
         return actionPoints;
     }
 
-    protected int getNumTilesPlaced(){
+    public int getNumTilesPlaced(){
         return numTilesPlaced;
     }
 
-    protected int getNumCardsDrawn(){
+    public int getNumCardsDrawn(){
         return numCardsDrawn;
+    }
+
+    public int getMaxCardsPerTurn(){
+        return maxCardsDrawn;
+    }
+    public int getMaxExtraActionTokensPerTurn(){
+        return maxExtraActionTokensPlayed;
+    }
+    public int getMinTilesPlacePerTurn(){
+        return minTilesPlaced;
     }
 }

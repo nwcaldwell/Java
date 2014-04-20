@@ -3,8 +3,15 @@ package gamecontrollers.turn;
 import gamecontrollers.BoardLogicController;
 import gamecontrollers.commands.gameplaycommands.EndFinalTurnCommand;
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
+import gamecontrollers.rules.turnrules.CardsDrawnPerTurnRule;
+import gamecontrollers.rules.turnrules.ExtraActionTokensPlayedPerTurn;
+import gamecontrollers.rules.turnrules.NotEnoughActionPointsRule;
+import gamecontrollers.rules.turnrules.TurnRule;
 import models.board.SharedResources;
 import models.palacefestival.JavaPlayer;
+
+import java.util.ArrayList;
+
 public class LastTurn extends TurnState {
 
     private JavaPlayer firstLastTurn;
@@ -19,6 +26,12 @@ public class LastTurn extends TurnState {
     private int maxExtraActionTokensPlayed = 1;
     private int defaultActionPoints = 6;
     private int maxTilesForThisState = 0;
+    private int minTilesForThisState = 0;
+
+    //My own private rules? you shouldnt have
+    private CardsDrawnPerTurnRule cardRule;
+    private NotEnoughActionPointsRule actionPointsRule;
+    private ExtraActionTokensPlayedPerTurn extraTokens;
 
 
     /*
@@ -37,6 +50,18 @@ public class LastTurn extends TurnState {
         turnController = tc;
         resources = sr;
         otherState = ts;
+
+        setMaxCardsPerTurn(maxCardsDrawn);
+        setMaxExtraActionTokensPerTurn(maxExtraActionTokensPlayed);
+        setMinTilesPlacePerTurn(minTilesForThisState);
+
+        //instantiate rules and set them in rules list
+        cardRule = new CardsDrawnPerTurnRule(this);
+        actionPointsRule = new NotEnoughActionPointsRule(this, turnController);
+        extraTokens = new ExtraActionTokensPlayedPerTurn(this);
+
+        //set rules list
+        addRules(cardRule, actionPointsRule, extraTokens);
     }
 
 
@@ -59,26 +84,24 @@ public class LastTurn extends TurnState {
 
     public void playExtraActionToken(){
         extraActionTokenUsed();
+        updateState();
     }
 
     public void returnExtraActionToken(){
-        extraActionTokenUsed();
+        extraActionTokenPutBack();
+        updateState();
     }
 
     public void drawCard(){
         cardDrawn();
+        updateState();
     }
 
     public void returnCard(){
         cardPutBack();
+        updateState();
     }
 
-    public boolean canDrawCard(){
-        return getNumCardsDrawn() < maxCardsDrawn;
-    }
-    public boolean canPlayExtraActionToken(){
-        return getNumExtraActionTokensUsed() < maxExtraActionTokensPlayed;
-    }
 
     public void clear(){
         setActionPoints(defaultActionPoints);
@@ -94,11 +117,36 @@ public class LastTurn extends TurnState {
 
     /*
   ========================================================================
+     RULE CHECKING METHODS
+  ========================================================================
+   */
+
+    public boolean canDrawCard(){
+        return cardRule.getValidity();
+    }
+
+    public boolean canPlayExtraActionToken(){
+        return extraTokens.getValidity();
+    }
+
+    public boolean hasEnoughActionPoints(int i){
+        return actionPointsRule.getValidity() && canEndTurn();
+    }
+
+    /*
+  ========================================================================
      PRIVATE METHODS
   ========================================================================
    */
 
+
+
     private void updateState(){
+        notifyRules();
+        updateControllerState();
+    }
+
+    private void updateControllerState(){
         if(resources.getNumThreeTiles() > maxTilesForThisState){
             turnController.setTurnState(otherState);
         }

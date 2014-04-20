@@ -2,19 +2,22 @@ package gamecontrollers.rules.turnrules;
 
 import gamecontrollers.Message;
 import gamecontrollers.turn.TurnController;
+import gamecontrollers.turn.TurnState;
 
 /**
  * Created by kevinnieman on 4/14/14.
  */
 public class NotEnoughActionPointsRule extends TurnRule {
-    private TurnController controller;
+    TurnController controller;
+    private TurnState turn;
     private Message message;
 
-    NotEnoughActionPointsRule(TurnController controller){
+    public NotEnoughActionPointsRule(TurnState turnState, TurnController controller){
+        this.turn = turnState;
         this.controller = controller;
     }
     public void update(){
-        if(controller.hasEnoughActionPoints(controller.getCost())){
+        if(turn.hasEnoughActionPoints(controller.getCost())){
             message = new Message("You can totally do this man", false);
             setValidity(true);
         }
@@ -25,6 +28,6 @@ public class NotEnoughActionPointsRule extends TurnRule {
 
     }
     public Message getErrorMessage(){
-        return null;
+        return message;
     }
 }
