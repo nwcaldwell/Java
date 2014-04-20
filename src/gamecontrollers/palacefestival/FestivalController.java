@@ -52,6 +52,11 @@ public class FestivalController {
         //check if the bid is higher than the highest bid in the model, if so update it
     }
 
+    public void tabPalaceCard(){
+        //tell the turn controller to increment the current player's palace card
+        turnController.tabThroughPalaceCards();
+    }
+
     public void dropOutOfFestival(){
         //mark the user as being dropped out
         //increment to the next players turn
