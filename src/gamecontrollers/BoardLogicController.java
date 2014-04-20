@@ -9,6 +9,8 @@ import java.util.*;
 public class BoardLogicController {
 	private Board board;
 	private int numTiles;
+    private DevMoveController devMoveController;
+
 	public BoardLogicController(Board board) {
 		numTiles = getAllSpaces().size();
 		this.board = board;
@@ -66,6 +68,7 @@ public class BoardLogicController {
 				}
 			}
 		}
+        return internals;
 	}
 
 	//Assuming the board is a connected graph...

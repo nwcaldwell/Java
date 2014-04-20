@@ -1,7 +1,7 @@
 package gamecontrollers;
 
-import gamecontrollers.commandcreator.DevMoveController;
-import gamecontrollers.commandcreator.TilePlacementController;
+import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
+import gamecontrollers.commandcreator.TilePlacementCommandCreator;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.turn.HistoryChannelController;
 import gamecontrollers.turn.PlanningModeCommandHandler;
@@ -25,11 +25,11 @@ public class Facade {
 
     private static Facade FacadeInstance = new Facade();
     private JavaGame game;
-    private TilePlacementController tilePlacementController;
+    private TilePlacementCommandCreator tilePlacementCommandCreator;
     private BoardLogicController boardLogicController;
     private FestivalController festivalController;
     private HistoryChannelController historyChannelController;
-    private DevMoveController devMoveController;
+    private DeveloperMovementCommandCreator developerMovementCommandCreator;
     private TurnController turnController;
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;

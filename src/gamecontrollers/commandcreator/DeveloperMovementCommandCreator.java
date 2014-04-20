@@ -14,7 +14,7 @@ import models.board.Space;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DevMoveController extends DeveloperCommandCreator {
+public class DeveloperMovementCommandCreator extends DeveloperCommandCreator {
     private Space desiredSpace;
     private Developer currentDeveloper;
     private List<Space> path;
@@ -28,7 +28,7 @@ public class DevMoveController extends DeveloperCommandCreator {
        CONSTRUCTORS
   ========================================================================
    */
-    public DevMoveController(){
+    public DeveloperMovementCommandCreator(){
 
     }
 
