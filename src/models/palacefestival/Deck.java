@@ -19,6 +19,8 @@ public class Deck {
    */
 
     public DeckMemento createMemento(){
+        //make sure to never save an empty deck!
+        checkEmpty();
         return new DeckMemento(this.library, this.graveyard, this.festivalCard);
     }
 
@@ -43,9 +45,7 @@ public class Deck {
     //Assuming that this will never be called without
     //checking deckEmpty()
     public PalaceCard drawFromDeck(){
-        if(library.checkIfEmpty()){
-            library.shuffle(graveyard.getDiscardedCards());
-        }
+
         return library.draw();
     }
 
@@ -74,6 +74,7 @@ public class Deck {
     //TODO implement check for empty deck that is undoable in command
     public PalaceCard drawFestivalCard(){
         PalaceCard fest = festivalCard;
+        //not checking for empty, shouldnt be a problem
         festivalCard = library.draw();
         return fest;
     }
@@ -85,6 +86,21 @@ public class Deck {
     public void returnFestivalCard(PalaceCard card){
         library.returnCard(festivalCard);
         this.festivalCard = card;
+    }
+
+    /*
+  ========================================================================
+     PRIVATE METHODS
+  ========================================================================
+   */
+
+    //checks if there are no cards in the library
+    //if so fix that
+    //Enforces that there will always be cards in the library to draw
+    private void checkEmpty(){
+        if(deckEmpty()){
+            library.shuffle(graveyard.getDiscardedCards());
+        }
     }
 
 }

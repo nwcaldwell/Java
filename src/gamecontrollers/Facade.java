@@ -62,6 +62,7 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
+    // regular game methods
     public void placeTileComponent(TileComponent tileComponent) {
         throw new UnsupportedOperationException();
     }
@@ -79,6 +80,10 @@ public class Facade {
     }
 
     public void planCommand(){
+        throw new UnsupportedOperationException();
+    }
+
+    public void endTurn() {
         throw new UnsupportedOperationException();
     }
 
@@ -104,12 +109,16 @@ public class Facade {
         return false;
     }
 
-    // Festival Methods
-    public void askForPalaceFestivalTie(){
+    public void startPlacingTile(TileComponent tileComponent) {
         throw new UnsupportedOperationException();
     }
 
-    public void ASkForPalaceFestivalTie() {
+    // Festival Methods
+    public void startFestival() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void askForPalaceFestivalTie(){
         throw new UnsupportedOperationException();
     }
 
