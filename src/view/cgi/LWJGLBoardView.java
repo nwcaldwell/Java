@@ -79,7 +79,7 @@ public class LWJGLBoardView extends BoardView{
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
 	
 	/**for perspective, the translation of the scene*/
-	private Vector3D sceneTranslation;
+	private Vector3D sceneTranslation=new Vector3D(0, 0, 0);
 	/**for perspective, the yaw of the scene*/
 	private double sceneYaw=0;
 	/**for perspective, the pitch of the scene*/
@@ -127,8 +127,8 @@ public class LWJGLBoardView extends BoardView{
 		glEnable(GL_NORMALIZE);
 		//enable face culling, so only the front of a shape is rendered
 		//EASY way to optimize
-		glCullFace(GL_FRONT);
-		glEnable(GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+		//glEnable(GL_CULL_FACE);
 
 		glClearColor(0.5f, 0, 0, 1);
 		
@@ -145,19 +145,34 @@ public class LWJGLBoardView extends BoardView{
 				TextureFactory.getTexture("resources/3Dobjects/rice_hex_texture.png"));
 		this.rice=new Model3D(riceHex);
 		this.buriedSpace=new Model3D(riceHex);
-		buriedSpace.setRotation(0, 30, 0);
+		this.buriedSpace.setRotation(0, 30, 0);
 		this.highland=new Model3D(riceHex);
-		highland.setRotation(0, 30, 0);
+		this.highland.setRotation(0, 30, 0);
 		this.lowland=new Model3D(riceHex);
-		lowland.setRotation(0, 30, 0);
+		this.lowland.setRotation(0, 30, 0);
 		this.ground=new Model3D(riceHex);
-		ground.setRotation(0, 30, 0);
+		this.ground.setRotation(0, 30, 0);
 		Model3D villageHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
 				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
 		Model3D village=ModelFactory.makeFromObj(new File("resources/3Dobjects/village.obj"), 
 				TextureFactory.getTexture("resources/3Dobjects/village_texture.png"));
 		this.village=new Model3D(village,villageHex);
 		this.village.setRotation(0, 30, 0);
+		Model3D irrigationHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
+		this.irrigation=new Model3D(irrigationHex);
+		this.irrigation.setRotation(0, 30, 0);
+
+		Model3D palaceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		for (int i=0;i<palace.length;i++){
+			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
+					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
+			//Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
+			//		TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+			palace[i]=new Model3D(palaceHex,model);//,number);
+			palace[i].setRotation(0, 30, 0);
+		}
 	}
 	
 	@Override
@@ -205,7 +220,7 @@ public class LWJGLBoardView extends BoardView{
 	private void updateSpace(Space space, Vector2D offset){
 
 		if (space.getHeight()==0){
-			Model3D terrain=ground.clone();//buriedSpace.clone();
+			Model3D terrain=palace[4].clone();//buriedSpace.clone();
 			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
 			spaces.add(terrain);
 		}
@@ -244,10 +259,10 @@ public class LWJGLBoardView extends BoardView{
 		
 		//things too close will not be rendered
 		glTranslated(0, 0, -(CANVAS_FAR+CANVAS_NEAR)/2);
-		
-		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 
 		glScaled(sceneScale, sceneScale, sceneScale);
+		
+		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 		
 		glRotated(scenePitch, 1, 0, 0);
 		
