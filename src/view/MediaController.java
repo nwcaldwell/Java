@@ -2,28 +2,31 @@ package view;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 
 //TODO [Jorge][Sydney]
 
 public class MediaController {
 
-    private HashMap<String, String> stringTemplates;
-    private HashMap<String, BufferedImage> loadedImages;
-    // TODO implement private HashMap<String, Audio> loadedAudio
-    // TODO implement private HashMap<String, 3DModel> loaded3DModel
+    private static MediaController mediaControllerInstance = new MediaController();
+    private HashMap<String, String> stringTemplates = new HashMap<String,String>();
+    private HashMap<String, BufferedImage> loadedImages = new HashMap<String, BufferedImage>();
+    private HashMap<String,File> loadedFiles  = new HashMap<String, File>();
+    private static final String STRINGS_FILE_NAME = "/strings.txt";
+    private static final String IMGS_FOLDER = "/imgs/";
 
-    public MediaController() {
+    private MediaController() {
         initStrings();
+    }
+
+    public static MediaController getInstance() {
+        return mediaControllerInstance;
     }
 
     public String getString( String alias, Object... data) {
 
-        String stringTemplate = null;
+        String stringTemplate;
 
         try
         {
@@ -55,12 +58,24 @@ public class MediaController {
         return img;
     }
 
+    public File getFile( String fileName ) {
+
+        File file = loadedFiles.get( fileName );
+
+        if( file == null )
+        {
+            loadFile(fileName);
+            file = loadedFiles.get(fileName);
+        }
+
+        return file;
+    }
+
     private void initStrings() {
 
         try
         {
-            // TODO modify the file location for the project
-            BufferedReader br = new BufferedReader(new FileReader("strings.txt"));
+            BufferedReader br = new BufferedReader(new FileReader( getClass().getResource(STRINGS_FILE_NAME).getPath() )  );
             String currentLine;
             int splitIndex;
             String stringAlias;
@@ -99,9 +114,7 @@ public class MediaController {
         BufferedImage newImage;
 
         try {
-
-            // TODO modify the file location for the project
-            InputStream imgInput = getClass().getResourceAsStream( imgName );
+            InputStream imgInput = getClass().getResourceAsStream( IMGS_FOLDER + imgName );
             newImage  = ImageIO.read( imgInput );
 
             if (newImage == null) {
@@ -110,6 +123,24 @@ public class MediaController {
             }
 
             loadedImages.put( imgName, newImage );
+
+        } catch (Exception e) {
+            System.out.println( e.getMessage() );
+        }
+    }
+
+    private void loadFile(String filepath) {
+        File newFile;
+
+        try {
+            newFile = new File( getClass().getResource( "/" + filepath ).getPath() );
+
+            if (newFile == null) {
+
+                throw new Exception( "No image found with the name:" + filepath );
+            }
+
+            loadedFiles.put( filepath, newFile );
 
         } catch (Exception e) {
             System.out.println( e.getMessage() );

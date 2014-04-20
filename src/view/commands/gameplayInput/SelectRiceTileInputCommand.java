@@ -1,11 +1,16 @@
 // TODO developer [ Kevin ], test [ Sydney ]
 package view.commands.gameplayInput;
 
+import view.ViewController;
 import view.commands.InputCommand;
 
-public class SelectRiceTileInputCommand implements InputCommand {
+public class SelectRiceTileInputCommand extends InputCommand {
 
-	@Override	public void execute() {
+    public SelectRiceTileInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override	public void execute() {
 		throw new UnsupportedOperationException();
 	}
 }

@@ -1,5 +1,6 @@
 package gamecontrollers.rules.palacefestivaladmissionrules;
 
+import gamecontrollers.Message;
 import gamecontrollers.rules.palacefestivaladmissionrules.PalaceFestivalAdmissionRule;
 
 /**
@@ -12,7 +13,7 @@ public class PlayerHasAtLeastOneDeveloperInFestivalCity extends PalaceFestivalAd
 	}
 
 	@Override
-	public String getErrorMessage() {
+	public Message getErrorMessage() {
 		throw new UnsupportedOperationException();
 	}
 }

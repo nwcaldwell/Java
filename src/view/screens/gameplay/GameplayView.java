@@ -1,43 +1,116 @@
 package view.screens.gameplay;
 
-import view.*;
-import view.controls.ConsoleView;
+import gamecontrollers.Facade;
+import models.board.JavaGame;
+import models.palacefestival.JavaPlayer;
+import view.View;
+import view.ViewController;
+import view.cgi.LWJGLBoardView;
 import view.controls.BoardView;
+import view.controls.ConsoleView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
-
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 //TODO [Sydney][Jorge]
 
-public class GameplayView extends View {
+public abstract class GameplayView extends View {
+    private static final int BORDER = 10;
+    protected ConsoleView consoleView;
+    protected ArrayList<PlayerView> playerViews;
+    //protected BoardView boardView;
+    protected SharedResourcesView sharedResourcesView;
+    protected JPanel playerContainer;
+    protected JPanel toggleButtonContainer;
+    private JavaGame game;
 
-    private ConsoleView consoleView;
-    private List<PlayerView> playerViews;
-    private BoardView boardView;
-    private SharedResourcesView sharedResourcesView;
+    protected GameplayView(ViewController viewC) {
+        super(viewC);
+        game = Facade.getInstance().getGame();
+    }
 
-    protected GameplayView(ViewController viewC, MediaController mediaC) {
-        super(viewC, mediaC);
+    //this method sets up the default layout for the board
+    public void init(){
+        //create the attributes
+        consoleView = new ConsoleView();
+        playerViews = new ArrayList<PlayerView>();
+        //boardView = new LWJGLBoardView(game.getBoard()); //TODO get this working properly
+        sharedResourcesView = new SharedResourcesView();
+
+        //setup view
+        setBackground(Color.WHITE);
+        setBorder(new EmptyBorder(BORDER, BORDER, BORDER, BORDER));
+
+        //this is the left side of the screen, needs to somehow conform to the size of the screen
+        JPanel leftSide = new JPanel();
+        leftSide.setPreferredSize(new Dimension(this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
+        leftSide.setBackground(Color.WHITE);
+
+        //the shared resources and the console are on the left panel. add them in the respective order
+        toggleButtonContainer = new JPanel();
+        leftSide.add(sharedResourcesView);
+        sharedResourcesView.add(toggleButtonContainer);
+        leftSide.add(consoleView);
+        add(leftSide, BorderLayout.WEST);
+
+        //the player views need to have something to encapsulate them all
+        playerContainer = new JPanel();
+        playerContainer.setMinimumSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, this.getScreenHeight()/4- BORDER));
+
+        for(int i = 0; i < game.getPlayers().length; i++){
+            PlayerView player = new PlayerView(game.getPlayers()[i].getColor());
+            this.addPlayerView(player);
+        }
+
+        //this includes the BoardView and the Player Views
+        JPanel rightSide = new JPanel();
+        rightSide.setPreferredSize(new Dimension(3 * this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
+        rightSide.setBackground(Color.WHITE);
+        //rightSide.add(boardView);
+        rightSide.add(playerContainer);
+
+        add(rightSide, BorderLayout.EAST);
+
     }
 
     protected ConsoleView getConsoleView() {
         return consoleView;
     }
 
-    protected List<PlayerView> getPlayerViews() {
+    protected ArrayList<PlayerView> getPlayerViews() {
         return playerViews;
     }
 
-    protected BoardView getBoardView() {
-        return boardView;
-    }
+//    protected BoardView getBoardView() {
+//        return boardView;
+//    }
 
     protected SharedResourcesView getSharedResourcesView() {
         return sharedResourcesView;
     }
 
-    protected void addPlayerView( PlayerView playerView ) {
-        playerViews.add( playerView );
+    protected void addPlayerView(PlayerView player) {
+        //add the playerview to the player array list
+        playerViews.add( player );
+
+        //add the player to the view in order to display
+        playerContainer.add(player);
     }
+
+    public void update(){
+
+        //boardView.update();
+        sharedResourcesView.update(game.getSharedResources(), game.getDeck());
+        consoleView.update();
+        JavaPlayer[] players = game.getPlayers();
+        for(int i = 0; i < players.length; i++){
+            playerViews.get(i).update(players[i]);
+        }
+
+    }
+
 }

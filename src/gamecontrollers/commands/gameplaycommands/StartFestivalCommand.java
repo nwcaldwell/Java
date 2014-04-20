@@ -1,8 +1,10 @@
 // TODO developer [ Sydney ], test [ Jorge ]
 package gamecontrollers.commands.gameplaycommands;
 
+import gamecontrollers.Facade;
 import gamecontrollers.commands.GameplayActionCommand;
 
+import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.save.CommandSaveVisitor;
 import models.board.Space;
 import models.palacefestival.JavaPlayer;
@@ -19,8 +21,7 @@ public class StartFestivalCommand implements GameplayActionCommand {
         this.festivalCard = fest;
     }
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+	@Override	public void execute() { throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {
 		throw new UnsupportedOperationException();

@@ -1,18 +1,44 @@
 package models.palacefestival;
 
-import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 public class JavaPlayer {
+
+    /*
+    ========================================================================
+      Instance variables
+    ========================================================================
+    */
     private String name;
-    private Color color;
+    private String color;
     private int famePoints;
     private int numDevelopers, numRiceTiles, numVillageTiles, numTwoSpaceTiles;
     private int extraActionTokens;
-    private ArrayList<PalaceCard> palaceCards;
-	
-	public JavaPlayer(){
+    private List<PalaceCard> palaceCards;
 
+    /*
+    ========================================================================
+      Constructor
+    ========================================================================
+    */
+	public JavaPlayer(String playerName,
+                      String  playerColor,
+                      int initialFamePoints,
+                      int initDeveloperCount,
+                      int initialRiceCount,
+                      int initialVillageCount,
+                      int initialTwoSpaceCount,
+                      int initialExtraActionTokenCount){
+        name = playerName;
+        color = playerColor;
+        famePoints = initialFamePoints;
+        numDevelopers = initDeveloperCount;
+        numRiceTiles = initialRiceCount;
+        numVillageTiles = initialVillageCount;
+        numTwoSpaceTiles = initialTwoSpaceCount;
+        extraActionTokens = initialExtraActionTokenCount;
+        palaceCards = new ArrayList<PalaceCard>();
 	}
 
     // this updates the fame points based on the additional points the player has earned
@@ -27,7 +53,7 @@ public class JavaPlayer {
         return this.name;
     }
 
-    public Color getColor(){
+    public String getColor(){
         return this.color;
     }
 
@@ -55,9 +81,63 @@ public class JavaPlayer {
         return this.extraActionTokens;
     }
 
-    public ArrayList<PalaceCard> getPalaceCards(){
+    public List<PalaceCard> getPalaceCards(){
         return this.palaceCards;
     }
 
+    public void drawCard(PalaceCard card) {
+        palaceCards.add(card);
+    }
 
+    public void takeBackCard(PalaceCard card){
+        palaceCards.remove(card);
+    }
+
+    public void useCard(PalaceCard card){
+        palaceCards.remove(card);
+    }
+
+    public void playExtraActionToken(){
+        extraActionTokens--;
+    }
+
+    public void returnExtraActionToken(){
+        extraActionTokens++;
+    }
+
+    public void playDeveloper(){
+        numDevelopers--;
+    }
+
+    public void returnDeveloper(){
+        numDevelopers++;
+    }
+
+    public void playRice(){
+        numRiceTiles--;
+    }
+
+    public void returnRice(){
+        numRiceTiles++;
+    }
+
+    public void playVillage(){
+        numVillageTiles--;
+    }
+
+    public void returnVillage(){
+        numVillageTiles++;
+    }
+
+    public void playTwoTile(){
+        numTwoSpaceTiles--;
+    }
+
+    public void returnTwoTile(){
+        numTwoSpaceTiles++;
+    }
+
+    public void alterFamePoints(int i){
+        famePoints += i;
+    }
 }

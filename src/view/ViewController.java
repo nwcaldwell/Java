@@ -1,15 +1,13 @@
 package view;
 
+import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-
-//TODO [Jorge][Sydney]
 
 public class ViewController {
 
@@ -18,13 +16,11 @@ public class ViewController {
     private View currentView;
     private JFrame gameWindow;
     private List<JavaKeyListener> currentListeners;
-    private MediaController mediaController;
 
     public ViewController() {
 
         currentView = null;
         currentListeners = new ArrayList<JavaKeyListener>();
-        mediaController = new MediaController();
         gameWindow = new JFrame();
     }
 
@@ -38,7 +34,8 @@ public class ViewController {
         gameWindow.setVisible(true);
 
         // set the game window to the main view
-        setCurrentView( new MainMenuView(this, mediaController));
+        setCurrentView( new MainMenuView(this));
+
 
         // TODO remove this keylistener when the real quit is implemented
         gameWindow.addKeyListener(new KeyListener() {
@@ -54,11 +51,16 @@ public class ViewController {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     System.exit(0);
                 }
             }
         });
+
+
+//        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
+        gameWindow.validate();
+
     }
 
     public void setCurrentView( View newView ) {
@@ -82,6 +84,10 @@ public class ViewController {
         // Update the window
         gameWindow.setContentPane( currentView );
         gameWindow.validate();
+    }
+
+    public void update(){
+        currentView.update();
     }
 
     public void addKeyListener( JavaKeyListener listener ) {

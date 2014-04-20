@@ -1,5 +1,7 @@
 package gamecontrollers.rules.tileplacementrules;
 
+import gamecontrollers.Message;
+
 /**
  * Created by williammacfarlane on 4/15/14.
  */
@@ -11,7 +13,7 @@ public class TilePlacedDirectlyOnTwin extends TilePlacementRule {
 	}
 
 	@Override
-	public String getErrorMessage() {
+	public Message getErrorMessage() {
 		throw new UnsupportedOperationException();
 	}
 }
