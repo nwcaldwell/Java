@@ -16,7 +16,6 @@ public class EndFestivalTurnCommand implements GameplayActionCommand {
 
 	@Override
     public void execute() {
-        Facade.getInstance().endFestivalTurn();
         throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {

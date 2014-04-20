@@ -18,7 +18,6 @@ public class PlayPalaceCardCommand implements GameplayActionCommand {
     }
 
 	@Override	public void execute() {
-        Facade.getInstance().playCard(player, card);
         throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {

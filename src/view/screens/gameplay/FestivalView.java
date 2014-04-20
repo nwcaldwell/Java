@@ -1,5 +1,6 @@
 package view.screens.gameplay;
 
+import gamecontrollers.Facade;
 import view.*;
 import view.controls.FestivalPlayerView;
 
@@ -17,5 +18,12 @@ public class FestivalView extends View {
     public FestivalView(ViewController viewC, MediaController mediaC){
         super(viewC);
 
+    }
+
+    public void update(){
+//        consoleView.update();
+        for(FestivalPlayerView view : playersList){
+            view.update();
+        }
     }
 }

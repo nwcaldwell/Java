@@ -22,8 +22,6 @@ public class EndFestivalCommand implements GameplayActionCommand {
     }
 
 	@Override	public void execute() {
-        Facade.getInstance().endFestival();
-        //TODO - just a little confused about whether the Facade calls the view to change?
         throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {

@@ -21,8 +21,7 @@ public class StartFestivalCommand implements GameplayActionCommand {
         this.festivalCard = fest;
     }
 
-	@Override	public void execute() {
-        Facade.getInstance().startNewFestival(playersEligible, festivalCard, palace);
+	@Override	public void execute() { throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {
 		throw new UnsupportedOperationException();

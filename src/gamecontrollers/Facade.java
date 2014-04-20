@@ -12,6 +12,8 @@ import models.board.Developer;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
+import models.palacefestival.Deck;
+import models.palacefestival.FestivalPlayer;
 import models.palacefestival.JavaPlayer;
 import models.palacefestival.PalaceCard;
 
@@ -41,6 +43,22 @@ public class Facade {
 
     public static Board getBoard(){
         throw new UnsupportedOperationException();
+    }
+
+    public JavaPlayer[] getPlayer(int indexOfPlayer){
+
+    }
+
+    public SharedResources getSharedResources(){
+
+    }
+
+    public Deck getDeck(){
+
+    }
+
+    public FestivalPlayer getFestivalPlayer(int indexOfPlayer){
+        return festivalController.getPlayers();
     }
 
     public void placeTileComponent(TileComponent tileComponent) {

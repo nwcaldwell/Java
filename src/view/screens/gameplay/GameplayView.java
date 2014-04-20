@@ -94,4 +94,14 @@ public abstract class GameplayView extends View {
         //add the player to the view in order to display
         playerContainer.add(player);
     }
+
+    public void update(){
+        //boardView.update(); TODO
+        sharedResourcesView.update();
+        consoleView.update();
+        for(int i = 0; i < pl){
+            view.update();
+        }
+    }
+
 }

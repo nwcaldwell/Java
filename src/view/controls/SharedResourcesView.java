@@ -1,5 +1,6 @@
 package view.controls;
 
+import gamecontrollers.Facade;
 import view.MediaController;
 
 import javax.swing.*;
@@ -24,14 +25,14 @@ public class SharedResourcesView extends JPanel {
     }
 
     public void initLayout() {
-        threeTiles = new JLabel("150");
-        irrigationTiles = new JLabel("10");
-        palace2Tiles = new JLabel("6");
-        palace4Tiles = new JLabel("7");
-        palace6Tiles = new JLabel("8");
-        palace8Tiles = new JLabel("9");
-        palace10Tiles = new JLabel("10");
-        palaceDeck = new JButton("30");
+        threeTiles = new JLabel();
+        irrigationTiles = new JLabel();
+        palace2Tiles = new JLabel();
+        palace4Tiles = new JLabel();
+        palace6Tiles = new JLabel();
+        palace8Tiles = new JLabel();
+        palace10Tiles = new JLabel();
+        palaceDeck = new JButton();
         festivalCard = new JButton();
         actionSummaryCard = new JLabel(); //tODo
 
@@ -124,4 +125,8 @@ public class SharedResourcesView extends JPanel {
     }
 
 
+    public void update() {
+        Facade.getInstance().getSharedResources();
+        Facade.getInstance().getDeck();
+    }
 }
