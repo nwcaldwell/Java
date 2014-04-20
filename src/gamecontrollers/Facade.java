@@ -52,7 +52,7 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public JavaPlayer[] getPlayer(int indexOfPlayer){
+    public List<JavaPlayer> getPlayer(int indexOfPlayer){
         throw new UnsupportedOperationException();
     }
 

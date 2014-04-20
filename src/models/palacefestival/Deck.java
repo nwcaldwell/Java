@@ -64,6 +64,10 @@ public class Deck {
         return graveyard.getDiscardedCards();
     }
 
+    public PalaceCard getFestivalCard(){
+        return festivalCard;
+    }
+
     public void discard(PalaceCard card){
         graveyard.discard(card);
     }

@@ -12,11 +12,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 //TODO [Sydney][Jorge]
 
 public class FestivalView extends View {
     private static final int BORDER = 10;
+    private String imageExt = ".png";
     private ConsoleView consoleView;
     private ArrayList<FestivalPlayerView> players;
     private JLabel festivalCard;
@@ -45,14 +47,14 @@ public class FestivalView extends View {
         center.setBackground(new Color(5, 125, 43));
         center.setLayout(new BorderLayout());
 
-        festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage("")));
-        festivalCard.setPreferredSize(new Dimension());
+        //festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage()));
+        //festivalCard.setPreferredSize(new Dimension());
 
         add(center);
     }
 
     public void setFestivalCard(String imageSource){
-        festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage(imageSource)));
+        festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage(imageSource.concat(imageExt))));
     }
 
     public void setHighestBid(int bid){
@@ -64,7 +66,7 @@ public class FestivalView extends View {
         setFestivalCard(festival.getFestivalCard().toString());
         setHighestBid(festival.getHighestBid());
 
-        ArrayList<FestivalPlayer> fPlayers = festival.getPlayers();
+        List<FestivalPlayer> fPlayers = festival.getPlayers();
         for(int i = 0; i < fPlayers.size(); i++){
             players.get(i).update(fPlayers.get(i));
         }

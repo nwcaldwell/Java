@@ -1,5 +1,6 @@
 package view.controls;
 
+import models.board.Palace;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;
 import view.MediaController;
@@ -8,13 +9,14 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 //TODO [Sydney][Jorge]
 
 public class FestivalPlayerView extends JPanel {
     private MediaController mediaC;
     private JLabel currentBid;
-    private ArrayList<JLabel> palaceCards;
+    private List<JLabel> palaceCards;
     private JButton dropOut;
     private boolean isDroppedOut;
 
@@ -50,8 +52,12 @@ public class FestivalPlayerView extends JPanel {
         currentBid.setText(""+bid);
     }
 
-    public void setPalaceCards(ArrayList<PalaceCard> cards){
-
+    public void setPalaceCards(List<PalaceCard> cards){
+        //convert the palacecards to view jlabels
+        palaceCards = new ArrayList<JLabel>(cards.size());
+        for(PalaceCard card : cards){
+            palaceCards.add( new JLabel( new ImageIcon(MediaController.getInstance().getImage( card.toString() ) ) ) );
+        }
     }
 
     public void setIsDroppedOut(boolean dropped){

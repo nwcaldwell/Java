@@ -133,7 +133,7 @@ public class MediaController {
         File newFile;
 
         try {
-            newFile = new File( getClass().getResource( fileName ).getPath() );
+            newFile = new File( getClass().getResource( "/" + fileName ).getPath() );
 
             if (newFile == null) {
 
