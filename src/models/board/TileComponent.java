@@ -1,9 +1,11 @@
 package models.board;
 
+import gamecontrollers.commandcreator.TileCreationVisitor;
+
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class TileComponent {
+public class TileComponent{
 	private TileComponentContent tcc;
     private Direction direction;
     private TileComponent[] conjoinedParts;
@@ -72,5 +74,16 @@ public class TileComponent {
 		}
 	}
 
+    public Direction getDirection(){
+        return direction;
+    }
+
+    public void accept(TileCreationVisitor visitor){
+        visitor.visit(this);
+    }
+
+    public TileComponentContent getTileComponentContent(){
+        return tcc;
+    }
 }
 

@@ -18,6 +18,7 @@ public class TilePlacementController extends TileCommandCreator {
     private ArrayList<TilePlacementRule> rules;
     private TurnController controller;
     private int cost;
+    private TileCreationVisitor visitor;
 
     /*
   ========================================================================
@@ -26,6 +27,7 @@ public class TilePlacementController extends TileCommandCreator {
    */
 	public TilePlacementController(TurnController controller) {
         this.controller = controller;
+        visitor = new TileCreationVisitor(controller);
 	}
 
     /*
@@ -77,10 +79,8 @@ public class TilePlacementController extends TileCommandCreator {
         This method will return the constructed command
     */
     public GameplayActionCommand getCommand(){
-
-        GameplayActionCommand command = new PlaceTileCommand(currentTile, currentSpace, controller);
-
-        return command;
+        //check the visitor which type to return
+        return visitor.getCommand(currentTile);
     }
 
     /*
