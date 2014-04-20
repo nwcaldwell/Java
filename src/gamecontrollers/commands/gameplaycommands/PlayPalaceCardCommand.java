@@ -18,10 +18,10 @@ public class PlayPalaceCardCommand implements GameplayActionCommand {
     }
 
 	@Override	public void execute() {
-        throw new UnsupportedOperationException();
+        player.playCard(card);
 	}
 	@Override	public void undo() {
-		throw new UnsupportedOperationException();
+		player.undoPlayCard(card);
 	}
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();

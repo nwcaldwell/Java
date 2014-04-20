@@ -40,4 +40,12 @@ public class FestivalLogicController {
         return false;
     }
 
+    public void checkIfCanEndGame(){
+        //it's the end of the round
+        //can end the game if there's only one player left
+        //if there's a tie and the players dont have any cards left
+        //if there's a tie and the players have cards left - you have to ask the users if they want to end the game
+
+    }
+
 }

@@ -44,16 +44,21 @@ public class FestivalController {
         festivalModel = new FestivalModel(festivalPlayers, festivalCard, palaceValue);
     }
 
-    public void playCard(PalaceCard card){
+    public void playCard(){
         //remove the card from the player's stash, and put it into the discarded pile
         //add the card to the deck's graveyard
         //increment the current player's bid
         //check if the bid is higher than the highest bid in the model, if so update it
+
+        //need the festival card for comparison
     }
 
     public void dropOutOfFestival(){
-        //mark the user as being dropped out
-        //increment to the next players turn
+        turnController.dropCurrentPlayer();
+    }
+
+    public void undoDropOutOfFestival(FestivalPlayer player, int index) {
+        turnController.undoDropOutOfFestival(player, index);
     }
 
     public void endTurn(){
@@ -65,12 +70,19 @@ public class FestivalController {
     public void startNewRound(){
         //TODO
         //this method will check if there is a tie, how many players are left, etc.
+        logicController.checkIfCanEndGame();
+        //somehow we need to talk to the view to ask the user if they want to end the game after a tie.
     }
 
-    public void endFestival(){
+    //TODO is this necessary?
+    public void endFestival(FestivalPlayer winner){
         //need to make a command? to end the festival.
         //this will be called when there is only one person left,
+    }
+
+    public void endFestival(ArrayList<FestivalPlayer> winners){
         // when there is a tie and the users want to end the festival,
         // when no one has cards left and they have to end the festival (don't want to ask if the user wants to end)
     }
+
 }

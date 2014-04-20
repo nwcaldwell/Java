@@ -26,6 +26,28 @@ public class FestivalModel {
         return winners;
     }
 
+    private int numberOfPlayersLeft(){
+        return getWinners().size();
+    }
+
+    public boolean isTie(){
+        if(numberOfPlayersLeft() == 1)
+            return false;
+        return true;
+    }
+
+    public boolean playersAreOutOfCards(){
+        //see if the winners are out of cards. If so - the festival MUST end
+        //but only end if all the players are out of cards.
+
+        for(FestivalPlayer player : getWinners()){
+            if(player.getCards().size() > 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public ArrayList<PalaceCard> getDiscardedCards(){
         ArrayList<PalaceCard> cardsToDiscard = new ArrayList<PalaceCard>();
         cardsToDiscard.add(festivalCard);
@@ -34,7 +56,6 @@ public class FestivalModel {
         }
         return cardsToDiscard;
     }
-
 
     public boolean compareBids(int playerBid){
         if(playerBid > highestBid){

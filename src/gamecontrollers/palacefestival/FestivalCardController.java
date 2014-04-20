@@ -13,7 +13,7 @@ public class FestivalCardController {
 
     public FestivalCardController(ArrayList<PalaceCard> cards){
         palaceCards = cards;
-        currentCard = palaceCards.get(0);
+        resetSelectedCard();
     }
 
     public void incrementCurrentCard(){
@@ -23,6 +23,10 @@ public class FestivalCardController {
 
     public PalaceCard getCurrentCard(){
         return currentCard;
+    }
+
+    public void resetSelectedCard(){
+        currentCard = palaceCards.get(0);
     }
 
 }

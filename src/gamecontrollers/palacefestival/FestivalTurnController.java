@@ -73,6 +73,9 @@ public class FestivalTurnController {
         turnOrder.remove(currentPlayer);
     }
 
+    public void undoDropOutOfFestival(FestivalPlayer player, int index) {
+        turnOrder.add(index, player);
+    }
 
     //GETTERS
     public ArrayList<FestivalPlayer> getFestivalPlayers(){
@@ -81,6 +84,10 @@ public class FestivalTurnController {
 
     public FestivalPlayer getCurrentPlayer(){
         return currentPlayer;
+    }
+
+    public int getCurrentPlayerIndex(){
+        return turnOrder.indexOf(currentPlayer);
     }
 
     //SETTERS
