@@ -31,12 +31,6 @@ public class PlayView extends GameplayView {
 //        disablePlanningModeButton();
         togglePlanningMode.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlanningView(this.getViewController()))));
         toggleButtonContainer.add(togglePlanningMode, BorderLayout.NORTH);
-
-        //TODO delete after testing is done/after figure out how to get this incorporated:
-        for(int i = 0; i < 4; i++){
-            PlayerView player = new PlayerView("Red");
-            this.addPlayerView(player);
-        }
     }
 
 

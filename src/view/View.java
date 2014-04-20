@@ -48,4 +48,6 @@ public abstract class View extends JPanel {
     protected int getScreenHeight(){
         return (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 50;
     }
+
+    public abstract void update();
 }

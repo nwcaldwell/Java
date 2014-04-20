@@ -47,5 +47,10 @@ public class MainMenuView extends View {
 
         add(buttons, BorderLayout.CENTER);
     }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
 }
 

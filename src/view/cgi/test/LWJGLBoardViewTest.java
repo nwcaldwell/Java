@@ -24,7 +24,7 @@ public class LWJGLBoardViewTest {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		board=new Board(HexDirection.N, "resources/guessworkBoard.txt");
 		viewController=new ViewController();
-		view = new LWJGLBoardView(viewController, board);
+		view = new LWJGLBoardView(board);
 		frame.add(view);
 		view.setSize(512,512);
 		try {

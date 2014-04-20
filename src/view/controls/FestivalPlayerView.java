@@ -56,7 +56,7 @@ public class FestivalPlayerView extends JPanel {
         //convert the palacecards to view jlabels
         palaceCards = new ArrayList<JLabel>(cards.size());
         for(PalaceCard card : cards){
-            palaceCards.add( new JLabel( new ImageIcon(MediaController.getInstance().getImage( card.toString() ) ) ) );
+            palaceCards.add( new JLabel( new ImageIcon( MediaController.getInstance().getImage( card.toString() ))));
         }
     }
 

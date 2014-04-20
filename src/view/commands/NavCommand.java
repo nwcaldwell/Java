@@ -19,4 +19,9 @@ public class NavCommand implements InputCommand {
     public void execute() {
         viewController.setCurrentView( viewToGoTo );
     }
+
+    public void updateViewController() {
+        //TODO might want to be moved to the InputCommand interface
+        viewController.update();
+    }
 }

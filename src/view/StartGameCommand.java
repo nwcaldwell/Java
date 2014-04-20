@@ -5,7 +5,6 @@ import view.commands.NavCommand;
 import view.screens.NewGameView;
 
 public class StartGameCommand extends NavCommand {
-
     private NewGameView newGameView;
 
     public StartGameCommand(ViewController viewC, View view, NewGameView nGameView) {
@@ -17,5 +16,6 @@ public class StartGameCommand extends NavCommand {
     public void execute() {
         Facade.getInstance().startGame( newGameView.getPlayersData(), newGameView.getBoardFileName() );
         super.execute();
+        super.updateViewController();
     }
 }
