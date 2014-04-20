@@ -12,6 +12,7 @@ public class EndFestivalTurnInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-        throw new UnsupportedOperationException();
+        Facade.getInstance().endFestivalTurn();
+        this.getViewController().update();
     }
 }
