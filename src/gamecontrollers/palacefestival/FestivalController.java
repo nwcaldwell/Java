@@ -13,10 +13,13 @@ public class FestivalController {
     private FestivalTurnController turnController;
 
     public FestivalController() {
-        logicController = new FestivalLogicController()
+        logicController = new FestivalLogicController();
     }
 
-    public ArrayList<JavaPlayer> calculateWinners(){}
+    public ArrayList<JavaPlayer> calculateWinners(){
+        // TODO implement
+        return null;
+    }
 
     public void endFestival(){}
 
