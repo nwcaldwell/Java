@@ -1,4 +1,4 @@
-// TODO developer [ Jorge ], test [ Sydney ]
+// developer [ Jorge ], test [ Sydney ]
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;

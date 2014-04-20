@@ -17,7 +17,9 @@ public class FestivalController {
     }
 
     public ArrayList<JavaPlayer> calculateWinners(){
-		return null;}
+        // TODO implement
+        return null;
+    }
 
     public void endFestival(){}
 

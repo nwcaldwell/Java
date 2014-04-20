@@ -2,10 +2,7 @@ package view;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 
 //TODO [Jorge][Sydney]
@@ -15,6 +12,7 @@ public class MediaController {
     private static MediaController mediaControllerInstance = new MediaController();
     private HashMap<String, String> stringTemplates = new HashMap<String,String>();
     private HashMap<String, BufferedImage> loadedImages = new HashMap<String, BufferedImage>();
+    private HashMap<String,File> loadedFiles  = new HashMap<String, File>();
     private static final String STRINGS_FILE_NAME = "/strings.txt";
     private static final String IMGS_FOLDER = "/imgs/";
 
@@ -60,6 +58,19 @@ public class MediaController {
         return img;
     }
 
+    public File getFile( String fileName ) {
+
+        File file = loadedFiles.get( fileName );
+
+        if( file == null )
+        {
+            loadFile(fileName);
+            file = loadedFiles.get(fileName);
+        }
+
+        return file;
+    }
+
     private void initStrings() {
 
         try
@@ -103,8 +114,6 @@ public class MediaController {
         BufferedImage newImage;
 
         try {
-
-            // TODO modify the file location for the project
             InputStream imgInput = getClass().getResourceAsStream( IMGS_FOLDER + imgName );
             newImage  = ImageIO.read( imgInput );
 
@@ -114,6 +123,24 @@ public class MediaController {
             }
 
             loadedImages.put( imgName, newImage );
+
+        } catch (Exception e) {
+            System.out.println( e.getMessage() );
+        }
+    }
+
+    private void loadFile(String fileName) {
+        File newFile;
+
+        try {
+            newFile = new File( getClass().getResource( fileName ).getPath() );
+
+            if (newFile == null) {
+
+                throw new Exception( "No image found with the name:" + fileName );
+            }
+
+            loadedFiles.put( fileName, newFile );
 
         } catch (Exception e) {
             System.out.println( e.getMessage() );

@@ -4,9 +4,9 @@ package view.commands.gameplayInput;
 import gamecontrollers.Facade;
 import view.commands.InputCommand;
 
-public class AskForTieFestivalInputCommand implements InputCommand {
+public class AcceptTieRequestCommand implements InputCommand {
 
 	@Override	public void execute() {
-        Facade.getInstance().askForPalaceFestivalTie();
+        Facade.getInstance().acceptTieRequest();
 	}
 }

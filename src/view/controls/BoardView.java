@@ -16,7 +16,7 @@ public abstract class BoardView extends JPanel {
     private final int HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 300 - BORDER); //see PlayerView for Height
 	protected ViewController viewC;
 	protected Board board;
-    
+
     public BoardView(ViewController vc, Board board){
         this.viewC = vc;
         this.board = board;
