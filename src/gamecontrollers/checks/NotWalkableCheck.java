@@ -8,6 +8,7 @@ import models.board.*;
 public class NotWalkableCheck {
 
     public boolean check(Space space){
-        return space.getTileComponentContent().getWalkable();
+
+        return !space.getTileComponentContent().getWalkable();
     }
 }

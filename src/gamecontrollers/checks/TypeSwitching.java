@@ -15,7 +15,7 @@ public class TypeSwitching {
     }
 
     public boolean check(TileComponentContent t1, TileComponentContent t2){
-        return checker.compare(t1, t2);
+        return !checker.compare(t1, t2);
     }
 
 }

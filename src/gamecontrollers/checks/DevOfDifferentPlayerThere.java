@@ -21,7 +21,7 @@ public class DevOfDifferentPlayerThere {
 
     public boolean check(Space space, JavaPlayer player){
         Developer temp = board.getDeveloperOn(space);
-        if(temp.getPlayer() != null && temp.getPlayer() == player)
+        if(temp.getPlayer() != null && temp.getPlayer() != player)
             return true;
         else
             return false;
