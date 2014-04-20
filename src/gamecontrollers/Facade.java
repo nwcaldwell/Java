@@ -13,10 +13,7 @@ import models.board.Developer;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
-import models.palacefestival.Deck;
-import models.palacefestival.FestivalPlayer;
-import models.palacefestival.JavaPlayer;
-import models.palacefestival.PalaceCard;
+import models.palacefestival.*;
 
 import java.util.List;
 
@@ -55,7 +52,7 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public JavaPlayer[] getPlayer(int indexOfPlayer){
+    public List<JavaPlayer> getPlayer(int indexOfPlayer){
         throw new UnsupportedOperationException();
     }
 
@@ -64,6 +61,10 @@ public class Facade {
     }
 
     public Deck getDeck(){
+        throw new UnsupportedOperationException();
+    }
+
+    public FestivalModel getFestival() {
         throw new UnsupportedOperationException();
     }
 
@@ -156,5 +157,6 @@ public class Facade {
     public void beginNewGame(String[] playerNames, String[] playerColors){
         throw new UnsupportedOperationException();
     }
+
 
 }
