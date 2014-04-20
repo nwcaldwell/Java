@@ -1,5 +1,6 @@
 package view.controls;
 
+import models.palacefestival.FestivalPlayer;
 import view.MediaController;
 
 import javax.swing.*;
@@ -14,5 +15,8 @@ public class FestivalPlayerView extends JPanel {
 
     public FestivalPlayerView(MediaController media){
         this.mediaC = media;
+    }
+
+    public void update(FestivalPlayer player) {
     }
 }

@@ -1,6 +1,7 @@
 // TODO developer [ Sydney ], test [ Jorge ]
 package gamecontrollers.commands.gameplaycommands;
 
+import gamecontrollers.Facade;
 import gamecontrollers.commands.GameplayActionCommand;
 
 import gamecontrollers.save.CommandSaveVisitor;
@@ -13,8 +14,9 @@ public class EndFestivalTurnCommand implements GameplayActionCommand {
         this.player = p;
     }
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+	@Override
+    public void execute() {
+        throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {
 		throw new UnsupportedOperationException();

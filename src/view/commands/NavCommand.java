@@ -3,6 +3,8 @@ package view.commands;
 import view.View;
 import view.ViewController;
 
+
+
 public class NavCommand implements InputCommand {
 
     private ViewController viewController;

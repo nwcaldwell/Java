@@ -1,6 +1,6 @@
 package models.board;
 
-//TODO [Nathan, WIll, Kevin][Jorge]
+// Developers [Nathan, WIll, Kevin] Tester [Jorge]
 
 
 import models.palacefestival.JavaPlayer;

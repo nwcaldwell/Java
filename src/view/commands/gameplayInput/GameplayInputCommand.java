@@ -1,16 +1,15 @@
 package view.commands.gameplayInput;
 
 import view.commands.InputCommand;
+import view.screens.gameplay.GameplayView;
 
-/**
- * Created by jorgep on 4/18/14.
- */
+// TODO verify is need
 public abstract class GameplayInputCommand implements InputCommand {
 
-
+    private GameplayView view;
 
     @Override
     public void execute() {
-
+        view.update();
     }
 }

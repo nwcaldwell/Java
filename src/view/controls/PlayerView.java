@@ -1,5 +1,7 @@
 package view.controls;
 
+import gamecontrollers.Facade;
+import models.palacefestival.JavaPlayer;
 import view.MediaController;
 
 import javax.swing.*;
@@ -24,15 +26,15 @@ public class PlayerView extends JPanel{
         colorString = playerColor.toLowerCase();
         color = convertStringToColor(colorString);
 
-        playerName = new JLabel("Sydney");
-        actionPoints = new JLabel("6 ap");
-        famePoints = new JLabel("300");
-        developers = new JLabel("12");
-        twoTiles = new JLabel("3");
-        riceTiles = new JLabel("5");
-        villageTiles = new JLabel("4");
-        actionTokens = new JLabel("3");
-        palaceCards = new JLabel("3");
+        playerName = new JLabel();
+        actionPoints = new JLabel();
+        famePoints = new JLabel();
+        developers = new JLabel();
+        twoTiles = new JLabel();
+        riceTiles = new JLabel();
+        villageTiles = new JLabel();
+        actionTokens = new JLabel();
+        palaceCards = new JLabel();
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.WHITE);
@@ -152,5 +154,9 @@ public class PlayerView extends JPanel{
 
     public void disableActionPointLabel(){
         actionPoints.setVisible(false);
+    }
+
+    public void update(JavaPlayer player) {
+        //Facade.getInstance().getPlayer();
     }
 }

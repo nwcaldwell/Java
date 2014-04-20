@@ -1,7 +1,7 @@
 package view.controls;
 
 import models.board.Board;
-import models.board.HexDirection;
+import models.board.Direction;
 import view.ViewController;
 
 import javax.swing.*;
@@ -29,8 +29,8 @@ public abstract class BoardView extends JPanel {
     public abstract void update();
     
     /**draws a hilighted space*/
-    public abstract void hilightSpace(ArrayList<HexDirection> path, int height);
+    public abstract void hilightSpace(ArrayList<Direction> path, int height);
     
     /**draws a developer*/
-    public abstract void displayDev(ArrayList<HexDirection> path, int height);
+    public abstract void displayDev(ArrayList<Direction> path, int height);
 }

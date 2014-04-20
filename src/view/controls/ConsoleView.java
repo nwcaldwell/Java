@@ -1,5 +1,7 @@
 package view.controls;
 
+import gamecontrollers.Facade;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -62,5 +64,8 @@ public class ConsoleView extends JPanel {
         setBlackText();
         //update the text
         updateText(message);
+    }
+
+    public void update() {
     }
 }

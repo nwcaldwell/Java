@@ -7,4 +7,5 @@ import gamecontrollers.rules.Rule;
  */
 public abstract class PalaceFestivalAdmissionRule extends Rule {
 
+
 }

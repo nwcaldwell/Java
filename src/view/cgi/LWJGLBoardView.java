@@ -2,59 +2,90 @@ package view.cgi;
 
 import models.board.Board;
 import models.board.HexDirection;
+import models.board.Direction;
 import models.board.Space;
 import view.ViewController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
+import java.io.File;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 /**an implementation of BoardView that uses an LWJGL canvas*/
 public class LWJGLBoardView extends BoardView{
 	
-	final float CANVAS_WIDTH=1;
-	final float CANVAS_HEIGHT=1;
+	public static final float CANVAS_WIDTH=10;
+	public static final float CANVAS_HEIGHT=10;
+	public static final float CANVAS_FAR=21;
+	public static final float CANVAS_NEAR=1;
 	final float CLOSE=0.01f;
 	final float FAR=1;
 	
 	private Canvas lwjglCanvas;
 	
-	final Vector2D[] offsets = new Vector2D[HexDirection.values().length];
-	/*
+	protected static final Vector2D[] offsets = new Vector2D[HexDirection.values().length];
+	
+	/**marks the distance between two hex tiles in rendering (disregards scene scale)*/
+	private static final float HEX_DISTANCE=(float) Math.sin(60*2*Math.PI/360)*2*3.461961f;
+	
+	private static final float HEX_ANGLE=(float)Math.PI/3f;
+	
+	//initialize offsets
 	static{
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D(),
-		new Vector2D()	
+		Vector2D north = new Vector2D(HEX_DISTANCE,0);
+		offsets[HexDirection.N.getIntValue()]=north;
+		offsets[HexDirection.NE.getIntValue()]=north.rotate(HEX_ANGLE);
+		offsets[HexDirection.SE.getIntValue()]=north.rotate(HEX_ANGLE*2);
+		offsets[HexDirection.S.getIntValue()]=north.rotate(HEX_ANGLE*3);
+		offsets[HexDirection.SW.getIntValue()]=north.rotate(HEX_ANGLE*4);
+		offsets[HexDirection.NW.getIntValue()]=north.rotate(HEX_ANGLE*5);
 	};
-	*/
+	
 	
 	/**the height, in local units, of a hex tile*/
-	final float spaceHeight=1;
+	public static final float SPACE_HEIGHT=0.882757f;
 
 	/**represents a model of a developer.*/
-	final Model3D developer=null;
+	Model3D developer=null;
 	
+	/**represents a model of the ground beneath a space on central Java*/
+	Model3D ground=null;
+	/**represents a model of highland terrain*/
+	Model3D highland=null;
+	/**represents a model of lowland terrain*/
+	Model3D lowland=null;
+	
+	/**represents palaces of various size.
+	 * each size is doubled.*/
+	Model3D palace[]=new Model3D[5];
 	/**represents a model that represents a hilighted space*/
-	final Model3D hilight=null;
+	Model3D hilight=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D buriedSpace=null;
+	Model3D buriedSpace=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D rice=null;
+	Model3D rice=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D village=null;
+	Model3D village=null;
 	/**represents the model of a space whose surface is not seen*/
-	final Model3D irrigation=null;
+	Model3D irrigation=null;
 	
 	ArrayList<Model3D> spaces=new ArrayList<Model3D>();
 	ArrayList<Model3D> developers=new ArrayList<Model3D>();
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
+	
+	/**for perspective, the translation of the scene*/
+	private Vector3D sceneTranslation=new Vector3D(0, 0, 0);
+	/**for perspective, the yaw of the scene*/
+	private double sceneYaw=0;
+	/**for perspective, the pitch of the scene*/
+	private double scenePitch=0;
+	/**for perspective, the scale of the scene*/
+	private double sceneScale=0.25f;
 	
 	public LWJGLBoardView(ViewController vc, Board b) {
 		super(vc, b);
@@ -71,9 +102,6 @@ public class LWJGLBoardView extends BoardView{
 					"specifically, it must return true for the \"isDisplayable\" call");
 		}
 		
-		//try loading the default texture.  If this doesn't work, you're screwed.
-		TextureFactory.loadMissingTexture("resources/imgs/Default.png");
-		
 		//create a canvas to hold the LWJGL Display
 		lwjglCanvas = new Canvas();
 		add(lwjglCanvas);
@@ -85,55 +113,93 @@ public class LWJGLBoardView extends BoardView{
 		Display.setParent(lwjglCanvas);
 		Display.create();
 		//enable all of the OpenGL stuff
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-		GL11.glLoadIdentity();
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
 		//we need textures
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		glEnable(GL_TEXTURE_2D);
 		//depth test ensures that close stuff is in front of far stuff.
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
 		//enable lighting (specifically light 0)
-		GL11.glEnable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_LIGHT0);
+		//glEnable(GL_LIGHTING);
+		//glEnable(GL_LIGHT0);
 		//ensures normalization of all norms
 		//a bit slow.  Can be removed and fixed in face for optimization.
-		GL11.glEnable(GL11.GL_NORMALIZE);
+		glEnable(GL_NORMALIZE);
 		//enable face culling, so only the front of a shape is rendered
 		//EASY way to optimize
-		GL11.glCullFace(GL11.GL_FRONT);
-		GL11.glEnable(GL11.GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+		//glEnable(GL_CULL_FACE);
 
-		GL11.glClearColor(0.5f, 0, 0, 1);
+		glClearColor(0.5f, 0, 0, 1);
+		
+		//try loading the default texture.  If this doesn't work, you're screwed.
+		TextureFactory.loadMissingTexture("resources/imgs/Default.png");
+		
+		loadResources();
 	}
 	
 	private void loadResources(){
-		
+//		buriedSpace=ModelFactory.makeFromObj(new File("resources/hex.obj"), 
+//				TextureFactory.getTexture("resources/imgs/GenericHex.png"));
+		Model3D riceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/rice_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/rice_hex_texture.png"));
+		this.rice=new Model3D(riceHex);
+		this.buriedSpace=new Model3D(riceHex);
+		this.buriedSpace.setRotation(0, 30, 0);
+		this.highland=new Model3D(riceHex);
+		this.highland.setRotation(0, 30, 0);
+		this.lowland=new Model3D(riceHex);
+		this.lowland.setRotation(0, 30, 0);
+		this.ground=new Model3D(riceHex);
+		this.ground.setRotation(0, 30, 0);
+		Model3D villageHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
+		Model3D village=ModelFactory.makeFromObj(new File("resources/3Dobjects/village.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/village_texture.png"));
+		this.village=new Model3D(village,villageHex);
+		this.village.setRotation(0, 30, 0);
+		Model3D irrigationHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
+		this.irrigation=new Model3D(irrigationHex);
+		this.irrigation.setRotation(0, 30, 0);
+
+		Model3D palaceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		for (int i=0;i<palace.length;i++){
+			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
+					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
+			//Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
+			//		TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+			palace[i]=new Model3D(palaceHex,model);//,number);
+			palace[i].setRotation(0, 30, 0);
+		}
 	}
 	
 	@Override
-	public void hilightSpace(ArrayList<HexDirection> path, int height) {
+	public void hilightSpace(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
-		for (HexDirection d:path){
-			offset.translate(offsets[d.ordinal()]);
+		for (Direction d:path){
+			offset.translate(offsets[d.getIntValue()]);
 		}
 		Model3D newModel=hilight.clone();
-		newModel.setTranslation(new Vector3D(offset.x, height*spaceHeight, offset.y));
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 	
 	@Override
-	public void displayDev(ArrayList<HexDirection> path, int height) {
+	public void displayDev(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
-		for (HexDirection d:path){
-			offset.translate(offsets[d.ordinal()]);
+		for (Direction d:path){
+			offset.translate(offsets[d.getIntValue()]);
 		}
 		Model3D newModel=developer.clone();
-		newModel.setTranslation(new Vector3D(offset.x, height*spaceHeight, offset.y));
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 
 	@Override
 	public void update() {
 		spaces.clear();
 		ArrayList<Space> preTraversed=new ArrayList<Space>();
-		board.getRoot();
+		updateRecursive(board.getRoot(), preTraversed, new Vector2D(0, 0));
 	}
 	
 	/**updates the model data for the spaces on the
@@ -152,15 +218,22 @@ public class LWJGLBoardView extends BoardView{
 	/**adds model data for a given space.
 	 * May be more than one Model3D.*/
 	private void updateSpace(Space space, Vector2D offset){
+
+		if (space.getHeight()==0){
+			Model3D terrain=palace[4].clone();//buriedSpace.clone();
+			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
+			spaces.add(terrain);
+		}
+		
 		for (int i=0;i<space.getHeight()-1;i++){
 			Model3D newModel=buriedSpace.clone();
-			newModel.setTranslation(new Vector3D(offset.x, i*spaceHeight, offset.y));
+			newModel.setTranslation(new Vector3D(offset.x, i*SPACE_HEIGHT, offset.y));
 			spaces.add(newModel);
 		}
 		if (space.getHeight()>0){
 			//render the top tile
 			Model3D newModel=buriedSpace.clone();
-			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*spaceHeight, offset.y));
+			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*SPACE_HEIGHT, offset.y));
 			spaces.add(newModel);
 		}
 	}
@@ -171,18 +244,29 @@ public class LWJGLBoardView extends BoardView{
 	public void renderScene(){
 		
 		//modelview doesn't translate lights
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		glMatrixMode(GL11.GL_MODELVIEW);
 		//reset the transformation matrix
-		GL11.glLoadIdentity();
+		glLoadIdentity();
 		//Creates an orthographic projection from 0,0 to CANVAS_WIDTH, CANVAS_HEIGHT
-		GL11.glOrtho(0, CANVAS_WIDTH, 0, CANVAS_HEIGHT, 1, 400);
+		glOrtho(-CANVAS_WIDTH/2, CANVAS_WIDTH/2, -CANVAS_HEIGHT/2, CANVAS_HEIGHT/2, CANVAS_NEAR, CANVAS_FAR);
 		//setLighting();
 		//clear the background
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+		glClear(GL11.GL_COLOR_BUFFER_BIT);
 		//if we want a skybox, we should put it here
 		//SKYBOX!!!
 		//clear depth buffers
-		GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+		glClear(GL11.GL_DEPTH_BUFFER_BIT);
+		
+		//things too close will not be rendered
+		glTranslated(0, 0, -(CANVAS_FAR+CANVAS_NEAR)/2);
+
+		glScaled(sceneScale, sceneScale, sceneScale);
+		
+		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
+		
+		glRotated(scenePitch, 1, 0, 0);
+		
+		glRotated(sceneYaw, 0, 1, 0);
 		
 		for (Model3D model: spaces){
 			model.render();
@@ -193,5 +277,41 @@ public class LWJGLBoardView extends BoardView{
 		for (Model3D model: hilights){
 			model.render();
 		}
+		
+		Display.update();
+	}
+
+	////////////////getters and setters////////////////
+	
+	public Vector3D getSceneTranslation() {
+		return sceneTranslation;
+	}
+
+	public void setSceneTranslation(Vector3D sceneTranslation) {
+		this.sceneTranslation = sceneTranslation;
+	}
+
+	public double getSceneYaw() {
+		return sceneYaw;
+	}
+
+	public void setSceneYaw(double sceneYaw) {
+		this.sceneYaw = sceneYaw;
+	}
+
+	public double getScenePitch() {
+		return scenePitch;
+	}
+
+	public void setScenePitch(double scenePitch) {
+		this.scenePitch = scenePitch;
+	}
+
+	public double getSceneScale() {
+		return sceneScale;
+	}
+
+	public void setSceneScale(double sceneScale) {
+		this.sceneScale = sceneScale;
 	}
 }
