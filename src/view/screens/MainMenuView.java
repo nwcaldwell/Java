@@ -2,8 +2,8 @@ package view.screens;
 
 import view.View;
 import view.ViewController;
-import view.commands.NavCommand;
 import view.commands.JavaButtonListener;
+import view.commands.NavCommand;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +18,12 @@ public class MainMenuView extends View {
 
     public MainMenuView(ViewController viewC) {
         super(viewC);
+    }
 
+    // This method is called when the view is actually about to be displayed
+    // on the screen
+    @Override
+    public void init(){
         newGameButton = new JButton("New JavaGame");
         newGameButton.addActionListener(new JavaButtonListener( new NavCommand(this.getViewController(), new NewGameView(this.getViewController()))));
 
@@ -33,10 +38,6 @@ public class MainMenuView extends View {
             }
         });
 
-        initializeLayout();
-    }
-
-    private void initializeLayout(){
         JPanel buttons = new JPanel();
         buttons.setBorder(new EmptyBorder(getScreenHeight()/2, 0, 0, 0));
 
@@ -45,7 +46,6 @@ public class MainMenuView extends View {
         buttons.add(quitGameButton);
 
         add(buttons, BorderLayout.CENTER);
-
     }
 }
 

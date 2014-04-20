@@ -1,7 +1,8 @@
 package view.screens.gameplay;
 
-import gamecontrollers.Facade;
-import view.*;
+import view.MediaController;
+import view.View;
+import view.ViewController;
 import view.controls.FestivalPlayerView;
 
 import javax.swing.*;
@@ -23,5 +24,12 @@ public class FestivalView extends View {
     public void update(){
 //        consoleView.update();
 
+    }
+
+    // This method is called when the view is actually about to be displayed
+    // on the screen
+    @Override
+    public void init() {
+        throw new UnsupportedOperationException();
     }
 }

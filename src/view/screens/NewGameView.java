@@ -6,6 +6,7 @@ import view.View;
 import view.ViewController;
 import view.commands.JavaButtonListener;
 import view.screens.gameplay.PlayView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,19 +23,20 @@ public class NewGameView extends View {
 
     public NewGameView(ViewController viewC) {
         super(viewC);
+    }
 
+    // This method is called when the view is actually about to be displayed
+    // on the screen
+    @Override
+    public void init(){
         playersNames = new JTextField[4];
         colorSelections = new JComboBox[4];
         startGame = new JButton("Let's Play!");
         startGame.addActionListener(new JavaButtonListener(
-                        new StartGameCommand(this.getViewController(),
+                new StartGameCommand(this.getViewController(),
                         new PlayView(this.getViewController()),
                         this)));
 
-        initializeView();
-    }
-
-    private void initializeView(){
         JLabel title = new JLabel("New JavaGame");
         title.setFont(new Font("Arial", 0, 18));
 

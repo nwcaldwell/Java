@@ -1,9 +1,6 @@
 package view.screens.gameplay;
 
-import view.MediaController;
 import view.ViewController;
-import view.commands.JavaButtonListener;
-import view.commands.NavCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +12,12 @@ public class PlanningView extends GameplayView {
 
     public PlanningView(ViewController viewC) {
         super(viewC);
+    }
 
+    // This method is called when the view is actually about to be displayed
+    // on the screen
+    @Override
+    public void init() {
         togglePlayMode = new JButton("Play Mode");
         togglePlayMode.setFocusable(false);
         disablePlayModeButton();

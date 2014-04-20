@@ -2,12 +2,9 @@ package gamecontrollers.turn;
 
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
-import gamecontrollers.rules.Rule;
-import gamecontrollers.rules.turnrules.TurnRule;
 import models.palacefestival.JavaPlayer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * //TODO [Will][Kevin]
@@ -26,9 +23,6 @@ public class TurnController {
     private JavaPlayer currentPlayer;
     //This is the order of players in the turn
     private ArrayList<JavaPlayer> turnOrder;
-
-
-
 
     /*
   ========================================================================
