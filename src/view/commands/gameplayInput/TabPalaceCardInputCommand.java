@@ -1,5 +1,6 @@
 package view.commands.gameplayInput;
 
+import gamecontrollers.Facade;
 import view.ViewController;
 import view.commands.InputCommand;
 
@@ -11,6 +12,7 @@ public class TabPalaceCardInputCommand extends InputCommand {
 
     @Override
     public void execute() {
-        throw new UnsupportedOperationException();
+        Facade.getInstance().tabPalaceCard();
+        getViewController().update();
     }
 }

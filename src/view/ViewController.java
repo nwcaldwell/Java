@@ -77,12 +77,11 @@ public class ViewController {
 
         //get the listeners from the view
         currentListeners = currentView.getJavaKeyListeners();
-        System.out.println(currentListeners.size());
 
         // Add listeners of the new view
         for ( JavaKeyListener listener : currentListeners ) {
 
-            currentView.addKeyListener(listener);   //TODO is this right? if the key listeners are alreay in the view?
+            currentView.addKeyListener(listener);
         }
 
         // Update the window

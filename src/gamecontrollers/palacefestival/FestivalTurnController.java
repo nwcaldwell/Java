@@ -50,7 +50,6 @@ public class FestivalTurnController {
         cardController.incrementCurrentCard();
     }
 
-
     private void incrementPlayer(){
         int index = turnOrder.indexOf(currentPlayer);
         currentPlayer = turnOrder.get((index+1) % turnOrder.size());
