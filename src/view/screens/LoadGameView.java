@@ -17,4 +17,9 @@ public class LoadGameView extends View {
     public void init() {
 
     }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
 }

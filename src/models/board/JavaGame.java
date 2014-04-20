@@ -68,7 +68,26 @@ public class JavaGame {
     ========================================================================
     */
 
+    public Deck getDeck(){
+        return deck;
+    }
+
+    public SharedResources getSharedResources(){
+        return sharedResources;
+    }
+
+    public JavaPlayer[] getPlayers(){
+        return players;
+    }
+
+    public Board getBoard(){
+        return board;
+    }
+
+
     /*
+
+
     ========================================================================
       Private methods
     ========================================================================
@@ -97,8 +116,6 @@ public class JavaGame {
       Protected methods
     ========================================================================
     */
-    protected Deck getDeck(){
-        return deck;
-    }
+
 
 }

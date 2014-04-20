@@ -18,4 +18,9 @@ public class PausedGameView extends View {
     public void init() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
 }

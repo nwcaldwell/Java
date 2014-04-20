@@ -126,8 +126,7 @@ public class SharedResourcesView extends JPanel {
     }
 
 
-    public void update() {
-        SharedResources resources = Facade.getInstance().getSharedResources();
+    public void update(SharedResources resources, Deck deck) {
         setNumThreeTiles(resources.getNumThreeTiles());
         setNumIrrigationTiles(resources.getNumIrrigationTiles());
         setNumPalace2Tiles(resources.getNum2PalaceTiles());
@@ -136,7 +135,6 @@ public class SharedResourcesView extends JPanel {
         setNumPalace8Tiles(resources.getNum8PalaceTiles());
         setNumPalace10Tiles(resources.getNum10PalaceTiles());
 
-        Deck deck = Facade.getInstance().getDeck();
         setFestivalCardImage(deck.getFestivalCard().toString());
         setNumPalaceCards(deck.getLibrary().size());
     }

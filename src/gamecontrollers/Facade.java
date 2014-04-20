@@ -48,20 +48,8 @@ public class Facade {
     // getters
 
 
-    public static Board getBoard(){
-        throw new UnsupportedOperationException();
-    }
-
-    public List<JavaPlayer> getPlayer(int indexOfPlayer){
-        throw new UnsupportedOperationException();
-    }
-
-    public SharedResources getSharedResources(){
-        throw new UnsupportedOperationException();
-    }
-
-    public Deck getDeck(){
-        throw new UnsupportedOperationException();
+    public JavaGame getGame() {
+        return game;
     }
 
     public FestivalModel getFestival() {

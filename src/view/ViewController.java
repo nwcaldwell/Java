@@ -91,6 +91,10 @@ public class ViewController {
         gameWindow.validate();
     }
 
+    public void update(){
+        currentView.update();
+    }
+
     public void addKeyListener( JavaKeyListener listener ) {
 
         currentListeners.add( listener );

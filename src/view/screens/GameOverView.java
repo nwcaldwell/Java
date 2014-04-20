@@ -18,4 +18,9 @@ public class GameOverView extends View {
     public void init() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public void update() {
+
+    }
 }

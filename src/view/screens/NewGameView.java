@@ -89,4 +89,9 @@ public class NewGameView extends View {
     public String getBoardFileName(){
        return BOARD_FILE_NAME;
     }
+
+    @Override
+    public void update() {
+        //do nothing
+    }
 }
