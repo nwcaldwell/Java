@@ -1,8 +1,14 @@
 package gamecontrollers.turn;
 
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
+import gamecontrollers.rules.turnrules.CardsDrawnPerTurnRule;
+import gamecontrollers.rules.turnrules.ExtraActionTokensPlayedPerTurn;
+import gamecontrollers.rules.turnrules.NotEnoughActionPointsRule;
+import gamecontrollers.rules.turnrules.TurnRule;
 import models.board.SharedResources;
 import models.palacefestival.JavaPlayer;
+
+import java.util.ArrayList;
 
 public class NormalTurn extends TurnState{
     private TurnController turnController;
@@ -16,6 +22,11 @@ public class NormalTurn extends TurnState{
     private int minTilesPlaced = 1;
     private int minTilesForThisState = 1;
 
+    //private rules? i bet you do this for every turnstate
+    private CardsDrawnPerTurnRule cardRule;
+    private NotEnoughActionPointsRule actionPointsRule;
+    private ExtraActionTokensPlayedPerTurn extraTokens;
+
     /*
    ========================================================================
       CONSTRUCTORS
@@ -28,7 +39,17 @@ public class NormalTurn extends TurnState{
         turnController = tc;
         resources = sr;
 
+        setMaxCardsPerTurn(maxCardsDrawn);
+        setMaxExtraActionTokensPerTurn(maxExtraActionTokensPlayed);
+        setMinTilesPlacePerTurn(minTilesForThisState);
 
+        //instantiate rules and set them in rules list
+        cardRule = new CardsDrawnPerTurnRule(this);
+        actionPointsRule = new NotEnoughActionPointsRule(this, turnController);
+        extraTokens = new ExtraActionTokensPlayedPerTurn(this);
+
+        //set rules list
+        addRules(cardRule, actionPointsRule, extraTokens);
     }
 
 
@@ -54,7 +75,7 @@ public class NormalTurn extends TurnState{
     }
 
     public void returnExtraActionToken(){
-        extraActionTokenUsed();
+        extraActionTokenPutBack();
         updateState();
     }
 
@@ -68,12 +89,7 @@ public class NormalTurn extends TurnState{
         updateState();
     }
 
-    public boolean canDrawCard(){
-        return getNumCardsDrawn() < maxCardsDrawn;
-    }
-    public boolean canPlayExtraActionToken(){
-        return getNumExtraActionTokensUsed() < maxExtraActionTokensPlayed;
-    }
+
 
     public void clear(){
             setActionPoints(defaultActionPoints);
@@ -85,6 +101,25 @@ public class NormalTurn extends TurnState{
         return new EndTurnCommand(turnController.getCurrentPlayer());
     }
 
+   /*
+  ========================================================================
+     RULE CHECKING METHODS
+  ========================================================================
+   */
+
+    public boolean canDrawCard(){
+        return cardRule.getValidity();
+    }
+
+    public boolean canPlayExtraActionToken(){
+        return extraTokens.getValidity();
+    }
+
+    public boolean hasEnoughActionPoints(int i){
+        return actionPointsRule.getValidity() && canEndTurn();
+    }
+
+
     /*
   ========================================================================
      PRIVATE METHODS
@@ -92,6 +127,7 @@ public class NormalTurn extends TurnState{
    */
 
     private void updateState(){
+        notifyRules();
         updateCanEndTurn();
         updateControllerState();
     }
