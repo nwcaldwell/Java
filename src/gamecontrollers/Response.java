@@ -19,7 +19,7 @@ public class Response {
 
     public Response(List<Message> messages){
         hasErrors = true;
-        messages = new ArrayList<Message>();
+        this.messages = new ArrayList<Message>();
         addMessages(messages);
     }
 
