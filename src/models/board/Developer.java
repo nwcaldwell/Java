@@ -11,6 +11,12 @@ public class Developer {
 		this.space = space;
 	}
 
+    public Developer(JavaPlayer player){
+        this.player = player;
+    }
+
+    public Developer(){};
+
 	public JavaPlayer getPlayer() {
 		return player;
 	}

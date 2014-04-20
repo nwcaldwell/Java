@@ -1,6 +1,5 @@
 package models.board;
 
-import javafx.util.Pair;
 import view.MediaController;
 
 import java.io.BufferedReader;
@@ -8,7 +7,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
+
+import models.Pair;
 
 /**
  * Created by williammacfarlane on 4/17/14.
@@ -25,7 +26,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 	private static Direction dir = HexDirection.N;
 	public Space buildBoard(String boardFileName) {
 		//BufferedReader br = new BufferedReader(new FileReader(boardFileName));
-		ArrayList<ArrayList<Space>> grid = putBoardInGrid(boardFileName);
+		List<List<Space>> grid = putBoardInGrid(boardFileName);
 		Space root = connectBoard(grid);
 		return root;
 	}
@@ -39,7 +40,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 	{
 		return (s != null);
 	}
-	private Space connectBoard(ArrayList<ArrayList<Space>> grid)
+	private Space connectBoard(List<List<Space>> grid)
 	{
 		int numRows = grid.size();
 
@@ -90,13 +91,13 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 		throw new IllegalStateException();
 	}
 
-	ArrayList<ArrayList<Space>> putBoardInGrid(String boardFileName)
+	private List<List<Space>> putBoardInGrid(String boardFileName)
 	{
-		ArrayList<ArrayList<Space>> grid = new ArrayList<ArrayList<Space>>();
+
+		List<List<Space>> grid = new ArrayList<List<Space>>();
 		try{
 			File f;
-			//f = MediaController.getInstance().getFile(boardFileName);
-			f = new File(boardFileName); //TODO: replace this line with the line above it when media controller is implemented
+			f = MediaController.getInstance().getFile(boardFileName);
 			BufferedReader br = new BufferedReader(new FileReader(f));
 			String line;
 			int lineNum = 0;

@@ -1,9 +1,10 @@
 package view.controls;
 
+import models.board.SharedResources;
+import models.palacefestival.Deck;
 import view.MediaController;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 //TODO [Sydney] [Jorge]
@@ -24,14 +25,14 @@ public class SharedResourcesView extends JPanel {
     }
 
     public void initLayout() {
-        threeTiles = new JLabel("150");
-        irrigationTiles = new JLabel("10");
-        palace2Tiles = new JLabel("6");
-        palace4Tiles = new JLabel("7");
-        palace6Tiles = new JLabel("8");
-        palace8Tiles = new JLabel("9");
-        palace10Tiles = new JLabel("10");
-        palaceDeck = new JButton("30");
+        threeTiles = new JLabel();
+        irrigationTiles = new JLabel();
+        palace2Tiles = new JLabel();
+        palace4Tiles = new JLabel();
+        palace6Tiles = new JLabel();
+        palace8Tiles = new JLabel();
+        palace10Tiles = new JLabel();
+        palaceDeck = new JButton();
         festivalCard = new JButton();
         actionSummaryCard = new JLabel(); //tODo
 
@@ -51,7 +52,7 @@ public class SharedResourcesView extends JPanel {
         setLayout(palaceDeck, 100, "card_back");
         add(palaceDeck);
 
-        setLayout(festivalCard, 100, "card_drum");
+        setLayout(festivalCard, 100, "palaceCard_1");
         add(festivalCard);
 
         setLayout(palace2Tiles, 75, "palace_2");
@@ -115,8 +116,9 @@ public class SharedResourcesView extends JPanel {
         palace10Tiles.setText(""+num);
     }
 
-    public void setFestivalCardImage(ImageIcon icon){
-        festivalCard.setIcon(icon);
+    public void setFestivalCardImage(String imageSource){
+        System.out.println(String.format(source, imageSource));
+        festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage(String.format(source, imageSource))));
     }
 
     public void setNumPalaceCards(int num){
@@ -124,4 +126,16 @@ public class SharedResourcesView extends JPanel {
     }
 
 
+    public void update(SharedResources resources, Deck deck) {
+        setNumThreeTiles(resources.getNumThreeTiles());
+        setNumIrrigationTiles(resources.getNumIrrigationTiles());
+        setNumPalace2Tiles(resources.getNum2PalaceTiles());
+        setNumPalace4Tiles(resources.getNum4PalaceTiles());
+        setNumPalace6Tiles(resources.getNum6PalaceTiles());
+        setNumPalace8Tiles(resources.getNum8PalaceTiles());
+        setNumPalace10Tiles(resources.getNum10PalaceTiles());
+
+        setFestivalCardImage(deck.getFestivalCard().toString());
+        setNumPalaceCards(deck.getLibrary().size());
+    }
 }

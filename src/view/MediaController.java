@@ -129,18 +129,18 @@ public class MediaController {
         }
     }
 
-    private void loadFile(String fileName) {
+    private void loadFile(String filepath) {
         File newFile;
 
         try {
-            newFile = new File( getClass().getResource( fileName ).getPath() );
+            newFile = new File( getClass().getResource( "/" + filepath ).getPath() );
 
             if (newFile == null) {
 
-                throw new Exception( "No image found with the name:" + fileName );
+                throw new Exception( "No image found with the name:" + filepath );
             }
 
-            loadedFiles.put( fileName, newFile );
+            loadedFiles.put( filepath, newFile );
 
         } catch (Exception e) {
             System.out.println( e.getMessage() );

@@ -1,19 +1,13 @@
 package view;
 
-
+import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
-
-import view.screens.*;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-
-//TODO [Jorge][Sydney]
 
 public class ViewController {
 
@@ -81,6 +75,9 @@ public class ViewController {
         // Change the current view
         currentView = newView;
 
+        //get the listeners from the view
+        currentListeners = currentView.getJavaKeyListeners();
+
         // Add listeners of the new view
         for ( JavaKeyListener listener : currentListeners ) {
 
@@ -88,8 +85,13 @@ public class ViewController {
         }
 
         // Update the window
+        currentView.init();
         gameWindow.setContentPane( currentView );
         gameWindow.validate();
+    }
+
+    public void update(){
+        currentView.update();
     }
 
     public void addKeyListener( JavaKeyListener listener ) {

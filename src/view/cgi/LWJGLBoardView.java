@@ -87,8 +87,8 @@ public class LWJGLBoardView extends BoardView{
 	/**for perspective, the scale of the scene*/
 	private double sceneScale=0.25f;
 	
-	public LWJGLBoardView(ViewController vc, Board b) {
-		super(vc, b);
+	public LWJGLBoardView(Board b) {
+		super(b);
 		// TODO Auto-generated constructor stub
 
 	}

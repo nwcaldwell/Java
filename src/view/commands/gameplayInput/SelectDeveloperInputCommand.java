@@ -1,11 +1,16 @@
 // TODO developer [ Kevin ], test [ Sydney ]
 package view.commands.gameplayInput;
 
+import view.ViewController;
 import view.commands.InputCommand;
 
-public class SelectDeveloperInputCommand implements InputCommand {
+public class SelectDeveloperInputCommand extends InputCommand {
 
-	@Override	public void execute() {
+    public SelectDeveloperInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override	public void execute() {
 		throw new UnsupportedOperationException();
 	}
 }
