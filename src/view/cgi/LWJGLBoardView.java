@@ -79,7 +79,7 @@ public class LWJGLBoardView extends BoardView{
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
 	
 	/**for perspective, the translation of the scene*/
-	private Vector3D sceneTranslation;
+	private Vector3D sceneTranslation=new Vector3D(0, 0, 0);
 	/**for perspective, the yaw of the scene*/
 	private double sceneYaw=0;
 	/**for perspective, the pitch of the scene*/
@@ -125,8 +125,8 @@ public class LWJGLBoardView extends BoardView{
 		glEnable(GL_NORMALIZE);
 		//enable face culling, so only the front of a shape is rendered
 		//EASY way to optimize
-		glCullFace(GL_FRONT);
-		glEnable(GL_CULL_FACE);
+		//glCullFace(GL_FRONT);
+		//glEnable(GL_CULL_FACE);
 
 		glClearColor(0.5f, 0, 0, 1);
 		
@@ -166,9 +166,9 @@ public class LWJGLBoardView extends BoardView{
 		for (int i=0;i<palace.length;i++){
 			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
 					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
-			Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
-					TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
-			palace[i]=new Model3D(palaceHex,model,number);
+			//Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
+			//		TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+			palace[i]=new Model3D(palaceHex,model);//,number);
 			palace[i].setRotation(0, 30, 0);
 		}
 	}
@@ -257,10 +257,10 @@ public class LWJGLBoardView extends BoardView{
 		
 		//things too close will not be rendered
 		glTranslated(0, 0, -(CANVAS_FAR+CANVAS_NEAR)/2);
-		
-		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 
 		glScaled(sceneScale, sceneScale, sceneScale);
+		
+		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 		
 		glRotated(scenePitch, 1, 0, 0);
 		

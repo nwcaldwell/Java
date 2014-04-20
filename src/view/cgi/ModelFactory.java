@@ -82,6 +82,7 @@ public class ModelFactory {
 					
 					boolean fullTextureData=true;
 					boolean fullNormalData=true;
+					boolean tristrip=false;
 					for (int i=1;i<tokens.length;i++){
 						String[] indicies=tokens[i].split("/");
 						fv[tokens.length-(i+1)]=vertices.get(Integer.parseInt(indicies[0])-1);
@@ -97,10 +98,17 @@ public class ModelFactory {
 						}else{
 							fullNormalData=false;
 						}
+						if (i==5){
+							tristrip=true;
+						}
 					}
 					int rendType=GL11.GL_TRIANGLES;
 					if (fv.length==4){
 						rendType=GL11.GL_QUADS;
+					}
+					if (fv.length>4){
+						rendType=GL11.GL_TRIANGLE_STRIP;
+						System.out.println("trisrip");
 					}
 					try {
 						if (fullTextureData){
