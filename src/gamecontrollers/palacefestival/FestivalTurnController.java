@@ -18,7 +18,7 @@ public class FestivalTurnController {
     private FestivalPlayer currentPlayer;
 
     private FestivalCardController cardController;
-    
+
 
     private FestivalCommandCreator commandCreator;
     private HistoryChannelController historyChannelController;

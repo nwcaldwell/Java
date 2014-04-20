@@ -142,7 +142,11 @@ public class Facade {
     }
 
     public void dropOutOfFestival() {
-//        FestivalController.dropCurrentPlayerFromFestival();
+        festivalTurnController.dropOut();
+    }
+
+    public void endFestivalTurn(){
+        festivalTurnController.endTurn();
     }
 
     public void acceptTieRequest() {

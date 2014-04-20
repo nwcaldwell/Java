@@ -15,10 +15,8 @@ public class FestivalCardController extends FestivalCommandCreator {
     private PalaceCard currentCard;
     private FestivalTurnController festivalTurnController;
 
-
     public FestivalCardController(List<PalaceCard> cards, FestivalTurnController festivalTurnC){
-        palaceCards = cards;
-        currentCard = palaceCards.get(0);
+        reset(cards);
         festivalTurnController = festivalTurnC;
     }
 
@@ -26,11 +24,6 @@ public class FestivalCardController extends FestivalCommandCreator {
         int index = palaceCards.indexOf(currentCard);
         currentCard = palaceCards.get((index+1) % palaceCards.size());
     }
-
-    public PalaceCard getCurrentCard(){
-        return currentCard;
-    }
-
 
     @Override
     public PlayPalaceCardCommand getCommand() {
@@ -43,10 +36,12 @@ public class FestivalCardController extends FestivalCommandCreator {
     }
 
     @Override
-    public Response checkPossible() {
+    public Response checkPossible() {   //TODO
         return null;
     }
 
     public void reset(List<PalaceCard> cards) {
+        palaceCards = cards;
+        currentCard = palaceCards.get(0);
     }
 }
