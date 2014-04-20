@@ -122,7 +122,8 @@ public class DevMoveController extends DeveloperCommandCreator {
 
     private void updateState(){
         //update the cost and path of the controller
-        cost = logicController.findShortestPath(turnController.getCurrentPlayer(), currentDeveloper.getSpace(), desiredSpace, path);
+	    //TODO: Will needs to talk to Kevin about this
+        cost = logicController.findPathWithinCentralJava(turnController.getCurrentPlayer(), currentDeveloper.getSpace(), desiredSpace, path);
         notifyRules();
     }
 
