@@ -7,6 +7,7 @@ import gamecontrollers.rules.Rule;
 import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
 import gamecontrollers.turn.TurnController;
 import models.board.Direction;
+import models.board.SharedResources;
 import models.board.Space;
 import models.board.TileComponent;
 
@@ -19,15 +20,17 @@ public class TilePlacementController extends TileCommandCreator {
     private TurnController controller;
     private int cost;
     private TileCreationVisitor visitor;
+    private SharedResources resources;
 
     /*
   ========================================================================
      CONSTRUCTORS
   ========================================================================
    */
-	public TilePlacementController(TurnController controller) {
+	public TilePlacementController(TurnController controller, SharedResources resources) {
         this.controller = controller;
-        visitor = new TileCreationVisitor(controller);
+        visitor = new TileCreationVisitor(controller, resources);
+        this.resources = resources;
 	}
 
     /*
@@ -80,6 +83,8 @@ public class TilePlacementController extends TileCommandCreator {
     */
     public GameplayActionCommand getCommand(){
         //check the visitor which type to return
+        //set the current space right now and then ask
+        visitor.setSpace(currentSpace);
         return visitor.getCommand(currentTile);
     }
 
