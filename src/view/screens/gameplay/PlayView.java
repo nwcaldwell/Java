@@ -3,7 +3,6 @@ package view.screens.gameplay;
 import view.ViewController;
 import view.commands.JavaButtonListener;
 import view.commands.NavCommand;
-import view.controls.PlayerView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +25,7 @@ public class PlayView extends GameplayView {
     // on the screen
     @Override
     public void init() {
+        super.init();
         togglePlanningMode = new JButton("Planning Mode"); //TODO
         togglePlanningMode.setFocusable(false);
 //        disablePlanningModeButton();

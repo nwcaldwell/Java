@@ -82,6 +82,7 @@ public class ViewController {
         }
 
         // Update the window
+        currentView.init();
         gameWindow.setContentPane( currentView );
         gameWindow.validate();
     }

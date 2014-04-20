@@ -14,10 +14,12 @@ public class Library {
 	}
 
     public Library(List<PalaceCard> cardList){
-        this.cards.addAll(cardList);
+        cards = new Stack<PalaceCard>();
+        cards.addAll(cardList);
+        shuffle(cards);
     }
 
-    public PalaceCard draw(){
+    public PalaceCard drawTopCard(){
         return cards.pop();
     }
 
@@ -38,5 +40,4 @@ public class Library {
         ArrayList<PalaceCard> deckCopy = new ArrayList<PalaceCard>(cards);
        return deckCopy;
     }
-
 }
