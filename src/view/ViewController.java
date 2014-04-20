@@ -113,8 +113,4 @@ public class ViewController {
             removeKeyListener(listener);
         }
     }
-
-    public void update(){
-        currentView.update();
-    }
 }

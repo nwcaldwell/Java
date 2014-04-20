@@ -12,7 +12,11 @@ public abstract class InputCommand {
 
     public abstract void execute();
 
-    protected ViewController getViewController(){
+    public ViewController getViewController() {
         return viewController;
+    }
+
+    protected void updateViewController() {
+        viewController.update();
     }
 }
