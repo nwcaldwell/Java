@@ -1,14 +1,13 @@
 package view.screens.gameplay;
 
 import gamecontrollers.Facade;
-import view.controls.ConsoleView;
+import models.board.JavaGame;
+import models.palacefestival.JavaPlayer;
 import view.View;
 import view.ViewController;
-import view.cgi.LWJGLBoardView;
-import view.controls.BoardView;
+import view.controls.ConsoleView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -24,26 +23,25 @@ public abstract class GameplayView extends View {
     protected SharedResourcesView sharedResourcesView;
     protected JPanel playerContainer;
     protected JPanel toggleButtonContainer;
+    private JavaGame game;
 
     protected GameplayView(ViewController viewC) {
         super(viewC);
+        game = Facade.getInstance().getGame();
+    }
 
+    //this method sets up the default layout for the board
+    public void init(){
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        //boardView = new LWJGLBoardView(viewC, Facade.getInstance().getBoard()); //TODO get this working properly
+        //boardView = new LWJGLBoardView(game.getBoard()); //TODO get this working properly
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
         setBackground(Color.WHITE);
         setBorder(new EmptyBorder(BORDER, BORDER, BORDER, BORDER));
 
-        //initialize everything else
-        initializeView();
-    }
-
-    //this method sets up the default layout for the board
-    protected void initializeView(){
         //this is the left side of the screen, needs to somehow conform to the size of the screen
         JPanel leftSide = new JPanel();
         leftSide.setPreferredSize(new Dimension(this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
@@ -59,6 +57,11 @@ public abstract class GameplayView extends View {
         //the player views need to have something to encapsulate them all
         playerContainer = new JPanel();
         playerContainer.setMinimumSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, this.getScreenHeight()/4- BORDER));
+
+        for(int i = 0; i < game.getPlayers().length; i++){
+            PlayerView player = new PlayerView(game.getPlayers()[i].getColor());
+            this.addPlayerView(player);
+        }
 
         //this includes the BoardView and the Player Views
         JPanel rightSide = new JPanel();
@@ -96,12 +99,15 @@ public abstract class GameplayView extends View {
     }
 
     public void update(){
-        //boardView.update(); TODO
-        sharedResourcesView.update();
+
+        //boardView.update();
+        sharedResourcesView.update(game.getSharedResources(), game.getDeck());
         consoleView.update();
-        for(int i = 0; i < pl){
-            view.update();
+        JavaPlayer[] players = game.getPlayers();
+        for(int i = 0; i < players.length; i++){
+            playerViews.get(i).update(players[i]);
         }
+
     }
 
 }

@@ -1,14 +1,15 @@
 package models.palacefestival;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FestivalModel {
-    private ArrayList<FestivalPlayer> players;
+    private List<FestivalPlayer> players;
     private PalaceCard festivalCard;
     private int palaceValue;
     private int highestBid;
 
-	public FestivalModel(ArrayList<FestivalPlayer> p, PalaceCard fest, int pValue) {
+	public FestivalModel(List<FestivalPlayer> p, PalaceCard fest, int pValue) {
         this.players = p;
         this.festivalCard = fest;
         this.palaceValue = pValue;
@@ -81,7 +82,7 @@ public class FestivalModel {
         palaceValue = value;
     }
 
-    public ArrayList<FestivalPlayer> getPlayers(){
+    public List<FestivalPlayer> getPlayers(){
         return players;
     }
 

@@ -12,6 +12,11 @@ public class Message {
         this.isError = isError;
     }
 
+    public Message(String messageTemplate,boolean isError){
+        this.messageTemplate = messageTemplate;
+        this.isError = isError;
+    }
+
     public String getMessageTemplate() {
         return messageTemplate;
     }

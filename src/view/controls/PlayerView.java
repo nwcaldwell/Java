@@ -157,8 +157,13 @@ public class PlayerView extends JPanel{
     }
 
     public void update(JavaPlayer player) {
-        Facade.getInstance().getPlayer(){
-
-        }
+        setPlayerName(player.getName());
+        setNumFamePoints(player.getFamePoints());
+        setNumDevelopers(player.getNumDevelopers());
+        setNumTwoTiles(player.getNumTwoSpaceTiles());
+        setNumRiceTiles(player.getNumRiceTiles());
+        setNumVillageTiles(player.getNumVillageTiles());
+        setNumActionTokens(player.getNumVillageTiles());
+        setNumPalaceCards(player.getPalaceCards().size());
     }
 }

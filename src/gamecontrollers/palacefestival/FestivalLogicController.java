@@ -1,9 +1,9 @@
 package gamecontrollers.palacefestival;
 
-import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FestivalLogicController {
     //this class is for checking if things are legal right?
@@ -13,7 +13,7 @@ public class FestivalLogicController {
         festivalController = controller;
 	}
 
-    public boolean canParticipateInFestival(ArrayList<PalaceCard> cards, PalaceCard festivalCard){
+    public boolean canParticipateInFestival(List<PalaceCard> cards, PalaceCard festivalCard){
         boolean canParticipate = false;
 
         for (PalaceCard card : cards){
@@ -22,8 +22,8 @@ public class FestivalLogicController {
         return false;
     }
 
-    public ArrayList<PalaceCard> getEligibleCards(ArrayList<PalaceCard> cards, PalaceCard festivalCard){
-        ArrayList<PalaceCard> eligibleCards = new ArrayList<PalaceCard>();
+    public List<PalaceCard> getEligibleCards(List<PalaceCard> cards, PalaceCard festivalCard){
+        List<PalaceCard> eligibleCards = new ArrayList<PalaceCard>();
 
         for(PalaceCard card : cards){
             if(card.compare(festivalCard) > 0){

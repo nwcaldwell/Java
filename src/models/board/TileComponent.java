@@ -8,9 +8,9 @@ public class TileComponent {
     private Direction direction;
     private TileComponent[] conjoinedParts;
 
-    TileComponent(Direction d, TileComponentContent tcc){
+    public TileComponent(Direction d, TileComponentContent tcc){
         this.direction = d;
-        conjoinedParts = new TileComponent[d.getIntValue()];
+        conjoinedParts = new TileComponent[d.numDirections()];
 	    this.tcc = tcc;
     }
 	

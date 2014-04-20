@@ -21,9 +21,10 @@ public class LWJGLBoardViewTest {
 	public LWJGLBoardViewTest() {
 		frame.setSize(600, 600);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		board=new Board(HexDirection.N, "resources/guessworkBoard.txt");
 		viewController=new ViewController();
-		view = new LWJGLBoardView(viewController, board);
+		view = new LWJGLBoardView(board);
 		frame.add(view);
 		view.setSize(512,512);
 		try {
@@ -33,9 +34,9 @@ public class LWJGLBoardViewTest {
 			System.exit(1);
 		}
 		while (true){
-			pollInput();
 			view.update();
 			view.renderScene();
+			pollInput();
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {
@@ -53,7 +54,14 @@ public class LWJGLBoardViewTest {
 	boolean rmouseWasDown=false;
 	boolean mmouseWasDown=false;
 	
+	int zoom=100;
+	
 	public void pollInput(){
+		
+		int wheelDelta=Mouse.getDWheel();
+		if (wheelDelta!=0){
+			zoom=Math.max(1,zoom+wheelDelta/Math.abs(wheelDelta));
+		}
 		
 		if (Mouse.isButtonDown(0)){
 			if (mouseWasDown) {
@@ -78,10 +86,11 @@ public class LWJGLBoardViewTest {
 		}else{
 			rmouseWasDown=false;
 		}
-		
+
+		view.setSceneScale((zoom*zoom*zoom*0.0000005));
 		view.setSceneTranslation(new Vector3D(
-				  x*LWJGLBoardView.CANVAS_WIDTH/frame.getWidth()
-				, y*LWJGLBoardView.CANVAS_HEIGHT/frame.getHeight()
+				  (float)(x*LWJGLBoardView.CANVAS_WIDTH/(frame.getWidth()*view.getSceneScale()))
+				, (float)(y*LWJGLBoardView.CANVAS_HEIGHT/(frame.getHeight()*view.getSceneScale()))
 				, 0));
 		view.setScenePitch(pitch);
 		view.setSceneYaw(yaw);

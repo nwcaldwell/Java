@@ -1,16 +1,17 @@
 package models.palacefestival;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FestivalPlayer {
     private JavaPlayer player;
-    private ArrayList<PalaceCard> cards;
-    private ArrayList<PalaceCard> discardedCards;
+    private List<PalaceCard> cards;
+    private List<PalaceCard> discardedCards;
     private boolean droppedOut;
     private boolean hasPlayedThisRound;
     private int bid;
 
-	public FestivalPlayer(JavaPlayer p, ArrayList<PalaceCard> palaceCards) {
+	public FestivalPlayer(JavaPlayer p, List<PalaceCard> palaceCards) {
         this.player = p;
         this.cards = palaceCards;
         this.discardedCards = new ArrayList<PalaceCard>();
@@ -96,11 +97,11 @@ public class FestivalPlayer {
         return bid;
     }
 
-    public ArrayList<PalaceCard> getDiscardedCards() {
+    public List<PalaceCard> getDiscardedCards() {
         return discardedCards;
     }
 
-    public ArrayList<PalaceCard> getCards(){
+    public List<PalaceCard> getCards(){
         return cards;
     }
 

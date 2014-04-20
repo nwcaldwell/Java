@@ -4,6 +4,7 @@ import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import gamecontrollers.rules.Rule;
+import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
 import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
@@ -13,7 +14,8 @@ import java.util.ArrayList;
 public class TilePlacementController extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
-    private ArrayList<Rule> rules;
+    private ArrayList<TilePlacementRule> rules;
+    private int cost;
 
     /*
   ========================================================================
@@ -85,7 +87,7 @@ public class TilePlacementController extends TileCommandCreator {
         be required to perform the command
      */
     public int getCost(){
-        return 0;
+        return cost;
     }
 
     /*

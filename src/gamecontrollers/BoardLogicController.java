@@ -54,10 +54,11 @@ public class BoardLogicController {
 	}
 	
 	public Developer getNextDeveloper(Developer d) {
-		return null;
+        return board.getNextDeveloper(d);
 	}
 	
 	public boolean hasDeveloper(Space s, Developer d) {
 		return false;
 	}
+
 }

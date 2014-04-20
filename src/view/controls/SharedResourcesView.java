@@ -1,10 +1,11 @@
 package view.controls;
 
 import gamecontrollers.Facade;
+import models.board.SharedResources;
+import models.palacefestival.Deck;
 import view.MediaController;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 //TODO [Sydney] [Jorge]
@@ -52,7 +53,7 @@ public class SharedResourcesView extends JPanel {
         setLayout(palaceDeck, 100, "card_back");
         add(palaceDeck);
 
-        setLayout(festivalCard, 100, "card_drum");
+        setLayout(festivalCard, 100, "palaceCard_1");
         add(festivalCard);
 
         setLayout(palace2Tiles, 75, "palace_2");
@@ -116,8 +117,8 @@ public class SharedResourcesView extends JPanel {
         palace10Tiles.setText(""+num);
     }
 
-    public void setFestivalCardImage(ImageIcon icon){
-        festivalCard.setIcon(icon);
+    public void setFestivalCardImage(String imageSource){
+        festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage(String.format(source, imageSource))));
     }
 
     public void setNumPalaceCards(int num){
@@ -125,8 +126,16 @@ public class SharedResourcesView extends JPanel {
     }
 
 
-    public void update() {
-        Facade.getInstance().getSharedResources();
-        Facade.getInstance().getDeck();
+    public void update(SharedResources resources, Deck deck) {
+        setNumThreeTiles(resources.getNumThreeTiles());
+        setNumIrrigationTiles(resources.getNumIrrigationTiles());
+        setNumPalace2Tiles(resources.getNum2PalaceTiles());
+        setNumPalace4Tiles(resources.getNum4PalaceTiles());
+        setNumPalace6Tiles(resources.getNum6PalaceTiles());
+        setNumPalace8Tiles(resources.getNum8PalaceTiles());
+        setNumPalace10Tiles(resources.getNum10PalaceTiles());
+
+        setFestivalCardImage(deck.getFestivalCard().toString());
+        setNumPalaceCards(deck.getLibrary().size());
     }
 }

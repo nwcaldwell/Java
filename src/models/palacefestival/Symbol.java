@@ -16,4 +16,8 @@ public class Symbol {
             return true;
         return false;
     }
+
+    public String toString(){
+        return ""+num;
+    }
 }
