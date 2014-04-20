@@ -19,13 +19,13 @@ public class MainMenuView extends View {
     public MainMenuView(ViewController viewC) {
         super(viewC);
 
-        newGameButton = new JButton("New Game");
+        newGameButton = new JButton("New JavaGame");
         newGameButton.addActionListener(new JavaButtonListener( new NavCommand(this.getViewController(), new NewGameView(this.getViewController()))));
 
-        loadGameButton = new JButton("Load Game");
+        loadGameButton = new JButton("Load JavaGame");
         loadGameButton.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new LoadGameView(this.getViewController()))));
 
-        quitGameButton = new JButton("Quit Game");
+        quitGameButton = new JButton("Quit JavaGame");
         quitGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

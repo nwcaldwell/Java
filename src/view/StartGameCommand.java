@@ -1,11 +1,9 @@
 package view;
 
+import gamecontrollers.Facade;
 import view.commands.NavCommand;
 import view.screens.NewGameView;
 
-/**
- * Created by jorgep on 4/19/14.
- */
 public class StartGameCommand extends NavCommand {
 
     private NewGameView newGameView;
@@ -15,8 +13,9 @@ public class StartGameCommand extends NavCommand {
         newGameView = nGameView;
     }
 
+    @Override
     public void execute() {
-
+        Facade.getInstance().startGame(newGameView.getPlayersData());
+        super.execute();
     }
-
 }
