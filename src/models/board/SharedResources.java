@@ -86,7 +86,7 @@ public class SharedResources {
     }
 
     public void incNum10PalaceTiles() {
-        num10PalaceTiles;++
+        num10PalaceTiles++;
     }
 
 

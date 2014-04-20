@@ -36,7 +36,7 @@ public class PlaceRiceTileCommand implements GameplayActionCommand{
     public void undo() {
         //this code is not copypasta
         //(un)place that tile boiiiii
-        space.placeTile(tile);
+        space.removeTile();
         //update player counter
         controller.getCurrentPlayer().returnRice();
         //update dat turn counter
