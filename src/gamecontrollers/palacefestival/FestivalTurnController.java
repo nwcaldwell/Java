@@ -1,5 +1,10 @@
 package gamecontrollers.palacefestival;
 
+import gamecontrollers.Response;
+import gamecontrollers.commandcreator.FestivalCommandCreator;
+import gamecontrollers.commands.GameplayActionCommand;
+import gamecontrollers.turn.HistoryChannelController;
+import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;
 
@@ -9,25 +14,59 @@ import java.util.List;
 public class FestivalTurnController {
     private FestivalController festivalController;
     private List<FestivalPlayer> turnOrder;
+    private FestivalModel festivalModel;
     private FestivalPlayer currentPlayer;
-    private FestivalCardController cardController;
 
-	public FestivalTurnController(FestivalController controller) {
+    private FestivalCardController cardController;
+    
+
+    private FestivalCommandCreator commandCreator;
+    private HistoryChannelController historyChannelController;
+
+	public FestivalTurnController(FestivalController controller, HistoryChannelController hc) {
         festivalController = controller;
+        historyChannelController = hc;
 	}
 
-    public void startNewFestival(List<FestivalPlayer> players){
+    public void startNewFestival(List<FestivalPlayer> players, FestivalModel model){
         turnOrder = players;
+        festivalModel = model;
         currentPlayer = turnOrder.get(0);
-        setNewFestivalController();
+        cardController = new FestivalCardController(currentPlayer.getCards(), this);
     }
 
-    public void dropCurrentPlayer(){
+    public void startDrawingCard() {
+        commandCreator = cardController;
+    }
+
+    public Response commitMove(){
+        //check this turns rules stuff real quick
+        Response response = commandCreator.checkPossible();
+
+        if(!response.hasErrors()){
+            GameplayActionCommand command= commandCreator.getCommand();
+            command.execute();
+            historyChannelController.addCommand(command);
+        }
+
+        return response;
+    }
+
+    public void dropOut(){
         // tell the current player to drop out
         currentPlayer.dropOutOfFestival();
-
         dropCurrentPlayerFromTurnOrder();
+
         endTurn();
+    }
+
+    public void tabThroughPalaceCards(){
+        cardController.incrementCurrentCard();
+    }
+
+    public void playPalaceCard() {
+        startDrawingCard();
+        commitMove();
     }
 
     public void endTurn(){
@@ -42,17 +81,10 @@ public class FestivalTurnController {
 
     }
 
-    public PalaceCard getSelectedCard(){
-        return cardController.getCurrentCard();
-    }
-
-    public void tabThroughPalaceCards(){
-        cardController.incrementCurrentCard();
-    }
-
     private void incrementPlayer(){
         int index = turnOrder.indexOf(currentPlayer);
         currentPlayer = turnOrder.get((index+1) % turnOrder.size());
+        cardController.reset(currentPlayer.getCards());
     }
 
     private void startNewRoundCheck(){
@@ -66,7 +98,8 @@ public class FestivalTurnController {
         for(FestivalPlayer player : turnOrder){
             player.startNewRound();
         }
-        festivalController.startNewRound();
+
+        //start new round stuff
     }
 
     private void dropCurrentPlayerFromTurnOrder(){
@@ -91,10 +124,7 @@ public class FestivalTurnController {
 
     public void setCurrentPlayer(FestivalPlayer currentPlayer){
         this.currentPlayer = currentPlayer;
-        setNewFestivalController();
     }
 
-    private void setNewFestivalController(){
-        this.cardController = new FestivalCardController(currentPlayer.getCards());
-    }
+
 }

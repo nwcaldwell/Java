@@ -92,6 +92,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 
 	private List<List<Space>> putBoardInGrid(String boardFileName)
 	{
+
 		List<List<Space>> grid = new ArrayList<List<Space>>();
 		try{
 			File f;
