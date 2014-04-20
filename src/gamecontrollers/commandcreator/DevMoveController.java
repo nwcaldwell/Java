@@ -16,7 +16,6 @@ import java.util.List;
 
 public class DevMoveController extends DeveloperCommandCreator {
     private Space desiredSpace;
-    private Space originalSpace;
     private Developer currentDeveloper;
     private List<Space> path;
     private int cost;
@@ -48,7 +47,7 @@ public class DevMoveController extends DeveloperCommandCreator {
    */
     public DevMoveCommand getCommand(){
 
-        throw new UnsupportedOperationException();
+        return new DevMoveCommand(currentDeveloper, currentDeveloper.getSpace(), desiredSpace);
     }
 
     /*
@@ -72,8 +71,8 @@ public class DevMoveController extends DeveloperCommandCreator {
             response = new Response(new Message("No Developers left", true));
         }
 
-        //notify rules
-        notifyRules();
+        //update state
+        updateState();
 
         //return the response
         return response;
@@ -89,14 +88,14 @@ public class DevMoveController extends DeveloperCommandCreator {
         //iterate through the list of developers on the board
         currentDeveloper = logicController.getNextDeveloper(currentDeveloper);
 
-        //notify rules
-        notifyRules();
+        //update state
+        updateState();
     }
 
     public void move(Direction direction){
-
-        //notify rules
-        notifyRules();
+        desiredSpace = desiredSpace.getAdjacentSpace(direction);
+        //update state
+        updateState();
     }
 
     public Response checkPossible(){
@@ -113,6 +112,13 @@ public class DevMoveController extends DeveloperCommandCreator {
      PRIVATE METHODS
   ========================================================================
    */
+
+
+    private void updateState(){
+        //update the cost and path of the controller
+        cost = logicController.findShortestPath(turnController.getCurrentPlayer(), currentDeveloper.getSpace(), desiredSpace, path);
+        notifyRules();
+    }
 
     private void notifyRules(){
         for(Rule rool : rules){
