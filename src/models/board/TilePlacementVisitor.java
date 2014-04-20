@@ -2,28 +2,33 @@ package models.board;
 
 public class TilePlacementVisitor implements TileVisitor {
 
-    public TilePlacementVisitor(){
+	private int value;
+	
+    public TilePlacementVisitor() {
 
     }
 
-    public void visit(TileComponent tcc){
-
+    public void visit(Rice r) {
+        value = 0;
+    }
+    
+    public void visit(Village v) {
+        value = 1;
+    }
+  
+    public void visit(Palace p) {
+        value = 2;
     }
 
-    public void visit(Palace p){
-
+    public void visit(Irrigation i) {
+        value = 3;
     }
 
-    public void visit(Village v){
-
+    public void visit(TileComponent tcc) {
+        value = 4;
     }
-
-    public void visit(Rice r){
-
+    
+    public int getValue(){
+        return value;
     }
-
-    public void visit(Irrigation i){
-
-    }
-
 }

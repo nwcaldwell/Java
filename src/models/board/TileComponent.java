@@ -13,7 +13,11 @@ public class TileComponent {
         conjoinedParts = new TileComponent[d.getIntValue()];
 	    this.tcc = tcc;
     }
-	
+								
+	public TileComponentContent getTileComponentContent() {
+		return tcc;
+	}
+
 	public TileComponent getConjoinedTile(Direction direction){ //should call siblingExists(dir) first!!!
         return conjoinedParts[direction.getIntValue()];
     }

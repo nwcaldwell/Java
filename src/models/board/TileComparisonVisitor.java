@@ -5,26 +5,26 @@ public class TileComparisonVisitor implements TileVisitor {
 
     private int value;
 
-    public void visit(TileComponent tcc){
+    public void visit(Village v) {
         value = 0;
     }
 
-    public void visit(Palace p){
+    public void visit(Rice r) {
         value = 1;
     }
-
-    public void visit(Village v){
+    
+    public void visit(Palace p) {
         value = 2;
     }
 
-    public void visit(Rice r){
+    public void visit(Irrigation i) {
         value = 3;
     }
 
-    public void visit(Irrigation i){
+    public void visit(TileComponent tcc) {
         value = 4;
     }
-
+    
     public boolean compare(TileComponentContent t1, TileComponentContent t2) {
         t1.accept(this);
         int firstTileVal = value;
