@@ -3,15 +3,14 @@ package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
 import view.ViewController;
-import view.commands.InputCommand;
 
-public class TabDeveloperInputCommand extends InputCommand {
+public class TabDeveloperInputCommand extends GameplayInputCommand {
 
     public TabDeveloperInputCommand(ViewController viewController) {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override	public void doExecute() {
         Facade.getInstance().tabThroughDevelopers();
 	}
 }

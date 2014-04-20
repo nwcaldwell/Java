@@ -140,7 +140,7 @@ public class Facade {
     }
 
     public void startFestival() {
-        throw new UnsupportedOperationException();
+        // festivalController.startFestival(gam);
     }
 
     public void tabPalaceCard(){

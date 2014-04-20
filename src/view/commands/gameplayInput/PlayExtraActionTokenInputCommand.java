@@ -10,7 +10,8 @@ public class PlayExtraActionTokenInputCommand extends InputCommand {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override
+    public void execute() {
 		throw new UnsupportedOperationException();
 	}
 }
