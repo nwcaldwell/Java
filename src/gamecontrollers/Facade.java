@@ -1,6 +1,7 @@
 package gamecontrollers;
 
 import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
+import gamecontrollers.commandcreator.PalaceCommandCreator;
 import gamecontrollers.commandcreator.TilePlacementCommandCreator;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.turn.HistoryChannelController;
@@ -30,6 +31,7 @@ public class Facade {
     private TurnController turnController;
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;
+    private PalaceCommandCreator palaceCommandCreator;
 
     public static Facade getInstance() {
         return FacadeInstance;
@@ -86,6 +88,14 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
+    public void tabThroughPalace() {
+        palaceCommandCreator.tabThroughPalacesRemaining();
+    }
+
+    public void tabThroughDevelopers() {
+        developerMovementCommandCreator.iterateThroughBoardDevelopers();
+    }
+
     // Festival Methods
     public void drawCardFromDeck() {
         throw new UnsupportedOperationException();
@@ -122,8 +132,9 @@ public class Facade {
     }
 
     public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
-        //tODO
+        //TODO
 //        festivalController.startFestival(players, festivalCard, palaceAssociated);
+        throw new UnsupportedOperationException();
     }
 
     public void endFestival(){ throw new UnsupportedOperationException(); }

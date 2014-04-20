@@ -12,6 +12,9 @@ public abstract class GameplayInputCommand extends InputCommand {
 
     @Override
     public void execute() {
+        doExecute();
         getViewController().update();
     }
+
+    protected abstract void doExecute();
 }
