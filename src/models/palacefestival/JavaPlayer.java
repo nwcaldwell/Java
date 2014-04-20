@@ -66,4 +66,8 @@ public class JavaPlayer {
     public void takeBackCard(PalaceCard card){
         palaceCards.remove(card);
     }
+
+    public void useCard(PalaceCard card){
+        palaceCards.remove(card);
+    }
 }

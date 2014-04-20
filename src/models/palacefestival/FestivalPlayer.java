@@ -19,6 +19,66 @@ public class FestivalPlayer {
         this.bid = 0;
 	}
 
+    /* Festival Player Actions
+     * Higher level of abstraction */
+    public void playCard(PalaceCard card){
+        removeCardFromPlayer(card);
+        removeCardFromEligibleCards(card);
+        discardCard(card);
+    }
+
+    public void undoPlayCard(PalaceCard card){
+        undoRemoveCardFromPlayer(card);
+        undoRemoveCardFromEligibleCards(card);
+        undoDiscardCard(card);
+    }
+
+    //lower abstraction level methods
+
+    public PalaceCard getCardAtIndex(int index){
+        return cards.get(index);
+    }
+
+    public void dropOutOfFestival() {
+        droppedOut = true;
+    }
+
+    public void addToBid(int points){
+        bid += points;
+    }
+
+    public void endTurn(){
+        hasPlayedThisRound = true;
+    }
+
+    public void startNewRound(){
+        hasPlayedThisRound = false;
+    }
+
+    private void removeCardFromPlayer(PalaceCard card){
+        player.useCard(card);
+    }
+
+    private void undoRemoveCardFromPlayer(PalaceCard card){
+        player.drawCard(card);
+    }
+
+    private void removeCardFromEligibleCards(PalaceCard card){
+        cards.remove(card);
+    }
+
+    private void undoRemoveCardFromEligibleCards(PalaceCard card){
+        cards.add(card);
+    }
+
+    private void discardCard(PalaceCard card){
+        discardedCards.add(card);
+    }
+
+    private void undoDiscardCard(PalaceCard card){
+        discardedCards.remove(card);
+    }
+
     /* GETTERS */
     public JavaPlayer getPlayer(){
         return player;
@@ -40,36 +100,8 @@ public class FestivalPlayer {
         return discardedCards;
     }
 
-
-    /* Festival Player Actions */
-    public void discardCard(PalaceCard card){
-        discardedCards.add(card);
-    }
-
-    public PalaceCard getCardAtIndex(int index){
-        return cards.get(index);
-    }
-
-    public PalaceCard useCardAtindex(int index){
-        PalaceCard card = cards.get(index);
-        cards.remove(index);
-        return card;
-    }
-
-    public void dropOutOfFestival() {
-        droppedOut = true;
-    }
-
-    public void addToBid(int points){
-        bid += points;
-    }
-
-    public void endTurn(){
-        hasPlayedThisRound = true;
-    }
-
-    public void startNewRound(){
-        hasPlayedThisRound = false;
+    public ArrayList<PalaceCard> getCards(){
+        return cards;
     }
 
 }
