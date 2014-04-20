@@ -7,6 +7,7 @@ import models.palacefestival.JavaPlayer;
 import models.palacefestival.PalaceCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FestivalController {
     private FestivalModel festivalModel;
@@ -31,7 +32,7 @@ public class FestivalController {
         //the players passed in are the ones in the city
         //so need to check if their cards match the festival card
 
-        ArrayList<FestivalPlayer> festivalPlayers = new ArrayList<FestivalPlayer>();
+        List<FestivalPlayer> festivalPlayers = new ArrayList<FestivalPlayer>();
 
         for(int i = 0; i < players.length; i++){
             if(logicController.canParticipateInFestival(players[i].getPalaceCards(), festivalCard)){

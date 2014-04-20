@@ -1,8 +1,6 @@
 package models;
 
-/**
- * Created by jorgep on 4/19/14.
- */
+// This class was added during development to provide a utility class
 public class Pair<K,V> {
 
     private K key;

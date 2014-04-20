@@ -4,10 +4,11 @@ import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FestivalTurnController {
     private FestivalController festivalController;
-    private ArrayList<FestivalPlayer> turnOrder;
+    private List<FestivalPlayer> turnOrder;
     private FestivalPlayer currentPlayer;
     private FestivalCardController cardController;
 
@@ -15,7 +16,7 @@ public class FestivalTurnController {
         festivalController = controller;
 	}
 
-    public void startNewFestival(ArrayList<FestivalPlayer> players){
+    public void startNewFestival(List<FestivalPlayer> players){
         turnOrder = players;
         currentPlayer = turnOrder.get(0);
         setNewFestivalController();
@@ -75,7 +76,7 @@ public class FestivalTurnController {
 
 
     //GETTERS
-    public ArrayList<FestivalPlayer> getFestivalPlayers(){
+    public List<FestivalPlayer> getFestivalPlayers(){
         return turnOrder;
     }
 

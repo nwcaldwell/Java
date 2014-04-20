@@ -7,6 +7,7 @@ import gamecontrollers.turn.HistoryChannelController;
 import gamecontrollers.turn.PlanningModeCommandHandler;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
+import models.Pair;
 import models.board.*;
 import models.board.Developer;
 import models.board.Direction;
@@ -20,6 +21,7 @@ import java.util.List;
 public class Facade {
 
     private static Facade FacadeInstance = new Facade();
+    private JavaGame game;
     private TilePlacementController tilePlacementController;
     private BoardLogicController boardLogicController;
     private FestivalController festivalController;
@@ -29,14 +31,22 @@ public class Facade {
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;
 
-    private Facade() {
-
-    }
-
-    // getters
     public static Facade getInstance() {
         return FacadeInstance;
     }
+
+    private Facade() {
+
+
+    }
+
+    // start
+    public void startGame(List<Pair<String,String>> playersData, String boardFile){
+        game = new JavaGame(playersData, boardFile);
+    }
+
+    // getters
+
 
     public static Board getBoard(){
         throw new UnsupportedOperationException();

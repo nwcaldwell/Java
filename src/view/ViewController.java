@@ -1,9 +1,8 @@
 package view;
 
 
+import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
-
-import view.screens.*;
 
 
 import javax.swing.*;

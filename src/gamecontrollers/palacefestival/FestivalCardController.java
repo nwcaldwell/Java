@@ -2,16 +2,16 @@ package gamecontrollers.palacefestival;
 
 import models.palacefestival.PalaceCard;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ssyyddnneeyy on 4/19/14.
  */
 public class FestivalCardController {
-    private ArrayList<PalaceCard> palaceCards;
+    private List<PalaceCard> palaceCards;
     private PalaceCard currentCard;
 
-    public FestivalCardController(ArrayList<PalaceCard> cards){
+    public FestivalCardController(List<PalaceCard> cards){
         palaceCards = cards;
         currentCard = palaceCards.get(0);
     }

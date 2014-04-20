@@ -1,25 +1,24 @@
 package view.screens;
 
-import gamecontrollers.Facade;
+import models.Pair;
+import view.StartGameCommand;
 import view.View;
 import view.ViewController;
-import view.commands.InputCommand;
 import view.commands.JavaButtonListener;
-import view.commands.NavCommand;
 import view.screens.gameplay.PlayView;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 //TODO [Sydney][Jorge]
 
 public class NewGameView extends View {
-    JTextField[] playersNames;
-    JComboBox[] colorSelections;
-    JButton startGame;
+
+    private static final String BOARD_FILE_NAME = "board.txt";
+    private JTextField[] playersNames;
+    private JComboBox[] colorSelections;
+    private JButton startGame;
 
     public NewGameView(ViewController viewC) {
         super(viewC);
@@ -27,15 +26,16 @@ public class NewGameView extends View {
         playersNames = new JTextField[4];
         colorSelections = new JComboBox[4];
         startGame = new JButton("Let's Play!");
-        startGame.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlayView(this.getViewController()))));
-
-        //TODO How I start new game?
+        startGame.addActionListener(new JavaButtonListener(
+                        new StartGameCommand(this.getViewController(),
+                        new PlayView(this.getViewController()),
+                        this)));
 
         initializeView();
     }
 
     private void initializeView(){
-        JLabel title = new JLabel("New Game");
+        JLabel title = new JLabel("New JavaGame");
         title.setFont(new Font("Arial", 0, 18));
 
         String[] colors = {"Red", "Yellow", "Green", "Blue"}; //TODO add these to the media controller
@@ -66,24 +66,25 @@ public class NewGameView extends View {
         add(container, BorderLayout.CENTER);
     }
 
-    public ArrayList<String> getPlayerNames(){
-        ArrayList<String> names = new ArrayList<String>();
+    public List<Pair<String,String>> getPlayersData() {
+
+        List<Pair<String,String>> playersData = new ArrayList<Pair<String,String>>();
+
         for(int i = 0; i < playersNames.length; i++){
             if(!playersNames[i].getText().equals("")){
-                names.add(playersNames[i].getText());
+                playersData.add(
+                        new Pair<String, String>(
+                            playersNames[i].getText(),
+                            colorSelections[i].getSelectedItem().toString()
+                        )
+                );
             }
         }
-        return names;
+
+        return playersData;
     }
 
-    public ArrayList<String> getPlayerColors(){
-        ArrayList<String> colors = new ArrayList<String>();
-        for(int i = 0; i < playersNames.length; i++){
-            if(!playersNames[i].getText().equals("")){
-                colors.add(colorSelections[i].getSelectedItem().toString());
-            }
-        }
-        return colors;
+    public String getBoardFileName(){
+       return BOARD_FILE_NAME;
     }
-
 }
