@@ -23,6 +23,10 @@ public class Response {
         addMessages(messages);
     }
 
+    public Response(final Message message){
+        new Response(new ArrayList<Message>(){{ add(message); }});
+    }
+
     public List<Message> getMessages() {
         return messages;
     }
