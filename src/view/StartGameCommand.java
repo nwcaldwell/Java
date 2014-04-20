@@ -15,7 +15,7 @@ public class StartGameCommand extends NavCommand {
 
     @Override
     public void execute() {
-        Facade.getInstance().startGame(newGameView.getPlayersData());
+        Facade.getInstance().startGame( newGameView.getPlayersData(), newGameView.getBoardFileName() );
         super.execute();
     }
 }

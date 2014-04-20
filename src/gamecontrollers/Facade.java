@@ -44,8 +44,8 @@ public class Facade {
     }
 
     // start
-    public void startGame(List<Pair<String,String>> playersData){
-        game = new JavaGame(playersData);
+    public void startGame(List<Pair<String,String>> playersData, String boardFile){
+        game = new JavaGame(playersData, boardFile);
     }
 
     // getters

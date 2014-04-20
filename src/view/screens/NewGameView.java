@@ -14,9 +14,11 @@ import java.util.List;
 //TODO [Sydney][Jorge]
 
 public class NewGameView extends View {
-    JTextField[] playersNames;
-    JComboBox[] colorSelections;
-    JButton startGame;
+
+    private static final String BOARD_FILE_NAME = "board.txt";
+    private JTextField[] playersNames;
+    private JComboBox[] colorSelections;
+    private JButton startGame;
 
     public NewGameView(ViewController viewC) {
         super(viewC);
@@ -82,4 +84,7 @@ public class NewGameView extends View {
         return playersData;
     }
 
+    public String getBoardFileName(){
+       return BOARD_FILE_NAME;
+    }
 }
