@@ -131,6 +131,8 @@ public class Facade {
     }
 
     public void playPalaceCard(){
+//        turnController.set();
+//
 //        PlayPalaceCardCommand cmd = new PlayPalaceCardCommand()
 //        historyChannelController.addCommand();
 //        festivalController.playSelectedPalaceCard();
