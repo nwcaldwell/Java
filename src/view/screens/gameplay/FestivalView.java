@@ -6,12 +6,15 @@ import view.ViewController;
 import gamecontrollers.Facade;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
+import view.commands.JavaKeyListener;
+import view.commands.gameplayInput.*;
 import view.controls.ConsoleView;
 import view.controls.FestivalPlayerView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +30,7 @@ public class FestivalView extends View {
 
     public FestivalView(ViewController viewC){
         super(viewC);
+        initKeyListeners(viewC);
 
         consoleView = new ConsoleView();
         players = new ArrayList<FestivalPlayerView>(4);
@@ -52,6 +56,19 @@ public class FestivalView extends View {
         //festivalCard.setPreferredSize(new Dimension());
 
         add(center);
+    }
+
+    private void initKeyListeners(ViewController viewController){
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_ENTER, new AcceptTieRequestCommand(viewController)));
+
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_ESCAPE, new CancelCurrentActionInputCommand(viewController)));
+
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_D, new DropOutOfFestivalInputCommand(viewController)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_X, new EndFestivalTurnInputCommand(viewController)));
+
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_ENTER, new PlayPalaceCardInputCommand(viewController)));
+
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_TAB, new TabPalaceCardInputCommand(viewController)));
     }
 
     public void setFestivalCard(String imageSource){

@@ -15,7 +15,7 @@ public abstract class View extends JPanel {
     ========================================================================
     */
     private ViewController viewController;
-    private List<JavaKeyListener> keyListeners;
+    protected List<JavaKeyListener> keyListeners;
 
     /*
     ========================================================================
@@ -55,7 +55,7 @@ public abstract class View extends JPanel {
 
     public abstract void update();
 
-    public List<JavaKeyListener> getKeyListeners(){
+    public List<JavaKeyListener> getJavaKeyListeners(){
         return keyListeners;
     }
 }
