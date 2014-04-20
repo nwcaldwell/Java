@@ -5,23 +5,19 @@ import view.ViewController;
 
 
 
-public class NavCommand implements InputCommand {
+public class NavCommand extends InputCommand {
 
-    private ViewController viewController;
     private View viewToGoTo;
 
     public NavCommand(ViewController viewC, View view) {
-        viewController = viewC;
+        super(viewC);
         viewToGoTo = view;
     }
 
     @Override
     public void execute() {
-        viewController.setCurrentView( viewToGoTo );
+        getViewController().setCurrentView( viewToGoTo );
     }
 
-    public void updateViewController() {
-        //TODO might want to be moved to the InputCommand interface
-        viewController.update();
-    }
+
 }

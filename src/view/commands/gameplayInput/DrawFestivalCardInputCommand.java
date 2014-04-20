@@ -2,11 +2,16 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import view.ViewController;
 import view.commands.InputCommand;
 
-public class DrawFestivalCardInputCommand implements InputCommand {
+public class DrawFestivalCardInputCommand extends InputCommand {
 
-	@Override	public void execute() {
+    public DrawFestivalCardInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override	public void execute() {
         Facade.getInstance().drawTheFestivalCard();
 	}
 }
