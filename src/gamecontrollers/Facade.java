@@ -39,7 +39,6 @@ public class Facade {
 
     private Facade() {
 
-
     }
 
     // start
@@ -47,8 +46,11 @@ public class Facade {
         game = new JavaGame(playersData, boardFile);
     }
 
-    // getters
-
+    /*
+    ========================================================================
+      GETTERS
+    ========================================================================
+    */
 
     public JavaGame getGame() {
         return game;
@@ -58,12 +60,12 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public FestivalPlayer getFestivalPlayer(int indexOfPlayer){
-//        return festivalController.getPlayers();
-        throw new UnsupportedOperationException();
-    }
+    /*
+    ========================================================================
+      Board Communication Methods
+    ========================================================================
+    */
 
-    // regular game methods
     public void placeTileComponent(TileComponent tileComponent) {
         throw new UnsupportedOperationException();
     }
@@ -103,15 +105,11 @@ public class Facade {
 
     public void drawTheFestivalCard() {}
 
+    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path) {
 
-    public void dropOutOfFestival() {
-        throw new UnsupportedOperationException();
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return 0;
     }
-
-    public void acceptTieRequest() {
-        throw new UnsupportedOperationException();
-    }
-
 
     public boolean validPlacement(TileComponent tile, Space space){
         System.out.println("Facade.findShortestPath is not implemented yet");
@@ -122,8 +120,38 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    // Festival Methods
+
+    /*
+    ========================================================================
+      Festival Communication Methods
+    ========================================================================
+    */
+
+    public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
+        //TODO ?
+//        festivalController.startFestival(players, festivalCard, palaceAssociated);
+    }
+
     public void startFestival() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void tabPalaceCard(){
+        festivalController.tabPalaceCard();
+    }
+
+    public void playPalaceCard() {
+//        PlayPalaceCardCommand cmd = new PlayPalaceCardCommand()
+//        historyChannelController.addCommand();
+//        festivalController.playSelectedPalaceCard();
+          throw new UnsupportedOperationException();
+    }
+
+    public void dropOutOfFestival() {
+//        FestivalController.dropCurrentPlayerFromFestival();
+    }
+
+    public void acceptTieRequest() {
         throw new UnsupportedOperationException();
     }
 
@@ -131,19 +159,8 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
-        //TODO
-//        festivalController.startFestival(players, festivalCard, palaceAssociated);
-        throw new UnsupportedOperationException();
-    }
-
     public void endFestival(){ throw new UnsupportedOperationException(); }
 
-    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path) {
-
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return 0;
-    }
 
     // Actually execute the action being built
     // It returns a response that has messages for rules violation if any
@@ -151,10 +168,6 @@ public class Facade {
     public Response doCommand(){
         throw new UnsupportedOperationException();
 
-    }
-    //Starting a new game
-    public void beginNewGame(String[] playerNames, String[] playerColors){
-        throw new UnsupportedOperationException();
     }
 
 

@@ -75,6 +75,9 @@ public class ViewController {
         // Change the current view
         currentView = newView;
 
+        //get the listeners from the view
+        currentListeners = currentView.getJavaKeyListeners();
+
         // Add listeners of the new view
         for ( JavaKeyListener listener : currentListeners ) {
 
@@ -82,6 +85,7 @@ public class ViewController {
         }
 
         // Update the window
+        currentView.init();
         gameWindow.setContentPane( currentView );
         gameWindow.validate();
     }

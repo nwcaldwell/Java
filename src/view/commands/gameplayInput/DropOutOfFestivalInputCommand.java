@@ -13,5 +13,6 @@ public class DropOutOfFestivalInputCommand extends InputCommand {
 
     @Override	public void execute() {
         Facade.getInstance().dropOutOfFestival();
+        getViewController().update();
 	}
 }

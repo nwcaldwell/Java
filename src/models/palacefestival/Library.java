@@ -14,10 +14,11 @@ public class Library {
 	}
 
     public Library(List<PalaceCard> cardList){
-        this.cards.addAll(cardList);
+        cards = new Stack<PalaceCard>();
+        shuffle(cardList);
     }
 
-    public PalaceCard draw(){
+    public PalaceCard drawTopCard(){
         return cards.pop();
     }
 
@@ -25,7 +26,7 @@ public class Library {
         return cards.isEmpty();
     }
 
-    public void shuffle(Stack<PalaceCard> newCards){
+    public void shuffle(List<PalaceCard> newCards){
         cards.addAll(newCards);
         Collections.shuffle(cards);
     }
@@ -38,5 +39,4 @@ public class Library {
         ArrayList<PalaceCard> deckCopy = new ArrayList<PalaceCard>(cards);
        return deckCopy;
     }
-
 }
