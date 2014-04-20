@@ -46,19 +46,20 @@ public class Facade {
     }
 
     public JavaPlayer[] getPlayer(int indexOfPlayer){
-
+        throw new UnsupportedOperationException();
     }
 
     public SharedResources getSharedResources(){
-
+        throw new UnsupportedOperationException();
     }
 
     public Deck getDeck(){
-
+        throw new UnsupportedOperationException();
     }
 
     public FestivalPlayer getFestivalPlayer(int indexOfPlayer){
-        return festivalController.getPlayers();
+//        return festivalController.getPlayers();
+        throw new UnsupportedOperationException();
     }
 
     public void placeTileComponent(TileComponent tileComponent) {
@@ -113,7 +114,8 @@ public class Facade {
     }
 
     public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
-        festivalController.startFestival(players, festivalCard, palaceAssociated);
+        //tODO
+//        festivalController.startFestival(players, festivalCard, palaceAssociated);
     }
 
     public void endFestival(){ throw new UnsupportedOperationException(); }

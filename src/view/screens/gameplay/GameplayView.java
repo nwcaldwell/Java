@@ -99,9 +99,6 @@ public abstract class GameplayView extends View {
         //boardView.update(); TODO
         sharedResourcesView.update();
         consoleView.update();
-        for(int i = 0; i < pl){
-            view.update();
-        }
     }
 
 }

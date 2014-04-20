@@ -16,7 +16,7 @@ public class DropOutOfFestivalCommand implements GameplayActionCommand {
 
 	@Override	public void execute() {
 
-        Facade.getInstance().dropCurrentPlayerFromFestival();
+//        Facade.getInstance().dropCurrentPlayerFromFestival();
         throw new UnsupportedOperationException();
 	}
 	@Override	public void undo() {

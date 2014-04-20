@@ -157,8 +157,6 @@ public class PlayerView extends JPanel{
     }
 
     public void update(JavaPlayer player) {
-        Facade.getInstance().getPlayer(){
-
-        }
+        //Facade.getInstance().getPlayer();
     }
 }

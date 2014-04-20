@@ -22,8 +22,6 @@ public class FestivalView extends View {
 
     public void update(){
 //        consoleView.update();
-        for(FestivalPlayerView view : playersList){
-            view.update();
-        }
+
     }
 }

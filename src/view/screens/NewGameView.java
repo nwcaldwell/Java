@@ -1,5 +1,6 @@
 package view.screens;
 
+import gamecontrollers.Facade;
 import view.View;
 import view.ViewController;
 import view.commands.InputCommand;
@@ -9,6 +10,8 @@ import view.screens.gameplay.PlayView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 //TODO [Sydney][Jorge]
@@ -25,6 +28,7 @@ public class NewGameView extends View {
         colorSelections = new JComboBox[4];
         startGame = new JButton("Let's Play!");
         startGame.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlayView(this.getViewController()))));
+
         //TODO How I start new game?
 
         initializeView();
@@ -34,7 +38,7 @@ public class NewGameView extends View {
         JLabel title = new JLabel("New Game");
         title.setFont(new Font("Arial", 0, 18));
 
-        String[] colors = {"Red", "Yellow", "Green", "Blue"}; //TODO add these to the media controller?
+        String[] colors = {"Red", "Yellow", "Green", "Blue"}; //TODO add these to the media controller
 
         JPanel container = new JPanel();
         container.setPreferredSize(new Dimension(480, 500));
@@ -62,16 +66,24 @@ public class NewGameView extends View {
         add(container, BorderLayout.CENTER);
     }
 
-    public ArrayList<String> getPlayerInformation(){
-        ArrayList<String> information = new ArrayList<String>();
+    public ArrayList<String> getPlayerNames(){
+        ArrayList<String> names = new ArrayList<String>();
         for(int i = 0; i < playersNames.length; i++){
             if(!playersNames[i].getText().equals("")){
-                String info = playersNames[i].getText()+"/"+colorSelections[i].getSelectedItem();
-                information.add(info);
+                names.add(playersNames[i].getText());
             }
         }
+        return names;
+    }
 
-        return information;
+    public ArrayList<String> getPlayerColors(){
+        ArrayList<String> colors = new ArrayList<String>();
+        for(int i = 0; i < playersNames.length; i++){
+            if(!playersNames[i].getText().equals("")){
+                colors.add(colorSelections[i].getSelectedItem().toString());
+            }
+        }
+        return colors;
     }
 
 }
