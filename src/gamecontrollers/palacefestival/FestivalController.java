@@ -17,7 +17,8 @@ public class FestivalController {
     }
 
     public ArrayList<JavaPlayer> calculateWinners(){
-    	throw new UnsupportedOperationException();
+        // TODO implement
+        return null;
     }
 
     public void endFestival(){}
