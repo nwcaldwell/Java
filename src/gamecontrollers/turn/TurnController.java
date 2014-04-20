@@ -2,9 +2,12 @@ package gamecontrollers.turn;
 
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
+import gamecontrollers.rules.Rule;
+import gamecontrollers.rules.turnrules.TurnRule;
 import models.palacefestival.JavaPlayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * //TODO [Will][Kevin]
@@ -23,6 +26,8 @@ public class TurnController {
     private JavaPlayer currentPlayer;
     //This is the order of players in the turn
     private ArrayList<JavaPlayer> turnOrder;
+
+
 
 
     /*
@@ -50,17 +55,15 @@ public class TurnController {
     //Facade has said to do command
     //Response incase of error
     public Response commitMove(){
-        //TODO check for ActionPoints
-        /*
-            This can be done right now by calling CommandCreator.getCost()
-            and then passing that into TurnState.hasEnoughActionPoints()
-            But this might need to be done in rules? idk need help plox
-         */
+        //check this turns rules stuff real quick
+        Response response = turnState.checkRules();
 
 
-        //check from CommandCreator if it is possible
-        Response response = currentCommandCreator.checkPossible();
-        if(response.hasErrors()){
+        //check from CommandCreator if it is possible and add it to current response
+        response.addMessages(currentCommandCreator.checkPossible().getMessages());
+
+
+        if(!response.hasErrors()){
             //Command is possible so fetch it and have it handled
             commandHandler.handleCommand(currentCommandCreator.getCommand());
         }
@@ -76,6 +79,12 @@ public class TurnController {
     public void setTurnState(TurnState ts){
         this.turnState = ts;
     }
+
+    public int getCost(){
+        return currentCommandCreator.getCost();
+    }
+
+
 
      /*
    ========================================================================
@@ -110,7 +119,19 @@ public class TurnController {
      */
     public boolean canEndTurn(){
 
-        return false;
+        return turnState.canEndTurn();
     }
+
+    public boolean hasEnoughActionPoints(int i){
+        return turnState.hasEnoughActionPoints(i);
+    }
+
+
+     /*
+   ========================================================================
+       PRIVATE METHODS
+   ========================================================================
+    */
+
 
 }

@@ -31,7 +31,22 @@ public class Board  {
 	}
 	
 	public Developer getNextDeveloper(Developer currentDeveloper) {
-		throw new UnsupportedOperationException();
+		Developer temp = currentDeveloper;
+
+        //yo this works dont listen jorge
+        //find a developer and then set that to the return value
+        //remove the developer and put it at the end of the list
+        //on the next search then you will find a different problem
+        loop: for(Developer dev : developers){
+            if(dev.getPlayer() == currentDeveloper.getPlayer()){
+                temp = dev;
+                developers.remove(dev);
+                developers.add(dev);
+                break loop;
+            }
+        }
+
+        return temp;
 	}
 	
 	public Developer getFirstDeveloper(JavaPlayer p) {
@@ -43,5 +58,14 @@ public class Board  {
 		
 		return null;
 	}
+
+    public boolean hasDeveloperOn(Space s){
+        for(Developer dev : developers){
+            if(dev.getSpace() == s)
+                return true;
+        }
+
+        return false;
+    }
 
 }
