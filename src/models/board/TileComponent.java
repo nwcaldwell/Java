@@ -25,6 +25,10 @@ public class TileComponent {
 		rotate(tileComponent, new HashSet<TileComponent>());
     }
 
+    public TileComponentContent getTileComponentContent(){
+        return tcc;
+    }
+
 
 	/************
 
@@ -71,6 +75,7 @@ public class TileComponent {
 				rotate(tileComponent.getConjoinedTile(dir), visited);
 		}
 	}
+
 
 }
 

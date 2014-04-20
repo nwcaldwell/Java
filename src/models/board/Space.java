@@ -46,6 +46,10 @@ public class Space {
     public TileComponent getTile(){
         return tileStack.peek();
     }
+
+    public TileComponentContent getTileComponentContent(){
+        return tileStack.peek().getTileComponentContent();
+    }
 	
 	/**returns the height of the uppermost tile on this space*/
 	public int getHeight(){

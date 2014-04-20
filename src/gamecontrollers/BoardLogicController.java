@@ -61,4 +61,20 @@ public class BoardLogicController {
 		return false;
 	}
 
+    public boolean hasDeveloperOn(Space s){
+        return board.hasDeveloperOn(s);
+    }
+
+    public Developer getDeveloperOn(Space space){
+        Developer dev = new Developer();
+        ArrayList<Developer> devs = board.getDevelopers();
+
+        for(Developer temp : devs){
+            if(temp.getSpace() == space){
+                dev = temp;
+            }
+        }
+        return dev;
+    }
+
 }
