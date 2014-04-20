@@ -5,8 +5,6 @@ import models.board.JavaGame;
 import models.palacefestival.JavaPlayer;
 import view.View;
 import view.ViewController;
-import view.cgi.LWJGLBoardView;
-import view.controls.BoardView;
 import view.controls.ConsoleView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
@@ -14,7 +12,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 //TODO [Sydney][Jorge]
 

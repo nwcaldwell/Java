@@ -1,6 +1,9 @@
 package view;
 
+import view.commands.JavaKeyListener;
+
 import javax.swing.*;
+import java.util.List;
 import java.awt.*;
 
 //TODO [Sydney][Jorge]
@@ -12,6 +15,7 @@ public abstract class View extends JPanel {
     ========================================================================
     */
     private ViewController viewController;
+    private List<JavaKeyListener> keyListeners;
 
     /*
     ========================================================================
@@ -50,4 +54,8 @@ public abstract class View extends JPanel {
     }
 
     public abstract void update();
+
+    public List<JavaKeyListener> getKeyListeners(){
+        return keyListeners;
+    }
 }
