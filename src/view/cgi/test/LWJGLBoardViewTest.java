@@ -3,6 +3,7 @@ package view.cgi.test;
 import javax.swing.JFrame;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
@@ -34,9 +35,8 @@ public class LWJGLBoardViewTest {
 			System.exit(1);
 		}
 		while (true){
-			view.update();
-			view.renderScene();
 			pollInput();
+			view.update();
 			try {
 				Thread.sleep(20);
 			} catch (InterruptedException e) {

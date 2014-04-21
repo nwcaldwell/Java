@@ -4,11 +4,14 @@ import models.board.Board;
 import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
-import view.ViewController;
+import models.board.SpaceGeography;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
 import java.io.File;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
@@ -120,15 +123,15 @@ public class LWJGLBoardView extends BoardView{
 		//depth test ensures that close stuff is in front of far stuff.
 		glEnable(GL_DEPTH_TEST);
 		//enable lighting (specifically light 0)
-		//glEnable(GL_LIGHTING);
-		//glEnable(GL_LIGHT0);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT0);
 		//ensures normalization of all norms
 		//a bit slow.  Can be removed and fixed in face for optimization.
 		glEnable(GL_NORMALIZE);
 		//enable face culling, so only the front of a shape is rendered
 		//EASY way to optimize
-		//glCullFace(GL_FRONT);
-		//glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
+		glEnable(GL_CULL_FACE);
 
 		glClearColor(0.5f, 0, 0, 1);
 		
@@ -146,12 +149,10 @@ public class LWJGLBoardView extends BoardView{
 		this.rice=new Model3D(riceHex);
 		this.buriedSpace=new Model3D(riceHex);
 		this.buriedSpace.setRotation(0, 30, 0);
-		this.highland=new Model3D(riceHex);
-		this.highland.setRotation(0, 30, 0);
-		this.lowland=new Model3D(riceHex);
-		this.lowland.setRotation(0, 30, 0);
+		this.buriedSpace.setFlat();
 		this.ground=new Model3D(riceHex);
 		this.ground.setRotation(0, 30, 0);
+		this.ground.setFlat();
 		Model3D villageHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
 				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
 		Model3D village=ModelFactory.makeFromObj(new File("resources/3Dobjects/village.obj"), 
@@ -162,17 +163,37 @@ public class LWJGLBoardView extends BoardView{
 				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
 		this.irrigation=new Model3D(irrigationHex);
 		this.irrigation.setRotation(0, 30, 0);
+		this.irrigation.setFlat();
 
 		Model3D palaceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/hex.obj"), 
 				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
 		for (int i=0;i<palace.length;i++){
 			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
 					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
-			//Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
-			//		TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+			Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
+					TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
 			palace[i]=new Model3D(palaceHex,model);//,number);
 			palace[i].setRotation(0, 30, 0);
+			palace[i].setFlat();
 		}
+		
+		Model3D highlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/highlands_empty_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/highlands_empty_hex.png"));
+		this.highland=new Model3D(highlandHex);
+		this.highland.setRotation(0, 30, 0);
+		this.highland.setFlat();
+
+		Model3D lowlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/lowlands_empty_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/lowlands_empty_hex.png"));
+		this.lowland=new Model3D(lowlandHex);
+		this.lowland.setRotation(0, 30, 0);
+		this.lowland.setFlat();
+		
+		Model3D empty=ModelFactory.makeFromObj(new File("resources/3Dobjects/empty_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		this.ground=new Model3D(empty);
+		this.ground.setRotation(0, 30, 0);
+		this.ground.setFlat();
 	}
 	
 	@Override
@@ -200,6 +221,8 @@ public class LWJGLBoardView extends BoardView{
 		spaces.clear();
 		ArrayList<Space> preTraversed=new ArrayList<Space>();
 		updateRecursive(board.getRoot(), preTraversed, new Vector2D(0, 0));
+		
+		renderScene();
 	}
 	
 	/**updates the model data for the spaces on the
@@ -220,7 +243,13 @@ public class LWJGLBoardView extends BoardView{
 	private void updateSpace(Space space, Vector2D offset){
 
 		if (space.getHeight()==0){
-			Model3D terrain=palace[4].clone();//buriedSpace.clone();
+			Model3D terrain=palace[3].clone();
+			if (space.getSpaceGeography()==SpaceGeography.highlands){
+				terrain=highland.clone();
+			}
+			if (space.getSpaceGeography()==SpaceGeography.lowlands){
+				terrain=lowland.clone();
+			}
 			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
 			spaces.add(terrain);
 		}
@@ -249,7 +278,8 @@ public class LWJGLBoardView extends BoardView{
 		glLoadIdentity();
 		//Creates an orthographic projection from 0,0 to CANVAS_WIDTH, CANVAS_HEIGHT
 		glOrtho(-CANVAS_WIDTH/2, CANVAS_WIDTH/2, -CANVAS_HEIGHT/2, CANVAS_HEIGHT/2, CANVAS_NEAR, CANVAS_FAR);
-		//setLighting();
+		//take a guess what this method does.
+		setLighting();
 		//clear the background
 		glClear(GL11.GL_COLOR_BUFFER_BIT);
 		//if we want a skybox, we should put it here
@@ -277,8 +307,41 @@ public class LWJGLBoardView extends BoardView{
 		for (Model3D model: hilights){
 			model.render();
 		}
-		
 		Display.update();
+	}
+	
+	/**sets up the lighting for the scene*/
+	private void setLighting(){
+		float[] lightPos={1f,0f,1f,0f};
+		
+		//material colors
+		float[] matspecular={1,1,1,0};
+		float[] matambient={1,1,1,0};
+		float[] matdiffuse={1f,1f,1f,0};
+		
+		//light colors
+		float[] lightspecular={1f,1f,1f,1};
+		float[] lightdiffuse={1f,1f,1f,0};
+		float[] lightambient={0.2f,0.2f,0.2f,0};
+		
+
+		GL11.glEnable(GL11.GL_LIGHT0);
+		
+		ByteBuffer temp = ByteBuffer.allocateDirect(16);
+		temp.order(ByteOrder.nativeOrder());
+		FloatBuffer lightPosition=(FloatBuffer) temp.asFloatBuffer().put(lightPos).flip();
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, (FloatBuffer)(lightPosition));
+		
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, (FloatBuffer) temp.asFloatBuffer().put(lightspecular).flip());
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, (FloatBuffer) temp.asFloatBuffer().put(lightambient).flip());
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, (FloatBuffer) temp.asFloatBuffer().put(lightdiffuse).flip());
+		
+		//GL11.glColorMaterial(GL11.GL_FRONT, GL11.GL_EMISSION);
+		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_SPECULAR, (FloatBuffer) temp.asFloatBuffer().put(matspecular).flip());
+		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_DIFFUSE, (FloatBuffer) temp.asFloatBuffer().put(matdiffuse).flip());
+		GL11.glMaterial(GL11.GL_FRONT, GL11.GL_AMBIENT, (FloatBuffer) temp.asFloatBuffer().put(matambient).flip());
+		
+		GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, 2f);
 	}
 
 	////////////////getters and setters////////////////
