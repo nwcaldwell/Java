@@ -29,6 +29,6 @@ public class SelectRiceTileInputCommand extends InputCommand {
     @Override	public void execute() {
         Facade.getInstance().startPlacingTile( new R( ).buildTile(HexDirection.N) );
         getViewController().removeCurrentKeyListeners();
-        getViewController().resetKeyActionListeners(keyListeners);
+        getViewController().addKeyListeners(keyListeners);
 	}
 }
