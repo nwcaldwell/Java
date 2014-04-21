@@ -24,7 +24,7 @@ public class LWJGLBoardViewTest {
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		board=new Board(HexDirection.N, "boardwithdots.txt");
+		board=new Board(HexDirection.N, "board.txt");
 		viewController=new ViewController();
 		view = new LWJGLBoardView(board);
 		view.setSize(512,512);
