@@ -4,6 +4,7 @@ import models.board.Board;
 import models.board.Direction;
 import view.controls.BoardView;
 
+import java.awt.Canvas;
 import java.util.ArrayList;
 
 /**an implementation of BoardView that uses an LWJGL canvas*/
@@ -26,11 +27,24 @@ public class LWJGLBoardView extends BoardView{
 	public synchronized void addNotify() {
 		System.out.println(getParent().isDisplayable());
 		System.out.println(this.isDisplayable());
-		backend=new LWJGLBoardViewBackend(board, this);
+		//JLayeredPane layers=new JLayeredPane();
+		//layers.setSize(this.getSize());
+		//add(layers);
+		//create a canvas to hold the LWJGL Display
+		Canvas lwjglCanvas = new Canvas();
+		//layers.add(lwjglCanvas, JLayeredPane.DEFAULT_LAYER);
+		getParent().add(lwjglCanvas);
+		lwjglCanvas.setSize(lwjglCanvas.getParent().getSize());
+		
+		backend=new LWJGLBoardViewBackend(board, lwjglCanvas);
 		Thread backendThread = new Thread(backend);
 		backendThread.start();
-		while (!backendThread.glInitialized()){
-			
+		while (!backend.glInitialized()){
+			try {
+				Thread.currentThread().sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
