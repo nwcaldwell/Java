@@ -4,6 +4,10 @@ import models.board.Board;
 import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
+import models.board.TileComponentContents.Irrigation;
+import models.board.TileComponentContents.Palace;
+import models.board.TileComponentContents.Rice;
+import models.board.TileComponentContents.Village;
 import view.MediaController;
 import view.ViewController;
 import view.controls.BoardView;
@@ -286,7 +290,22 @@ public class LWJGLBoardView extends BoardView{
 		}
 		if (space.getHeight()>0){
 			//render the top tile
+			//fix this later, it's bad oop
 			Model3D newModel=buriedSpace.clone();
+			if (space.getTile().getTileComponentContent() instanceof Irrigation){
+				newModel = irrigation.clone();
+			}
+			if (space.getTile().getTileComponentContent() instanceof Rice){
+				newModel = rice.clone();
+			}
+			if (space.getTile().getTileComponentContent() instanceof Village){
+				newModel = village.clone();
+			}
+			if (space.getTile().getTileComponentContent() instanceof Palace){
+				int level = ((Palace)space.getTile().getTileComponentContent()).getLevel();
+				newModel = palace[level/2];
+			}
+			
 			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*SPACE_HEIGHT, offset.y));
 			spaces.add(newModel);
 		}
