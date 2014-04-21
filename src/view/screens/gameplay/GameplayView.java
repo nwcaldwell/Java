@@ -1,6 +1,7 @@
 package view.screens.gameplay;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import models.board.JavaGame;
 import models.palacefestival.JavaPlayer;
 import view.View;
@@ -38,7 +39,7 @@ public abstract class GameplayView extends View {
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        boardView = new LWJGLBoardView(game.getBoard(), getViewController()); //TODO get this working properly
+        boardView = new LWJGLBoardView(game.getBoard(), getViewController());
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
@@ -105,10 +106,16 @@ public abstract class GameplayView extends View {
         playerContainer.add(player);
     }
 
+
+    @Override
+    public void displayResponseToConsole(Response response) {
+        consoleView.displayMessage(response);
+    }
+
     public void update(){
         boardView.update();
         sharedResourcesView.update(game.getSharedResources(), game.getDeck());
-        consoleView.update();
+//        consoleView.update();
         JavaPlayer[] players = game.getPlayers();
         for(int i = 0; i < players.length; i++){
             playerViews.get(i).update(players[i]);

@@ -1,5 +1,6 @@
 package view.screens.gameplay;
 
+import gamecontrollers.Response;
 import gamecontrollers.palacefestival.FestivalTurnController;
 import models.palacefestival.PalaceCard;
 import view.MediaController;
@@ -107,6 +108,11 @@ public class FestivalView extends View {
         players.get(festivalModel.getIndexOfCurrentPlayer()).setCurrentPlayer();
 
         getViewController().setFrameAsFocused();
+    }
+
+    @Override
+    public void displayResponseToConsole(Response response) {
+        consoleView.displayMessage(response);
     }
 
     public boolean alertUserThatNeedToPlayMoreCards(){
