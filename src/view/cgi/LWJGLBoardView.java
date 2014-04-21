@@ -9,11 +9,12 @@ import view.MediaController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
-import java.io.File;
+import java.awt.Color;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -93,14 +94,23 @@ public class LWJGLBoardView extends BoardView{
 	
 	public LWJGLBoardView(Board b) {
 		super(b);
-		// TODO Auto-generated constructor stub
-
+	}
+	
+	@Override
+	public synchronized void addNotify() {
+		super.addNotify();
+		try {
+			System.out.println("Initializing OpenGL");
+			initGL();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**initializes OpenGL Must be called after this object is added to something
 	 * on a displayable JFrame.
 	 * @throws Exception */
-	public void initGL() throws Exception{
+	public synchronized void initGL() throws Exception{
 		if (!getParent().isDisplayable()){
 			throw new Exception("LWJGLBoardView must be attached to a displayable object\n" +
 					"specifically, it must return true for the \"isDisplayable\" call");
@@ -140,6 +150,10 @@ public class LWJGLBoardView extends BoardView{
 		TextureFactory.loadMissingTexture("Default.png");
 		
 		loadResources();
+		lwjglCanvas.setBackground(Color.green);
+		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
+		lwjglCanvas.addMouseListener(listener);
+		lwjglCanvas.addMouseMotionListener(listener);
 	}
 	
 	private void loadResources(){
@@ -199,7 +213,7 @@ public class LWJGLBoardView extends BoardView{
 	}
 	
 	@Override
-	public void hilightSpace(ArrayList<Direction> path, int height) {
+	public synchronized void hilightSpace(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
 		for (Direction d:path){
 			offset.translate(offsets[d.getIntValue()]);
@@ -209,7 +223,7 @@ public class LWJGLBoardView extends BoardView{
 	}
 	
 	@Override
-	public void displayDev(ArrayList<Direction> path, int height) {
+	public synchronized void displayDev(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
 		for (Direction d:path){
 			offset.translate(offsets[d.getIntValue()]);
@@ -219,7 +233,7 @@ public class LWJGLBoardView extends BoardView{
 	}
 
 	@Override
-	public void update() {
+	public synchronized void update() {
 		spacecount=0;
 		spaces.clear();
 		ArrayList<Space> preTraversed=new ArrayList<Space>();
@@ -276,7 +290,7 @@ public class LWJGLBoardView extends BoardView{
 	/**maybe, if we were doing a complicated model, I would feel the need
 	 * to add a scene-graph system.  As it is, nothing we use would take
 	 * advantage of it, so no scene graph has been made.*/
-	public void renderScene(){
+	public synchronized void renderScene(){
 		
 		//modelview doesn't translate lights
 		glMatrixMode(GL11.GL_MODELVIEW);
@@ -351,38 +365,38 @@ public class LWJGLBoardView extends BoardView{
 		
 		GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, 2f);
 	}
-
+	
 	////////////////getters and setters////////////////
 	
-	public Vector3D getSceneTranslation() {
+	public synchronized Vector3D getSceneTranslation() {
 		return sceneTranslation;
 	}
 
-	public void setSceneTranslation(Vector3D sceneTranslation) {
+	public synchronized void setSceneTranslation(Vector3D sceneTranslation) {
 		this.sceneTranslation = sceneTranslation;
 	}
 
-	public double getSceneYaw() {
+	public synchronized double getSceneYaw() {
 		return sceneYaw;
 	}
 
-	public void setSceneYaw(double sceneYaw) {
+	public synchronized void setSceneYaw(double sceneYaw) {
 		this.sceneYaw = sceneYaw;
 	}
 
-	public double getScenePitch() {
+	public synchronized double getScenePitch() {
 		return scenePitch;
 	}
 
-	public void setScenePitch(double scenePitch) {
+	public synchronized void setScenePitch(double scenePitch) {
 		this.scenePitch = scenePitch;
 	}
 
-	public double getSceneScale() {
+	public synchronized double getSceneScale() {
 		return sceneScale;
 	}
 
-	public void setSceneScale(double sceneScale) {
+	public synchronized void setSceneScale(double sceneScale) {
 		this.sceneScale = sceneScale;
 	}
 }
