@@ -12,6 +12,6 @@ public class CommitActionInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-        Facade.getInstance().doCommand();
+        Facade.getInstance().commitMove();
 	}
 }
