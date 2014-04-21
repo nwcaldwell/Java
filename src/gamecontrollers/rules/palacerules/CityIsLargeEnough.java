@@ -18,11 +18,18 @@ public class CityIsLargeEnough extends PalaceRule {
     }
     @Override
     public void update() {
-
+        if(creator.getCurrentLevel() <= creator.getCitySize()){
+            message = new Message("Necesito un palace-o mas grande", true);
+            setValidity(false);
+        }
+        else{
+            message = new Message("This palace is juuuuuust right", false);
+            setValidity(true);
+        }
     }
 
     @Override
     public Message getErrorMessage() {
-        return null;
+        return message;
     }
 }

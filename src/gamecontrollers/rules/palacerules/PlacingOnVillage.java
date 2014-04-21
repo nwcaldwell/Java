@@ -4,6 +4,12 @@ import gamecontrollers.Message;
 import gamecontrollers.commandcreator.PalaceCommandCreator;
 import gamecontrollers.turn.TurnController;
 
+/*
+    THIS ISNT SUPER NEEDED IM PRETTY SURE
+    LOGIC DELEGATED TO PALACES COMBINED WITH
+    TARGETHASPROPERZONING
+ */
+
 /**
  * Created by kevinnieman on 4/20/14.
  */

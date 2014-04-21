@@ -19,6 +19,19 @@ public class BoardLogicController {
 	public Board getBoard() {
 		return board;
 	}
+
+    //TODO WILL SECTION
+    //this tells if the passed player has the absolute highest or highest by tiebreaker
+    //the given space should be the space of a palace tile component content
+    public boolean findHighestDeveloper(Space space, JavaPlayer player){
+        return false;
+    }
+    //this tells if the passed player has one of the highest tying developers
+    //the given space should be the space of a palace tile component content
+    public boolean findHighestDeveloperOnLastTurn(Space space, JavaPlayer player){
+        return false;
+    }
+    //END TODO WILL SECTION
 	
 	public List<Space> getCitySpaces(Space s) {
 		return new ArrayList<Space>();
@@ -107,6 +120,7 @@ public class BoardLogicController {
 			return nodeScore;
 		return nodeScore / numTiles;
 	}
+
 
 	private int pathLogic(JavaPlayer p, Space origin, Space destination, List<Space> path)
 	{

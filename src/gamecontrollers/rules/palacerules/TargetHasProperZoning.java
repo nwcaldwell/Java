@@ -21,7 +21,7 @@ public class TargetHasProperZoning extends PalaceRule{
         this.controller = controller;
     }
 
-    //check the palace for if we can dplace it there
+    //check the tilecomponentcontent for if we can place it there
     @Override
     public void update() {
         if(creator.getSpace().getTileComponentContent().canAcceptPalace(new Palace(creator.getCurrentLevel()))){
@@ -30,13 +30,13 @@ public class TargetHasProperZoning extends PalaceRule{
         }
         else {
             message = new Message("Palace no puede buildar", true);
-            setValidity(true);
+            setValidity(false);
         }
     }
 
     @Override
     public Message getErrorMessage() {
-        return null;
+        return message;
     }
 
 }

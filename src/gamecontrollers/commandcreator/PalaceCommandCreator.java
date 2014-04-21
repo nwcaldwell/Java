@@ -13,4 +13,6 @@ public abstract class PalaceCommandCreator implements GameplayCommandCreator {
 
     public abstract int getCurrentLevel();
 
+    public abstract int getCitySize();
+
 }
