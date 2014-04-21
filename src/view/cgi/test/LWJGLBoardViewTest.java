@@ -7,6 +7,7 @@ import org.lwjgl.opengl.Display;
 
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
+import view.cgi.Vector2D;
 import view.cgi.Vector3D;
 
 import models.board.Board;
@@ -23,7 +24,7 @@ public class LWJGLBoardViewTest {
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		board=new Board(HexDirection.N, "board.txt");
+		board=new Board(HexDirection.N, "boardwithdots.txt");
 		viewController=new ViewController();
 		view = new LWJGLBoardView(board);
 		frame.add(view);
@@ -46,7 +47,7 @@ public class LWJGLBoardViewTest {
 	}
 	
 	int x=0,y=0;
-	int pitch=45,yaw=45;
+	int pitch=90,yaw=0;
 	
 	int prevx=0;
 	int prevy=0;
@@ -65,8 +66,8 @@ public class LWJGLBoardViewTest {
 		
 		if (Mouse.isButtonDown(0)){
 			if (mouseWasDown) {
-				y += (Mouse.getY() - prevy);
-				x += (Mouse.getX() - prevx);
+				y += (Mouse.getY() - prevy)/view.getSceneScale();
+				x += (Mouse.getX() - prevx)/view.getSceneScale();
 			}
 			prevy=Mouse.getY();
 			prevx=Mouse.getX();
@@ -88,10 +89,17 @@ public class LWJGLBoardViewTest {
 		}
 
 		view.setSceneScale((zoom*zoom*zoom*0.0000005));
+
+		Vector2D sceneTranslation=new Vector2D(
+				  (float)(x*LWJGLBoardView.CANVAS_WIDTH/(frame.getWidth()))
+				, -(float)(y*LWJGLBoardView.CANVAS_HEIGHT/(frame.getHeight())));
+		sceneTranslation=sceneTranslation.rotate((float) ((yaw*Math.PI)/180f));
+		
 		view.setSceneTranslation(new Vector3D(
-				  (float)(x*LWJGLBoardView.CANVAS_WIDTH/(frame.getWidth()*view.getSceneScale()))
-				, (float)(y*LWJGLBoardView.CANVAS_HEIGHT/(frame.getHeight()*view.getSceneScale()))
-				, 0));
+				sceneTranslation.x,
+				0,
+				sceneTranslation.y
+				));
 		view.setScenePitch(pitch);
 		view.setSceneYaw(yaw);
 	}

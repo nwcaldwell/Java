@@ -5,6 +5,7 @@ import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
 import models.board.SpaceGeography;
+import view.MediaController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
@@ -136,16 +137,16 @@ public class LWJGLBoardView extends BoardView{
 		glClearColor(0.5f, 0, 0, 1);
 		
 		//try loading the default texture.  If this doesn't work, you're screwed.
-		TextureFactory.loadMissingTexture("resources/imgs/Default.png");
+		TextureFactory.loadMissingTexture("Default.png");
 		
 		loadResources();
 	}
 	
 	private void loadResources(){
-//		buriedSpace=ModelFactory.makeFromObj(new File("resources/hex.obj"), 
-//				TextureFactory.getTexture("resources/imgs/GenericHex.png"));
-		Model3D riceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/rice_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/rice_hex_texture.png"));
+//		buriedSpace=ModelFactory.makeFromObj(MediaController.getInstance().getFile("hex.obj"), 
+//				TextureFactory.getTexture("GenericHex.png"));
+		Model3D riceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/rice_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/rice_hex_texture.png"));
 		this.rice=new Model3D(riceHex);
 		this.rice.setRotation(0, 30, 0);
 		this.buriedSpace=new Model3D(riceHex);
@@ -154,44 +155,44 @@ public class LWJGLBoardView extends BoardView{
 		this.ground=new Model3D(riceHex);
 		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
-		Model3D villageHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
-		Model3D village=ModelFactory.makeFromObj(new File("resources/3Dobjects/village.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/village_texture.png"));
+		Model3D villageHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/village_hex_texture.png"));
+		Model3D village=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village.obj"), 
+				TextureFactory.getTexture("3Dobjects/village_texture.png"));
 		this.village=new Model3D(village,villageHex);
 		this.village.setRotation(0, 30, 0);
-		Model3D irrigationHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/irrigation_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/irrigation_hex_texture.png"));
+		Model3D irrigationHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/irrigation_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/irrigation_hex_texture.png"));
 		this.irrigation=new Model3D(irrigationHex);
 		this.irrigation.setRotation(0, 30, 0);
 		this.irrigation.setFlat();
 
-		Model3D palaceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		Model3D palaceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		for (int i=0;i<palace.length;i++){
-			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
-					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
-//			Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
-//					TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+			Model3D model=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/palace"+((i+1)*2)+".obj"), 
+					TextureFactory.getTexture("3Dobjects/palace"+((i+1)*2)+"_texture.png"));
+//			Model3D number=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/"+((i+1)*2)+".obj"), 
+//					TextureFactory.getTexture("3Dobjects/number_texture.png"));
 			palace[i]=new Model3D(palaceHex,model);//,number);
 			palace[i].setRotation(0, 30, 0);
 			palace[i].setFlat();
 		}
 		
-		Model3D highlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/highlands_empty_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/highlands_empty_hex.png"));
+		Model3D highlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/highlands_empty_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/highlands_empty_hex.png"));
 		this.highland=new Model3D(highlandHex);
 		this.highland.setRotation(0, 30, 0);
 		this.highland.setFlat();
 
-		Model3D lowlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/lowlands_empty_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/lowlands_empty_hex.png"));
+		Model3D lowlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/lowlands_empty_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/lowlands_empty_hex.png"));
 		this.lowland=new Model3D(lowlandHex);
 		this.lowland.setRotation(0, 30, 0);
 		this.lowland.setFlat();
 		
-		Model3D empty=ModelFactory.makeFromObj(new File("resources/3Dobjects/empty_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		Model3D empty=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/empty_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		this.ground=new Model3D(empty);
 		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
@@ -219,10 +220,11 @@ public class LWJGLBoardView extends BoardView{
 
 	@Override
 	public void update() {
+		spacecount=0;
 		spaces.clear();
 		ArrayList<Space> preTraversed=new ArrayList<Space>();
 		updateRecursive(board.getRoot(), preTraversed, new Vector2D(0, 0));
-		
+		System.out.println("spacce count: "+spacecount);
 		renderScene();
 	}
 	
@@ -239,10 +241,13 @@ public class LWJGLBoardView extends BoardView{
 		}
 	}
 	
+	
+	int spacecount=0;
 	/**adds model data for a given space.
 	 * May be more than one Model3D.*/
 	private void updateSpace(Space space, Vector2D offset){
 
+		spacecount++;
 		if (space.getHeight()==0){
 			Model3D terrain=rice.clone();
 			if (space.getSpaceGeography()==SpaceGeography.highlands){
@@ -291,13 +296,15 @@ public class LWJGLBoardView extends BoardView{
 		//things too close will not be rendered
 		glTranslated(0, 0, -(CANVAS_FAR+CANVAS_NEAR)/2);
 
+		glRotated(scenePitch, 1, 0, 0);
+		
+		glRotated(sceneYaw, 0, 1, 0);
+		
 		glScaled(sceneScale, sceneScale, sceneScale);
 		
 		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 		
-		glRotated(scenePitch, 1, 0, 0);
 		
-		glRotated(sceneYaw, 0, 1, 0);
 		
 		for (Model3D model: spaces){
 			model.render();

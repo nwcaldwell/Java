@@ -104,8 +104,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 			while((line = br.readLine()) != null)
 			{
 				grid.add(new ArrayList<Space>());
-				int startingIndex = lineNum % 2;
-				for(int j = startingIndex; j < line.length(); j += 2)
+				for(int j = 0; j < line.length(); j ++)
 				{
 					if(line.charAt(j) == '.')
 						grid.get(lineNum).add(null);
