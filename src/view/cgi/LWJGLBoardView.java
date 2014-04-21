@@ -93,8 +93,17 @@ public class LWJGLBoardView extends BoardView{
 	
 	public LWJGLBoardView(Board b) {
 		super(b);
-		// TODO Auto-generated constructor stub
-
+	}
+	
+	@Override
+	public void addNotify() {
+		super.addNotify();
+		try {
+			System.out.println("Initializing OpenGL");
+			initGL();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**initializes OpenGL Must be called after this object is added to something

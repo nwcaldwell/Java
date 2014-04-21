@@ -27,14 +27,9 @@ public class LWJGLBoardViewTest {
 		board=new Board(HexDirection.N, "boardwithdots.txt");
 		viewController=new ViewController();
 		view = new LWJGLBoardView(board);
-		frame.add(view);
 		view.setSize(512,512);
-		try {
-			view.initGL();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(1);
-		}
+		frame.add(view);
+		
 		while (true){
 			pollInput();
 			view.update();
