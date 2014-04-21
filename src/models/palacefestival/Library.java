@@ -15,8 +15,7 @@ public class Library {
 
     public Library(List<PalaceCard> cardList){
         cards = new Stack<PalaceCard>();
-        cards.addAll(cardList);
-        shuffle(cards);
+        shuffle(cardList);
     }
 
     public PalaceCard drawTopCard(){
@@ -27,7 +26,7 @@ public class Library {
         return cards.isEmpty();
     }
 
-    public void shuffle(Stack<PalaceCard> newCards){
+    public void shuffle(List<PalaceCard> newCards){
         cards.addAll(newCards);
         Collections.shuffle(cards);
     }

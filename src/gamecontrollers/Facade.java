@@ -1,7 +1,8 @@
 package gamecontrollers;
 
-import gamecontrollers.commandcreator.DevMoveController;
-import gamecontrollers.commandcreator.TilePlacementController;
+import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
+import gamecontrollers.commandcreator.PalaceCommandCreator;
+import gamecontrollers.commandcreator.TilePlacementCommandCreator;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.HistoryChannelController;
@@ -9,12 +10,13 @@ import gamecontrollers.turn.PlanningModeCommandHandler;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
 import models.Pair;
-import models.board.*;
-import models.board.Developer;
 import models.board.Direction;
+import models.board.JavaGame;
 import models.board.Space;
 import models.board.TileComponent;
-import models.palacefestival.*;
+import models.palacefestival.FestivalModel;
+import models.palacefestival.JavaPlayer;
+import models.palacefestival.PalaceCard;
 
 import java.util.List;
 
@@ -23,15 +25,16 @@ public class Facade {
 
     private static Facade FacadeInstance = new Facade();
     private JavaGame game;
-    private TilePlacementController tilePlacementController;
+    private TilePlacementCommandCreator tilePlacementCommandCreator;
     private BoardLogicController boardLogicController;
     private FestivalController festivalController;
     private FestivalTurnController festivalTurnController;
     private HistoryChannelController historyChannelController;
-    private DevMoveController devMoveController;
+    private DeveloperMovementCommandCreator developerMovementCommandCreator;
     private TurnController turnController;
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;
+    private PalaceCommandCreator palaceCommandCreator;
 
     public static Facade getInstance() {
         return FacadeInstance;
@@ -48,8 +51,7 @@ public class Facade {
         boardLogicController = new BoardLogicController(game.getBoard());
         festivalController = new FestivalController(historyChannelController);
         festivalTurnController = festivalController.getTurnController();
-        devMoveController = new DevMoveController();
-
+        developerMovementCommandCreator = new DeveloperMovementCommandCreator(turnController, boardLogicController);
     }
 
     /*
@@ -68,16 +70,26 @@ public class Facade {
 
     /*
     ========================================================================
+      Setup for command builders methods
+    ========================================================================
+    */
+    public Response setupForMovingDeveloper(){
+        Response response = developerMovementCommandCreator.setCurrentDeveloper();
+
+        if ( !response.hasErrors() ) {
+              turnController.setCommandBuilder(developerMovementCommandCreator);
+        }
+
+        return response;
+    }
+
+    /*
+    ========================================================================
       Board Communication Methods
     ========================================================================
     */
-
-    public void placeTileComponent(TileComponent tileComponent) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void placeDeveloper(Developer direction, Space space){
-        throw new UnsupportedOperationException();
+    public void tabThroughDevelopers() {
+        developerMovementCommandCreator.iterateThroughBoardDevelopers();
     }
 
     public void moveTile(Direction direction){
@@ -88,33 +100,20 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void planCommand(){
-        throw new UnsupportedOperationException();
-    }
-
     public void endTurn() {
         throw new UnsupportedOperationException();
     }
 
-    public void drawCardFromDeck() {
-        throw new UnsupportedOperationException();
+    public void tabThroughPalace() {
+        palaceCommandCreator.tabThroughPalacesRemaining();
     }
 
-    public void drawTheFestivalCard() {}
-
-    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path) {
-
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return 0;
+    public void playExtraActionToken() {
+        turnController.playExtraActionToken();
     }
 
-    public boolean validPlacement(TileComponent tile, Space space){
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return false;
-    }
-
-    public void startPlacingTile(TileComponent tileComponent) {
-        throw new UnsupportedOperationException();
+    public void rotateCurrentTileComponent() {
+        tilePlacementCommandCreator.rotateCurrentTileComponent();
     }
 
 
@@ -123,14 +122,13 @@ public class Facade {
       Festival Communication Methods
     ========================================================================
     */
-
     public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
         //TODO ?
 //        festivalController.startFestival(players, festivalCard, palaceAssociated);
     }
 
     public void startFestival() {
-        throw new UnsupportedOperationException();
+        // festivalController.startFestival(gam);
     }
 
     public void tabPalaceCard(){
@@ -157,16 +155,41 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
+    public void drawCardFromDeck() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void drawTheFestivalCard() {}
+
+    public boolean validPlacement(TileComponent tile, Space space){
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return false;
+    }
+
+    public void startPlacingTile(TileComponent tileComponent) {
+        throw new UnsupportedOperationException();
+    }
+
+
     public void endFestival(){ throw new UnsupportedOperationException(); }
 
 
+    /*
+    ========================================================================
+      Perform actions methods
+    ========================================================================
+    */
     // Actually execute the action being built
     // It returns a response that has messages for rules violation if any
     // if the action is executed successfully the response.hasErrors is set to true
-    public Response doCommand(){
-        throw new UnsupportedOperationException();
-
+    public Response commitMove(){
+        return turnController.commitMove();
     }
+
+    public void planCommand(){
+        throw new UnsupportedOperationException();
+    }
+
 
 
 }

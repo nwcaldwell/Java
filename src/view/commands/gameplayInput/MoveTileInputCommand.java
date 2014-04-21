@@ -1,16 +1,20 @@
 // TODO developer [ Kevin ], test [ Sydney ]
 package view.commands.gameplayInput;
 
+import gamecontrollers.Facade;
+import models.board.Direction;
 import view.ViewController;
-import view.commands.InputCommand;
 
-public class MoveTileInputCommand extends InputCommand {
+public class MoveTileInputCommand extends GameplayInputCommand {
 
-    public MoveTileInputCommand(ViewController viewController) {
+    private Direction direction;
+
+    public MoveTileInputCommand(ViewController viewController, Direction direction) {
         super(viewController);
+        this.direction = direction;
     }
 
-    @Override	public void execute() {
-		throw new UnsupportedOperationException();
+    @Override	public void doExecute() {
+        Facade.getInstance().moveTile(direction);
 	}
 }

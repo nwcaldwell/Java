@@ -78,6 +78,9 @@ public class TurnController {
         return currentCommandCreator.getCost();
     }
 
+    public void setCommandBuilder(GameplayCommandCreator gameplayCommandCreator){
+        currentCommandCreator = gameplayCommandCreator;
+    }
 
 
      /*
@@ -123,9 +126,27 @@ public class TurnController {
 
      /*
    ========================================================================
-       PRIVATE METHODS
+       PUBLIC METHODS FOR TRACKING TURN STATE
    ========================================================================
     */
 
+    public void playTile(){
+        turnState.playTile();
+    }
+    public void removeTile(){
+        turnState.removeTile();
+    }
+    public void playExtraActionToken(){
+        turnState.playExtraActionToken();
+    }
+    public void returnExtraActionToken(){
+        turnState.returnExtraActionToken();
+    }
+    public void drawCard(){
+        turnState.drawCard();
+    }
+    public void returnCard(){
+        turnState.returnCard();
+    }
 
 }

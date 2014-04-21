@@ -3,16 +3,14 @@ package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
 import view.ViewController;
-import view.commands.InputCommand;
 
-public class PlayPalaceCardInputCommand extends InputCommand {
+public class PlayPalaceCardInputCommand extends GameplayInputCommand {
 
     public PlayPalaceCardInputCommand(ViewController viewController) {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override	public void doExecute() {
         Facade.getInstance().playPalaceCard();
-        getViewController().update();
     }
 }

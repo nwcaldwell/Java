@@ -36,10 +36,12 @@ public class PalaceCard {
 
     @Override
     public String toString() {
-        String toString = "palaceCard";
+        StringBuilder sb = new StringBuilder();
+        sb.append("palaceCard");
+
         for(Symbol sym : symbols){
-            toString.concat("_"+sym.toString());
+            sb.append("_" + sym.toString());
         }
-        return toString;
+        return sb.toString();
     }
 }
