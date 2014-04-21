@@ -6,17 +6,18 @@ import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.DropOutOfFestivalCommand;
 import gamecontrollers.commands.gameplaycommands.EndFestivalCommand;
 import gamecontrollers.commands.gameplaycommands.EndFestivalTurnCommand;
+import gamecontrollers.rules.PalaceFestivalRules.PlayerCanEndTurn;
 import gamecontrollers.rules.Rule;
 import gamecontrollers.turn.HistoryChannelController;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FestivalTurnController {
     private FestivalController festivalController;
-    private FestivalLogicController logicController;
     private List<FestivalPlayer> turnOrder;
     private FestivalModel festivalModel;
     private FestivalPlayer currentPlayer;
@@ -27,13 +28,11 @@ public class FestivalTurnController {
 
 	public FestivalTurnController(
             FestivalController controller,
-            FestivalLogicController logic,
-            HistoryChannelController hc,
-            List<Rule> r) {
+            HistoryChannelController hc) {
         festivalController = controller;
-        logicController = logic;
         historyChannelController = hc;
-        rules = r;
+        rules = new ArrayList<Rule>();
+        rules.add(new PlayerCanEndTurn(this));
 	}
 
     /*
@@ -118,7 +117,7 @@ public class FestivalTurnController {
 
         // TODO make this in a rule logicController.checkIfCanEndTurn(currentPlayer.getBid(), festivalModel.getHighestBid()
         for(Rule r:rules){
-            if( !r.getValidity()) {
+            if( !checkValidity(r)) {
                 response.addMessage(r.getErrorMessage());
             }
         }
@@ -128,6 +127,11 @@ public class FestivalTurnController {
         }
 
         return response;
+    }
+
+    private boolean checkValidity(Rule rule){
+        rule.update();
+        return rule.getValidity();
     }
 
     public void endTurnFinalization(){
@@ -186,7 +190,7 @@ public class FestivalTurnController {
         }
 
         if(!festivalModel.canStartNewRound()){
-            executeCommand(new EndFestivalCommand(festivalModel, logicController.computePointsWon(festivalModel.getWinners().size(), festivalModel.getPalaceValue()), this));
+            executeCommand(new EndFestivalCommand(festivalModel, this));
         }
     }
 

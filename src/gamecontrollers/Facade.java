@@ -124,9 +124,8 @@ public class Facade {
     ========================================================================
     */
 
-    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
-        //TODO ?
-//        festivalController.startFestival(players, festivalCard, palaceAssociated);
+    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palaceAssociated){
+        festivalController.startFestival(players, festivalCard, palaceAssociated);
     }
 
     public void tabPalaceCard(){

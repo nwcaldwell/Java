@@ -1,5 +1,7 @@
 package models.palacefestival;
 
+import models.board.Palace;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,17 +9,17 @@ public class FestivalModel {
     private List<FestivalPlayer> players;
     private List<FestivalPlayer> turnOrder;
     private PalaceCard festivalCard;
-    private int palaceValue;
+    private Palace palace;
     private int highestBid;
 
-	public FestivalModel(List<FestivalPlayer> p, PalaceCard fest, int pValue) {
+	public FestivalModel(List<FestivalPlayer> p, PalaceCard fest, Palace palace) {
         this.players = p;
         turnOrder = new ArrayList<FestivalPlayer>(players.size());
         for(FestivalPlayer player : players){
             turnOrder.add(player);
         }
         this.festivalCard = fest;
-        this.palaceValue = pValue;
+        this.palace = palace;
         this.highestBid = 0;
 	}
 
@@ -139,8 +141,8 @@ public class FestivalModel {
         return festivalCard;
     }
 
-    public int getPalaceValue(){
-        return palaceValue;
+    public Palace getPalace(){
+        return palace;
     }
 
     public int getHighestBid(){
