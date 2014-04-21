@@ -1,7 +1,7 @@
 package gamecontrollers;
 
-import gamecontrollers.commandcreator.DevMoveController;
-import gamecontrollers.commandcreator.TilePlacementController;
+import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
+import gamecontrollers.commandcreator.TilePlacementCommandCreator;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.HistoryChannelController;
@@ -23,12 +23,12 @@ public class Facade {
 
     private static Facade FacadeInstance = new Facade();
     private JavaGame game;
-    private TilePlacementController tilePlacementController;
+    private TilePlacementCommandCreator tilePlacementCommandCreator;
     private BoardLogicController boardLogicController;
     private FestivalController festivalController;
     private FestivalTurnController festivalTurnController;
     private HistoryChannelController historyChannelController;
-    private DevMoveController devMoveController;
+    private DeveloperMovementCommandCreator developerMovementCommandCreator;
     private TurnController turnController;
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;
@@ -48,7 +48,6 @@ public class Facade {
         boardLogicController = new BoardLogicController(game.getBoard());
         festivalController = new FestivalController(historyChannelController);
         festivalTurnController = festivalController.getTurnController();
-        devMoveController = new DevMoveController();
 
     }
 
@@ -62,8 +61,8 @@ public class Facade {
         return game;
     }
 
-    public FestivalModel getFestival() {
-        throw new UnsupportedOperationException();
+    public FestivalModel getFestivalModel() {
+        return festivalTurnController.getFestivalModel();
     }
 
     /*
@@ -124,13 +123,8 @@ public class Facade {
     ========================================================================
     */
 
-    public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
-        //TODO ?
-//        festivalController.startFestival(players, festivalCard, palaceAssociated);
-    }
-
-    public void startFestival() {
-        throw new UnsupportedOperationException();
+    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palaceAssociated){
+        festivalController.startFestival(players, festivalCard, palaceAssociated);
     }
 
     public void tabPalaceCard(){
@@ -142,11 +136,11 @@ public class Facade {
     }
 
     public void dropOutOfFestival() {
-        festivalTurnController.dropOut();
+        festivalTurnController.dropOutCommandCreator();
     }
 
     public void endFestivalTurn(){
-        festivalTurnController.endTurn();
+        festivalTurnController.endTurnFinalization();
     }
 
     public void acceptTieRequest() {
@@ -157,8 +151,16 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void endFestival(){ throw new UnsupportedOperationException(); }
+    public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        //need to go to the viewController, and go back to the board view
+        //then apply this to the game
+        game.endFestival(discardedCards, playersFromFestival, pointsEarned);
 
+    }
+
+    public void undoEndFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        game.undoFestival(discardedCards, playersFromFestival, pointsEarned);
+    }
 
     // Actually execute the action being built
     // It returns a response that has messages for rules violation if any
@@ -167,6 +169,4 @@ public class Facade {
         throw new UnsupportedOperationException();
 
     }
-
-
 }

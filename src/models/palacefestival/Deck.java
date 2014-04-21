@@ -65,8 +65,13 @@ public class Deck {
         return festivalCard;
     }
 
-    public void discard(PalaceCard card){
-        graveyard.discard(card);
+    public void discard(List<PalaceCard> discardedCards) {
+        for(PalaceCard card : discardedCards)
+            graveyard.discard(card);
+    }
+
+    public void undoDiscard(List<PalaceCard> discardedCards) {
+        graveyard.undoDiscardCards(discardedCards.size());
     }
 
 
@@ -120,4 +125,5 @@ public class Deck {
 
         library = new Library(cards);
     }
+
 }

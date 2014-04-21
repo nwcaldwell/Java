@@ -1,6 +1,7 @@
 package view.screens.gameplay;
 
 import gamecontrollers.palacefestival.FestivalTurnController;
+import models.palacefestival.PalaceCard;
 import view.MediaController;
 import view.View;
 import view.ViewController;
@@ -13,7 +14,6 @@ import view.controls.ConsoleView;
 import view.controls.FestivalPlayerView;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -86,15 +86,6 @@ public class FestivalView extends View {
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_TAB, new TabPalaceCardInputCommand(viewController)));
     }
 
-    public void dropOutPlayer(int index){
-        players.get(index).dropOutUser(index);
-        players.remove(index);
-    }
-
-    public void undoDropOutPlayer(int index){
-        throw new UnsupportedOperationException();
-    }
-
     public void setFestivalCard(String imageSource){
         festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage(imageSource.concat(imageExt))));
     }
@@ -104,14 +95,26 @@ public class FestivalView extends View {
     }
 
     public void update(){
-        FestivalModel festival = Facade.getInstance().getFestival();
-//        FestivalTurnController currentPlayerInfo = Facade.getInstance().getFestivalController();
-        setFestivalCard(festival.getFestivalCard().toString());
-        setHighestBid(festival.getHighestBid());
+        FestivalModel festivalModel = Facade.getInstance().getFestivalModel();
 
-        List<FestivalPlayer> fPlayers = festival.getPlayers();
+        setFestivalCard(festivalModel.getFestivalCard().toString());
+        setHighestBid(festivalModel.getHighestBid());
+
+        List<FestivalPlayer> fPlayers = festivalModel.getTurnOrder();
         for(int i = 0; i < fPlayers.size(); i++){
             players.get(i).update(fPlayers.get(i));
         }
+        players.get(festivalModel.getIndexOfCurrentPlayer()).setCurrentPlayer();
     }
+
+    public boolean alertUserThatNeedToPlayMoreCards(){
+        int response = JOptionPane.showConfirmDialog(this, "You have not bid enough points, would you like to drop out?", "Cannot End Turn", JOptionPane.YES_NO_OPTION);
+        if (response == 0) return true;
+        return false;
+    }
+
+    public void displayWinners(String winners, int points){
+
+    }
+
 }

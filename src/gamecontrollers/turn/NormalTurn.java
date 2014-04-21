@@ -98,7 +98,7 @@ public class NormalTurn extends TurnState{
     }
 
     public EndTurnCommand endTurn(){
-        return new EndTurnCommand(turnController.getCurrentPlayer());
+        return new EndTurnCommand(turnController);
     }
 
    /*

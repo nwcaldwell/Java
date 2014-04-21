@@ -38,4 +38,10 @@ public class Graveyard {
 
         return temp;
     }
+
+    public void undoDiscardCards(int numCards){
+        for(int i = 0; i < numCards; i++){
+            discardedCards.pop();
+        }
+    }
 }
