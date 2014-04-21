@@ -24,7 +24,14 @@ public class LWJGLBoardView extends BoardView{
 	
 	@Override
 	public synchronized void addNotify() {
-		
+		System.out.println(getParent().isDisplayable());
+		System.out.println(this.isDisplayable());
+		backend=new LWJGLBoardViewBackend(board, this);
+		Thread backendThread = new Thread(backend);
+		backendThread.start();
+		while (!backendThread.glInitialized()){
+			
+		}
 	}
 	
 	@Override

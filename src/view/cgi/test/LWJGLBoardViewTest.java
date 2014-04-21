@@ -7,9 +7,6 @@ import org.lwjgl.opengl.Display;
 
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
-import view.cgi.LWJGLBoardViewInputPoller;
-import view.cgi.Vector2D;
-import view.cgi.Vector3D;
 
 import models.board.Board;
 import models.board.HexDirection;
@@ -19,26 +16,21 @@ public class LWJGLBoardViewTest {
 	JFrame frame = new JFrame();
 	Board board;
 	LWJGLBoardView view;
-	ViewController viewController;
 	
 	public LWJGLBoardViewTest() {
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		board=new Board(HexDirection.N, "boardwithdots.txt");
-		viewController=new ViewController();
 		view = new LWJGLBoardView(board);
 		view.setSize(512,512);
+		System.out.println(frame.isDisplayable());
 		frame.add(view);
-		LWJGLBoardViewInputPoller l=new LWJGLBoardViewInputPoller(view);
-		frame.addMouseListener(l);
-		frame.addMouseMotionListener(l);
 		
 		while (true){
-			//pollInput();
 			view.update();
 			try {
-				Thread.sleep(20);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
