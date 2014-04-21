@@ -1,5 +1,6 @@
 package view;
 
+import org.lwjgl.Sys;
 import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
 import javax.swing.*;
@@ -37,7 +38,61 @@ public class ViewController {
         setCurrentView( new MainMenuView(this));
 
 
-        // TODO remove this keylistener when the real quit is implemented
+//        // TODO remove this keylistener when the real quit is implemented
+//        gameWindow.addKeyListener(new KeyListener() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//            }
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                System.out.println("GAME WINDOW "+e.getKeyChar());
+//                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+//                    System.exit(0);
+//                }
+//            }
+//        });
+        gameWindow.setFocusTraversalKeysEnabled(false);
+        gameWindow.setFocusable(true);
+
+
+//        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
+        gameWindow.validate();
+
+    }
+
+    public void setCurrentView( View newView ) {
+
+        // Remove the current listeners
+        removeCurrentKeyListeners();
+
+        // Change the current view
+        currentView = newView;
+
+        //get the listeners from the view
+        currentListeners = currentView.getJavaKeyListeners();
+
+        //reset the key listeners
+        resetKeyActionListeners(currentListeners);
+
+        currentView.setFocusable(false);
+
+        // Update the window
+        currentView.init();
+        gameWindow.setContentPane( currentView );
+        gameWindow.validate();
+    }
+
+    public void update(){
+        currentView.update();
+    }
+
+    public void resetKeyActionListeners(final List<JavaKeyListener> newListeners){
         gameWindow.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -51,70 +106,22 @@ public class ViewController {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    System.exit(0);
+                System.out.println("button pressed");
+                for(JavaKeyListener listener : newListeners){
+                    listener.respondToKeyEvent(e);
                 }
             }
         });
-
-
-//        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
-        gameWindow.validate();
-
     }
 
-    public void setCurrentView( View newView ) {
-
-        // Remove listeners of current view
-        // This also includes the ones that weren't added in the initial change of view
-        for ( JavaKeyListener listener : currentListeners ) {
-
-            currentView.removeKeyListener( listener );
-        }
-
-        // Change the current view
-        currentView = newView;
-
-        //get the listeners from the view
-        currentListeners = currentView.getJavaKeyListeners();
-
-        // Add listeners of the new view
-        for ( JavaKeyListener listener : currentListeners ) {
-
-            currentView.addKeyListener(listener);
-        }
-
-        // Update the window
-        currentView.init();
-        gameWindow.setContentPane( currentView );
-        gameWindow.validate();
-    }
-
-    public void update(){
-        currentView.update();
-    }
-
-    public void addKeyListener( JavaKeyListener listener ) {
-
-        currentListeners.add( listener );
-        gameWindow.addKeyListener( listener );
-    }
-
-    public void addKeyListener(List<JavaKeyListener> listeners){
-        for (JavaKeyListener listener : listeners){
-            addKeyListener(listener);
+    public void removeCurrentKeyListeners() {
+        KeyListener[] key = gameWindow.getKeyListeners();
+        for(int i = 0; i < key.length; i++){
+            gameWindow.removeKeyListener(key[i]);
         }
     }
 
-    public void removeKeyListener ( JavaKeyListener listener ) {
-
-        currentListeners.remove( listener );
-        gameWindow.removeKeyListener( listener );
-    }
-
-    public void removeKeyListener(List<JavaKeyListener> listeners) {
-        for (JavaKeyListener listener : listeners){
-            removeKeyListener(listener);
-        }
+    public void setFrameAsFocused() {
+        gameWindow.requestFocus();
     }
 }

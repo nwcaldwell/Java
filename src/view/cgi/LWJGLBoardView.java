@@ -4,8 +4,12 @@ import models.board.Board;
 import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
-import models.board.SpaceGeography;
+import models.board.TileComponentContents.Irrigation;
+import models.board.TileComponentContents.Palace;
+import models.board.TileComponentContents.Rice;
+import models.board.TileComponentContents.Village;
 import view.MediaController;
+import view.ViewController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
@@ -14,7 +18,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.Timer;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -84,16 +87,16 @@ public class LWJGLBoardView extends BoardView{
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
 	
 	/**for perspective, the translation of the scene*/
-	private Vector3D sceneTranslation=new Vector3D(0, 0, 0);
+	private Vector3D sceneTranslation=new Vector3D(30, 0, -20);
 	/**for perspective, the yaw of the scene*/
-	private double sceneYaw=0;
+	private double sceneYaw=45;
 	/**for perspective, the pitch of the scene*/
-	private double scenePitch=0;
+	private double scenePitch=45;
 	/**for perspective, the scale of the scene*/
-	private double sceneScale=0.25f;
+	private double sceneScale=0.0625f;
 	
-	public LWJGLBoardView(Board b) {
-		super(b);
+	public LWJGLBoardView(Board b, ViewController controller) {
+		super(b, controller);
 	}
 	
 	@Override
@@ -116,14 +119,19 @@ public class LWJGLBoardView extends BoardView{
 					"specifically, it must return true for the \"isDisplayable\" call");
 		}
 		
+		//JLayeredPane layers=new JLayeredPane();
+		//layers.setSize(this.getSize());
+		//add(layers);
 		//create a canvas to hold the LWJGL Display
 		lwjglCanvas = new Canvas();
+		//layers.add(lwjglCanvas, JLayeredPane.DEFAULT_LAYER);
 		add(lwjglCanvas);
 		lwjglCanvas.setSize(lwjglCanvas.getParent().getSize());
 		
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
-		Display.setDisplayMode(new DisplayMode((int)CANVAS_WIDTH, (int)CANVAS_HEIGHT));
+        DisplayMode display =new DisplayMode((int) CANVAS_WIDTH, (int) CANVAS_HEIGHT);
+		Display.setDisplayMode(display);
 		Display.setParent(lwjglCanvas);
 		Display.create();
 		//enable all of the OpenGL stuff
@@ -151,9 +159,10 @@ public class LWJGLBoardView extends BoardView{
 		
 		loadResources();
 		lwjglCanvas.setBackground(Color.green);
-		//LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
-		//lwjglCanvas.addMouseListener(listener);
-		//lwjglCanvas.addMouseMotionListener(listener);
+
+		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
+		lwjglCanvas.addMouseListener(listener);
+		lwjglCanvas.addMouseMotionListener(listener);
 	}
 	
 	private void loadResources(){
@@ -281,7 +290,22 @@ public class LWJGLBoardView extends BoardView{
 		}
 		if (space.getHeight()>0){
 			//render the top tile
+			//fix this later, it's bad oop
 			Model3D newModel=buriedSpace.clone();
+			if (space.getTile().getTileComponentContent() instanceof Irrigation){
+				newModel = irrigation.clone();
+			}
+			if (space.getTile().getTileComponentContent() instanceof Rice){
+				newModel = rice.clone();
+			}
+			if (space.getTile().getTileComponentContent() instanceof Village){
+				newModel = village.clone();
+			}
+			if (space.getTile().getTileComponentContent() instanceof Palace){
+				int level = ((Palace)space.getTile().getTileComponentContent()).getLevel();
+				newModel = palace[level/2];
+			}
+			
 			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*SPACE_HEIGHT, offset.y));
 			spaces.add(newModel);
 		}
@@ -330,6 +354,9 @@ public class LWJGLBoardView extends BoardView{
 			model.render();
 		}
 		Display.update();
+
+        //this is needed for key input interaction
+        super.setFrameAsFocused();
 	}
 	
 	/**sets up the lighting for the scene*/

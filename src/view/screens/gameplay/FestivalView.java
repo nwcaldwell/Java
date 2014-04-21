@@ -105,6 +105,8 @@ public class FestivalView extends View {
             players.get(i).update(fPlayers.get(i));
         }
         players.get(festivalModel.getIndexOfCurrentPlayer()).setCurrentPlayer();
+
+        getViewController().setFrameAsFocused();
     }
 
     public boolean alertUserThatNeedToPlayMoreCards(){
