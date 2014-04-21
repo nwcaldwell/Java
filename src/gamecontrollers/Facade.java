@@ -84,6 +84,12 @@ public class Facade {
         return response;
     }
 
+    public void startPlacingTile(TileComponent tileComponent) {
+        tilePlacementCommandCreator.setCurrentSpace(game.getBoard().getRoot());
+        tilePlacementCommandCreator.setCurrentTileComponent(tileComponent);
+        turnController.setCommandBuilder(tilePlacementCommandCreator);
+    }
+
     /*
     ========================================================================
       Board Communication Methods
@@ -164,9 +170,7 @@ public class Facade {
         return false;
     }
 
-    public void startPlacingTile(TileComponent tileComponent) {
-        throw new UnsupportedOperationException();
-    }
+
 
 
     public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {

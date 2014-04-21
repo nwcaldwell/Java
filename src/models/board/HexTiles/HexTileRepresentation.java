@@ -8,8 +8,8 @@ import models.board.TileRepresentation;
  * Created by williammacfarlane on 4/20/14.
  */
 public abstract class HexTileRepresentation extends TileRepresentation{
-	public TileComponent buildTile(Direction d, TileRepresentation tileRepresentation)
+	public TileComponent buildTile(Direction d)
 	{
-		return d.getPreferredTileConstructionCrew().buildTile(tileRepresentation);
+		return d.getPreferredTileConstructionCrew().buildTile(this);
 	}
 }
