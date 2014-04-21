@@ -1,5 +1,7 @@
 package models.board;
 
+import models.board.TileComponentContents.Palace;
+
 public abstract class TileComponentContent implements VisitableTile {
 
     private boolean canAcceptPalace;

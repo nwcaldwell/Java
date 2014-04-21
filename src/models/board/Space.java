@@ -85,8 +85,4 @@ public class Space {
 		return direction;
 	}
 
-	public SpaceGeography getSpaceGeography()
-	{
-		return spaceGeography;
-	}
 }
