@@ -12,6 +12,7 @@ import gamecontrollers.turn.TurnController;
 import models.Pair;
 import models.board.Direction;
 import models.board.JavaGame;
+import models.board.Palace;
 import models.board.Space;
 import models.board.TileComponent;
 import models.palacefestival.FestivalModel;
@@ -64,8 +65,8 @@ public class Facade {
         return game;
     }
 
-    public FestivalModel getFestival() {
-        throw new UnsupportedOperationException();
+    public FestivalModel getFestivalModel() {
+        return festivalTurnController.getFestivalModel();
     }
 
     /*
@@ -122,13 +123,10 @@ public class Facade {
       Festival Communication Methods
     ========================================================================
     */
-    public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
-        //TODO ?
-//        festivalController.startFestival(players, festivalCard, palaceAssociated);
-    }
 
-    public void startFestival() {
-        // festivalController.startFestival(gam);
+
+    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palaceAssociated){
+        festivalController.startFestival(players, festivalCard, palaceAssociated);
     }
 
     public void tabPalaceCard(){
@@ -140,11 +138,11 @@ public class Facade {
     }
 
     public void dropOutOfFestival() {
-        festivalTurnController.dropOut();
+        festivalTurnController.dropOutCommandCreator();
     }
 
     public void endFestivalTurn(){
-        festivalTurnController.endTurn();
+        festivalTurnController.endTurnFinalization();
     }
 
     public void acceptTieRequest() {
@@ -171,8 +169,16 @@ public class Facade {
     }
 
 
-    public void endFestival(){ throw new UnsupportedOperationException(); }
+    public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        //need to go to the viewController, and go back to the board view
+        //then apply this to the game
+        game.endFestival(discardedCards, playersFromFestival, pointsEarned);
 
+    }
+
+    public void undoEndFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        game.undoFestival(discardedCards, playersFromFestival, pointsEarned);
+    }
 
     /*
     ========================================================================
@@ -189,7 +195,5 @@ public class Facade {
     public void planCommand(){
         throw new UnsupportedOperationException();
     }
-
-
 
 }

@@ -30,6 +30,6 @@ public class TargetInvalidRule extends DeveloperMovementRule {
     }
 
     public Message getErrorMessage(){
-        return null;
+        return message;
     }
 }
