@@ -4,7 +4,7 @@ import models.board.Board;
 import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
-import view.ViewController;
+import models.board.SpaceGeography;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
@@ -168,11 +168,27 @@ public class LWJGLBoardView extends BoardView{
 		for (int i=0;i<palace.length;i++){
 			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
 					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
-			//Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
-			//		TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+			Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
+					TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
 			palace[i]=new Model3D(palaceHex,model);//,number);
 			palace[i].setRotation(0, 30, 0);
 		}
+		
+		Model3D highlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/highlands_empty_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/highlands_empty_hex.png"));
+		this.highland=new Model3D(highlandHex);
+		this.highland.setRotation(0, 30, 0);
+		
+
+		Model3D lowlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/lowlands_empty_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/lowlands_empty_hex.png"));
+		this.lowland=new Model3D(lowlandHex);
+		this.lowland.setRotation(0, 30, 0);
+		
+		Model3D empty=ModelFactory.makeFromObj(new File("resources/3Dobjects/empty_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		this.ground=new Model3D(empty);
+		this.ground.setRotation(0, 30, 0);
 	}
 	
 	@Override
@@ -200,6 +216,8 @@ public class LWJGLBoardView extends BoardView{
 		spaces.clear();
 		ArrayList<Space> preTraversed=new ArrayList<Space>();
 		updateRecursive(board.getRoot(), preTraversed, new Vector2D(0, 0));
+		
+		renderScene();
 	}
 	
 	/**updates the model data for the spaces on the
@@ -220,7 +238,13 @@ public class LWJGLBoardView extends BoardView{
 	private void updateSpace(Space space, Vector2D offset){
 
 		if (space.getHeight()==0){
-			Model3D terrain=palace[4].clone();//buriedSpace.clone();
+			Model3D terrain=ground.clone();
+			if (space.getSpaceGeography()==SpaceGeography.highlands){
+				terrain=highland.clone();
+			}
+			if (space.getSpaceGeography()==SpaceGeography.lowlands){
+				terrain=lowland.clone();
+			}
 			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
 			spaces.add(terrain);
 		}
@@ -277,7 +301,6 @@ public class LWJGLBoardView extends BoardView{
 		for (Model3D model: hilights){
 			model.render();
 		}
-		
 		Display.update();
 	}
 
