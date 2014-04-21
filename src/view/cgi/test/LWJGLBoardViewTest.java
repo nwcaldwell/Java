@@ -27,7 +27,7 @@ public class LWJGLBoardViewTest {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		board=new Board(HexDirection.N, "board.txt");
 		viewController=new ViewController();
-		view = new LWJGLBoardView(board);
+		view = new LWJGLBoardView(board, viewController);
 		view.setSize(512,512);
 		frame.add(view);
 		LWJGLBoardViewInputPoller l=new LWJGLBoardViewInputPoller(view);

@@ -1,5 +1,6 @@
 package view;
 
+import org.lwjgl.Sys;
 import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
 import javax.swing.*;
@@ -37,26 +38,27 @@ public class ViewController {
         setCurrentView( new MainMenuView(this));
 
 
-        // TODO remove this keylistener when the real quit is implemented
-        gameWindow.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                System.out.println("GAME WINDOW "+e.getKeyChar());
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    System.exit(0);
-                }
-            }
-        });
+//        // TODO remove this keylistener when the real quit is implemented
+//        gameWindow.addKeyListener(new KeyListener() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//            }
+//
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                System.out.println("GAME WINDOW "+e.getKeyChar());
+//                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+//                    System.exit(0);
+//                }
+//            }
+//        });
         gameWindow.setFocusTraversalKeysEnabled(false);
+        gameWindow.setFocusable(true);
 
 
 //        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
@@ -76,7 +78,9 @@ public class ViewController {
         currentListeners = currentView.getJavaKeyListeners();
 
         //reset the key listeners
-        resetKeyActionListers(currentListeners);
+        resetKeyActionListeners(currentListeners);
+
+        currentView.setFocusable(false);
 
         // Update the window
         currentView.init();
@@ -88,7 +92,7 @@ public class ViewController {
         currentView.update();
     }
 
-    public void resetKeyActionListers(final List<JavaKeyListener> newListeners){
+    public void resetKeyActionListeners(final List<JavaKeyListener> newListeners){
         gameWindow.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -102,6 +106,7 @@ public class ViewController {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                System.out.println("button pressed");
                 for(JavaKeyListener listener : newListeners){
                     listener.respondToKeyEvent(e);
                 }
@@ -114,5 +119,9 @@ public class ViewController {
         for(int i = 0; i < key.length; i++){
             gameWindow.removeKeyListener(key[i]);
         }
+    }
+
+    public void setFrameAsFocused() {
+        gameWindow.requestFocus();
     }
 }

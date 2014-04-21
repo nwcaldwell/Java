@@ -4,9 +4,8 @@ import models.board.Board;
 import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
-import models.board.SpaceGeography;
-import org.lwjgl.Sys;
 import view.MediaController;
+import view.ViewController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
@@ -15,10 +14,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.Timer;
-
-import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -96,8 +91,8 @@ public class LWJGLBoardView extends BoardView{
 	/**for perspective, the scale of the scene*/
 	private double sceneScale=0.0625f;
 	
-	public LWJGLBoardView(Board b) {
-		super(b);
+	public LWJGLBoardView(Board b, ViewController controller) {
+		super(b, controller);
 	}
 	
 	@Override
@@ -340,6 +335,9 @@ public class LWJGLBoardView extends BoardView{
 			model.render();
 		}
 		Display.update();
+
+        //this is needed for key input interaction
+        super.setFrameAsFocused();
 	}
 	
 	/**sets up the lighting for the scene*/

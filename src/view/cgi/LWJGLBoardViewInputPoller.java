@@ -96,7 +96,6 @@ public class LWJGLBoardViewInputPoller implements MouseListener, MouseMotionList
 		System.out.println("pressed");
 		prevy=e.getY();
 		prevx=e.getX();
-        System.out.println(prevy);
 	}
 
 	@Override
