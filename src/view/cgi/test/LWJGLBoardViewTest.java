@@ -7,6 +7,7 @@ import org.lwjgl.opengl.Display;
 
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
+import view.cgi.LWJGLBoardViewInputPoller;
 import view.cgi.Vector2D;
 import view.cgi.Vector3D;
 
@@ -29,9 +30,12 @@ public class LWJGLBoardViewTest {
 		view = new LWJGLBoardView(board);
 		view.setSize(512,512);
 		frame.add(view);
+		LWJGLBoardViewInputPoller l=new LWJGLBoardViewInputPoller(view);
+		frame.addMouseListener(l);
+		frame.addMouseMotionListener(l);
 		
 		while (true){
-			pollInput();
+			//pollInput();
 			view.update();
 			try {
 				Thread.sleep(20);
@@ -41,7 +45,7 @@ public class LWJGLBoardViewTest {
 		}
 	}
 	
-	int x=0,y=0;
+/*	int x=0,y=0;
 	int pitch=90,yaw=0;
 	
 	int prevx=0;
@@ -97,7 +101,7 @@ public class LWJGLBoardViewTest {
 				));
 		view.setScenePitch(pitch);
 		view.setSceneYaw(yaw);
-	}
+	}*/
 	
 	public static void main(String[] args) {
 		LWJGLBoardViewTest tester=new LWJGLBoardViewTest();

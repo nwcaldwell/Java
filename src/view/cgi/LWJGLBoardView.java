@@ -16,6 +16,9 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Timer;
 
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
@@ -84,13 +87,13 @@ public class LWJGLBoardView extends BoardView{
 	ArrayList<Model3D> hilights=new ArrayList<Model3D>();
 	
 	/**for perspective, the translation of the scene*/
-	private Vector3D sceneTranslation=new Vector3D(0, 0, 0);
+	private Vector3D sceneTranslation=new Vector3D(30, 0, -20);
 	/**for perspective, the yaw of the scene*/
-	private double sceneYaw=0;
+	private double sceneYaw=45;
 	/**for perspective, the pitch of the scene*/
-	private double scenePitch=0;
+	private double scenePitch=45;
 	/**for perspective, the scale of the scene*/
-	private double sceneScale=0.25f;
+	private double sceneScale=0.0625f;
 	
 	public LWJGLBoardView(Board b) {
 		super(b);
@@ -116,8 +119,12 @@ public class LWJGLBoardView extends BoardView{
 					"specifically, it must return true for the \"isDisplayable\" call");
 		}
 		
+		//JLayeredPane layers=new JLayeredPane();
+		//layers.setSize(this.getSize());
+		//add(layers);
 		//create a canvas to hold the LWJGL Display
 		lwjglCanvas = new Canvas();
+		//layers.add(lwjglCanvas, JLayeredPane.DEFAULT_LAYER);
 		add(lwjglCanvas);
 		lwjglCanvas.setSize(lwjglCanvas.getParent().getSize());
 		
@@ -155,7 +162,6 @@ public class LWJGLBoardView extends BoardView{
 //		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
 //		lwjglCanvas.addMouseListener(listener);
 //		lwjglCanvas.addMouseMotionListener(listener);
-
 	}
 	
 	private void loadResources(){
