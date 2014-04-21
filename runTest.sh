@@ -14,5 +14,5 @@ e.g:
 "
 else
 ant
-java -classpath bin:libs/lwjgl.jar:resources -Djava.library.path=libs/native/ view.cgi.test.LWJGLBoardViewTest
+java -classpath bin:libs/lwjgl.jar:resources -Djava.library.path=libs/native/ "$1"
 fi
