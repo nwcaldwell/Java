@@ -84,4 +84,8 @@ public class TileComponent {
     public void accept(TileCreationVisitor visitor) {
         visitor.visit(this);
     }
+
+    public Iterator<Direction> iterator(){
+        return direction.iterator();
+    }
 }

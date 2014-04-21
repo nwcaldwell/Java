@@ -48,6 +48,10 @@ public class Space {
         return tileStack.peek();
     }
 
+    public boolean hasTile(){
+        return getHeight() != 0;
+    }
+
     public TileComponentContent getTileComponentContent(){
         return tileStack.peek().getTileComponentContent();
     }
