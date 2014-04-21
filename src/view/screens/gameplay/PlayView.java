@@ -42,6 +42,8 @@ public class PlayView extends GameplayView {
     private void initKeyListeners(ViewController viewController){
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_ESCAPE, new CancelCurrentActionInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_ENTER, new CommitActionInputCommand(viewController)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_TAB, new TabDeveloperInputCommand(viewController)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_TAB, new TabPalaceInputCommand(viewController)));
 
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_C , new DrawCardFromDeckInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_F , new DrawFestivalCardInputCommand(viewController)));
@@ -71,8 +73,6 @@ public class PlayView extends GameplayView {
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_3, new SelectThreeTileInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_2, new SelectTwoTileInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_V, new SelectVillageTileInputCommand(viewController)));
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_TAB, new TabDeveloperInputCommand(viewController)));
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_TAB, new TabPalaceInputCommand(viewController)));
     }
 
 

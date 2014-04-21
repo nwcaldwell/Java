@@ -41,7 +41,6 @@ public class ViewController {
         gameWindow.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-
             }
 
             @Override
@@ -51,11 +50,13 @@ public class ViewController {
 
             @Override
             public void keyReleased(KeyEvent e) {
+                System.out.println("GAME WINDOW "+e.getKeyChar());
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     System.exit(0);
                 }
             }
         });
+        gameWindow.setFocusTraversalKeysEnabled(false);
 
 
 //        gameWindow.setContentPane(new JLabel( new ImageIcon( MediaController.getInstance().getImage("Default.png") ) ) );
@@ -65,12 +66,8 @@ public class ViewController {
 
     public void setCurrentView( View newView ) {
 
-        // Remove listeners of current view
-        // This also includes the ones that weren't added in the initial change of view
-        for ( JavaKeyListener listener : currentListeners ) {
-
-            currentView.removeKeyListener( listener );
-        }
+        // Remove the current listeners
+        removeCurrentKeyListeners();
 
         // Change the current view
         currentView = newView;
@@ -78,11 +75,8 @@ public class ViewController {
         //get the listeners from the view
         currentListeners = currentView.getJavaKeyListeners();
 
-        // Add listeners of the new view
-        for ( JavaKeyListener listener : currentListeners ) {
-
-            currentView.addKeyListener(listener);
-        }
+        //reset the key listeners
+        resetKeyActionListers(currentListeners);
 
         // Update the window
         currentView.init();
@@ -94,27 +88,31 @@ public class ViewController {
         currentView.update();
     }
 
-    public void addKeyListener( JavaKeyListener listener ) {
+    public void resetKeyActionListers(final List<JavaKeyListener> newListeners){
+        gameWindow.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
 
-        currentListeners.add( listener );
-        gameWindow.addKeyListener( listener );
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                for(JavaKeyListener listener : newListeners){
+                    listener.respondToKeyEvent(e);
+                }
+            }
+        });
     }
 
-    public void addKeyListener(List<JavaKeyListener> listeners){
-        for (JavaKeyListener listener : listeners){
-            addKeyListener(listener);
-        }
-    }
-
-    public void removeKeyListener ( JavaKeyListener listener ) {
-
-        currentListeners.remove( listener );
-        gameWindow.removeKeyListener( listener );
-    }
-
-    public void removeKeyListener(List<JavaKeyListener> listeners) {
-        for (JavaKeyListener listener : listeners){
-            removeKeyListener(listener);
+    public void removeCurrentKeyListeners() {
+        KeyListener[] key = gameWindow.getKeyListeners();
+        for(int i = 0; i < key.length; i++){
+            gameWindow.removeKeyListener(key[i]);
         }
     }
 }
