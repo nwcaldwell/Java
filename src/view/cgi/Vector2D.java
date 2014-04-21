@@ -52,6 +52,6 @@ public class Vector2D {
 	public Vector2D rotate(float angle){
 		return new Vector2D(
 				(float)(x*Math.cos(angle)-y*Math.sin(angle)),
-				(float)(x*Math.sin(angle)-y*Math.cos(angle)));
+				(float)(x*Math.sin(angle)+y*Math.cos(angle)));
 	}
 }

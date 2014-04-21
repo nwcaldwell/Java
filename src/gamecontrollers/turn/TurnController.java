@@ -78,6 +78,9 @@ public class TurnController {
         return currentCommandCreator.getCost();
     }
 
+    public void setCommandBuilder(GameplayCommandCreator gameplayCommandCreator){
+        currentCommandCreator = gameplayCommandCreator;
+    }
 
 
      /*

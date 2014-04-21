@@ -1,22 +1,18 @@
 package models.palacefestival;
 
-import java.util.ArrayList;
-
 public class PalaceCard {
-    private ArrayList<Symbol> symbols;
-	
-	public PalaceCard(Symbol symbol){
-        symbols = new ArrayList<Symbol>();
-        symbols.add(symbol);
-	}
+    private Symbol[] symbols;
 
-    public PalaceCard(Symbol sym1, Symbol sym2){
-        symbols = new ArrayList<Symbol>();
-        symbols.add(sym1);
-        symbols.add(sym2);
+    public PalaceCard(){
+        symbols = new Symbol[0];
     }
 
-    public ArrayList<Symbol> getSymbols(){
+	public PalaceCard(Symbol... symbol){
+        symbols = symbol;
+
+	}
+
+    public Symbol[] getSymbols(){
         return this.symbols;
     }
 
@@ -40,10 +36,12 @@ public class PalaceCard {
 
     @Override
     public String toString() {
-        String toString = "palaceCard";
+        StringBuilder sb = new StringBuilder();
+        sb.append("palaceCard");
+
         for(Symbol sym : symbols){
-            toString.concat("_"+sym.toString());
+            sb.append("_" + sym.toString());
         }
-        return toString;
+        return sb.toString();
     }
 }

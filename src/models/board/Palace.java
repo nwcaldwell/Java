@@ -39,6 +39,7 @@ public class Palace extends NotWalkable {
         return level;
     }
 
+
 	public void accept(TilePlacementVisitor v) {
 		v.visit(this);
 	}
@@ -48,7 +49,24 @@ public class Palace extends NotWalkable {
 
     }
 
-    public boolean canAcceptPalace(Palace palace){
+
+    public boolean canAcceptPalace(Palace palace) {
         return palace.getLevel() > this.level;
+    }
+
+    public int getTiePoints(){
+        return Math.round(level/4);
+    }
+
+    public int getPoints(){
+        return Math.round(level/2);
+    }
+
+    public void setHasHadFestival(boolean hasHadFestival) {
+        this.faceUp = hasHadFestival;
+    }
+
+    public boolean hasHadFestival() {
+        return faceUp;
     }
 }

@@ -1,6 +1,5 @@
 package view.controls;
 
-import gamecontrollers.Facade;
 import models.board.SharedResources;
 import models.palacefestival.Deck;
 import view.MediaController;
@@ -118,6 +117,7 @@ public class SharedResourcesView extends JPanel {
     }
 
     public void setFestivalCardImage(String imageSource){
+        System.out.println(String.format(source, imageSource));
         festivalCard.setIcon(new ImageIcon(MediaController.getInstance().getImage(String.format(source, imageSource))));
     }
 

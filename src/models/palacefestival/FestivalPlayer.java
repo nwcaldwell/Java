@@ -24,13 +24,13 @@ public class FestivalPlayer {
      * Higher level of abstraction */
     public void playCard(PalaceCard card){
         removeCardFromPlayer(card);
-        removeCardFromEligibleCards(card);
+        removeCard(card);
         discardCard(card);
     }
 
     public void undoPlayCard(PalaceCard card){
         undoRemoveCardFromPlayer(card);
-        undoRemoveCardFromEligibleCards(card);
+        undoRemoveCard(card);
         undoDiscardCard(card);
     }
 
@@ -44,17 +44,29 @@ public class FestivalPlayer {
         droppedOut = true;
     }
 
+    public void undoDropOutOfFestival() {
+        droppedOut = false;
+    }
+
     public void addToBid(int points){
         bid += points;
+    }
+
+    public void undoAddToBid(int points) {
+        bid -= points;
     }
 
     public void endTurn(){
         hasPlayedThisRound = true;
     }
 
+    public void undoEndTurn(){ hasPlayedThisRound = false;}
+
     public void startNewRound(){
         hasPlayedThisRound = false;
     }
+
+    /* PRIVATE METHODS FOR CARD MANIPULATION */
 
     private void removeCardFromPlayer(PalaceCard card){
         player.useCard(card);
@@ -64,11 +76,12 @@ public class FestivalPlayer {
         player.drawCard(card);
     }
 
-    private void removeCardFromEligibleCards(PalaceCard card){
+    private void removeCard(PalaceCard card){
+        player.useCard(card);
         cards.remove(card);
     }
 
-    private void undoRemoveCardFromEligibleCards(PalaceCard card){
+    private void undoRemoveCard(PalaceCard card){
         cards.add(card);
     }
 
@@ -81,6 +94,7 @@ public class FestivalPlayer {
     }
 
     /* GETTERS */
+
     public JavaPlayer getPlayer(){
         return player;
     }
@@ -104,5 +118,6 @@ public class FestivalPlayer {
     public List<PalaceCard> getCards(){
         return cards;
     }
+
 
 }

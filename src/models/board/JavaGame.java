@@ -3,6 +3,7 @@ package models.board;
 import models.Pair;
 import models.palacefestival.Deck;
 import models.palacefestival.JavaPlayer;
+import models.palacefestival.PalaceCard;
 
 import java.util.List;
 
@@ -84,6 +85,20 @@ public class JavaGame {
         return board;
     }
 
+    public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        deck.discard(discardedCards);
+        for(JavaPlayer player : playersFromFestival){
+            player.updateFamePoints(pointsEarned);
+        }
+    }
+
+
+    public void undoFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        deck.undoDiscard(discardedCards);
+        for(JavaPlayer player : playersFromFestival){
+            player.updateFamePoints((-1)*pointsEarned);
+        }
+    }
 
     /*
 

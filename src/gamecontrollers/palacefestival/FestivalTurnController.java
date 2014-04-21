@@ -1,5 +1,15 @@
 package gamecontrollers.palacefestival;
 
+import gamecontrollers.Response;
+import gamecontrollers.commandcreator.FestivalCommandCreator;
+import gamecontrollers.commands.GameplayActionCommand;
+import gamecontrollers.commands.gameplaycommands.DropOutOfFestivalCommand;
+import gamecontrollers.commands.gameplaycommands.EndFestivalCommand;
+import gamecontrollers.commands.gameplaycommands.EndFestivalTurnCommand;
+import gamecontrollers.rules.PalaceFestivalRules.PlayerCanEndTurn;
+import gamecontrollers.rules.Rule;
+import gamecontrollers.turn.HistoryChannelController;
+import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;
 
@@ -7,95 +17,224 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FestivalTurnController {
-    private FestivalController festivalController;
     private List<FestivalPlayer> turnOrder;
-    private FestivalPlayer currentPlayer;
+    private FestivalModel festivalModel;
     private FestivalCardController cardController;
+    private FestivalCommandCreator commandCreator;
+    private HistoryChannelController historyChannelController;
+    private List<Rule> rules;
 
-	public FestivalTurnController(FestivalController controller) {
-        festivalController = controller;
+	public FestivalTurnController(HistoryChannelController hc) {
+        historyChannelController = hc;
+        rules = new ArrayList<Rule>();
 	}
 
-    public void startNewFestival(List<FestivalPlayer> players){
-        turnOrder = players;
-        currentPlayer = turnOrder.get(0);
-        setNewFestivalController();
+    /*
+    ========================================================================
+      Initializing Festival Method
+    ========================================================================
+    */
+
+    public void startNewFestival(FestivalModel model){
+        festivalModel = model;
+        turnOrder = festivalModel.getTurnOrder();
+        cardController = new FestivalCardController(festivalModel.getCurrentPlayerCards(), festivalModel);
     }
 
-    public void dropCurrentPlayer(){
-        // tell the current player to drop out
-        currentPlayer.dropOutOfFestival();
+    /*
+    ========================================================================
+      Command Execution Methods
+    ========================================================================
+    */
 
-        dropCurrentPlayerFromTurnOrder();
-        endTurn();
+    private void executeCommand(GameplayActionCommand command){
+        command.execute();
+        historyChannelController.addCommand(command);
     }
 
-    public void endTurn(){
-        // make sure the current player has been marked as "played this round"
-        currentPlayer.endTurn();
+    public Response commitMove(){
+        //check this turns rules stuff real quick
+        Response response = commandCreator.checkPossible();
 
-        // increment current player
-        incrementPlayer();
+        if(!response.hasErrors()){
+            executeCommand(commandCreator.getCommand());
+        }
 
-        //check if the round was completed
-        startNewRoundCheck();
-
+        return response;
     }
 
-    public PalaceCard getSelectedCard(){
-        return cardController.getCurrentCard();
+    /*
+    ========================================================================
+      Play Festival Card Methods
+    ========================================================================
+    */
+
+    public void playPalaceCard() {
+        startDrawingCard();
+        commitMove();
     }
 
     public void tabThroughPalaceCards(){
         cardController.incrementCurrentCard();
     }
 
-
-    private void incrementPlayer(){
-        int index = turnOrder.indexOf(currentPlayer);
-        currentPlayer = turnOrder.get((index+1) % turnOrder.size());
+    private void startDrawingCard() {
+        commandCreator = cardController;
     }
 
-    private void startNewRoundCheck(){
-        //if the player has played this round is true, that means that we need to start a new round
-        if(currentPlayer.hasPlayedThisRound()){
+    /*
+    ========================================================================
+      Dropping out methods
+    ========================================================================
+    */
+
+    public void dropOutCommandCreator(){
+        executeCommand(new DropOutOfFestivalCommand(this, festivalModel.getCurrentPlayer(), festivalModel.getIndexOfCurrentPlayer()));
+    }
+
+    public void dropOut(){
+        festivalModel.dropCurrentPlayerFromFestival();
+        dropCurrentPlayerFromTurnOrder();
+        endTurn();
+    }
+
+    /*
+    ========================================================================
+      Ending turn checking
+    ========================================================================
+    */
+
+    public Response endTurn(){
+
+        Response response = new Response();
+
+        // TODO make this in a rule logicController.checkIfCanEndTurn(currentPlayer.getBid(), festivalModel.getHighestBid()
+        for(Rule r:rules){
+            if( !checkValidity(r)) {
+                response.addMessage(r.getErrorMessage());
+            }
+        }
+
+        if(!response.hasErrors()) {
+            executeCommand(new EndFestivalTurnCommand(this, festivalModel.getCurrentPlayer(), festivalModel.getIndexOfCurrentPlayer()));
+        }
+
+        return response;
+    }
+
+    private boolean checkValidity(Rule rule){
+        rule.update();
+        return rule.getValidity();
+    }
+
+    public void endTurnFinalization(){
+        // make sure the current player has been marked as "played this round"
+        festivalModel.endCurrentPlayerTurn();
+
+        // increment current player
+        incrementPlayer();
+
+        //check if the round was completed
+        if ( startNewRoundCheck() ) {
             startNewRound();
         }
+    }
+
+    /*
+    ========================================================================
+      End Turn backend
+    ========================================================================
+    */
+
+    private void dropCurrentPlayerFromTurnOrder(){
+        festivalModel.dropCurrentPlayerFromTurnOrder();
+    }
+
+    private void incrementPlayer(){
+        int index = festivalModel.getIndexOfCurrentPlayer();
+        setCurrentPlayer(turnOrder.get((index+1) % turnOrder.size()));
+        resetCardControllerCards();
+    }
+
+    private void addPlayerBackToTurnOrder(FestivalPlayer player, int playerIndex){
+        turnOrder.add(playerIndex, player);
+        setCurrentPlayer(turnOrder.get(playerIndex));
+        resetCardControllerCards();
+    }
+
+    private void resetCardControllerCards(){
+        cardController.reset(festivalModel.getCurrentPlayerCards());
+    }
+
+    /*
+    ========================================================================
+      New Round Methods
+    ========================================================================
+    */
+
+    private boolean startNewRoundCheck(){
+        //if the player has played this round is true, that means that we need to start a new round
+        return festivalModel.hasCurrentPlayerPlayedThisRound();
     }
 
     private void startNewRound(){
         for(FestivalPlayer player : turnOrder){
             player.startNewRound();
         }
-        festivalController.startNewRound();
+
+        if(!festivalModel.canStartNewRound()){
+            executeCommand(new EndFestivalCommand(festivalModel, this));
+        }
     }
 
-    private void dropCurrentPlayerFromTurnOrder(){
-        turnOrder.remove(currentPlayer);
+    /*
+    ========================================================================
+      Getters
+    ========================================================================
+    */
+
+    public FestivalModel getFestivalModel() {
+        return festivalModel;
     }
 
+    /*
+    ========================================================================
+      Setters
+    ========================================================================
+    */
 
-    //GETTERS
-    public List<FestivalPlayer> getFestivalPlayers(){
-        return turnOrder;
-    }
-
-    public FestivalPlayer getCurrentPlayer(){
-        return currentPlayer;
-    }
-
-    //SETTERS
-    public void setTurnOrder(ArrayList<FestivalPlayer> players, FestivalPlayer currentPlayer){
-        this.turnOrder = players;
-        setCurrentPlayer(currentPlayer);
+    public void setTurnOrder(List<FestivalPlayer> players){
+        turnOrder = players;
     }
 
     public void setCurrentPlayer(FestivalPlayer currentPlayer){
-        this.currentPlayer = currentPlayer;
-        setNewFestivalController();
+        festivalModel.setCurrentPlayer(currentPlayer);
+        resetCardControllerCards();
     }
 
-    private void setNewFestivalController(){
-        this.cardController = new FestivalCardController(currentPlayer.getCards());
+    public void setFestivalModel(FestivalModel model){
+        this.festivalModel = model;
+    }
+
+    /*
+    ========================================================================
+      Undo Methods
+    ========================================================================
+    */
+
+    public void undoEndTurn(FestivalPlayer player, int playerIndex){
+        player.undoEndTurn();
+        addPlayerBackToTurnOrder(player, playerIndex);
+    }
+
+    public void undoEndFestival(FestivalModel model){
+        setFestivalModel(model);
+        setTurnOrder(model.getPlayers());
+        setCurrentPlayer(turnOrder.get(0));
+    }
+
+    public void undoDropOut(FestivalPlayer player, int index){
+        player.undoDropOutOfFestival();
+        addPlayerBackToTurnOrder(player, index);
     }
 }

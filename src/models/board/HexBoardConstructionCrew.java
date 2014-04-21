@@ -1,6 +1,5 @@
 package models.board;
 
-import javafx.util.Pair;
 import view.MediaController;
 
 import java.io.BufferedReader;
@@ -9,6 +8,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import models.Pair;
 
 /**
  * Created by williammacfarlane on 4/17/14.
@@ -92,6 +93,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 
 	private List<List<Space>> putBoardInGrid(String boardFileName)
 	{
+
 		List<List<Space>> grid = new ArrayList<List<Space>>();
 		try{
 			File f;
@@ -102,8 +104,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 			while((line = br.readLine()) != null)
 			{
 				grid.add(new ArrayList<Space>());
-				int startingIndex = lineNum % 2;
-				for(int j = startingIndex; j < line.length(); j += 2)
+				for(int j = 0; j < line.length(); j ++)
 				{
 					if(line.charAt(j) == '.')
 						grid.get(lineNum).add(null);

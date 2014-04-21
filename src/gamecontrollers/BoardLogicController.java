@@ -12,8 +12,8 @@ public class BoardLogicController {
     private DevMoveController devMoveController;
 
 	public BoardLogicController(Board board) {
-		numTiles = getAllSpaces().size();
 		this.board = board;
+		numTiles = getAllSpaces().size();
 	}
 
 	public Board getBoard() {
