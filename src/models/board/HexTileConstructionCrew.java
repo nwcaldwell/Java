@@ -94,8 +94,7 @@ public class HexTileConstructionCrew extends TileConstructionCrew {
 		{
 			line = stringRep[lineNum];
 			grid.add(new ArrayList<TileComponent>());
-			int startingIndex = lineNum % 2;
-			for(int j = startingIndex; j < line.length(); j += 2)
+			for(int j = 0; j < line.length(); j++)
 			{
 				if(line.charAt(j) == '.')
 					grid.get(lineNum).add(null);

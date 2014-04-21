@@ -9,7 +9,7 @@ import models.board.TileComponent;
 public class RVR extends HexTileRepresentation {
 	public String[] stringRepresentation()
 	{
-		String[] rep = {"R,R", ".V."};
+		String[] rep = {"R.R", ".V."};
 		return rep;
 	}
 }
