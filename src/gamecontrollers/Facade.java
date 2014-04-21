@@ -100,14 +100,17 @@ public class Facade {
     }
 
     public void moveTile(Direction direction){
+
         throw new UnsupportedOperationException();
     }
 
     public void moveDeveloper(Direction direction){
+
         throw new UnsupportedOperationException();
     }
 
     public void endTurn() {
+        turnController.endTurn();
         throw new UnsupportedOperationException();
     }
 
