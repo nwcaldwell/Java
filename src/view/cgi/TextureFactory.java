@@ -100,8 +100,10 @@ public class TextureFactory {
 		BufferedImage image = MediaController.getInstance().getImage(filename);
 		
 		//if the image was not loaded, just make the default texture return.
-		if (image == null)
+		if (image == null){
+			loadedTextures.put(filename, MISSING_TEXTURE);
 			throw new IOException("texture file not found: "+filename);
+		}
 		//BufferedImage image = ImageIO.read(new File(filename));
 		
 		int[] pixels = new int[image.getWidth() * image.getHeight()];

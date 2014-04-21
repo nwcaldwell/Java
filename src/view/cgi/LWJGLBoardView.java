@@ -119,14 +119,14 @@ public class LWJGLBoardView extends BoardView{
 					"specifically, it must return true for the \"isDisplayable\" call");
 		}
 		
-		JLayeredPane layers=new JLayeredPane();
-		layers.setSize(this.getSize());
-		add(layers);
+		//JLayeredPane layers=new JLayeredPane();
+		//layers.setSize(this.getSize());
+		//add(layers);
 		//create a canvas to hold the LWJGL Display
 		lwjglCanvas = new Canvas();
-		layers.add(lwjglCanvas, JLayeredPane.DEFAULT_LAYER);
+		//layers.add(lwjglCanvas, JLayeredPane.DEFAULT_LAYER);
+		add(lwjglCanvas);
 		lwjglCanvas.setSize(lwjglCanvas.getParent().getSize());
-		lwjglCanvas.setLocation(0, 0);
 		
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
@@ -157,13 +157,11 @@ public class LWJGLBoardView extends BoardView{
 		TextureFactory.loadMissingTexture("Default.png");
 		
 		loadResources();
-		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
-		JPanel frontPane=new JPanel();
-		frontPane.setLocation(0, 0);
-		layers.add(frontPane,JLayeredPane.PALETTE_LAYER);
-		frontPane.setSize(layers.getSize());
-		frontPane.setBackground(Color.green);
-		frontPane.addMouseListener(listener);
+		lwjglCanvas.setBackground(Color.green);
+
+//		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
+//		lwjglCanvas.addMouseListener(listener);
+//		lwjglCanvas.addMouseMotionListener(listener);
 	}
 	
 	private void loadResources(){
@@ -274,10 +272,10 @@ public class LWJGLBoardView extends BoardView{
 		spacecount++;
 		if (space.getHeight()==0){
 			Model3D terrain=rice.clone();
-			if (space.getSpaceGeography()==SpaceGeography.highlands){
+			if (space.isInHighlands()){
 				terrain=highland.clone();
 			}
-			if (space.getSpaceGeography()==SpaceGeography.lowlands){
+			if (space.isInLowlands()){
 				terrain=lowland.clone();
 			}
 			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));

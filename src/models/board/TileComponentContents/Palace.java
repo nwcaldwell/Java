@@ -1,4 +1,8 @@
-package models.board;
+package models.board.TileComponentContents;
+
+import models.board.NotWalkable;
+import models.board.TilePlacementVisitor;
+import models.board.TileVisitor;
 
 public class Palace extends NotWalkable {
     private int level;
@@ -7,6 +11,7 @@ public class Palace extends NotWalkable {
     public Palace(int level){
         this.level = level;
         this.faceUp = true;
+        setCanAcceptPalace(false);
     }
 
     //purely for undo
@@ -29,6 +34,16 @@ public class Palace extends NotWalkable {
         else
             return false;
     }
+
+    public boolean isFaceUp(){
+        return faceUp;
+    }
+
+    public int getLevel(){
+        return level;
+    }
+
+
 	public void accept(TilePlacementVisitor v) {
 		v.visit(this);
 	}
@@ -38,8 +53,9 @@ public class Palace extends NotWalkable {
 
     }
 
-    public int getLevel(){
-        return level;
+
+    public boolean canAcceptPalace(Palace palace) {
+        return palace.getLevel() > this.level;
     }
 
     public int getTiePoints(){

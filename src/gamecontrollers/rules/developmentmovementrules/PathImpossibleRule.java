@@ -1,6 +1,7 @@
 package gamecontrollers.rules.developmentmovementrules;
 
 
+import gamecontrollers.commandcreator.DeveloperCommandCreator;
 import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
 
 import gamecontrollers.Message;
@@ -12,11 +13,11 @@ import gamecontrollers.Message;
 public class PathImpossibleRule extends DeveloperMovementRule {
     //checks that the developer can move to an indicated space
 
-    private DeveloperMovementCommandCreator controller;
+    private DeveloperCommandCreator controller;
     private Message message;
 
 
-    PathImpossibleRule(DeveloperMovementCommandCreator controller){
+    PathImpossibleRule(DeveloperCommandCreator controller){
         this.controller = controller;
     }
 

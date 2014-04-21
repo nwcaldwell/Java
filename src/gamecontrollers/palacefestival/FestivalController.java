@@ -1,10 +1,7 @@
 package gamecontrollers.palacefestival;
 
-import gamecontrollers.rules.PalaceFestivalRules.PlayerCanEndTurn;
-import gamecontrollers.rules.Rule;
 import gamecontrollers.turn.HistoryChannelController;
-import models.board.Palace;
-import models.board.Space;
+import models.board.TileComponentContents.Palace;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.JavaPlayer;

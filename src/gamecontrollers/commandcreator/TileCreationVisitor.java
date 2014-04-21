@@ -4,8 +4,11 @@ import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.*;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
+import models.board.TileComponentContents.Irrigation;
+import models.board.TileComponentContents.Palace;
+import models.board.TileComponentContents.Rice;
+import models.board.TileComponentContents.Village;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 

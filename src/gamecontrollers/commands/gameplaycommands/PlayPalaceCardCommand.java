@@ -1,11 +1,8 @@
 // TODO developer [ Sydney ], test [ Jorge ]
 package gamecontrollers.commands.gameplaycommands;
 
-import gamecontrollers.Facade;
 import gamecontrollers.commands.GameplayActionCommand;
-
 import gamecontrollers.save.CommandSaveVisitor;
-import models.board.Palace;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;

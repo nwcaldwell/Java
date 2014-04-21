@@ -1,5 +1,10 @@
 package models.board;
 
+import models.board.TileComponentContents.Irrigation;
+import models.board.TileComponentContents.Palace;
+import models.board.TileComponentContents.Rice;
+import models.board.TileComponentContents.Village;
+
 public class PoolAndBeachVisitor implements TileVisitor {
 
     public PoolAndBeachVisitor(){

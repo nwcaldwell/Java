@@ -9,17 +9,27 @@ import gamecontrollers.turn.TurnController;
 import models.board.Direction;
 import models.board.SharedResources;
 import models.board.Space;
+import models.board.TileComponentContent;
 import models.palacefestival.JavaPlayer;
-
 import java.util.ArrayList;
 import java.util.List;
+
+
+     /*
+   ========================================================================
+       IF CURRENT LEVEL IS -1 THEN THERE ARE NO PALACES
+   ========================================================================
+     */
 
 /**
  * Created by kevinnieman on 4/20/14.
  */
 public class MaskPalaceCommandCreator extends PalaceCommandCreator{
-    /*
-        IF CURRENT LEVEL IS -1 THEN THERE ARE NO PALACES
+
+     /*
+   ========================================================================
+      LOCAL STATE
+   ========================================================================
      */
 
     //currentLevel is an index in the palceLevel list
@@ -33,11 +43,21 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
     //this is the list of the palace levels
     private List<Integer> palaceLevel;
 
+    //private list of the city surrounding the tile
+    private List<TileComponentContent> cityAroundTile;
+
+      /*
+    ========================================================================
+       CONSTRUCTORS
+    ========================================================================
+     */
+
     public MaskPalaceCommandCreator(TurnController controller, SharedResources resources){
         this.controller = controller;
         this.resources = resources;
         palaceLevelCounter = new ArrayList<Integer>();
         palaceLevel = new ArrayList<Integer>();
+        cityAroundTile = new ArrayList<TileComponentContent>();
 
         //populate the list of integers
         palaceLevelCounter.add(resources.getNum2PalaceTiles());
@@ -54,14 +74,21 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
         currentLevel = 0;
     }
 
+     /*
+   ========================================================================
+      PUBLIC METHODS
+   ========================================================================
+    */
+
 
     @Override
     public GameplayActionCommand getCommand() {
-        return new PlacePalaceCommand(controller, palaceLevel.get(currentLevel), desiredSpace, resources);
+        return new PlacePalaceCommand(controller, palaceLevel.get(currentLevel), desiredSpace, resources, cityAroundTile);
     }
 
     public void move(Direction direction){
         desiredSpace = desiredSpace.getAdjacentSpace(direction);
+        updateState();
     }
 
     //Tab through only the remaining types of palaces
@@ -111,6 +138,18 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
         return response;
     }
 
+    public Space getSpace(){
+        return desiredSpace;
+    }
+
+    public int getCurrentLevel(){
+        return palaceLevel.get(currentLevel);
+    }
+
+    public int getCitySize(){
+        return cityAroundTile.size();
+    }
+
 
    /*
   ========================================================================
@@ -118,9 +157,19 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
   ========================================================================
    */
 
+    private void updateState(){
+        notifyRules();
+        buildCity();
+    }
+
     private void notifyRules(){
         for(Rule rool : rules){
             rool.update();
         }
+    }
+
+    private void buildCity(){
+        //build the city and change the local list
+        //TODO Will consruct the city around a tilecomponentcontent
     }
 }
