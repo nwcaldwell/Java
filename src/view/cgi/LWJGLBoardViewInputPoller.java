@@ -72,8 +72,6 @@ public class LWJGLBoardViewInputPoller implements MouseListener, MouseMotionList
 				));
 		view.setScenePitch(pitch);
 		view.setSceneYaw(yaw);
-		
-		view.renderScene();
 	}
 
 	@Override
@@ -134,8 +132,6 @@ public class LWJGLBoardViewInputPoller implements MouseListener, MouseMotionList
 
 		view.setScenePitch(pitch);
 		view.setSceneYaw(yaw);
-		
-		view.renderScene();
 	}
 
 	@Override
