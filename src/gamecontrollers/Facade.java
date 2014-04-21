@@ -5,10 +5,7 @@ import gamecontrollers.commandcreator.PalaceCommandCreator;
 import gamecontrollers.commandcreator.TilePlacementCommandCreator;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.palacefestival.FestivalTurnController;
-import gamecontrollers.turn.HistoryChannelController;
-import gamecontrollers.turn.PlanningModeCommandHandler;
-import gamecontrollers.turn.ReplayController;
-import gamecontrollers.turn.TurnController;
+import gamecontrollers.turn.*;
 import models.Pair;
 import models.board.Direction;
 import models.board.JavaGame;
@@ -35,6 +32,7 @@ public class Facade {
     private TurnController turnController;
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;
+    private PlayModeCommandHandler playModeCommandHandler;
     private PalaceCommandCreator palaceCommandCreator;
 
     public static Facade getInstance() {
@@ -108,11 +106,11 @@ public class Facade {
     }
 
     public void moveDeveloper(Direction direction){
-        throw new UnsupportedOperationException();
+        developerMovementCommandCreator.move(direction);
     }
 
     public void endTurn() {
-        throw new UnsupportedOperationException();
+        turnController.endTurn();
     }
 
     public void tabThroughPalace() {
@@ -200,8 +198,16 @@ public class Facade {
         return turnController.commitMove();
     }
 
-    public void planCommand(){
-        throw new UnsupportedOperationException();
+    public void startPlanningMode(){
+        turnController.setCommandHandler(planningModeCommandHandler);
+    }
+
+    public void startPlayMode(){
+        turnController.setCommandHandler(playModeCommandHandler);
+    }
+
+    public void undoCommand(){
+        planningModeCommandHandler.cancelCommand();
     }
 
 }
