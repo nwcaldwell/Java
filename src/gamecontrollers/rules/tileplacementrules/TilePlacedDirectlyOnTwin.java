@@ -6,8 +6,10 @@ import models.board.Direction;
 import models.board.Space;
 import models.board.TileComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by williammacfarlane on 4/15/14.
@@ -20,9 +22,12 @@ public class TilePlacedDirectlyOnTwin extends TilePlacementRule {
     private Space targetSpace;
     private TileComponent targetTile;
 
+    private List<TileComponent> visitedTiles;
+
     public TilePlacedDirectlyOnTwin(TileCommandCreator creator){
         this.creator = creator;
         spaceReferenceCounter = new HashMap<Space, Integer>();
+        visitedTiles = new ArrayList<TileComponent>();
     }
 
 	@Override
@@ -40,7 +45,7 @@ public class TilePlacedDirectlyOnTwin extends TilePlacementRule {
             //Space has a tile so everything is all good
 
             //fill the map out
-            fillMap();
+            fillMap(targetTile, targetSpace);
 
             //The hash map has been filled os now check if there is a value of one
             //a value of one indicates a unique reference and that the tiles are not oriented the same and the same type
@@ -87,8 +92,9 @@ public class TilePlacedDirectlyOnTwin extends TilePlacementRule {
         This method will fill the hashmap
      */
 
-    private void fillMap(){
-        TileComponent currentTile = targetSpace.getTile();
+    private void fillMap(TileComponent tile, Space space){
+        TileComponent currentTile = space.getTile();
+
 
         //Map the existing tilecomponent spaces to the reference counter
         //get the direction iterator from the current tile
@@ -99,22 +105,37 @@ public class TilePlacedDirectlyOnTwin extends TilePlacementRule {
             Direction direction = iterator.next();
             //check if that current tile has a sibling there
             if (currentTile.siblingExists(direction)) {
-                //it has a sibling there so add the space in the same direction
-                addToMap(targetSpace.getAdjacentSpace(direction));
+                //it has a sibling there so add the space in the same direction if it hasnt been visited already
+                if(!visitedTiles.contains(tile.getConjoinedTile(direction)))
+                    addToMap(space.getAdjacentSpace(direction));
             }
         }
 
         //get the direction iterator from the target tile
-        Iterator<Direction> iterator2 = targetTile.iterator();
+        Iterator<Direction> iterator2 = tile.iterator();
         //iterator over the directions to add the spaces
         while (iterator2.hasNext()) {
             //check if that current tile has a sibling there
             Direction direction = iterator2.next();
-            if (targetTile.siblingExists(direction)) {
+            if (tile.siblingExists(direction)) {
                 //it has a sibling there so add the space in the same direction
                 //NOT CHECKING IF THE SPACE EXISTS
-                addToMap(targetSpace.getAdjacentSpace(direction));
+                //it has a sibling there so add the space in the same direction if it hasnt been visited already
+                if(!visitedTiles.contains(tile.getConjoinedTile(direction))){
+                    addToMap(space.getAdjacentSpace(direction));
+                    fillMap(tile.getConjoinedTile(direction), space.getAdjacentSpace(direction));
+                }
+
             }
         }
+
+        //add this tile to the visited tiles list if it hasnt already been added
+        if(!visitedTiles.contains(tile)){
+            visitedTiles.add(tile);
+        }
+
+
     }
+
+
 }
