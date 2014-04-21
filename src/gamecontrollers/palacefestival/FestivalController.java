@@ -17,7 +17,7 @@ public class FestivalController {
     private FestivalTurnController turnController;
 
     public FestivalController(HistoryChannelController hcc) {
-        turnController = new FestivalTurnController(this, hcc);
+        turnController = new FestivalTurnController(hcc);
     }
 
     public FestivalTurnController getTurnController(){

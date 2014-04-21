@@ -1,8 +1,6 @@
 package gamecontrollers.rules.PalaceFestivalRules;
 
 import gamecontrollers.Message;
-import gamecontrollers.palacefestival.FestivalController;
-import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.rules.Rule;
 import models.palacefestival.FestivalModel;
 

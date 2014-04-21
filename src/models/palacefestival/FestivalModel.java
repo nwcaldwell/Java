@@ -8,6 +8,8 @@ import java.util.List;
 public class FestivalModel {
     private List<FestivalPlayer> players;
     private List<FestivalPlayer> turnOrder;
+    private FestivalPlayer currentPlayer;
+    private int indexOfCurrentCard;
     private PalaceCard festivalCard;
     private Palace palace;
     private int highestBid;
@@ -18,6 +20,8 @@ public class FestivalModel {
         for(FestivalPlayer player : players){
             turnOrder.add(player);
         }
+        this.currentPlayer = turnOrder.get(0);
+        this.indexOfCurrentCard = 0;
         this.festivalCard = fest;
         this.palace = palace;
         this.highestBid = 0;
@@ -115,6 +119,21 @@ public class FestivalModel {
 
     /*
     ========================================================================
+      Current Player and Selected Cards
+    ========================================================================
+    */
+
+    public void incrementCurrentCard() {
+        indexOfCurrentCard = (indexOfCurrentCard+1) + currentPlayer.getCards().size();
+    }
+
+    public List<PalaceCard> getCurrentPlayerCards(){
+        return currentPlayer.getCards();
+    }
+
+
+    /*
+    ========================================================================
       Setters
     ========================================================================
     */
@@ -125,6 +144,34 @@ public class FestivalModel {
 
     public void setPlayers(ArrayList<FestivalPlayer> p){
         players = p;
+    }
+
+    public void setCurrentPlayer(FestivalPlayer player){
+        currentPlayer = player;
+    }
+
+    public PalaceCard getCurrentCard(){
+        return currentPlayer.getCardAtIndex(indexOfCurrentCard);
+    }
+
+    public int getIndexOfCurrentPlayer(){
+        return turnOrder.indexOf(currentPlayer);
+    }
+
+    public void dropCurrentPlayerFromFestival(){
+        currentPlayer.dropOutOfFestival();
+    }
+
+    public void dropCurrentPlayerFromTurnOrder(){
+        turnOrder.remove(currentPlayer);
+    }
+
+    public void endCurrentPlayerTurn(){
+        currentPlayer.endTurn();
+    }
+
+    public boolean hasCurrentPlayerPlayedThisRound(){
+        return currentPlayer.hasPlayedThisRound();
     }
 
     /*
@@ -151,5 +198,9 @@ public class FestivalModel {
 
     public List<FestivalPlayer> getTurnOrder(){
         return turnOrder;
+    }
+
+    public FestivalPlayer getCurrentPlayer(){
+        return currentPlayer;
     }
 }

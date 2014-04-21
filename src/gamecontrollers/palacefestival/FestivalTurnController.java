@@ -17,22 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FestivalTurnController {
-    private FestivalController festivalController;
     private List<FestivalPlayer> turnOrder;
     private FestivalModel festivalModel;
-    private FestivalPlayer currentPlayer;
     private FestivalCardController cardController;
     private FestivalCommandCreator commandCreator;
     private HistoryChannelController historyChannelController;
     private List<Rule> rules;
 
-	public FestivalTurnController(
-            FestivalController controller,
-            HistoryChannelController hc) {
-        festivalController = controller;
+	public FestivalTurnController(HistoryChannelController hc) {
         historyChannelController = hc;
         rules = new ArrayList<Rule>();
-        rules.add(new PlayerCanEndTurn(this));
 	}
 
     /*
@@ -44,8 +38,7 @@ public class FestivalTurnController {
     public void startNewFestival(FestivalModel model){
         festivalModel = model;
         turnOrder = festivalModel.getTurnOrder();
-        currentPlayer = turnOrder.get(0);
-        cardController = new FestivalCardController(currentPlayer.getCards(), this);
+        cardController = new FestivalCardController(festivalModel.getCurrentPlayerCards(), festivalModel);
     }
 
     /*
@@ -96,11 +89,11 @@ public class FestivalTurnController {
     */
 
     public void dropOutCommandCreator(){
-        executeCommand(new DropOutOfFestivalCommand(this, currentPlayer, getCurrentPlayerIndex()));
+        executeCommand(new DropOutOfFestivalCommand(this, festivalModel.getCurrentPlayer(), festivalModel.getIndexOfCurrentPlayer()));
     }
 
     public void dropOut(){
-        currentPlayer.dropOutOfFestival();
+        festivalModel.dropCurrentPlayerFromFestival();
         dropCurrentPlayerFromTurnOrder();
         endTurn();
     }
@@ -123,7 +116,7 @@ public class FestivalTurnController {
         }
 
         if(!response.hasErrors()) {
-            executeCommand(new EndFestivalTurnCommand(this, currentPlayer, getCurrentPlayerIndex()));
+            executeCommand(new EndFestivalTurnCommand(this, festivalModel.getCurrentPlayer(), festivalModel.getIndexOfCurrentPlayer()));
         }
 
         return response;
@@ -136,7 +129,7 @@ public class FestivalTurnController {
 
     public void endTurnFinalization(){
         // make sure the current player has been marked as "played this round"
-        currentPlayer.endTurn();
+        festivalModel.endCurrentPlayerTurn();
 
         // increment current player
         incrementPlayer();
@@ -154,11 +147,11 @@ public class FestivalTurnController {
     */
 
     private void dropCurrentPlayerFromTurnOrder(){
-        turnOrder.remove(currentPlayer);
+        festivalModel.dropCurrentPlayerFromTurnOrder();
     }
 
     private void incrementPlayer(){
-        int index = turnOrder.indexOf(currentPlayer);
+        int index = festivalModel.getIndexOfCurrentPlayer();
         setCurrentPlayer(turnOrder.get((index+1) % turnOrder.size()));
         resetCardControllerCards();
     }
@@ -170,7 +163,7 @@ public class FestivalTurnController {
     }
 
     private void resetCardControllerCards(){
-        cardController.reset(currentPlayer.getCards());
+        cardController.reset(festivalModel.getCurrentPlayerCards());
     }
 
     /*
@@ -181,7 +174,7 @@ public class FestivalTurnController {
 
     private boolean startNewRoundCheck(){
         //if the player has played this round is true, that means that we need to start a new round
-        return currentPlayer.hasPlayedThisRound();
+        return festivalModel.hasCurrentPlayerPlayedThisRound();
     }
 
     private void startNewRound(){
@@ -204,30 +197,6 @@ public class FestivalTurnController {
         return festivalModel;
     }
 
-    public FestivalPlayer getCurrentPlayer(){
-        return currentPlayer;
-    }
-
-    public List<FestivalPlayer> getTurnOrder(){
-        return turnOrder;
-    }
-
-    public PalaceCard getFestivalCard(){
-        return festivalModel.getFestivalCard();
-    }
-
-    public int getHighestBid(){
-        return festivalModel.getHighestBid();
-    }
-
-    public int getCurrentPlayerIndex(){
-        return turnOrder.indexOf(currentPlayer);
-    }
-
-    public int getSelectedCard(){
-        return cardController.getIndexOfCurrentCard();
-    }
-
     /*
     ========================================================================
       Setters
@@ -239,7 +208,7 @@ public class FestivalTurnController {
     }
 
     public void setCurrentPlayer(FestivalPlayer currentPlayer){
-        this.currentPlayer = currentPlayer;
+        festivalModel.setCurrentPlayer(currentPlayer);
         resetCardControllerCards();
     }
 

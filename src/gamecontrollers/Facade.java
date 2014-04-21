@@ -62,8 +62,8 @@ public class Facade {
         return game;
     }
 
-    public FestivalTurnController getFestivalTurnController() {
-        return festivalTurnController;
+    public FestivalModel getFestivalModel() {
+        return festivalTurnController.getFestivalModel();
     }
 
     /*

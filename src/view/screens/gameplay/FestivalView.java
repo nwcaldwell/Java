@@ -95,16 +95,16 @@ public class FestivalView extends View {
     }
 
     public void update(){
-        FestivalTurnController currentFestivalState = Facade.getInstance().getFestivalTurnController();
+        FestivalModel festivalModel = Facade.getInstance().getFestivalModel();
 
-        setFestivalCard(currentFestivalState.getFestivalCard().toString());
-        setHighestBid(currentFestivalState.getHighestBid());
+        setFestivalCard(festivalModel.getFestivalCard().toString());
+        setHighestBid(festivalModel.getHighestBid());
 
-        List<FestivalPlayer> fPlayers = currentFestivalState.getTurnOrder();
+        List<FestivalPlayer> fPlayers = festivalModel.getTurnOrder();
         for(int i = 0; i < fPlayers.size(); i++){
             players.get(i).update(fPlayers.get(i));
         }
-        players.get(currentFestivalState.getCurrentPlayerIndex()).setCurrentPlayer();
+        players.get(festivalModel.getIndexOfCurrentPlayer()).setCurrentPlayer();
     }
 
     public boolean alertUserThatNeedToPlayMoreCards(){
