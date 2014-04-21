@@ -1,5 +1,6 @@
 package view;
 
+import gamecontrollers.Response;
 import org.lwjgl.Sys;
 import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
@@ -123,5 +124,9 @@ public class ViewController {
 
     public void setFrameAsFocused() {
         gameWindow.requestFocus();
+    }
+
+    public void showError(Response response){
+
     }
 }
