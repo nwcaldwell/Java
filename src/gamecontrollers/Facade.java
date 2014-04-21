@@ -48,7 +48,6 @@ public class Facade {
         boardLogicController = new BoardLogicController(game.getBoard());
         festivalController = new FestivalController(historyChannelController);
         festivalTurnController = festivalController.getTurnController();
-        devMoveController = new DevMoveController();
 
     }
 
