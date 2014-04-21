@@ -108,6 +108,9 @@ public class LWJGLBoardViewBackend implements Runnable{
 			throw new Exception("LWJGLBoardView must be attached to a displayable object\n" +
 					"specifically, it must return true for the \"isDisplayable\" call");
 		}
+		if (parent.getSize().getHeight()==0||parent.getSize().getWidth()==0){
+			throw new Exception("LWJGL may not be attached to an object of size 0.");
+		}
 		
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
