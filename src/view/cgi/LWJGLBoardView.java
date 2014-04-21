@@ -31,8 +31,12 @@ public class LWJGLBoardView extends BoardView{
 	
 	Thread graphicsThread;
 	
+	Canvas lwjglCanvas;
+	
 	public LWJGLBoardView(Board b, ViewController controller) {
 		super(b, controller);
+		lwjglCanvas = new Canvas();
+		add(lwjglCanvas);
 	}
 	
 	@Override
@@ -41,14 +45,8 @@ public class LWJGLBoardView extends BoardView{
 		
 		System.out.println(getParent().isDisplayable());
 		System.out.println(this.isDisplayable());
-		//JLayeredPane layers=new JLayeredPane();
-		//layers.setSize(this.getSize());
-		//add(layers);
-		//create a canvas to hold the LWJGL Display
-		Canvas lwjglCanvas = new Canvas();
-		//layers.add(lwjglCanvas, JLayeredPane.DEFAULT_LAYER);
-		add(lwjglCanvas);
-		lwjglCanvas.setSize(lwjglCanvas.getParent().getSize());
+		
+		lwjglCanvas.setSize(getSize());
 		backend=new LWJGLBoardViewBackend(board, lwjglCanvas);
 		Thread backendThread = new Thread(backend);
 		backendThread.start();
