@@ -1,6 +1,7 @@
 package gamecontrollers.palacefestival;
 
-import models.board.Space;
+import gamecontrollers.turn.HistoryChannelController;
+import models.board.TileComponentContents.Palace;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.JavaPlayer;
@@ -10,24 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FestivalController {
-    private FestivalModel festivalModel;
-    private FestivalLogicController logicController;
     private FestivalTurnController turnController;
 
-    public FestivalController() {
-        logicController = new FestivalLogicController(this);
-        turnController = new FestivalTurnController(this);
+    public FestivalController(HistoryChannelController hcc) {
+        turnController = new FestivalTurnController(hcc);
     }
 
-    public ArrayList<FestivalPlayer> getWinners(){
-		return festivalModel.getWinners();
+    public FestivalTurnController getTurnController(){
+        return turnController;
     }
 
-    public void setFestivalModel(FestivalModel model){
-        festivalModel = model;
-    }
-
-    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palace, int palaceValue){
+    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palace){
         //convert the players into FestivalPlayers
         //the players passed in are the ones in the city
         //so need to check if their cards match the festival card
@@ -35,43 +29,32 @@ public class FestivalController {
         List<FestivalPlayer> festivalPlayers = new ArrayList<FestivalPlayer>();
 
         for(int i = 0; i < players.length; i++){
-            if(logicController.canParticipateInFestival(players[i].getPalaceCards(), festivalCard)){
+            if(canParticipateInFestival(players[i].getPalaceCards(), festivalCard)){
                 //they can participate in the festival
-                festivalPlayers.add(new FestivalPlayer(players[i], logicController.getEligibleCards(players[i].getPalaceCards(), festivalCard)));
+                festivalPlayers.add(new FestivalPlayer(players[i], getEligibleCards(players[i].getPalaceCards(), festivalCard)));
             }
         }
 
-        turnController.startNewFestival(festivalPlayers);
-        festivalModel = new FestivalModel(festivalPlayers, festivalCard, palaceValue);
+        turnController.startNewFestival(new FestivalModel(festivalPlayers, festivalCard, palace));
     }
 
-    public void playCard(PalaceCard card){
-        //remove the card from the player's stash, and put it into the discarded pile
-        //add the card to the deck's graveyard
-        //increment the current player's bid
-        //check if the bid is higher than the highest bid in the model, if so update it
+    public boolean canParticipateInFestival(List<PalaceCard> cards, PalaceCard festivalCard){
+        for (PalaceCard card : cards){
+            if(card.compare(festivalCard) > 0 ) return true;
+        }
+        return false;
     }
 
-    public void dropOutOfFestival(){
-        //mark the user as being dropped out
-        //increment to the next players turn
+    public List<PalaceCard> getEligibleCards(List<PalaceCard> cards, PalaceCard festivalCard){
+        List<PalaceCard> eligibleCards = new ArrayList<PalaceCard>();
+
+        for(PalaceCard card : cards){
+            if(card.compare(festivalCard) > 0){
+                eligibleCards.add(card);
+            }
+        }
+
+        return eligibleCards;
     }
 
-    public void endTurn(){
-        //check if the user is allowed to end the turn
-        //if so then end turn
-        //if not, force to drop out
-    }
-
-    public void startNewRound(){
-        //TODO
-        //this method will check if there is a tie, how many players are left, etc.
-    }
-
-    public void endFestival(){
-        //need to make a command? to end the festival.
-        //this will be called when there is only one person left,
-        // when there is a tie and the users want to end the festival,
-        // when no one has cards left and they have to end the festival (don't want to ask if the user wants to end)
-    }
 }

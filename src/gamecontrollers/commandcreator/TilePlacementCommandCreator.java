@@ -55,8 +55,8 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
 		return currentTile;
 	}
 
-	public void setCurrentTile(TileComponent currentTile) {
-		this.currentTile = currentTile;
+	public void setCurrentTileComponent(TileComponent currentTileComponent) {
+		this.currentTile = currentTileComponent;
         //update rules
         notifyRules();
 	}
@@ -88,6 +88,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         //set the current space right now and then ask
         visitor.setSpace(currentSpace);
         return visitor.getCommand(currentTile);
+
     }
 
     /*

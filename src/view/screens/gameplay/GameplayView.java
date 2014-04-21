@@ -10,11 +10,11 @@ import view.controls.BoardView;
 import view.controls.ConsoleView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 //TODO [Sydney][Jorge]
 
@@ -22,7 +22,7 @@ public abstract class GameplayView extends View {
     private static final int BORDER = 10;
     protected ConsoleView consoleView;
     protected ArrayList<PlayerView> playerViews;
-    //protected BoardView boardView;
+    protected BoardView boardView;
     protected SharedResourcesView sharedResourcesView;
     protected JPanel playerContainer;
     protected JPanel toggleButtonContainer;
@@ -30,15 +30,15 @@ public abstract class GameplayView extends View {
 
     protected GameplayView(ViewController viewC) {
         super(viewC);
-        game = Facade.getInstance().getGame();
     }
 
     //this method sets up the default layout for the board
     public void init(){
+        game = Facade.getInstance().getGame();
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        //boardView = new LWJGLBoardView(game.getBoard()); //TODO get this working properly
+        boardView = new LWJGLBoardView(game.getBoard()); //TODO get this working properly
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
@@ -70,7 +70,8 @@ public abstract class GameplayView extends View {
         JPanel rightSide = new JPanel();
         rightSide.setPreferredSize(new Dimension(3 * this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
         rightSide.setBackground(Color.WHITE);
-        //rightSide.add(boardView);
+        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, this.getScreenHeight() - BORDER*2));
+        rightSide.add(boardView);
         rightSide.add(playerContainer);
 
         add(rightSide, BorderLayout.EAST);
@@ -85,9 +86,9 @@ public abstract class GameplayView extends View {
         return playerViews;
     }
 
-//    protected BoardView getBoardView() {
-//        return boardView;
-//    }
+    protected BoardView getBoardView() {
+        return boardView;
+    }
 
     protected SharedResourcesView getSharedResourcesView() {
         return sharedResourcesView;
@@ -103,7 +104,7 @@ public abstract class GameplayView extends View {
 
     public void update(){
 
-        //boardView.update();
+        boardView.update();
         sharedResourcesView.update(game.getSharedResources(), game.getDeck());
         consoleView.update();
         JavaPlayer[] players = game.getPlayers();

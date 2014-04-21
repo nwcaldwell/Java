@@ -1,19 +1,23 @@
 package gamecontrollers;
 
 import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
+import gamecontrollers.commandcreator.PalaceCommandCreator;
 import gamecontrollers.commandcreator.TilePlacementCommandCreator;
 import gamecontrollers.palacefestival.FestivalController;
+import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.HistoryChannelController;
 import gamecontrollers.turn.PlanningModeCommandHandler;
 import gamecontrollers.turn.ReplayController;
 import gamecontrollers.turn.TurnController;
 import models.Pair;
-import models.board.*;
-import models.board.Developer;
 import models.board.Direction;
+import models.board.JavaGame;
 import models.board.Space;
 import models.board.TileComponent;
-import models.palacefestival.*;
+import models.board.TileComponentContents.Palace;
+import models.palacefestival.FestivalModel;
+import models.palacefestival.JavaPlayer;
+import models.palacefestival.PalaceCard;
 
 import java.util.List;
 
@@ -25,11 +29,13 @@ public class Facade {
     private TilePlacementCommandCreator tilePlacementCommandCreator;
     private BoardLogicController boardLogicController;
     private FestivalController festivalController;
+    private FestivalTurnController festivalTurnController;
     private HistoryChannelController historyChannelController;
     private DeveloperMovementCommandCreator developerMovementCommandCreator;
     private TurnController turnController;
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;
+    private PalaceCommandCreator palaceCommandCreator;
 
     public static Facade getInstance() {
         return FacadeInstance;
@@ -37,37 +43,54 @@ public class Facade {
 
     private Facade() {
 
-
     }
 
     // start
     public void startGame(List<Pair<String,String>> playersData, String boardFile){
         game = new JavaGame(playersData, boardFile);
+        historyChannelController = new HistoryChannelController(game.getPlayers().length + 1);
+        boardLogicController = new BoardLogicController(game.getBoard());
+        festivalController = new FestivalController(historyChannelController);
+        festivalTurnController = festivalController.getTurnController();
+        developerMovementCommandCreator = new DeveloperMovementCommandCreator(turnController, boardLogicController);
     }
 
-    // getters
-
+    /*
+    ========================================================================
+      GETTERS
+    ========================================================================
+    */
 
     public JavaGame getGame() {
         return game;
     }
 
-    public FestivalModel getFestival() {
-        throw new UnsupportedOperationException();
+    public FestivalModel getFestivalModel() {
+        return festivalTurnController.getFestivalModel();
     }
 
-    public FestivalPlayer getFestivalPlayer(int indexOfPlayer){
-//        return festivalController.getPlayers();
-        throw new UnsupportedOperationException();
+    /*
+    ========================================================================
+      Setup for command builders methods
+    ========================================================================
+    */
+    public Response setupForMovingDeveloper(){
+        Response response = developerMovementCommandCreator.setCurrentDeveloper();
+
+        if ( !response.hasErrors() ) {
+              turnController.setCommandBuilder(developerMovementCommandCreator);
+        }
+
+        return response;
     }
 
-    // regular game methods
-    public void placeTileComponent(TileComponent tileComponent) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void placeDeveloper(Developer direction, Space space){
-        throw new UnsupportedOperationException();
+    /*
+    ========================================================================
+      Board Communication Methods
+    ========================================================================
+    */
+    public void tabThroughDevelopers() {
+        developerMovementCommandCreator.iterateThroughBoardDevelopers();
     }
 
     public void moveTile(Direction direction){
@@ -78,30 +101,63 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void planCommand(){
-        throw new UnsupportedOperationException();
-    }
-
     public void endTurn() {
         throw new UnsupportedOperationException();
     }
 
-    // Festival Methods
-    public void drawCardFromDeck() {
-        throw new UnsupportedOperationException();
+    public void tabThroughPalace() {
+        palaceCommandCreator.tabThroughPalacesRemaining();
     }
 
-    public void drawTheFestivalCard() {}
+    public void playExtraActionToken() {
+        turnController.playExtraActionToken();
+    }
 
+    public void rotateCurrentTileComponent() {
+        tilePlacementCommandCreator.rotateCurrentTileComponent();
+    }
+
+
+    /*
+    ========================================================================
+      Festival Communication Methods
+    ========================================================================
+    */
+
+
+    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palaceAssociated){
+        festivalController.startFestival(players, festivalCard, palaceAssociated);
+    }
+
+    public void tabPalaceCard(){
+        festivalTurnController.tabThroughPalaceCards();
+    }
+
+    public void playPalaceCard(){
+        festivalTurnController.playPalaceCard();
+    }
 
     public void dropOutOfFestival() {
-        throw new UnsupportedOperationException();
+        festivalTurnController.dropOutCommandCreator();
+    }
+
+    public void endFestivalTurn(){
+        festivalTurnController.endTurnFinalization();
     }
 
     public void acceptTieRequest() {
         throw new UnsupportedOperationException();
     }
 
+    public void askForPalaceFestivalTie(){
+        throw new UnsupportedOperationException();
+    }
+
+    public void drawCardFromDeck() {
+        throw new UnsupportedOperationException();
+    }
+
+    public void drawTheFestivalCard() {}
 
     public boolean validPlacement(TileComponent tile, Space space){
         System.out.println("Facade.findShortestPath is not implemented yet");
@@ -112,39 +168,32 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    // Festival Methods
-    public void startFestival() {
-        throw new UnsupportedOperationException();
+
+    public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        //need to go to the viewController, and go back to the board view
+        //then apply this to the game
+        game.endFestival(discardedCards, playersFromFestival, pointsEarned);
+
     }
 
-    public void askForPalaceFestivalTie(){
-        throw new UnsupportedOperationException();
+    public void undoEndFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
+        game.undoFestival(discardedCards, playersFromFestival, pointsEarned);
     }
 
-    public void startNewFestival(JavaPlayer[] players, PalaceCard festivalCard, Space palaceAssociated){
-        //tODO
-//        festivalController.startFestival(players, festivalCard, palaceAssociated);
-    }
-
-    public void endFestival(){ throw new UnsupportedOperationException(); }
-
-    public int findShortestPath(JavaPlayer p, Space origin, Space destination, List<Space> path) {
-
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return 0;
-    }
-
+    /*
+    ========================================================================
+      Perform actions methods
+    ========================================================================
+    */
     // Actually execute the action being built
     // It returns a response that has messages for rules violation if any
     // if the action is executed successfully the response.hasErrors is set to true
-    public Response doCommand(){
-        throw new UnsupportedOperationException();
-
-    }
-    //Starting a new game
-    public void beginNewGame(String[] playerNames, String[] playerColors){
-        throw new UnsupportedOperationException();
+    public Response commitMove(){
+        return turnController.commitMove();
     }
 
+    public void planCommand(){
+        throw new UnsupportedOperationException();
+    }
 
 }
