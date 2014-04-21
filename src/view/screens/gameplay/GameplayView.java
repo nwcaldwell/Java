@@ -46,16 +46,16 @@ public abstract class GameplayView extends View {
         setBorder(new EmptyBorder(BORDER, BORDER, BORDER, BORDER));
 
         //this is the left side of the screen, needs to somehow conform to the size of the screen
-        JPanel leftSide = new JPanel();
-        leftSide.setPreferredSize(new Dimension(this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
-        leftSide.setBackground(Color.WHITE);
+        JPanel rightSide = new JPanel();
+        rightSide.setPreferredSize(new Dimension(this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
+        rightSide.setBackground(Color.WHITE);
 
         //the shared resources and the console are on the left panel. add them in the respective order
         toggleButtonContainer = new JPanel();
-        leftSide.add(sharedResourcesView);
+        rightSide.add(sharedResourcesView);
         sharedResourcesView.add(toggleButtonContainer);
-        leftSide.add(consoleView);
-        add(leftSide, BorderLayout.WEST);
+        rightSide.add(consoleView);
+        add(rightSide, BorderLayout.EAST);
 
         //the player views need to have something to encapsulate them all
         playerContainer = new JPanel();
@@ -67,14 +67,16 @@ public abstract class GameplayView extends View {
         }
 
         //this includes the BoardView and the Player Views
-        JPanel rightSide = new JPanel();
-        rightSide.setPreferredSize(new Dimension(3 * this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
-        rightSide.setBackground(Color.WHITE);
-        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, this.getScreenHeight() - BORDER*2));
-        rightSide.add(boardView);
-        rightSide.add(playerContainer);
+        JPanel leftSide = new JPanel();
+        leftSide.setPreferredSize(new Dimension(3 * this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
+        leftSide.setBackground(Color.WHITE);
+        int boardViewHeight = this.getScreenHeight() - 250 - BORDER*2;
+        boardView.setPreferredSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
+        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
+        leftSide.add(boardView);
+        leftSide.add(playerContainer);
 
-        add(rightSide, BorderLayout.EAST);
+        add(leftSide, BorderLayout.WEST);
 
     }
 

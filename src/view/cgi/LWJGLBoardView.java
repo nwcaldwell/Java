@@ -5,6 +5,7 @@ import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
 import models.board.SpaceGeography;
+import org.lwjgl.Sys;
 import view.MediaController;
 import view.controls.BoardView;
 
@@ -130,7 +131,8 @@ public class LWJGLBoardView extends BoardView{
 		
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
-		Display.setDisplayMode(new DisplayMode((int)CANVAS_WIDTH, (int)CANVAS_HEIGHT));
+        DisplayMode display =new DisplayMode((int) CANVAS_WIDTH, (int) CANVAS_HEIGHT);
+		Display.setDisplayMode(display);
 		Display.setParent(lwjglCanvas);
 		Display.create();
 		//enable all of the OpenGL stuff
