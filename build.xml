@@ -13,13 +13,20 @@
         <pathelement location="bin"/>
         <pathelement location="libs/junit-4.11.jar"/>
         <pathelement location="libs/mockito-all-1.9.5.jar"/>
-        <pathelement location="libs/lwjgl.jar"/>
         <pathelement location="libs/jinput.jar"/>
+        <pathelement location="libs/lwjgl.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="resources">
+                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -34,6 +41,7 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
+            <src path="resources"/>
             <classpath refid="Java.classpath"/>
         </javac>
     </target>
@@ -53,6 +61,11 @@
     </target>
     <target name="LWJGLTest">
         <java classname="view.cgi.test.LWJGLTest" failonerror="true" fork="yes">
+            <classpath refid="Java.classpath"/>
+        </java>
+    </target>
+    <target name="LWJGLBoardViewTest">
+        <java classname="view.cgi.test.LWJGLBoardViewTest" failonerror="true" fork="yes">
             <classpath refid="Java.classpath"/>
         </java>
     </target>

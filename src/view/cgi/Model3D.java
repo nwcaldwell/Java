@@ -76,4 +76,18 @@ public class Model3D {
 		clone.setRotation(pitch, yaw, roll);
 		return clone;
 	}
+	
+	/**overrides the normals of all faces and makes them 
+	 * perpendicular to the face*/
+	public void setFlat(){
+		for (Face3D face:faces)
+			face.generateDefaultNormals();
+	}
+	
+	/**overrides the normals of all faces and makes them 
+	 * the same as the vertices.*/
+	public void setSphere(){
+		for (Face3D face:faces)
+			face.generateSphereNormals();
+	}
 }
