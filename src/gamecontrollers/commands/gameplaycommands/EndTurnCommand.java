@@ -4,20 +4,21 @@ package gamecontrollers.commands.gameplaycommands;
 import gamecontrollers.commands.GameplayActionCommand;
 
 import gamecontrollers.save.CommandSaveVisitor;
+import gamecontrollers.turn.TurnController;
 import models.palacefestival.JavaPlayer;
 
 public class EndTurnCommand implements GameplayActionCommand {
-    private JavaPlayer player;
+    private TurnController controller;
 
-    public EndTurnCommand(JavaPlayer p){
-        this.player = p;
+    public EndTurnCommand( TurnController controller) {
+        this.controller = controller;
     }
 
 	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+	    controller.endTurn();
 	}
 	@Override	public void undo() {
-		throw new UnsupportedOperationException();
+		controller.revertTurn();
 	}
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();

@@ -14,7 +14,7 @@ import models.board.Space;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DevMoveController extends DeveloperCommandCreator {
+public class DeveloperMovementCommandCreator extends DeveloperCommandCreator {
     private Space desiredSpace;
     private Developer currentDeveloper;
     private List<Space> path;
@@ -28,8 +28,10 @@ public class DevMoveController extends DeveloperCommandCreator {
        CONSTRUCTORS
   ========================================================================
    */
-    public DevMoveController(){
 
+    public DeveloperMovementCommandCreator(TurnController controller, BoardLogicController logicController){
+        this.turnController = controller;
+        this.logicController = logicController;
     }
 
 
@@ -47,7 +49,7 @@ public class DevMoveController extends DeveloperCommandCreator {
    */
     public DevMoveCommand getCommand(){
 
-        return new DevMoveCommand(currentDeveloper, currentDeveloper.getSpace(), desiredSpace);
+        return new DevMoveCommand(currentDeveloper, currentDeveloper.getSpace(), desiredSpace, turnController);
     }
 
     /*
@@ -122,7 +124,8 @@ public class DevMoveController extends DeveloperCommandCreator {
 
     private void updateState(){
         //update the cost and path of the controller
-        cost = logicController.findShortestPath(turnController.getCurrentPlayer(), currentDeveloper.getSpace(), desiredSpace, path);
+	    //TODO: Will needs to talk to Kevin about this
+        cost = logicController.findPathWithinCentralJava(turnController.getCurrentPlayer(), currentDeveloper.getSpace(), desiredSpace, path);
         notifyRules();
     }
 

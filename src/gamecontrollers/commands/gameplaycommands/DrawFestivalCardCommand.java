@@ -3,6 +3,7 @@ package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.save.CommandSaveVisitor;
+import gamecontrollers.turn.TurnController;
 import models.palacefestival.Deck;
 import models.palacefestival.DeckMemento;
 import models.palacefestival.JavaPlayer;
@@ -13,10 +14,13 @@ public class DrawFestivalCardCommand implements GameplayActionCommand {
     private Deck deck;
     private PalaceCard card;
     private DeckMemento oldDeck;
+    private TurnController controller;
 
-    public DrawFestivalCardCommand(JavaPlayer p, Deck deck){
+
+    public DrawFestivalCardCommand(JavaPlayer p, Deck deck, TurnController controller){
         this.player = p;
         this.deck = deck;
+        this.controller = controller;
     }
 
 
@@ -27,6 +31,8 @@ public class DrawFestivalCardCommand implements GameplayActionCommand {
         card = deck.drawFestivalCard();
         //give the card to the player
         player.drawCard(card);
+        //update turnState
+        controller.drawCard();
 
 	}
 	@Override	public void undo() {
@@ -34,6 +40,8 @@ public class DrawFestivalCardCommand implements GameplayActionCommand {
         player.takeBackCard(card);
         //restore deck using memento
         deck.restoreFromMemento(oldDeck);
+        //update turnstate
+        controller.returnCard();
 	}
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();

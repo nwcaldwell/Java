@@ -5,27 +5,35 @@ import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import gamecontrollers.rules.Rule;
 import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
+import gamecontrollers.turn.TurnController;
 import models.board.Direction;
+import models.board.SharedResources;
 import models.board.Space;
 import models.board.TileComponent;
 
 import java.util.ArrayList;
 
-public class TilePlacementController extends TileCommandCreator {
+public class TilePlacementCommandCreator extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
     private ArrayList<TilePlacementRule> rules;
+    private TurnController controller;
     private int cost;
+    private TileCreationVisitor visitor;
+    private SharedResources resources;
 
     /*
   ========================================================================
      CONSTRUCTORS
   ========================================================================
    */
-	public TilePlacementController(Space currentSpace, TileComponent currentTile) {
-		this.currentSpace = currentSpace;
-		this.currentTile = currentTile;
-	}
+
+	public TilePlacementCommandCreator(TurnController controller, SharedResources resources) {
+        this.controller = controller;
+        visitor = new TileCreationVisitor(controller, resources);
+        this.resources = resources;
+    }
+
 
     /*
    ========================================================================
@@ -76,10 +84,10 @@ public class TilePlacementController extends TileCommandCreator {
         This method will return the constructed command
     */
     public GameplayActionCommand getCommand(){
-
-        GameplayActionCommand command = new PlaceTileCommand(currentTile, currentSpace);
-
-        return command;
+        //check the visitor which type to return
+        //set the current space right now and then ask
+        visitor.setSpace(currentSpace);
+        return visitor.getCommand(currentTile);
     }
 
     /*

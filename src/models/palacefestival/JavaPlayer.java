@@ -96,4 +96,48 @@ public class JavaPlayer {
     public void useCard(PalaceCard card){
         palaceCards.remove(card);
     }
+
+    public void playExtraActionToken(){
+        extraActionTokens--;
+    }
+
+    public void returnExtraActionToken(){
+        extraActionTokens++;
+    }
+
+    public void playDeveloper(){
+        numDevelopers--;
+    }
+
+    public void returnDeveloper(){
+        numDevelopers++;
+    }
+
+    public void playRice(){
+        numRiceTiles--;
+    }
+
+    public void returnRice(){
+        numRiceTiles++;
+    }
+
+    public void playVillage(){
+        numVillageTiles--;
+    }
+
+    public void returnVillage(){
+        numVillageTiles++;
+    }
+
+    public void playTwoTile(){
+        numTwoSpaceTiles--;
+    }
+
+    public void returnTwoTile(){
+        numTwoSpaceTiles++;
+    }
+
+    public void alterFamePoints(int i){
+        famePoints += i;
+    }
 }
