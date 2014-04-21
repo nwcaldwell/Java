@@ -1,10 +1,9 @@
 package gamecontrollers.rules.palacerules;
 
-import gamecontrollers.BoardLogicController;
 import gamecontrollers.Message;
 import gamecontrollers.commandcreator.PalaceCommandCreator;
 import gamecontrollers.turn.TurnController;
-import models.board.Palace;
+import models.board.TileComponentContents.Palace;
 
 //Check that the palace can have the desired palace
 

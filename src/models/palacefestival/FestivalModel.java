@@ -1,6 +1,6 @@
 package models.palacefestival;
 
-import models.board.Palace;
+import models.board.TileComponentContents.Palace;
 
 import java.util.ArrayList;
 import java.util.List;

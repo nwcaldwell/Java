@@ -1,7 +1,5 @@
 package view.controls;
 
-import gamecontrollers.palacefestival.FestivalTurnController;
-import models.board.Palace;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.PalaceCard;
 import view.MediaController;

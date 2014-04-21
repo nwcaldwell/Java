@@ -4,6 +4,7 @@ import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.save.CommandSaveVisitor;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
+import models.board.TileComponentContents.Palace;
 
 import java.util.List;
 

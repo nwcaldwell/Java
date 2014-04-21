@@ -14,4 +14,9 @@ public class Irrigation extends NotWalkable {
     public void accept(TileVisitor v) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean canAcceptPalace(Palace p) {
+        throw new UnsupportedOperationException();
+    }
 }
