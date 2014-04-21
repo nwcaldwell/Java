@@ -1,11 +1,17 @@
 // TODO developer [ Jorge ], test [ Sydney ]
 package view.commands.gameplayInput;
 
-import view.commands.InputCommand;
+import gamecontrollers.Facade;
+import view.ViewController;
 
-public class TabPalaceInputCommand implements InputCommand {
+public class TabPalaceInputCommand extends GameplayInputCommand {
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
-	}
+    public TabPalaceInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override
+    public void doExecute() {
+		Facade.getInstance().tabThroughPalace();
+    }
 }

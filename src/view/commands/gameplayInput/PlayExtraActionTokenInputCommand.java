@@ -1,11 +1,17 @@
 // TODO developer [ Jorge ], test [ Sydney ]
 package view.commands.gameplayInput;
 
-import view.commands.InputCommand;
+import gamecontrollers.Facade;
+import view.ViewController;
 
-public class PlayExtraActionTokenInputCommand implements InputCommand {
+public class PlayExtraActionTokenInputCommand extends GameplayInputCommand {
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
-	}
+    public PlayExtraActionTokenInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override
+    protected void doExecute() {
+        Facade.getInstance().playExtraActionToken();
+    }
 }

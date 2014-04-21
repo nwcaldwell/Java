@@ -3,11 +3,12 @@ package gamecontrollers.rules.tileplacementrules;
 import models.board.TileComponentContent;
 import models.board.TilePlacementVisitor;
 import gamecontrollers.Message;
-import gamecontrollers.commandcreator.TilePlacementController;
+import gamecontrollers.commandcreator.TilePlacementCommandCreator;
 
 /**
  * Created by jorgep on 4/15/14.
  */
+
 public class LandTypeRestrictionsRule extends TilePlacementRule {
 	/* This boolean array is used to determine the validity of Tile Placements as well
 	 * as how many action points it should cost to move from one TileComponent to another.
@@ -30,10 +31,10 @@ public class LandTypeRestrictionsRule extends TilePlacementRule {
 												{false, false, true, false},
 										   	    {false, false, false, false}};
 	
-	private TilePlacementController tpc;
+	private TilePlacementCommandCreator tpc;
 	private Message message;
 	
-	public LandTypeRestrictionsRule(TilePlacementController tpc) {
+	public LandTypeRestrictionsRule(TilePlacementCommandCreator tpc) {
 		this.tpc = tpc;
 	}
 	

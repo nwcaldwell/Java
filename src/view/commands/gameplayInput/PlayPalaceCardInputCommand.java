@@ -1,11 +1,16 @@
 // TODO developer [ Jorge ], test [ Sydney ]
 package view.commands.gameplayInput;
 
-import view.commands.InputCommand;
+import gamecontrollers.Facade;
+import view.ViewController;
 
-public class PlayPalaceCardInputCommand implements InputCommand {
+public class PlayPalaceCardInputCommand extends GameplayInputCommand {
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
-	}
+    public PlayPalaceCardInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override	public void doExecute() {
+        Facade.getInstance().playPalaceCard();
+    }
 }

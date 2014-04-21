@@ -3,18 +3,21 @@ package view.commands;
 import view.View;
 import view.ViewController;
 
-public class NavCommand implements InputCommand {
 
-    private ViewController viewController;
+
+public class NavCommand extends InputCommand {
+
     private View viewToGoTo;
 
     public NavCommand(ViewController viewC, View view) {
-        viewController = viewC;
+        super(viewC);
         viewToGoTo = view;
     }
 
     @Override
     public void execute() {
-        viewController.setCurrentView( viewToGoTo );
+        getViewController().setCurrentView( viewToGoTo );
     }
+
+
 }

@@ -1,11 +1,21 @@
 // TODO developer [ Kevin ], test [ Sydney ]
 package view.commands.gameplayInput;
 
-import view.commands.InputCommand;
+import gamecontrollers.Facade;
+import models.board.Direction;
+import view.ViewController;
 
-public class MoveDeveloperInputCommand implements InputCommand {
+public class MoveDeveloperInputCommand extends GameplayInputCommand {
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+    private Direction direction;
+
+    public MoveDeveloperInputCommand(ViewController viewController, Direction direction) {
+        super(viewController);
+        this.direction = direction;
+    }
+
+    @Override
+    public void doExecute() {
+        Facade.getInstance().moveDeveloper(direction);
 	}
 }

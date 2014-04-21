@@ -1,5 +1,6 @@
 package gamecontrollers.rules.palacefestivaladmissionrules;
 
+import gamecontrollers.Message;
 import gamecontrollers.rules.palacefestivaladmissionrules.PalaceFestivalAdmissionRule;
 
 /**
@@ -13,7 +14,7 @@ public class PlayerHasAtLeastOneApplicableCard extends PalaceFestivalAdmissionRu
 	}
 
 	@Override
-	public String getErrorMessage() {
+	public Message getErrorMessage() {
 		throw new UnsupportedOperationException();
 	}
 }

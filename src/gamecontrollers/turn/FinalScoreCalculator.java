@@ -8,9 +8,23 @@ public class FinalScoreCalculator {
     private BoardLogicController boardLogic;
     private JavaPlayer playerToScore;
 
-    public FinalScoreCalculator(){
 
+    /*
+  ========================================================================
+     CONSTRUCTORS
+  ========================================================================
+   */
+    public FinalScoreCalculator(JavaPlayer p, BoardLogicController bl){
+        this.playerToScore = p;
+        this.boardLogic = bl;
     }
+
+
+    /*
+ ========================================================================
+    PUBLIC METHODS
+ ========================================================================
+  */
 
     public int calculateScore(){
 

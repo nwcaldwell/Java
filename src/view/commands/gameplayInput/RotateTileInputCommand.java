@@ -1,11 +1,17 @@
 // TODO developer [ Kevin ], test [ Sydney ]
 package view.commands.gameplayInput;
 
-import view.commands.InputCommand;
+import gamecontrollers.Facade;
+import view.ViewController;
 
-public class RotateTileInputCommand implements InputCommand {
+public class RotateTileInputCommand extends GameplayInputCommand {
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
-	}
+    public RotateTileInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override
+    protected void doExecute() {
+        Facade.getInstance().rotateCurrentTileComponent();
+    }
 }

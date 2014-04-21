@@ -3,21 +3,26 @@ package gamecontrollers.commands.gameplaycommands;
 
 import gamecontrollers.commands.GameplayActionCommand;
 
+import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.save.CommandSaveVisitor;
 import models.palacefestival.FestivalPlayer;
 
 public class DropOutOfFestivalCommand implements GameplayActionCommand {
+    private FestivalTurnController controller;
     private FestivalPlayer player;
+    private int index;
 
-    public DropOutOfFestivalCommand(FestivalPlayer p){
+    public DropOutOfFestivalCommand(FestivalTurnController fc, FestivalPlayer p, int i){
+        this.controller = fc;
         this.player = p;
+        this.index = i;
     }
 
 	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+        controller.dropOut();
 	}
 	@Override	public void undo() {
-		throw new UnsupportedOperationException();
+		controller.undoDropOut(player, index);
 	}
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();

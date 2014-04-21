@@ -1,12 +1,17 @@
-// TODO developer [ Jorge ], test [ Sydney ]
+// developer [ Jorge ], test [ Sydney ]
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import view.ViewController;
 import view.commands.InputCommand;
 
-public class CommitActionInputCommand implements InputCommand {
+public class CommitActionInputCommand extends InputCommand {
 
-	@Override	public void execute() {
-        Facade.getInstance().doCommand();
+    public CommitActionInputCommand(ViewController viewController) {
+        super(viewController);
+    }
+
+    @Override	public void execute() {
+        Facade.getInstance().commitMove();
 	}
 }

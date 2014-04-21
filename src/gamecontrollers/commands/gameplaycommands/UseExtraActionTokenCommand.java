@@ -4,21 +4,26 @@ package gamecontrollers.commands.gameplaycommands;
 import gamecontrollers.commands.GameplayActionCommand;
 
 import gamecontrollers.save.CommandSaveVisitor;
+import gamecontrollers.turn.TurnController;
 import models.palacefestival.JavaPlayer;
 
 public class UseExtraActionTokenCommand implements GameplayActionCommand {
     private JavaPlayer player;
+    private TurnController controller;
 
-    public UseExtraActionTokenCommand(JavaPlayer p){
+    public UseExtraActionTokenCommand(JavaPlayer p, TurnController controller){
         this.player = p;
+        this.controller = controller;
     }
 
 	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+		player.playExtraActionToken();
+        controller.playExtraActionToken();
 	}
 	@Override	public void undo() {
-		throw new UnsupportedOperationException();
-	}
+        player.returnExtraActionToken();
+        controller.returnExtraActionToken();
+    }
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();
 	}
