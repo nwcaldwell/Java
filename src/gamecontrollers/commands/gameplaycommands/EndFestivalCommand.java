@@ -4,6 +4,7 @@ package gamecontrollers.commands.gameplaycommands;
 import gamecontrollers.Facade;
 import gamecontrollers.commands.GameplayActionCommand;
 
+import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.save.CommandSaveVisitor;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
@@ -18,11 +19,14 @@ public class EndFestivalCommand implements GameplayActionCommand {
     private List<FestivalPlayer> winners;
     private int pointsEarned;
     private FestivalModel model;
+    private FestivalTurnController turnController;
 
-    public EndFestivalCommand(FestivalModel festivalModel, int points){
+    public EndFestivalCommand(FestivalModel festivalModel, int points, FestivalTurnController tc){
+        this.model = festivalModel;
         this.discardedCards = festivalModel.getDiscardedCards();
         this.winners = festivalModel.getWinners();
         this.pointsEarned = points;
+        this.turnController = tc;
     }
 
     public List<JavaPlayer> getPlayersFromFestival(){
@@ -38,7 +42,7 @@ public class EndFestivalCommand implements GameplayActionCommand {
 	}
 	@Override	public void undo() {
 		Facade.getInstance().undoEndFestival(discardedCards, getPlayersFromFestival(), pointsEarned);
-        throw new UnsupportedOperationException();
+        turnController.undoEndFestival(model);
 	}
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();

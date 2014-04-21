@@ -15,8 +15,6 @@ public class FestivalLogicController {
 	}
 
     public boolean canParticipateInFestival(List<PalaceCard> cards, PalaceCard festivalCard){
-        boolean canParticipate = false;
-
         for (PalaceCard card : cards){
             if(card.compare(festivalCard) > 0 ) return true;
         }

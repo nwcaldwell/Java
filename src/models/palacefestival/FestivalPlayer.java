@@ -52,6 +52,10 @@ public class FestivalPlayer {
         bid += points;
     }
 
+    public void undoAddToBid(int points) {
+        bid -= points;
+    }
+
     public void endTurn(){
         hasPlayedThisRound = true;
     }
@@ -114,5 +118,6 @@ public class FestivalPlayer {
     public List<PalaceCard> getCards(){
         return cards;
     }
+
 
 }

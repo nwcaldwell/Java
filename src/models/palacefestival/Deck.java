@@ -71,6 +71,7 @@ public class Deck {
     }
 
     public void undoDiscard(List<PalaceCard> discardedCards) {
+        graveyard.undoDiscardCards(discardedCards.size());
     }
 
 

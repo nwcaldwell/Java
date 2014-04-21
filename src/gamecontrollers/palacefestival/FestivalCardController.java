@@ -14,6 +14,7 @@ public class FestivalCardController extends FestivalCommandCreator {
     private List<PalaceCard> palaceCards;
     private PalaceCard currentCard;
     private FestivalTurnController festivalTurnController;
+    private int indexOfCurrentCard;
 
     public FestivalCardController(List<PalaceCard> cards, FestivalTurnController festivalTurnC){
         reset(cards);
@@ -43,5 +44,9 @@ public class FestivalCardController extends FestivalCommandCreator {
     public void reset(List<PalaceCard> cards) {
         palaceCards = cards;
         currentCard = palaceCards.get(0);
+    }
+
+    public int getIndexOfCurrentCard() {
+        return indexOfCurrentCard;
     }
 }

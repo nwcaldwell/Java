@@ -62,8 +62,8 @@ public class Facade {
         return game;
     }
 
-    public FestivalModel getFestival() {
-        throw new UnsupportedOperationException();
+    public FestivalTurnController getFestivalTurnController() {
+        return festivalTurnController;
     }
 
     /*
@@ -142,7 +142,7 @@ public class Facade {
     }
 
     public void endFestivalTurn(){
-        festivalTurnController.endTurnCommandCreator();
+        festivalTurnController.endTurnFinalization();
     }
 
     public void acceptTieRequest() {
@@ -171,6 +171,4 @@ public class Facade {
         throw new UnsupportedOperationException();
 
     }
-
-
 }
