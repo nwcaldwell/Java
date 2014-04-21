@@ -1,5 +1,6 @@
 package models.palacefestival;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
@@ -8,7 +9,9 @@ public class Deck {
     private PalaceCard festivalCard;
 	
 	public Deck(){
-
+        initLibrary();
+        graveyard = new Graveyard();
+        festivalCard = library.drawTopCard();
 	}
 
 
@@ -36,17 +39,11 @@ public class Deck {
   ========================================================================
    */
 
-
-    public void initPalaceCards(){
-
-    }
-
-
     //Assuming that this will never be called without
     //checking deckEmpty()
     public PalaceCard drawFromDeck(){
 
-        return library.draw();
+        return library.drawTopCard();
     }
 
     //Check that needs to be called externally before asking for a card
@@ -68,8 +65,12 @@ public class Deck {
         return festivalCard;
     }
 
-    public void discard(PalaceCard card){
-        graveyard.discard(card);
+    public void discard(List<PalaceCard> discardedCards) {
+        for(PalaceCard card : discardedCards)
+            graveyard.discard(card);
+    }
+
+    public void undoDiscard(List<PalaceCard> discardedCards) {
     }
 
 
@@ -79,7 +80,7 @@ public class Deck {
     public PalaceCard drawFestivalCard(){
         PalaceCard fest = festivalCard;
         //not checking for empty, shouldnt be a problem
-        festivalCard = library.draw();
+        festivalCard = library.drawTopCard();
         return fest;
     }
 
@@ -105,6 +106,23 @@ public class Deck {
         if(deckEmpty()){
             library.shuffle(graveyard.getDiscardedCards());
         }
+    }
+
+
+
+    public void initLibrary(){
+        final List<PalaceCard> cards = new ArrayList<PalaceCard>() {{
+            for (int i = 0; i < 5; i++) {
+                add(new PalaceCard( new Symbol[] { new Symbol(1) } ) );
+                add(new PalaceCard( new Symbol[] { new Symbol(2) } ) );
+                add(new PalaceCard( new Symbol[] { new Symbol(3) } ) );
+                add(new PalaceCard( new Symbol[] { new Symbol(1), new Symbol(2) } ) );
+                add(new PalaceCard( new Symbol[] { new Symbol(1), new Symbol(3) } ) );
+                add(new PalaceCard( new Symbol[] { new Symbol(2), new Symbol(3) } ) );
+            }
+        }};
+
+        library = new Library(cards);
     }
 
 }

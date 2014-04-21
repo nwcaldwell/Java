@@ -29,13 +29,13 @@ public class PlayView extends GameplayView {
     // on the screen
     @Override
     public void init() {
+
+        super.init();
         togglePlanningMode = new JButton("Planning Mode"); //TODO get from the media controller
         togglePlanningMode.setFocusable(false);
 //        disablePlanningModeButton();
         togglePlanningMode.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlanningView(this.getViewController()))));
         toggleButtonContainer.add(togglePlanningMode, BorderLayout.NORTH);
-
-
     }
 
     private void initKeyListeners(ViewController viewController){

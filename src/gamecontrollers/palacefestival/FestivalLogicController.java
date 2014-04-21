@@ -3,6 +3,7 @@ package gamecontrollers.palacefestival;
 import models.palacefestival.PalaceCard;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FestivalLogicController {
@@ -40,12 +41,8 @@ public class FestivalLogicController {
         return false;
     }
 
-    public void checkIfCanEndGame(){
-        //it's the end of the round
-        //can end the game if there's only one player left
-        //if there's a tie and the players dont have any cards left
-        //if there's a tie and the players have cards left - you have to ask the users if they want to end the game
-
+    public int computePointsWon(int numWinners, int palaceValue){
+        //TODO
     }
 
 }

@@ -1,5 +1,6 @@
 package gamecontrollers.palacefestival;
 
+import gamecontrollers.turn.HistoryChannelController;
 import models.board.Space;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
@@ -14,13 +15,17 @@ public class FestivalController {
     private FestivalLogicController logicController;
     private FestivalTurnController turnController;
 
-    public FestivalController() {
+    public FestivalController(HistoryChannelController hcc) {
         logicController = new FestivalLogicController(this);
-        turnController = new FestivalTurnController(this);
+        turnController = new FestivalTurnController(this, hcc);
     }
 
     public ArrayList<FestivalPlayer> getWinners(){
 		return festivalModel.getWinners();
+    }
+
+    public FestivalTurnController getTurnController(){
+        return turnController;
     }
 
     public void setFestivalModel(FestivalModel model){
@@ -41,43 +46,8 @@ public class FestivalController {
             }
         }
 
-        turnController.startNewFestival(festivalPlayers);
         festivalModel = new FestivalModel(festivalPlayers, festivalCard, palaceValue);
-    }
-
-    public void playCard(){
-        //remove the card from the player's stash, and put it into the discarded pile
-        //add the card to the deck's graveyard
-        //increment the current player's bid
-        //check if the bid is higher than the highest bid in the model, if so update it
-
-        //need the festival card for comparison
-    }
-
-    public void tabPalaceCard(){
-        //tell the turn controller to increment the current player's palace card
-        turnController.tabThroughPalaceCards();
-    }
-
-    public void dropOutOfFestival(){
-        turnController.dropCurrentPlayer();
-    }
-
-    public void undoDropOutOfFestival(FestivalPlayer player, int index) {
-        turnController.undoDropOutOfFestival(player, index);
-    }
-
-    public void endTurn(){
-        //check if the user is allowed to end the turn
-        //if so then end turn
-        //if not, force to drop out
-    }
-
-    public void startNewRound(){
-        //TODO
-        //this method will check if there is a tie, how many players are left, etc.
-        logicController.checkIfCanEndGame();
-        //somehow we need to talk to the view to ask the user if they want to end the game after a tie.
+        turnController.startNewFestival(festivalPlayers, festivalModel);
     }
 
     //TODO is this necessary?

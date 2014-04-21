@@ -8,6 +8,7 @@ import view.ViewController;
 import view.controls.ConsoleView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -27,11 +28,11 @@ public abstract class GameplayView extends View {
 
     protected GameplayView(ViewController viewC) {
         super(viewC);
-        game = Facade.getInstance().getGame();
     }
 
     //this method sets up the default layout for the board
     public void init(){
+        game = Facade.getInstance().getGame();
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();

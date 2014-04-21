@@ -16,8 +16,8 @@ public class FestivalModel {
         this.highestBid = 0;
 	}
 
-    public ArrayList<FestivalPlayer> getWinners(){
-        ArrayList<FestivalPlayer> winners = new ArrayList<FestivalPlayer>();
+    public List<FestivalPlayer> getWinners(){
+        List<FestivalPlayer> winners = new ArrayList<FestivalPlayer>();
 
         for (FestivalPlayer player : players){
             if((player.getBid() == highestBid) && !player.isDroppedOut()){
@@ -29,6 +29,10 @@ public class FestivalModel {
 
     private int numberOfPlayersLeft(){
         return getWinners().size();
+    }
+
+    public boolean onePlayerLeft(){
+        return (numberOfPlayersLeft() == 1);
     }
 
     public boolean isTie(){
@@ -58,12 +62,10 @@ public class FestivalModel {
         return cardsToDiscard;
     }
 
-    public boolean compareBids(int playerBid){
+    public void compareBids(int playerBid){
         if(playerBid > highestBid){
             setHighestBid(playerBid);
-            return true;
         }
-        return false;
     }
 
     public void setHighestBid(int bid){
@@ -72,14 +74,6 @@ public class FestivalModel {
 
     public void setPlayers(ArrayList<FestivalPlayer> p){
         players = p;
-    }
-
-    public void setFestivalCard(PalaceCard card){
-        festivalCard = card;
-    }
-
-    public void setPalaceValue(int value){
-        palaceValue = value;
     }
 
     public List<FestivalPlayer> getPlayers(){
@@ -98,4 +92,12 @@ public class FestivalModel {
         return highestBid;
     }
 
+    public void addToPlayerBid(FestivalPlayer player, PalaceCard card) {
+        player.addToBid(card.compare(festivalCard));
+        compareBids(player.getBid());
+    }
+
+    public void undoAddToPlayerBid(FestivalPlayer player, PalaceCard card) {
+        //TODO
+    }
 }
