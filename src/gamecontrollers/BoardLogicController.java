@@ -21,8 +21,19 @@ public class BoardLogicController {
 		return board;
 	}
 	
-	public List<Space> getCitySpaces(Space s) {
-		return new ArrayList<Space>();
+	public List<Space> getCitySpaces() {
+		/*
+		List<Space> allSpaces = getAllSpaces();
+		List<Space> citySpaces = new LinkedList<Space>();
+		Iterator<Space> it = allSpaces.iterator();
+		while(it.hasNext())
+		{
+			Space s = it.next();
+
+			citySpaces.add(s);
+		}
+		*/
+		throw new UnsupportedOperationException();
 	}
 	
 	public List<Space> getPoolAndBeach(Space s, List<Space> pool, List<Space> beach) {
@@ -42,7 +53,7 @@ public class BoardLogicController {
 	}
 
 	//Assuming the board is a connected graph...
-	public List<Space> getAllSpaces()
+	List<Space> getAllSpaces()
 	{
 		Space root = board.getRoot();
 		List<Space> allSpaces = new LinkedList<Space>();
