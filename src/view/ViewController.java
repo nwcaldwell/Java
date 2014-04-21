@@ -75,11 +75,13 @@ public class ViewController {
         // Change the current view
         currentView = newView;
 
+        //TODO fix with the new input command updates
+        
         //get the listeners from the view
         currentListeners = currentView.getJavaKeyListeners();
 
         //reset the key listeners
-        resetKeyActionListeners(currentListeners);
+        addKeyListeners(currentListeners);
 
         currentView.setFocusable(false);
 
@@ -93,29 +95,17 @@ public class ViewController {
         currentView.update();
     }
 
-    public void resetKeyActionListeners(final List<JavaKeyListener> newListeners){
-        gameWindow.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                System.out.println("button pressed");
-                for(JavaKeyListener listener : newListeners){
-                    listener.respondToKeyEvent(e);
-                }
-            }
-        });
+    public void addKeyListeners(List<JavaKeyListener> keys){
+        for(JavaKeyListener listen : keys){
+            addKeyListener(listen);
+        }
     }
 
-    public void removeCurrentKeyListeners() {
+    private void addKeyListener(KeyListener keyListener){
+        gameWindow.addKeyListener(keyListener);
+    }
+
+    private void removeCurrentKeyListeners() {
         KeyListener[] key = gameWindow.getKeyListeners();
         for(int i = 0; i < key.length; i++){
             gameWindow.removeKeyListener(key[i]);

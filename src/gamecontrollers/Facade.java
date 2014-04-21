@@ -111,6 +111,7 @@ public class Facade {
 
     public void endTurn() {
         turnController.endTurn();
+
     }
 
     public void tabThroughPalace() {

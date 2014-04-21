@@ -5,12 +5,9 @@ import org.lwjgl.opengl.GL11;
 import view.MediaController;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
 
 /**This class will be used to load resources into the graphics card.
  * The texture factory allows a program to access a texture, while
