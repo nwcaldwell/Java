@@ -151,9 +151,9 @@ public class LWJGLBoardView extends BoardView{
 		
 		loadResources();
 		lwjglCanvas.setBackground(Color.green);
-		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
-		lwjglCanvas.addMouseListener(listener);
-		lwjglCanvas.addMouseMotionListener(listener);
+//		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
+//		lwjglCanvas.addMouseListener(listener);
+//		lwjglCanvas.addMouseMotionListener(listener);
 	}
 	
 	private void loadResources(){
