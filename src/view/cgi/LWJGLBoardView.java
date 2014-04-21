@@ -151,9 +151,11 @@ public class LWJGLBoardView extends BoardView{
 		
 		loadResources();
 		lwjglCanvas.setBackground(Color.green);
+
 //		LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
 //		lwjglCanvas.addMouseListener(listener);
 //		lwjglCanvas.addMouseMotionListener(listener);
+
 	}
 	
 	private void loadResources(){
@@ -264,10 +266,10 @@ public class LWJGLBoardView extends BoardView{
 		spacecount++;
 		if (space.getHeight()==0){
 			Model3D terrain=rice.clone();
-			if (space.getSpaceGeography()==SpaceGeography.highlands){
+			if (space.isInHighlands()){
 				terrain=highland.clone();
 			}
-			if (space.getSpaceGeography()==SpaceGeography.lowlands){
+			if (space.isInLowlands()){
 				terrain=lowland.clone();
 			}
 			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));

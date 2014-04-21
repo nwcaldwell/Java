@@ -4,6 +4,14 @@ import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.save.CommandSaveVisitor;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
+import models.board.TileComponentContents.Palace;
+
+import java.util.List;
+
+/*
+    THIS ASSIGNS POINTS = HALF THE PALACE LEVEL.
+    IN ORDER TO CHANGE THIS THE SUBCLASS THIS CLASS AND OVERRIDE SAID METHOD
+ */
 
 /**
  * Created by kevinnieman on 4/20/14.
@@ -13,12 +21,14 @@ public class PlacePalaceCommand implements GameplayActionCommand {
     private int level;
     private Space space;
     private SharedResources resources;
+    private List<TileComponentContent> city;
 
-    public PlacePalaceCommand(TurnController controller, int level, Space space, SharedResources resources){
+    public PlacePalaceCommand(TurnController controller, int level, Space space, SharedResources resources, List<TileComponentContent> city){
         this.controller = controller;
         this.space = space;
         this.level = level;
         this.resources = resources;
+        this.city = city;
     }
 
     @Override
@@ -32,6 +42,14 @@ public class PlacePalaceCommand implements GameplayActionCommand {
         //update dat turn counter
         controller.playTile();
 
+        //special palace stuff for score
+        controller.getCurrentPlayer().alterFamePoints(level/2);
+
+        //special palace stuff to flop canAcceptPalace
+        for(TileComponentContent comp : city){
+            comp.setCanAcceptPalace(false);
+        }
+
     }
 
     @Override
@@ -43,6 +61,14 @@ public class PlacePalaceCommand implements GameplayActionCommand {
         resources.incNumThreeTiles();
         //update dat turn counter
         controller.removeTile();
+
+        //special palace stuff for score
+        controller.getCurrentPlayer().alterFamePoints(-level/2);
+
+        //special palace stuff to flop canAcceptPalace
+        for(TileComponentContent comp : city){
+            comp.setCanAcceptPalace(true);
+        }
     }
 
 

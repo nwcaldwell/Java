@@ -14,18 +14,23 @@ public class TileComponent {
         this.direction = d;
         conjoinedParts = new TileComponent[d.numDirections()];
         this.tcc = tcc;
+
     }
 
     public TileComponent getConjoinedTile(Direction direction) { //should call siblingExists(dir) first!!!
         return conjoinedParts[direction.getIntValue()];
     }
 
-    public boolean siblingExists(Direction direction) {
-        return (conjoinedParts[direction.getIntValue()] != null) ? true : false;
-    }
-
-    public void rotateAround(TileComponent tileComponent) { //The tileComponent passed in does NOT have to be a center
-        rotate(tileComponent, new HashSet<TileComponent>());
+	public boolean siblingExists(Direction direction)
+	{
+		return (conjoinedParts[direction.getIntValue()] != null) ? true : false;
+	}
+	public void setSiblings(TileComponent[] siblings)
+	{
+		conjoinedParts = siblings;
+	}
+	public void rotateAround(TileComponent tileComponent){ //The tileComponent passed in does NOT have to be a center
+		rotate(tileComponent, new HashSet<TileComponent>());
     }
 
     public TileComponentContent getTileComponentContent() {
@@ -83,5 +88,9 @@ public class TileComponent {
 
     public void accept(TileCreationVisitor visitor) {
         visitor.visit(this);
+    }
+
+    public Iterator<Direction> iterator(){
+        return direction.iterator();
     }
 }

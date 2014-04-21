@@ -2,6 +2,11 @@ package models.board;
 
 //TODO [Jorge][Kevin]
 
+import models.board.TileComponentContents.Irrigation;
+import models.board.TileComponentContents.Palace;
+import models.board.TileComponentContents.Rice;
+import models.board.TileComponentContents.Village;
+
 public interface  TileVisitor {
 
     public void visit(TileComponent tcc);

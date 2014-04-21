@@ -6,7 +6,7 @@ import gamecontrollers.commands.GameplayActionCommand;
 
 import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.save.CommandSaveVisitor;
-import models.board.Palace;
+import models.board.TileComponentContents.Palace;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
 import models.palacefestival.JavaPlayer;
