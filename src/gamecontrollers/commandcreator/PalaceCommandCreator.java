@@ -3,6 +3,7 @@ package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
+import models.board.Direction;
 import models.board.Space;
 
 
@@ -11,7 +12,7 @@ import models.board.Space;
  */
 public abstract class PalaceCommandCreator implements GameplayCommandCreator {
 
-
+    public abstract void move(Direction direction);
     public abstract Space getSpace();
 
     public abstract int getCurrentLevel();

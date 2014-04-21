@@ -100,7 +100,11 @@ public class Facade {
     }
 
     public void moveTile(Direction direction){
-        throw new UnsupportedOperationException();
+        tilePlacementCommandCreator.move(direction);
+    }
+
+    public void movePalace(Direction direction){
+        palaceCommandCreator.move(direction);
     }
 
     public void moveDeveloper(Direction direction){

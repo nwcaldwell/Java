@@ -10,6 +10,7 @@ public class SelectDeveloperInputCommand extends GameplayInputCommand {
         super(viewController);
     }
 
+
     @Override	public void doExecute() {
         if ( Facade.getInstance().setupForMovingDeveloper().hasErrors() ){
             // TODO tell view to show error
