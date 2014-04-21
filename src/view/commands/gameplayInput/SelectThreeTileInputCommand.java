@@ -28,5 +28,7 @@ public class SelectThreeTileInputCommand extends InputCommand {
 
     @Override	public void execute() {
         Facade.getInstance().startPlacingTile( new RVR( ).buildTile(HexDirection.N) );
+        getViewController().removeCurrentKeyListeners();
+        getViewController().resetKeyActionListeners(keyListeners);
 	}
 }

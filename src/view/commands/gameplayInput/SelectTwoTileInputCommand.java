@@ -28,5 +28,7 @@ public class SelectTwoTileInputCommand extends InputCommand {
 
     @Override	public void execute() {
         Facade.getInstance().startPlacingTile( new VR( ).buildTile(HexDirection.N) );
+        getViewController().removeCurrentKeyListeners();
+        getViewController().resetKeyActionListeners(keyListeners);
 	}
 }

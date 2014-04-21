@@ -28,5 +28,7 @@ public class SelectPalaceTileInputCommand extends InputCommand {
 
     @Override	public void execute() {
         Facade.getInstance().startPlacingTile( new P( ).buildTile(HexDirection.N) );
+        getViewController().removeCurrentKeyListeners();
+        getViewController().resetKeyActionListeners(keyListeners);
 	}
 }
