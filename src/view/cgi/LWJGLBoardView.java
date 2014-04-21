@@ -5,14 +5,16 @@ import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
 import models.board.SpaceGeography;
+import view.MediaController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
-import java.io.File;
+import java.awt.Color;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -24,7 +26,7 @@ public class LWJGLBoardView extends BoardView{
 	
 	public static final float CANVAS_WIDTH=10;
 	public static final float CANVAS_HEIGHT=10;
-	public static final float CANVAS_FAR=21;
+	public static final float CANVAS_FAR=101;
 	public static final float CANVAS_NEAR=1;
 	final float CLOSE=0.01f;
 	final float FAR=1;
@@ -92,14 +94,23 @@ public class LWJGLBoardView extends BoardView{
 	
 	public LWJGLBoardView(Board b) {
 		super(b);
-		// TODO Auto-generated constructor stub
-
+	}
+	
+	@Override
+	public synchronized void addNotify() {
+		super.addNotify();
+		try {
+			System.out.println("Initializing OpenGL");
+			initGL();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**initializes OpenGL Must be called after this object is added to something
 	 * on a displayable JFrame.
 	 * @throws Exception */
-	public void initGL() throws Exception{
+	public synchronized void initGL() throws Exception{
 		if (!getParent().isDisplayable()){
 			throw new Exception("LWJGLBoardView must be attached to a displayable object\n" +
 					"specifically, it must return true for the \"isDisplayable\" call");
@@ -136,68 +147,73 @@ public class LWJGLBoardView extends BoardView{
 		glClearColor(0.5f, 0, 0, 1);
 		
 		//try loading the default texture.  If this doesn't work, you're screwed.
-		TextureFactory.loadMissingTexture("resources/imgs/Default.png");
+		TextureFactory.loadMissingTexture("Default.png");
 		
 		loadResources();
+		lwjglCanvas.setBackground(Color.green);
+		//LWJGLBoardViewInputPoller listener = new LWJGLBoardViewInputPoller(this);
+		//lwjglCanvas.addMouseListener(listener);
+		//lwjglCanvas.addMouseMotionListener(listener);
 	}
 	
 	private void loadResources(){
-//		buriedSpace=ModelFactory.makeFromObj(new File("resources/hex.obj"), 
-//				TextureFactory.getTexture("resources/imgs/GenericHex.png"));
-		Model3D riceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/rice_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/rice_hex_texture.png"));
+//		buriedSpace=ModelFactory.makeFromObj(MediaController.getInstance().getFile("hex.obj"), 
+//				TextureFactory.getTexture("GenericHex.png"));
+		Model3D riceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/rice_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/rice_hex_texture.png"));
 		this.rice=new Model3D(riceHex);
+		this.rice.setRotation(0, 30, 0);
 		this.buriedSpace=new Model3D(riceHex);
 		this.buriedSpace.setRotation(0, 30, 0);
 		this.buriedSpace.setFlat();
 		this.ground=new Model3D(riceHex);
 		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
-		Model3D villageHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
-		Model3D village=ModelFactory.makeFromObj(new File("resources/3Dobjects/village.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/village_texture.png"));
+		Model3D villageHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/village_hex_texture.png"));
+		Model3D village=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village.obj"), 
+				TextureFactory.getTexture("3Dobjects/village_texture.png"));
 		this.village=new Model3D(village,villageHex);
 		this.village.setRotation(0, 30, 0);
-		Model3D irrigationHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
+		Model3D irrigationHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/irrigation_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/irrigation_hex_texture.png"));
 		this.irrigation=new Model3D(irrigationHex);
 		this.irrigation.setRotation(0, 30, 0);
 		this.irrigation.setFlat();
 
-		Model3D palaceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		Model3D palaceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		for (int i=0;i<palace.length;i++){
-			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
-					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
-			Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
-					TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+			Model3D model=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/palace"+((i+1)*2)+".obj"), 
+					TextureFactory.getTexture("3Dobjects/palace"+((i+1)*2)+"_texture.png"));
+//			Model3D number=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/"+((i+1)*2)+".obj"), 
+//					TextureFactory.getTexture("3Dobjects/number_texture.png"));
 			palace[i]=new Model3D(palaceHex,model);//,number);
 			palace[i].setRotation(0, 30, 0);
 			palace[i].setFlat();
 		}
 		
-		Model3D highlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/highlands_empty_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/highlands_empty_hex.png"));
+		Model3D highlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/highlands_empty_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/highlands_empty_hex.png"));
 		this.highland=new Model3D(highlandHex);
 		this.highland.setRotation(0, 30, 0);
 		this.highland.setFlat();
 
-		Model3D lowlandHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/lowlands_empty_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/lowlands_empty_hex.png"));
+		Model3D lowlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/lowlands_empty_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/lowlands_empty_hex.png"));
 		this.lowland=new Model3D(lowlandHex);
 		this.lowland.setRotation(0, 30, 0);
 		this.lowland.setFlat();
 		
-		Model3D empty=ModelFactory.makeFromObj(new File("resources/3Dobjects/empty_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/default_hex_texture.png"));
+		Model3D empty=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/empty_hex.obj"), 
+				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		this.ground=new Model3D(empty);
 		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
 	}
 	
 	@Override
-	public void hilightSpace(ArrayList<Direction> path, int height) {
+	public synchronized void hilightSpace(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
 		for (Direction d:path){
 			offset.translate(offsets[d.getIntValue()]);
@@ -207,7 +223,7 @@ public class LWJGLBoardView extends BoardView{
 	}
 	
 	@Override
-	public void displayDev(ArrayList<Direction> path, int height) {
+	public synchronized void displayDev(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
 		for (Direction d:path){
 			offset.translate(offsets[d.getIntValue()]);
@@ -217,11 +233,12 @@ public class LWJGLBoardView extends BoardView{
 	}
 
 	@Override
-	public void update() {
+	public synchronized void update() {
+		spacecount=0;
 		spaces.clear();
 		ArrayList<Space> preTraversed=new ArrayList<Space>();
 		updateRecursive(board.getRoot(), preTraversed, new Vector2D(0, 0));
-		
+		System.out.println("spacce count: "+spacecount);
 		renderScene();
 	}
 	
@@ -238,16 +255,19 @@ public class LWJGLBoardView extends BoardView{
 		}
 	}
 	
+	
+	int spacecount=0;
 	/**adds model data for a given space.
 	 * May be more than one Model3D.*/
 	private void updateSpace(Space space, Vector2D offset){
 
+		spacecount++;
 		if (space.getHeight()==0){
-			Model3D terrain=palace[3].clone();
-			if (space.getSpaceGeography()==SpaceGeography.highlands){
+			Model3D terrain=rice.clone();
+			if (space.isInHighlands()){
 				terrain=highland.clone();
 			}
-			if (space.getSpaceGeography()==SpaceGeography.lowlands){
+			if (space.isInLowlands()){
 				terrain=lowland.clone();
 			}
 			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
@@ -270,7 +290,7 @@ public class LWJGLBoardView extends BoardView{
 	/**maybe, if we were doing a complicated model, I would feel the need
 	 * to add a scene-graph system.  As it is, nothing we use would take
 	 * advantage of it, so no scene graph has been made.*/
-	public void renderScene(){
+	public synchronized void renderScene(){
 		
 		//modelview doesn't translate lights
 		glMatrixMode(GL11.GL_MODELVIEW);
@@ -290,13 +310,15 @@ public class LWJGLBoardView extends BoardView{
 		//things too close will not be rendered
 		glTranslated(0, 0, -(CANVAS_FAR+CANVAS_NEAR)/2);
 
+		glRotated(scenePitch, 1, 0, 0);
+		
+		glRotated(sceneYaw, 0, 1, 0);
+		
 		glScaled(sceneScale, sceneScale, sceneScale);
 		
 		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 		
-		glRotated(scenePitch, 1, 0, 0);
 		
-		glRotated(sceneYaw, 0, 1, 0);
 		
 		for (Model3D model: spaces){
 			model.render();
@@ -312,7 +334,7 @@ public class LWJGLBoardView extends BoardView{
 	
 	/**sets up the lighting for the scene*/
 	private void setLighting(){
-		float[] lightPos={1f,0f,1f,0f};
+		float[] lightPos={0.5f,0f,1f,0f};
 		
 		//material colors
 		float[] matspecular={1,1,1,0};
@@ -343,38 +365,38 @@ public class LWJGLBoardView extends BoardView{
 		
 		GL11.glMaterialf(GL11.GL_FRONT, GL11.GL_SHININESS, 2f);
 	}
-
+	
 	////////////////getters and setters////////////////
 	
-	public Vector3D getSceneTranslation() {
+	public synchronized Vector3D getSceneTranslation() {
 		return sceneTranslation;
 	}
 
-	public void setSceneTranslation(Vector3D sceneTranslation) {
+	public synchronized void setSceneTranslation(Vector3D sceneTranslation) {
 		this.sceneTranslation = sceneTranslation;
 	}
 
-	public double getSceneYaw() {
+	public synchronized double getSceneYaw() {
 		return sceneYaw;
 	}
 
-	public void setSceneYaw(double sceneYaw) {
+	public synchronized void setSceneYaw(double sceneYaw) {
 		this.sceneYaw = sceneYaw;
 	}
 
-	public double getScenePitch() {
+	public synchronized double getScenePitch() {
 		return scenePitch;
 	}
 
-	public void setScenePitch(double scenePitch) {
+	public synchronized void setScenePitch(double scenePitch) {
 		this.scenePitch = scenePitch;
 	}
 
-	public double getSceneScale() {
+	public synchronized double getSceneScale() {
 		return sceneScale;
 	}
 
-	public void setSceneScale(double sceneScale) {
+	public synchronized void setSceneScale(double sceneScale) {
 		this.sceneScale = sceneScale;
 	}
 }

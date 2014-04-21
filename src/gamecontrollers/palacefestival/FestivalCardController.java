@@ -3,6 +3,7 @@ package gamecontrollers.palacefestival;
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.FestivalCommandCreator;
 import gamecontrollers.commands.gameplaycommands.PlayPalaceCardCommand;
+import models.palacefestival.FestivalModel;
 import models.palacefestival.PalaceCard;
 
 import java.util.List;
@@ -12,22 +13,20 @@ import java.util.List;
  */
 public class FestivalCardController extends FestivalCommandCreator {
     private List<PalaceCard> palaceCards;
-    private PalaceCard currentCard;
-    private FestivalTurnController festivalTurnController;
+    private FestivalModel festivalModel;
 
-    public FestivalCardController(List<PalaceCard> cards, FestivalTurnController festivalTurnC){
+    public FestivalCardController(List<PalaceCard> cards, FestivalModel model){
         reset(cards);
-        festivalTurnController = festivalTurnC;
+        festivalModel = model;
     }
 
     public void incrementCurrentCard(){
-        int index = palaceCards.indexOf(currentCard);
-        currentCard = palaceCards.get((index+1) % palaceCards.size());
+        festivalModel.incrementCurrentCard();
     }
 
     @Override
     public PlayPalaceCardCommand getCommand() {
-        return new PlayPalaceCardCommand(festivalTurnController.getCurrentPlayer(), currentCard);
+        return new PlayPalaceCardCommand(festivalModel.getCurrentPlayer(), festivalModel, festivalModel.getCurrentCard());
     }
 
     @Override
@@ -42,6 +41,5 @@ public class FestivalCardController extends FestivalCommandCreator {
 
     public void reset(List<PalaceCard> cards) {
         palaceCards = cards;
-        currentCard = palaceCards.get(0);
     }
 }

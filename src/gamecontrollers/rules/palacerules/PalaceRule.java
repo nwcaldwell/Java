@@ -6,14 +6,6 @@ import gamecontrollers.rules.Rule;
 /**
  * Created by kevinnieman on 4/20/14.
  */
-public class PalaceRule extends Rule {
-    @Override
-    public void update() {
+public abstract class PalaceRule extends Rule {
 
-    }
-
-    @Override
-    public Message getErrorMessage() {
-        return null;
-    }
 }

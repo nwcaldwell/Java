@@ -12,7 +12,6 @@ public class StartFestivalInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-        Facade.getInstance().startFestival();
-
+        throw new UnsupportedOperationException();
 	}
 }

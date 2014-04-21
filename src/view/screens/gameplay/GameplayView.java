@@ -5,6 +5,8 @@ import models.board.JavaGame;
 import models.palacefestival.JavaPlayer;
 import view.View;
 import view.ViewController;
+import view.cgi.LWJGLBoardView;
+import view.controls.BoardView;
 import view.controls.ConsoleView;
 import view.controls.PlayerView;
 import view.controls.SharedResourcesView;
@@ -20,7 +22,7 @@ public abstract class GameplayView extends View {
     private static final int BORDER = 10;
     protected ConsoleView consoleView;
     protected ArrayList<PlayerView> playerViews;
-    //protected BoardView boardView;
+    protected BoardView boardView;
     protected SharedResourcesView sharedResourcesView;
     protected JPanel playerContainer;
     protected JPanel toggleButtonContainer;
@@ -36,7 +38,7 @@ public abstract class GameplayView extends View {
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        //boardView = new LWJGLBoardView(game.getBoard()); //TODO get this working properly
+        boardView = new LWJGLBoardView(game.getBoard()); //TODO get this working properly
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
@@ -68,7 +70,8 @@ public abstract class GameplayView extends View {
         JPanel rightSide = new JPanel();
         rightSide.setPreferredSize(new Dimension(3 * this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
         rightSide.setBackground(Color.WHITE);
-        //rightSide.add(boardView);
+        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, this.getScreenHeight() - BORDER*2));
+        rightSide.add(boardView);
         rightSide.add(playerContainer);
 
         add(rightSide, BorderLayout.EAST);
@@ -83,9 +86,9 @@ public abstract class GameplayView extends View {
         return playerViews;
     }
 
-//    protected BoardView getBoardView() {
-//        return boardView;
-//    }
+    protected BoardView getBoardView() {
+        return boardView;
+    }
 
     protected SharedResourcesView getSharedResourcesView() {
         return sharedResourcesView;
@@ -101,7 +104,7 @@ public abstract class GameplayView extends View {
 
     public void update(){
 
-        //boardView.update();
+        boardView.update();
         sharedResourcesView.update(game.getSharedResources(), game.getDeck());
         consoleView.update();
         JavaPlayer[] players = game.getPlayers();

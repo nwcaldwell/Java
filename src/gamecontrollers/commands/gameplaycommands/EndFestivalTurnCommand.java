@@ -4,22 +4,27 @@ package gamecontrollers.commands.gameplaycommands;
 import gamecontrollers.Facade;
 import gamecontrollers.commands.GameplayActionCommand;
 
+import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.save.CommandSaveVisitor;
 import models.palacefestival.FestivalPlayer;
 
 public class EndFestivalTurnCommand implements GameplayActionCommand {
+    private FestivalTurnController turnController;
     private FestivalPlayer player;
+    private int playerIndex;
 
-    public EndFestivalTurnCommand(FestivalPlayer p){
-        this.player = p;
+    public EndFestivalTurnCommand(FestivalTurnController tc, FestivalPlayer p, int index){
+        turnController = tc;
+        player = p;
+        playerIndex = index;
     }
 
 	@Override
     public void execute() {
-        throw new UnsupportedOperationException();
+        turnController.endTurn();
 	}
 	@Override	public void undo() {
-		throw new UnsupportedOperationException();
+		turnController.undoEndTurn(player, playerIndex);
 	}
 	@Override	public void accept(CommandSaveVisitor visitor) {
 		throw new UnsupportedOperationException();

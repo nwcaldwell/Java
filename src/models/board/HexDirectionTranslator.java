@@ -1,8 +1,9 @@
 package models.board;
 
+import models.Pair;
+
 import java.util.HashMap;
 
-import models.Pair;
 
 /**
  * Created by williammacfarlane on 4/19/14.

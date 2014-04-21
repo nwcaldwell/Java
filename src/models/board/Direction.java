@@ -9,4 +9,5 @@ public interface Direction {
 	public int numDirections();
 	public Iterator<Direction> iterator();
 	public BoardConstructionCrew getPreferredBoardConstructionCrew();
+	public TileConstructionCrew getPreferredTileConstructionCrew();
 }
