@@ -24,7 +24,7 @@ public class LWJGLBoardView extends BoardView{
 	
 	public static final float CANVAS_WIDTH=10;
 	public static final float CANVAS_HEIGHT=10;
-	public static final float CANVAS_FAR=21;
+	public static final float CANVAS_FAR=101;
 	public static final float CANVAS_NEAR=1;
 	final float CLOSE=0.01f;
 	final float FAR=1;
@@ -147,6 +147,7 @@ public class LWJGLBoardView extends BoardView{
 		Model3D riceHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/rice_hex.obj"), 
 				TextureFactory.getTexture("resources/3Dobjects/rice_hex_texture.png"));
 		this.rice=new Model3D(riceHex);
+		this.rice.setRotation(0, 30, 0);
 		this.buriedSpace=new Model3D(riceHex);
 		this.buriedSpace.setRotation(0, 30, 0);
 		this.buriedSpace.setFlat();
@@ -159,8 +160,8 @@ public class LWJGLBoardView extends BoardView{
 				TextureFactory.getTexture("resources/3Dobjects/village_texture.png"));
 		this.village=new Model3D(village,villageHex);
 		this.village.setRotation(0, 30, 0);
-		Model3D irrigationHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/village_hex.obj"), 
-				TextureFactory.getTexture("resources/3Dobjects/village_hex_texture.png"));
+		Model3D irrigationHex=ModelFactory.makeFromObj(new File("resources/3Dobjects/irrigation_hex.obj"), 
+				TextureFactory.getTexture("resources/3Dobjects/irrigation_hex_texture.png"));
 		this.irrigation=new Model3D(irrigationHex);
 		this.irrigation.setRotation(0, 30, 0);
 		this.irrigation.setFlat();
@@ -170,8 +171,8 @@ public class LWJGLBoardView extends BoardView{
 		for (int i=0;i<palace.length;i++){
 			Model3D model=ModelFactory.makeFromObj(new File("resources/3Dobjects/palace"+((i+1)*2)+".obj"), 
 					TextureFactory.getTexture("resources/3Dobjects/palace"+((i+1)*2)+"_texture.png"));
-			Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
-					TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
+//			Model3D number=ModelFactory.makeFromObj(new File("resources/3Dobjects/"+((i+1)*2)+".obj"), 
+//					TextureFactory.getTexture("resources/3Dobjects/number_texture.png"));
 			palace[i]=new Model3D(palaceHex,model);//,number);
 			palace[i].setRotation(0, 30, 0);
 			palace[i].setFlat();
@@ -243,7 +244,7 @@ public class LWJGLBoardView extends BoardView{
 	private void updateSpace(Space space, Vector2D offset){
 
 		if (space.getHeight()==0){
-			Model3D terrain=palace[3].clone();
+			Model3D terrain=rice.clone();
 			if (space.getSpaceGeography()==SpaceGeography.highlands){
 				terrain=highland.clone();
 			}
@@ -312,7 +313,7 @@ public class LWJGLBoardView extends BoardView{
 	
 	/**sets up the lighting for the scene*/
 	private void setLighting(){
-		float[] lightPos={1f,0f,1f,0f};
+		float[] lightPos={0.5f,0f,1f,0f};
 		
 		//material colors
 		float[] matspecular={1,1,1,0};
