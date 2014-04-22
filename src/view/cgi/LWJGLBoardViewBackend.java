@@ -32,8 +32,8 @@ import static org.lwjgl.opengl.GL11.*;
  * that LWJGL's input doesn't play well with swing.*/
 public class LWJGLBoardViewBackend implements Runnable{
 	
-	public static final float CANVAS_WIDTH=10;
-	public static final float CANVAS_HEIGHT=10;
+	public static final float CANVAS_WIDTH=16;
+	public static final float CANVAS_HEIGHT=9;
 	public static final float CANVAS_FAR=101;
 	public static final float CANVAS_NEAR=1;
 	final float CLOSE=0.01f;
@@ -554,6 +554,9 @@ public class LWJGLBoardViewBackend implements Runnable{
 				0,
 				sceneTranslation.y
 				));
+		
+		pitch = Math.max(pitch, 0);
+		pitch = Math.min(pitch, 90);
 		setScenePitch(pitch);
 		setSceneYaw(yaw);
 		vc.setFrameAsFocused();
