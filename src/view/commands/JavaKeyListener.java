@@ -29,6 +29,7 @@ public class JavaKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        System.out.println("button pressed");
         if(e.getKeyCode() == keyCode){
             System.out.println("Executing command associated with keycode: "+keyCode);
             command.execute();
