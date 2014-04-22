@@ -261,22 +261,7 @@ public class BoardLogicController {
 	{
 		return devMoveController.nodeScoreToActionPointConversion(devMoveController.findOffBoardPath(p, origin, path));
 	}
-	
-	//The two methods below weren't in the design doc. 
-	//They are used to collect all palace spaces. 
-	public List<Space> getAllActivePalaceSpaces() {
-		List<Space> spaces = getAllSpaces();
-		int size = spaces.size();
-		
-		PalaceVisitor pv = new PalaceVisitor();
-		
-		for (int i = 0; i < size; i++) {
-			spaces.get(i).getTileComponentContent().accept(pv);
-		}
-		
-		return pv.getActivePalaces();
-	}
-	
+
 	//Assuming the board is a connected graph...
 	List<Space> getAllSpaces()
 	{
