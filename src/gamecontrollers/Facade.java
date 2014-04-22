@@ -193,12 +193,12 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void drawCardFromDeck() {
-        turnController.attemptToDrawFromDeck();
+    public Response drawCardFromDeck() {
+        return turnController.attemptToDrawFromDeck();
     }
 
-    public void drawTheFestivalCard() {
-        throw new UnsupportedOperationException();
+    public Response drawTheFestivalCard() {
+        return turnController.attemptToDrawFestivalCard();
     }
 
     public boolean validPlacement(TileComponent tile, Space space){

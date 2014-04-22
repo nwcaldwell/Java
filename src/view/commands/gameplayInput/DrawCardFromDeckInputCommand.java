@@ -2,6 +2,7 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import view.ViewController;
 
 public class DrawCardFromDeckInputCommand extends GameplayInputCommand {
@@ -10,8 +11,9 @@ public class DrawCardFromDeckInputCommand extends GameplayInputCommand {
         super(viewController);
     }
 
-    @Override
-    protected void doExecute() {
-        Facade.getInstance().drawCardFromDeck();
-    }
+
+    @Override	public void doExecute() {
+        Response response = Facade.getInstance().drawCardFromDeck();
+        getViewController().displayMessageToConsole(response);
+	}
 }
