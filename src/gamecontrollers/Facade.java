@@ -77,8 +77,8 @@ public class Facade {
         return festivalTurnController.getFestivalModel();
     }
 
-    public JavaPlayer getCurrentPlayer(){
-        return turnController.getCurrentPlayer();
+    public TurnController getTurnController(){
+        return turnController;
     }
 
     /*
