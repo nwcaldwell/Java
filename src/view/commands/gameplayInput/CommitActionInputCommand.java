@@ -2,6 +2,7 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import view.ViewController;
 import view.commands.InputCommand;
 
@@ -12,6 +13,8 @@ public class CommitActionInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-        Facade.getInstance().commitMove();
+        Response response = Facade.getInstance().commitMove();
+        //TODO TO ONLY PRINT ERRORS
+        getViewController().showError(response);
 	}
 }
