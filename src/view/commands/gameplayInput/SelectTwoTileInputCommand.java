@@ -24,6 +24,8 @@ public class SelectTwoTileInputCommand extends GameplayInputCommand {
         Facade.getInstance().startPlacingTile( new VR( ).buildTile(HexDirection.N) );
         getViewController().removeCurrentKeyListeners();
         getViewController().addKeyListeners(keySet);
+        getViewController().getBoardview().update();
+        getViewController().getBoardview().addTiles(Facade.getInstance().getCurrentTileComponent(),Facade.getInstance().getTilePlacementPath());
     }
 
     public void setKeySet(List<JavaKeyListener> newKeySet) {

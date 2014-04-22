@@ -15,5 +15,7 @@ public class RotateTileInputCommand extends GameplayInputCommand {
 
         Facade.getInstance().rotateCurrentTileComponent();
         super.updateViewController();
+        getViewController().getBoardview().update();
+        getViewController().getBoardview().addTiles(Facade.getInstance().getCurrentTileComponent(),Facade.getInstance().getTilePlacementPath());
     }
 }

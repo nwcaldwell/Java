@@ -7,6 +7,7 @@ import models.board.Space;
 import models.board.TileComponent;
 import models.board.TileComponentContent;
 import view.MediaController;
+import view.ViewController;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -45,7 +46,8 @@ public class LWJGLBoardViewBackend implements Runnable{
 	
 	private static final float HEX_ANGLE=(float)Math.PI/3f;
 	
-	//initialize offsets
+	ViewController vc;
+	
 	static{
 		Vector2D north = new Vector2D(0,HEX_DISTANCE);
 		offsets[HexDirection.N.getIntValue()]=north;
@@ -129,7 +131,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
 		Display.setDisplayMode(new DisplayMode((int)800, (int)600));
-		//Display.setParent(parent);
+		Display.setParent(parent);
 		Display.create();
 		//enable all of the OpenGL stuff
 		glMatrixMode(GL_MODELVIEW);
@@ -390,9 +392,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		glScaled(sceneScale, sceneScale, sceneScale);
 		
 		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
-		
-		
-//		System.out.println("model count: "+spaces.size());
+
 		for (Model3D model: spaces){
 			model.render();
 		}
@@ -501,7 +501,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	}
 	
 	int x=0,y=0;
-	int pitch=45,yaw=0;
+	int pitch=45,yaw=180;
 	
 	int prevx=0;
 	int prevy=0;
@@ -556,5 +556,6 @@ public class LWJGLBoardViewBackend implements Runnable{
 				));
 		setScenePitch(pitch);
 		setSceneYaw(yaw);
+		vc.setFrameAsFocused();
 	}
 }
