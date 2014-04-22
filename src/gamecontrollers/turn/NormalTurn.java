@@ -49,7 +49,7 @@ public class NormalTurn extends TurnState{
 
         //set rules list
         addRules(cardRule, actionPointsRule, extraTokens);
-        notifyRules();
+//        notifyRules();
     }
 
 
@@ -59,13 +59,13 @@ public class NormalTurn extends TurnState{
   ========================================================================
    */
 
-    public void playTile(){
-        tilePlaced();
+    public void playTile(int actionPointCost){
+        tilePlaced(actionPointCost);
         updateState();
     }
 
-    public void removeTile(){
-        tileRemoved();
+    public void removeTile(int actionPointCost){
+        tileRemoved(actionPointCost);
         updateState();
     }
 
