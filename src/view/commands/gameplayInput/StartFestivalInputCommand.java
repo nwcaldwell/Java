@@ -1,17 +1,16 @@
 // TODO developer [ Kevin ], test [ Sydney ]
 package view.commands.gameplayInput;
 
-import gamecontrollers.Facade;
 import view.ViewController;
-import view.commands.InputCommand;
 
-public class StartFestivalInputCommand extends InputCommand {
+public class StartFestivalInputCommand extends GameplayInputCommand {
 
     public StartFestivalInputCommand(ViewController viewController) {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override	public void doExecute() {
+        // TODO refactor startFestival in Facade Facade.getInstance().startFestival();
         throw new UnsupportedOperationException();
 	}
 }

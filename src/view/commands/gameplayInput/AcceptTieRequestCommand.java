@@ -3,15 +3,15 @@ package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
 import view.ViewController;
-import view.commands.InputCommand;
 
-public class AcceptTieRequestCommand extends InputCommand {
+public class AcceptTieRequestCommand extends GameplayInputCommand {
 
     public AcceptTieRequestCommand(ViewController viewController) {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override
+    protected void doExecute() {
         Facade.getInstance().acceptTieRequest();
-	}
+    }
 }
