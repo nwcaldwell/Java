@@ -55,7 +55,13 @@ public class LWJGLBoardViewBackend implements Runnable{
 	public static final float SPACE_HEIGHT=0.882757f;
 
 	/**represents a model of a developer.*/
-	Model3D developer=null;
+	Model3D devRed=null;
+	/**represents a model of a developer.*/
+	Model3D devYellow=null;
+	/**represents a model of a developer.*/
+	Model3D devGreen=null;
+	/**represents a model of a developer.*/
+	Model3D devBlue=null;
 	
 	/**represents a model of the ground beneath a space on central Java*/
 	Model3D ground=null;
@@ -197,22 +203,49 @@ public class LWJGLBoardViewBackend implements Runnable{
 				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		this.ground=new Model3D(empty);
 		this.ground.setFlat();
+		
+		devRed=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/DevRed.png"));
+		devRed.setScale(2);
+		devYellow=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/DevYellow.png"));
+		devYellow.setScale(2);
+		devGreen=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/DevGreen.png"));
+		devGreen.setScale(2);
+		devBlue=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/DevBlue.png"));
+		devBlue.setScale(2);
 	}
 	
-	public synchronized void hilightSpace(ArrayList<Direction> path, int height) {
+	public synchronized void hilightSpace(ArrayList<Direction> path) {
 		Vector2D offset=new Vector2D(0,0);
+		Space spaceRoot=board.getRoot();
+		int height = 0;
 		for (Direction d:path){
-			offset.translate(offsets[d.getIntValue()]);
+			if(spaceRoot!=null)
+				spaceRoot=spaceRoot.getAdjacentSpace(d);
+			offset=offset.translate(offsets[d.getIntValue()]);
+		}
+		if (spaceRoot!=null){
+			height = spaceRoot.getHeight();
 		}
 		Model3D newModel=hilight.clone();
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 	
-	public synchronized void addTiles( TileComponent root, ArrayList<Direction> path, int height){
+	public synchronized void addTiles( TileComponent root, ArrayList<Direction> path){
 		ArrayList<TileComponent> visited=new ArrayList<TileComponent>();
 		Vector2D offset=new Vector2D(0,0);
+		Space spaceRoot=board.getRoot();
+		int height = 0;
 		for (Direction d:path){
+			if(spaceRoot!=null)
+				spaceRoot=spaceRoot.getAdjacentSpace(d);
 			offset=offset.translate(offsets[d.getIntValue()]);
+		}
+		if (spaceRoot!=null){
+			height = spaceRoot.getHeight();
 		}
 		addTilesRecursive(root, visited, height, offset);
 	}
@@ -228,13 +261,28 @@ public class LWJGLBoardViewBackend implements Runnable{
 		}
 	}
 	
-	public synchronized void displayDev(ArrayList<Direction> path, int height) {
+	public synchronized void displayDev(ArrayList<Direction> path, Color c) {
 		Vector2D offset=new Vector2D(0,0);
+		Space spaceRoot=board.getRoot();
+		int height = 0;
 		for (Direction d:path){
-			offset.translate(offsets[d.getIntValue()]);
+			if(spaceRoot!=null)
+				spaceRoot=spaceRoot.getAdjacentSpace(d);
+			offset=offset.translate(offsets[d.getIntValue()]);
 		}
-		Model3D newModel=developer.clone();
+		if (spaceRoot!=null){
+			height = spaceRoot.getHeight();
+		}
+		Model3D newModel=devRed.clone();
+		if (c.getGreen()>127 && c.getRed()>127){
+			newModel=devYellow.clone();
+		}else if (c.getGreen()>127){
+			newModel=devGreen;
+		}else if (c.getBlue()>127){
+			newModel=devBlue;
+		}
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
+		developers.add(newModel);
 	}
 
 	public synchronized void update() {
@@ -278,7 +326,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 			spaces.add(newModel);
 		}
 		if (space.getHeight()>0){
-			updateTile(space.getTile().getTileComponentContent(), space.getHeight(), offset);
+			updateTile(space.getTile().getTileComponentContent(), space.getHeight()-1, offset);
 		}
 	}
 	
@@ -299,7 +347,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 			int index = Integer.parseInt(component.toString().substring(6))/2;
 			newModel=palace[index].clone();
 		}
-		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, -offset.y));
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 		System.out.println("adding a tile "+newModel.getTranslation());
 		spaces.add(newModel);
 	}
@@ -444,7 +492,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	}
 	
 	int x=0,y=0;
-	int pitch=90,yaw=0;
+	int pitch=45,yaw=0;
 	
 	int prevx=0;
 	int prevy=0;
@@ -452,7 +500,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	boolean rmouseWasDown=false;
 	boolean mmouseWasDown=false;
 	
-	int zoom=100;
+	int zoom=50;
 	
 	public void pollInput() {
 		

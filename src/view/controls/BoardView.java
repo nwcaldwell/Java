@@ -30,12 +30,12 @@ public abstract class BoardView extends JPanel {
     public abstract void update();
     
     /**draws a hilighted space*/
-    public abstract void hilightSpace(ArrayList<Direction> path, int height);
+    public abstract void hilightSpace(ArrayList<Direction> path);
     
     /**draws a developer*/
-    public abstract void displayDev(ArrayList<Direction> path, int height);
+    public abstract void displayDev(ArrayList<Direction> path, Color c);
 
-    public abstract void addTiles(TileComponent root, ArrayList<Direction> path, int height);
+    public abstract void addTiles(TileComponent root, ArrayList<Direction> path);
     
     public void setFrameAsFocused(){
         controller.setFrameAsFocused();
