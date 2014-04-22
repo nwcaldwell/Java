@@ -267,6 +267,19 @@ public class LWJGLBoardViewBackend implements Runnable{
 		if (space.getHeight()>0){
 			//render the top tile
 			Model3D newModel=buriedSpace.clone();
+			if (space.getTile().getTileComponentContent().toString().equals("irrigation")){
+				newModel=irrigation;
+			}
+			if (space.getTile().getTileComponentContent().toString().equals("rice")){
+				newModel=rice;
+			}
+			if (space.getTile().getTileComponentContent().toString().equals("village")){
+				newModel=village;
+			}
+			if (space.getTile().getTileComponentContent().toString().startsWith("palace")){
+				int index = Integer.parseInt(space.getTileComponentContent().toString().substring(6))/2;
+				newModel=palace[index];
+			}
 			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*SPACE_HEIGHT, offset.y));
 			spaces.add(newModel);
 		}

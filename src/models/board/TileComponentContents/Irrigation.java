@@ -19,4 +19,8 @@ public class Irrigation extends NotWalkable {
     public boolean canAcceptPalace(Palace p) {
         throw new UnsupportedOperationException();
     }
+    
+    public String toString(){
+    	return "irrigation";
+    }
 }
