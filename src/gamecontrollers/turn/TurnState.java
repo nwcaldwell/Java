@@ -109,10 +109,12 @@ public abstract class TurnState {
 
     protected void extraActionTokenUsed(){
         numExtraActionTokensUsed++;
+        actionPoints++;
     }
 
     protected void extraActionTokenPutBack(){
         numExtraActionTokensUsed--;
+        actionPoints--;
     }
 
     protected void setMaxCardsPerTurn(int i){

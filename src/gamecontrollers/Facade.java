@@ -54,10 +54,11 @@ public class Facade {
         tilePlacementCommandCreator = new TilePlacementCommandCreator(turnController, game.getSharedResources());
         //this new creator for turn controller is weird
         //gotta give him an arbitrary turnstate?
-        turnController = new TurnController(tilePlacementCommandCreator, Arrays.asList(game.getPlayers()), game.getSharedResources(), playModeCommandHandler, boardLogicController);
-        replayController = new ReplayController();
         planningModeCommandHandler = new PlanningModeCommandHandler(historyChannelController);
         playModeCommandHandler = new PlayModeCommandHandler(historyChannelController);
+        turnController = new TurnController(tilePlacementCommandCreator, Arrays.asList(game.getPlayers()), game.getSharedResources(), playModeCommandHandler, boardLogicController);
+        replayController = new ReplayController();
+
         palaceCommandCreator = new MaskPalaceCommandCreator(turnController, game.getSharedResources());
 
     }
@@ -134,7 +135,7 @@ public class Facade {
     }
 
     public void playExtraActionToken() {
-        turnController.playExtraActionToken();
+        turnController.attemptToActionToken();
     }
 
     public void rotateCurrentTileComponent() {
