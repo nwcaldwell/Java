@@ -12,6 +12,9 @@ public class RotateTileInputCommand extends GameplayInputCommand {
 
     @Override
     protected void doExecute() {
+
         Facade.getInstance().rotateCurrentTileComponent();
+        System.out.println("rotating tile");
+        super.updateViewController();
     }
 }
