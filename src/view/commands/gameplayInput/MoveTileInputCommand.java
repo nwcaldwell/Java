@@ -20,7 +20,7 @@ public class MoveTileInputCommand extends GameplayInputCommand {
         Facade.getInstance().moveTile(direction);
 
         List<Direction> path = Facade.getInstance().getTilePlacementPath();
-        //getViewController().getBoardview().update();
+        getViewController().getBoardview().update();
         getViewController().getBoardview().addTiles(Facade.getInstance().getCurrentTileComponent(), path);
 	}
 }
