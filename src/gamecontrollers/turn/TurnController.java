@@ -3,6 +3,7 @@ package gamecontrollers.turn;
 import gamecontrollers.BoardLogicController;
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
+import gamecontrollers.commands.gameplaycommands.UseExtraActionTokenCommand;
 import models.board.SharedResources;
 import models.palacefestival.JavaPlayer;
 
@@ -136,6 +137,12 @@ public class TurnController {
 
     public boolean hasEnoughActionPoints(int i){
         return turnState.hasEnoughActionPoints(i);
+    }
+
+    public void attemptToActionToken(){
+        if(turnState.canPlayExtraActionToken()){
+            commandHandler.handleCommand(new UseExtraActionTokenCommand(currentPlayer, this));
+        }
     }
 
 

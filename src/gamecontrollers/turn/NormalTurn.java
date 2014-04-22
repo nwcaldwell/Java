@@ -48,6 +48,7 @@ public class NormalTurn extends TurnState{
 
         //set rules list
         addRules(cardRule, actionPointsRule, extraTokens);
+        notifyRules();
     }
 
 
