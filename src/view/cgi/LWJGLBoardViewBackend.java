@@ -205,13 +205,17 @@ public class LWJGLBoardViewBackend implements Runnable{
 		this.ground.setFlat();
 		
 		devRed=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
-				TextureFactory.getTexture("3Dobjects/devRed.png"));
+				TextureFactory.getTexture("3Dobjects/DevRed.png"));
+		devRed.setScale(2);
 		devYellow=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
-				TextureFactory.getTexture("3Dobjects/devYellow.png"));
+				TextureFactory.getTexture("3Dobjects/DevYellow.png"));
+		devYellow.setScale(2);
 		devGreen=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
-				TextureFactory.getTexture("3Dobjects/devGreen.png"));
+				TextureFactory.getTexture("3Dobjects/DevGreen.png"));
+		devGreen.setScale(2);
 		devBlue=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
-				TextureFactory.getTexture("3Dobjects/devBlue.png"));
+				TextureFactory.getTexture("3Dobjects/DevBlue.png"));
+		devBlue.setScale(2);
 	}
 	
 	public synchronized void hilightSpace(ArrayList<Direction> path) {
@@ -221,7 +225,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		for (Direction d:path){
 			if(spaceRoot!=null)
 				spaceRoot=spaceRoot.getAdjacentSpace(d);
-			offset.translate(offsets[d.getIntValue()]);
+			offset=offset.translate(offsets[d.getIntValue()]);
 		}
 		if (spaceRoot!=null){
 			height = spaceRoot.getHeight();
@@ -264,7 +268,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		for (Direction d:path){
 			if(spaceRoot!=null)
 				spaceRoot=spaceRoot.getAdjacentSpace(d);
-			offset.translate(offsets[d.getIntValue()]);
+			offset=offset.translate(offsets[d.getIntValue()]);
 		}
 		if (spaceRoot!=null){
 			height = spaceRoot.getHeight();
@@ -278,6 +282,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 			newModel=devBlue;
 		}
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
+		developers.add(newModel);
 	}
 
 	public synchronized void update() {
@@ -321,7 +326,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 			spaces.add(newModel);
 		}
 		if (space.getHeight()>0){
-			updateTile(space.getTile().getTileComponentContent(), space.getHeight(), offset);
+			updateTile(space.getTile().getTileComponentContent(), space.getHeight()-1, offset);
 		}
 	}
 	
@@ -342,7 +347,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 			int index = Integer.parseInt(component.toString().substring(6))/2;
 			newModel=palace[index].clone();
 		}
-		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, -offset.y));
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 		System.out.println("adding a tile "+newModel.getTranslation());
 		spaces.add(newModel);
 	}
@@ -487,7 +492,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	}
 	
 	int x=0,y=0;
-	int pitch=90,yaw=0;
+	int pitch=45,yaw=0;
 	
 	int prevx=0;
 	int prevy=0;
@@ -495,7 +500,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	boolean rmouseWasDown=false;
 	boolean mmouseWasDown=false;
 	
-	int zoom=100;
+	int zoom=50;
 	
 	public void pollInput() {
 		

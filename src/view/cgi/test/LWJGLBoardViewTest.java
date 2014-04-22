@@ -1,5 +1,6 @@
 package view.cgi.test;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -33,13 +34,20 @@ public class LWJGLBoardViewTest {
 		System.out.println(frame.isDisplayable());
 		frame.add(view);
 
+		board.getRoot().getAdjacentSpace(HexDirection.S)
+		.getAdjacentSpace(HexDirection.S)
+		.getAdjacentSpace(HexDirection.S)
+		.placeTile(new RVR().buildTile(HexDirection.S));
+		
 		view.update();
 		ArrayList<Direction> path = new ArrayList<Direction>();
-		path.add(HexDirection.N);
-		path.add(HexDirection.N);
-		path.add(HexDirection.N);
-		view.addTiles(new RVR().buildTile(HexDirection.N),path);
-
+		path.add(HexDirection.S);
+		path.add(HexDirection.S);
+		path.add(HexDirection.S);
+		view.addTiles(new RVR().buildTile(HexDirection.S),path);
+		path.add(HexDirection.S);
+		path.add(HexDirection.S);
+		view.displayDev(path, Color.yellow);
 	}
 /*	
 	int x=0,y=0;
