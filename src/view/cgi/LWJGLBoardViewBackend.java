@@ -7,6 +7,7 @@ import models.board.Space;
 import models.board.TileComponent;
 import models.board.TileComponentContent;
 import view.MediaController;
+import view.ViewController;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -45,7 +46,8 @@ public class LWJGLBoardViewBackend implements Runnable{
 	
 	private static final float HEX_ANGLE=(float)Math.PI/3f;
 	
-	//initialize offsets
+	ViewController vc;
+	
 	static{
 		Vector2D north = new Vector2D(0,HEX_DISTANCE);
 		offsets[HexDirection.N.getIntValue()]=north;
@@ -391,8 +393,6 @@ public class LWJGLBoardViewBackend implements Runnable{
 		
 		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 		
-		
-		System.out.println("model count: "+spaces.size());
 		for (Model3D model: spaces){
 			model.render();
 		}
@@ -556,5 +556,6 @@ public class LWJGLBoardViewBackend implements Runnable{
 				));
 		setScenePitch(pitch);
 		setSceneYaw(yaw);
+		vc.setFrameAsFocused();
 	}
 }

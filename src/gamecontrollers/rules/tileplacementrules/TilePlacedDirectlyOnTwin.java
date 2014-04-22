@@ -80,11 +80,13 @@ public class TilePlacedDirectlyOnTwin extends TilePlacementRule {
 
     private void addToMap(Space space){
         //check if the map already contains the value
-        if(spaceReferenceCounter.containsKey(space))
+        if(!spaceReferenceCounter.containsKey(space))
             spaceReferenceCounter.put(space, 1);
         else{
             //space is already in the hash map so add to the integer
-            spaceReferenceCounter.put(space, spaceReferenceCounter.get(space) + 1);
+        	int newValue = spaceReferenceCounter.get(space) + 1;
+        	spaceReferenceCounter.remove(space);
+            spaceReferenceCounter.put(space, newValue);
         }
     }
 

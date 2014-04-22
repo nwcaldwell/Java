@@ -24,10 +24,13 @@ public class LWJGLBoardView extends BoardView {
 	
 	Canvas lwjglCanvas;
 	
+	ViewController vc;
+	
 	public LWJGLBoardView(Board b, ViewController controller) {
 		super(b, controller);
 		lwjglCanvas = new Canvas();
 		add(lwjglCanvas);
+		vc=controller;
 	}
 	
 	@Override
@@ -40,6 +43,7 @@ public class LWJGLBoardView extends BoardView {
 		lwjglCanvas.setSize(getSize());
 		backend=new LWJGLBoardViewBackend(board, lwjglCanvas);
 		Thread backendThread = new Thread(backend);
+		backend.vc=vc;
 		backendThread.start();
 		while (!backend.glInitialized()){
 			try {

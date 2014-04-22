@@ -89,7 +89,7 @@ public class ViewController {
         }
     }
 
-    public void setFrameAsFocused() {
+    public synchronized void setFrameAsFocused() {
         gameWindow.requestFocus();
     }
 
