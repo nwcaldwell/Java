@@ -32,7 +32,7 @@ public class SelectDeveloperInputCommand extends GameplayInputCommand {
         if ( response.hasErrors() ){
             // TODO tell view to show error
             // TODO probs by telling the view controller to show a pop up with the appropiate message
-            getViewController().showError(response);
+            getViewController().displayMessageToConsole(response);
         }
         else {
             getViewController().removeCurrentKeyListeners();

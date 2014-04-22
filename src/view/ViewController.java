@@ -91,7 +91,7 @@ public class ViewController {
         gameWindow.requestFocus();
     }
 
-    public void showError(Response response){
+    public void displayMessageToConsole(Response response){
         currentView.displayResponseToConsole(response);
     }
 }

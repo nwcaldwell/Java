@@ -164,7 +164,7 @@ public class PlayerView extends JPanel{
         setNumTwoTiles(player.getNumTwoSpaceTiles());
         setNumRiceTiles(player.getNumRiceTiles());
         setNumVillageTiles(player.getNumVillageTiles());
-        setNumActionTokens(player.getNumVillageTiles());
+        setNumActionTokens(player.getExtraActionTokens());
         setNumPalaceCards(player.getPalaceCards().size());
 
         if(isCurrentPlayer) {
