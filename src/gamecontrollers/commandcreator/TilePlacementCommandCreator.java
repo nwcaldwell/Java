@@ -47,6 +47,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         TilePlacedDirectlyOnTwin twinRule = new TilePlacedDirectlyOnTwin(this);
         rules.add(tiltedRule);
         rules.add(twinRule);
+        pathToTile=new ArrayList<Direction>();
     }
 
 
