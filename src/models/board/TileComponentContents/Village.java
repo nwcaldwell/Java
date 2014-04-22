@@ -22,4 +22,8 @@ public class Village extends Walkable {
     public boolean canAcceptPalace(Palace p){
         return getCanAcceptPalace();
     }
+    
+    public String toString(){
+    	return "village";
+    }
 }

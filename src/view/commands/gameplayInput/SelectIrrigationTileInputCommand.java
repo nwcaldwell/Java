@@ -5,13 +5,12 @@ import gamecontrollers.Facade;
 import models.board.HexDirection;
 import models.board.HexTiles.I;
 import view.ViewController;
-import view.commands.InputCommand;
 import view.commands.JavaKeyListener;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class SelectIrrigationTileInputCommand extends InputCommand {
+public class SelectIrrigationTileInputCommand extends GameplayInputCommand {
     //this is the set of keylisteners that will do stuff when stuff happens
     private ArrayList<JavaKeyListener> keyListeners =  new ArrayList<JavaKeyListener>(){{
         add(new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveTileInputCommand(getViewController(), HexDirection.SW)));
@@ -26,9 +25,10 @@ public class SelectIrrigationTileInputCommand extends InputCommand {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override
+    protected void doExecute() {
         Facade.getInstance().startPlacingTile( new I( ).buildTile(HexDirection.N) );
         getViewController().removeCurrentKeyListeners();
         getViewController().addKeyListeners(keyListeners);
-	}
+    }
 }
