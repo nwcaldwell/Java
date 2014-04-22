@@ -13,6 +13,7 @@ import view.ViewController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.Display;
@@ -61,19 +62,18 @@ public class LWJGLBoardView extends BoardView{
 	}
 	
 	@Override
-	public synchronized void hilightSpace(ArrayList<Direction> path, int height) {
-		backend.hilightSpace(path, height);
+	public synchronized void hilightSpace(ArrayList<Direction> path) {
+		backend.hilightSpace(path);
 	}
 	
 	@Override
-	public synchronized void displayDev(ArrayList<Direction> path, int height) {
-		backend.displayDev(path, height);
+	public synchronized void displayDev(ArrayList<Direction> path, Color c) {
+		backend.displayDev(path, c);
 	}
 
 	@Override
-	public void addTiles(TileComponent root, ArrayList<Direction> path,
-			int height) {
-		backend.addTiles(root, path, height);		
+	public void addTiles(TileComponent root, ArrayList<Direction> path) {
+		backend.addTiles(root, path);
 	}
 	
 	@Override

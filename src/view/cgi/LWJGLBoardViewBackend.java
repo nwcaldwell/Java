@@ -55,7 +55,13 @@ public class LWJGLBoardViewBackend implements Runnable{
 	public static final float SPACE_HEIGHT=0.882757f;
 
 	/**represents a model of a developer.*/
-	Model3D developer=null;
+	Model3D devRed=null;
+	/**represents a model of a developer.*/
+	Model3D devYellow=null;
+	/**represents a model of a developer.*/
+	Model3D devGreen=null;
+	/**represents a model of a developer.*/
+	Model3D devBlue=null;
 	
 	/**represents a model of the ground beneath a space on central Java*/
 	Model3D ground=null;
@@ -197,22 +203,45 @@ public class LWJGLBoardViewBackend implements Runnable{
 				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		this.ground=new Model3D(empty);
 		this.ground.setFlat();
+		
+		devRed=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/devRed.png"));
+		devYellow=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/devYellow.png"));
+		devGreen=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/devGreen.png"));
+		devBlue=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
+				TextureFactory.getTexture("3Dobjects/devBlue.png"));
 	}
 	
-	public synchronized void hilightSpace(ArrayList<Direction> path, int height) {
+	public synchronized void hilightSpace(ArrayList<Direction> path) {
 		Vector2D offset=new Vector2D(0,0);
+		Space spaceRoot=board.getRoot();
+		int height = 0;
 		for (Direction d:path){
+			if(spaceRoot!=null)
+				spaceRoot=spaceRoot.getAdjacentSpace(d);
 			offset.translate(offsets[d.getIntValue()]);
+		}
+		if (spaceRoot!=null){
+			height = spaceRoot.getHeight();
 		}
 		Model3D newModel=hilight.clone();
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 	
-	public synchronized void addTiles( TileComponent root, ArrayList<Direction> path, int height){
+	public synchronized void addTiles( TileComponent root, ArrayList<Direction> path){
 		ArrayList<TileComponent> visited=new ArrayList<TileComponent>();
 		Vector2D offset=new Vector2D(0,0);
+		Space spaceRoot=board.getRoot();
+		int height = 0;
 		for (Direction d:path){
+			if(spaceRoot!=null)
+				spaceRoot=spaceRoot.getAdjacentSpace(d);
 			offset=offset.translate(offsets[d.getIntValue()]);
+		}
+		if (spaceRoot!=null){
+			height = spaceRoot.getHeight();
 		}
 		addTilesRecursive(root, visited, height, offset);
 	}
@@ -228,12 +257,26 @@ public class LWJGLBoardViewBackend implements Runnable{
 		}
 	}
 	
-	public synchronized void displayDev(ArrayList<Direction> path, int height) {
+	public synchronized void displayDev(ArrayList<Direction> path, Color c) {
 		Vector2D offset=new Vector2D(0,0);
+		Space spaceRoot=board.getRoot();
+		int height = 0;
 		for (Direction d:path){
+			if(spaceRoot!=null)
+				spaceRoot=spaceRoot.getAdjacentSpace(d);
 			offset.translate(offsets[d.getIntValue()]);
 		}
-		Model3D newModel=developer.clone();
+		if (spaceRoot!=null){
+			height = spaceRoot.getHeight();
+		}
+		Model3D newModel=devRed.clone();
+		if (c.getGreen()>127 && c.getRed()>127){
+			newModel=devYellow.clone();
+		}else if (c.getGreen()>127){
+			newModel=devGreen;
+		}else if (c.getBlue()>127){
+			newModel=devBlue;
+		}
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 
