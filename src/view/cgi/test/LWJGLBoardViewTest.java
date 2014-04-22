@@ -5,12 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import org.lwjgl.input.Mouse;
-
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
-import view.cgi.Vector2D;
-import view.cgi.Vector3D;
 
 import models.board.Board;
 import models.board.Direction;

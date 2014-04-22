@@ -2,24 +2,13 @@ package view.cgi;
 
 import models.board.Board;
 import models.board.Direction;
-import models.board.Space;
 import models.board.TileComponent;
-import models.board.TileComponentContents.Irrigation;
-import models.board.TileComponentContents.Palace;
-import models.board.TileComponentContents.Rice;
-import models.board.TileComponentContents.Village;
-import view.MediaController;
 import view.ViewController;
 import view.controls.BoardView;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.util.ArrayList;
-
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
-import static org.lwjgl.opengl.GL11.*;
 
 /**an implementation of BoardView that uses an LWJGL canvas*/
 public class LWJGLBoardView extends BoardView{
