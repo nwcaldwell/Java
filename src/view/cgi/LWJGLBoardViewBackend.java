@@ -501,7 +501,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	}
 	
 	int x=0,y=0;
-	int pitch=45,yaw=0;
+	int pitch=45,yaw=180;
 	
 	int prevx=0;
 	int prevy=0;

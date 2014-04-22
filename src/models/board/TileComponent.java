@@ -76,7 +76,7 @@ public class TileComponent {
         while (it.hasNext()) {
             dir = it.next();
             if (tileComponent.siblingExists(dir))
-                rotate(tileComponent.getConjoinedTile(dir), visited);
+            	tileComponent.getConjoinedTile(dir).rotate(tileComponent.getConjoinedTile(dir), visited);
         }
     }
 
