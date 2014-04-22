@@ -12,7 +12,7 @@ public class PlanningModeCommandHandler implements CommandHandler {
     private List<GameplayActionCommand> plannedMoves;
     private HistoryChannelController history;
 
-    private PlanningModeCommandHandler(HistoryChannelController history){
+    public PlanningModeCommandHandler(HistoryChannelController history){
         plannedMoves = new ArrayList<GameplayActionCommand>();
         this.history = history;
     }

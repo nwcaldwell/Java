@@ -1,8 +1,6 @@
 package gamecontrollers;
 
-import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
-import gamecontrollers.commandcreator.PalaceCommandCreator;
-import gamecontrollers.commandcreator.TilePlacementCommandCreator;
+import gamecontrollers.commandcreator.*;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.*;
@@ -16,6 +14,8 @@ import models.palacefestival.FestivalModel;
 import models.palacefestival.JavaPlayer;
 import models.palacefestival.PalaceCard;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -51,6 +51,15 @@ public class Facade {
         festivalController = new FestivalController(historyChannelController);
         festivalTurnController = festivalController.getTurnController();
         developerMovementCommandCreator = new DeveloperMovementCommandCreator(turnController, boardLogicController);
+        tilePlacementCommandCreator = new TilePlacementCommandCreator(turnController, game.getSharedResources());
+        //this new creator for turn controller is weird
+        //gotta give him an arbitrary turnstate?
+        turnController = new TurnController(tilePlacementCommandCreator, Arrays.asList(game.getPlayers()), game.getSharedResources(), playModeCommandHandler, boardLogicController);
+        replayController = new ReplayController();
+        planningModeCommandHandler = new PlanningModeCommandHandler(historyChannelController);
+        playModeCommandHandler = new PlayModeCommandHandler(historyChannelController);
+        palaceCommandCreator = new MaskPalaceCommandCreator(turnController, game.getSharedResources());
+
     }
 
     /*

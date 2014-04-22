@@ -18,7 +18,6 @@ public class LastTurn extends TurnState {
     private JavaPlayer currentPlayer;
     private FinalScoreCalculator scoreCalculator;
     private TurnController turnController;
-    private TurnState otherState;
     private SharedResources resources;
 
     //Constants set for this turn
@@ -39,17 +38,17 @@ public class LastTurn extends TurnState {
      CONSTRUCTORS
   ========================================================================
    */
-    public LastTurn(JavaPlayer p, TurnController tc, TurnState ts,  SharedResources sr, BoardLogicController bl){
+    public LastTurn(TurnController tc ){
         setActionPoints(defaultActionPoints);
         //no requirements to end turn on last turn
         setCanEndTurn(true);
 
         //set stuff
-        firstLastTurn = p;
-        scoreCalculator = new FinalScoreCalculator(p, bl);
+        firstLastTurn = tc.getCurrentPlayer();
+        scoreCalculator = new FinalScoreCalculator(tc.getCurrentPlayer(), tc.getBoardLogicController());
         turnController = tc;
-        resources = sr;
-        otherState = ts;
+        resources = tc.getSharedResources();
+
 
         setMaxCardsPerTurn(maxCardsDrawn);
         setMaxExtraActionTokensPerTurn(maxExtraActionTokensPlayed);
@@ -148,7 +147,7 @@ public class LastTurn extends TurnState {
 
     private void updateControllerState(){
         if(resources.getNumThreeTiles() > maxTilesForThisState){
-            turnController.setTurnState(otherState);
+            turnController.setTurnState(new NormalTurn(turnController));
         }
     }
 

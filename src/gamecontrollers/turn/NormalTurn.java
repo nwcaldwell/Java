@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class NormalTurn extends TurnState{
     private TurnController turnController;
-    private TurnState otherState;
     private SharedResources resources;
 
     //Constants set for this turn
@@ -32,12 +31,11 @@ public class NormalTurn extends TurnState{
       CONSTRUCTORS
    ========================================================================
     */
-    public NormalTurn(TurnController tc, TurnState os, SharedResources sr){
+    public NormalTurn(TurnController tc){
         setActionPoints(defaultActionPoints);
 
-        otherState = os;
         turnController = tc;
-        resources = sr;
+        resources = tc.getSharedResources();
 
         setMaxCardsPerTurn(maxCardsDrawn);
         setMaxExtraActionTokensPerTurn(maxExtraActionTokensPlayed);
@@ -138,7 +136,7 @@ public class NormalTurn extends TurnState{
 
     private void updateControllerState(){
         if(resources.getNumIrrigationTiles() < minTilesForThisState){
-            turnController.setTurnState(otherState);
+            turnController.setTurnState(new LastTurn(turnController));
         }
     }
 

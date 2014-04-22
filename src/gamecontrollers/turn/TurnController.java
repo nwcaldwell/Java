@@ -1,10 +1,13 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.BoardLogicController;
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
+import models.board.SharedResources;
 import models.palacefestival.JavaPlayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * //TODO [Will][Kevin]
@@ -23,18 +26,22 @@ public class TurnController {
     private JavaPlayer currentPlayer;
     //This is the order of players in the turn
     private ArrayList<JavaPlayer> turnOrder;
+    private SharedResources resources;
+    private BoardLogicController board;
 
     /*
   ========================================================================
       CONSTRUCTORS
   ========================================================================
    */
-    public TurnController(GameplayCommandCreator gac, TurnState ts, ArrayList<JavaPlayer> playerOrder, CommandHandler ch){
+    public TurnController(GameplayCommandCreator gac, List<JavaPlayer> playerOrder, SharedResources resources, CommandHandler ch, BoardLogicController board){
         this.currentCommandCreator = gac;
-        this.turnState = ts;
-        this.turnOrder = playerOrder;
+        this.turnOrder = new ArrayList<JavaPlayer>(playerOrder);
         this.currentPlayer = turnOrder.get(0);
         this.commandHandler = ch;
+        this.resources = resources;
+        this.board = board;
+        this.turnState = new NormalTurn(this);
     }
 
     /*
@@ -80,6 +87,14 @@ public class TurnController {
 
     public void setCommandBuilder(GameplayCommandCreator gameplayCommandCreator){
         currentCommandCreator = gameplayCommandCreator;
+    }
+
+    public SharedResources getSharedResources(){
+        return resources;
+    }
+
+    public BoardLogicController getBoardLogicController(){
+        return board;
     }
 
 
