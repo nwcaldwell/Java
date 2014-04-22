@@ -80,6 +80,10 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
    ========================================================================
     */
 
+    public void setTurnController(TurnController controller){
+        this.controller = controller;
+    }
+
 
     @Override
     public GameplayActionCommand getCommand() {

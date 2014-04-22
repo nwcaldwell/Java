@@ -16,7 +16,7 @@ public class Village extends Walkable {
 
     @Override
     public void accept(TileVisitor v) {
-        throw new UnsupportedOperationException();
+       v.visit(this);
     }
 
     public boolean canAcceptPalace(Palace p){
