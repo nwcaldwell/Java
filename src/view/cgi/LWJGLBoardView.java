@@ -3,6 +3,7 @@ package view.cgi;
 import models.board.Board;
 import models.board.Direction;
 import models.board.Space;
+import models.board.TileComponent;
 import models.board.TileComponentContents.Irrigation;
 import models.board.TileComponentContents.Palace;
 import models.board.TileComponentContents.Rice;
@@ -69,6 +70,12 @@ public class LWJGLBoardView extends BoardView{
 		backend.displayDev(path, height);
 	}
 
+	@Override
+	public void addTiles(TileComponent root, ArrayList<Direction> path,
+			int height) {
+		backend.addTiles(root, path, height);		
+	}
+	
 	@Override
 	public synchronized void update() {
 		backend.update();

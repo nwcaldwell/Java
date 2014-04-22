@@ -17,9 +17,9 @@ import java.util.List;
 public class DeveloperMovementCommandCreator extends DeveloperCommandCreator {
     private Space desiredSpace;
     private Developer currentDeveloper;
-    private List<Space> path;
+    private List<Space> path = new ArrayList<Space>();
     private int cost;
-    private ArrayList<DeveloperMovementRule> rules;
+    private ArrayList<DeveloperMovementRule> rules = new ArrayList<DeveloperMovementRule>();
     private BoardLogicController logicController;
     private TurnController turnController;
 
@@ -40,6 +40,10 @@ public class DeveloperMovementCommandCreator extends DeveloperCommandCreator {
       GETTERS AND SETTERS
    ========================================================================
     */
+
+    public void setTurnController(TurnController controller){
+        this.turnController = controller;
+    }
     public Space getDesiredSpace() {
 		return desiredSpace;
 	}

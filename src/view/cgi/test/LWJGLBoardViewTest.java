@@ -1,12 +1,20 @@
 package view.cgi.test;
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
+
+import org.lwjgl.input.Mouse;
 
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
+import view.cgi.Vector2D;
+import view.cgi.Vector3D;
 
 import models.board.Board;
+import models.board.Direction;
 import models.board.HexDirection;
+import models.board.HexTiles.RVR;
 
 public class LWJGLBoardViewTest {
 
@@ -24,18 +32,17 @@ public class LWJGLBoardViewTest {
 		view.setSize(512,512);
 		System.out.println(frame.isDisplayable());
 		frame.add(view);
-		
-		while (true){
-			view.update();
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+
+		view.update();
+		ArrayList<Direction> path = new ArrayList<Direction>();
+		path.add(HexDirection.N);
+		path.add(HexDirection.N);
+		path.add(HexDirection.N);
+		view.addTiles(new RVR().buildTile(HexDirection.N),path,0);
+
 	}
-	
-/*	int x=0,y=0;
+/*	
+	int x=0,y=0;
 	int pitch=90,yaw=0;
 	
 	int prevx=0;

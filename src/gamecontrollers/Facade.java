@@ -52,14 +52,21 @@ public class Facade {
         festivalTurnController = festivalController.getTurnController();
         developerMovementCommandCreator = new DeveloperMovementCommandCreator(turnController, boardLogicController);
         tilePlacementCommandCreator = new TilePlacementCommandCreator(turnController, game.getSharedResources());
+
+        palaceCommandCreator = new MaskPalaceCommandCreator(turnController, game.getSharedResources());
         //this new creator for turn controller is weird
         //gotta give him an arbitrary turnstate?
         planningModeCommandHandler = new PlanningModeCommandHandler(historyChannelController);
         playModeCommandHandler = new PlayModeCommandHandler(historyChannelController);
         turnController = new TurnController(tilePlacementCommandCreator, Arrays.asList(game.getPlayers()), game.getSharedResources(), game.getDeck(), playModeCommandHandler, boardLogicController);
+
+        //lol oops
+        developerMovementCommandCreator.setTurnController(turnController);
+        tilePlacementCommandCreator.setTurnController(turnController);
+        palaceCommandCreator.setTurnController(turnController);
+
         replayController = new ReplayController();
 
-        palaceCommandCreator = new MaskPalaceCommandCreator(turnController, game.getSharedResources());
 
     }
 
@@ -186,12 +193,12 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void drawCardFromDeck() {
-        turnController.attemptToDrawFromDeck();
+    public Response drawCardFromDeck() {
+        return turnController.attemptToDrawFromDeck();
     }
 
-    public void drawTheFestivalCard() {
-        throw new UnsupportedOperationException();
+    public Response drawTheFestivalCard() {
+        return turnController.attemptToDrawFestivalCard();
     }
 
     public boolean validPlacement(TileComponent tile, Space space){

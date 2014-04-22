@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TilePlacementCommandCreator extends TileCommandCreator {
 	private Space currentSpace;
 	private TileComponent currentTile;
-    private ArrayList<TilePlacementRule> rules;
+    private ArrayList<TilePlacementRule> rules = new ArrayList<TilePlacementRule>();
     private TurnController controller;
     private int cost;
     private TileCreationVisitor visitor;
@@ -43,6 +43,11 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
       GETTERS AND SETTERS
    ========================================================================
     */
+
+    public void setTurnController(TurnController controller){
+        this.controller = controller;
+        visitor = new TileCreationVisitor(controller, resources);
+    }
 
 	public Space getCurrentSpace() {
 		return currentSpace;
