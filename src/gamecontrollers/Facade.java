@@ -198,7 +198,7 @@ public class Facade {
     }
 
     public Response drawTheFestivalCard() {
-        throw new UnsupportedOperationException();
+        return turnController.attemptToDrawFestivalCard();
     }
 
     public boolean validPlacement(TileComponent tile, Space space){

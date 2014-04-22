@@ -13,9 +13,7 @@ public class DrawCardFromDeckInputCommand extends GameplayInputCommand {
 
 
     @Override	public void doExecute() {
-        System.out.println("Number palace cards before happening: "+Facade.getInstance().getCurrentPlayer().getPalaceCards().size());
         Response response = Facade.getInstance().drawCardFromDeck();
-        System.out.println("Number palace cards: "+Facade.getInstance().getCurrentPlayer().getPalaceCards().size());
         getViewController().displayMessageToConsole(response);
 	}
 }
