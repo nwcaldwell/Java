@@ -23,7 +23,12 @@ import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
-/**an implementation of BoardView that uses an LWJGL canvas*/
+/**an implementation of BoardView that uses an LWJGL canvas
+ * 
+ * THIS WAS NOT IN THE ORIGINAL DOCUMENTATION
+ * It had to be added to accomodate LWJGL's insistance on
+ * being accessed only by it's owning thread, and the fact
+ * that LWJGL's input doesn't play well with swing.*/
 public class LWJGLBoardViewBackend implements Runnable{
 	
 	public static final float CANVAS_WIDTH=10;
@@ -387,7 +392,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 		
 		
-		
+		System.out.println("model count: "+spaces.size());
 		for (Model3D model: spaces){
 			model.render();
 		}
@@ -484,6 +489,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		
 		//start main loop
 		while(true){
+			//System.out.println("poll&render");
 			pollInput();
 			renderScene();
 			try {

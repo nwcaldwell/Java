@@ -6,24 +6,21 @@ import java.util.List;
 import gamecontrollers.Facade;
 import models.board.Direction;
 import view.ViewController;
-import view.controls.BoardView;
 
 public class MoveTileInputCommand extends GameplayInputCommand {
 
     private Direction direction;
-    private BoardView boardView;
 
-    public MoveTileInputCommand(ViewController viewController, BoardView bv, Direction direction) {
+    public MoveTileInputCommand(ViewController viewController, Direction direction) {
         super(viewController);
         this.direction = direction;
-        this.boardView=bv;
     }
 
     @Override	public void doExecute() {
         Facade.getInstance().moveTile(direction);
 
         List<Direction> path = Facade.getInstance().getTilePlacementPath();
-        boardView.update();
-        boardView.addTiles(Facade.getInstance().getCurrentTileComponent(), path);
+        //getViewController().getBoardview().update();
+        getViewController().getBoardview().addTiles(Facade.getInstance().getCurrentTileComponent(), path);
 	}
 }
