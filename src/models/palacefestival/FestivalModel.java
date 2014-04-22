@@ -62,7 +62,7 @@ public class FestivalModel {
         return (numberOfPlayersLeft() == 1);
     }
 
-    private boolean isTie(){
+    public boolean checkForTie(){
         if(numberOfPlayersLeft() == 1)
             return false;
         return true;
@@ -150,14 +150,6 @@ public class FestivalModel {
         currentPlayer = player;
     }
 
-    public PalaceCard getCurrentCard(){
-        return currentPlayer.getCardAtIndex(indexOfCurrentCard);
-    }
-
-    public int getIndexOfCurrentPlayer(){
-        return turnOrder.indexOf(currentPlayer);
-    }
-
     public void dropCurrentPlayerFromFestival(){
         currentPlayer.dropOutOfFestival();
     }
@@ -202,5 +194,17 @@ public class FestivalModel {
 
     public FestivalPlayer getCurrentPlayer(){
         return currentPlayer;
+    }
+
+    public PalaceCard getCurrentCard(){
+        return currentPlayer.getCardAtIndex(indexOfCurrentCard);
+    }
+
+    public int getIndexOfCurrentCard(){
+        return indexOfCurrentCard;
+    }
+
+    public int getIndexOfCurrentPlayer(){
+        return turnOrder.indexOf(currentPlayer);
     }
 }

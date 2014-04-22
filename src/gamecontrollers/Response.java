@@ -18,13 +18,14 @@ public class Response {
     }
 
     public Response(List<Message> messages){
-        hasErrors = true;
+        hasErrors = false;
         this.messages = new ArrayList<Message>();
         addMessages(messages);
     }
 
     public Response(final Message message){
-        new Response(new ArrayList<Message>(){{ add(message); }});
+        messages = new ArrayList<Message>();
+        addMessage(message);
     }
 
     public List<Message> getMessages() {
@@ -44,7 +45,11 @@ public class Response {
 
 
     public void addMessage(Message message){
-        hasErrors = ( hasErrors && message.isError() );
-        messages.add( message );
+        if(!hasErrors) {
+            hasErrors = message.isError();
+            messages.add( message );
+        } else if (message.isError()) {
+            messages.add( message );
+        }
     }
 }

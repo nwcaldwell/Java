@@ -12,5 +12,6 @@ public class PlayPalaceCardInputCommand extends GameplayInputCommand {
 
     @Override	public void doExecute() {
         Facade.getInstance().playPalaceCard();
+
     }
 }

@@ -1,5 +1,6 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.Response;
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 import gamecontrollers.rules.turnrules.CardsDrawnPerTurnRule;
 import gamecontrollers.rules.turnrules.ExtraActionTokensPlayedPerTurn;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 
 public class NormalTurn extends TurnState{
     private TurnController turnController;
-    private TurnState otherState;
     private SharedResources resources;
 
     //Constants set for this turn
@@ -32,12 +32,11 @@ public class NormalTurn extends TurnState{
       CONSTRUCTORS
    ========================================================================
     */
-    public NormalTurn(TurnController tc, TurnState os, SharedResources sr){
+    public NormalTurn(TurnController tc){
         setActionPoints(defaultActionPoints);
 
-        otherState = os;
         turnController = tc;
-        resources = sr;
+        resources = tc.getSharedResources();
 
         setMaxCardsPerTurn(maxCardsDrawn);
         setMaxExtraActionTokensPerTurn(maxExtraActionTokensPlayed);
@@ -50,6 +49,7 @@ public class NormalTurn extends TurnState{
 
         //set rules list
         addRules(cardRule, actionPointsRule, extraTokens);
+//        notifyRules();
     }
 
 
@@ -59,13 +59,13 @@ public class NormalTurn extends TurnState{
   ========================================================================
    */
 
-    public void playTile(){
-        tilePlaced();
+    public void playTile(int actionPointCost){
+        tilePlaced(actionPointCost);
         updateState();
     }
 
-    public void removeTile(){
-        tileRemoved();
+    public void removeTile(int actionPointCost){
+        tileRemoved(actionPointCost);
         updateState();
     }
 
@@ -90,7 +90,6 @@ public class NormalTurn extends TurnState{
     }
 
 
-
     public void clear(){
             setActionPoints(defaultActionPoints);
             setCanEndTurn(false);
@@ -107,16 +106,20 @@ public class NormalTurn extends TurnState{
   ========================================================================
    */
 
-    public boolean canDrawCard(){
-        return cardRule.getValidity();
+    public Response canDrawCard(){
+        return new Response(cardRule.getErrorMessage());
     }
 
-    public boolean canPlayExtraActionToken(){
-        return extraTokens.getValidity();
+    public Response canPlayExtraActionToken(){
+        return new Response(extraTokens.getErrorMessage());
     }
 
-    public boolean hasEnoughActionPoints(int i){
-        return actionPointsRule.getValidity() && canEndTurn();
+    public Response hasEnoughActionPoints(int i){
+        Response response = new Response( actionPointsRule.getErrorMessage());
+
+        response.addMessages(canEndTurn().getMessages());
+
+        return response;
     }
 
 
@@ -138,7 +141,7 @@ public class NormalTurn extends TurnState{
 
     private void updateControllerState(){
         if(resources.getNumIrrigationTiles() < minTilesForThisState){
-            turnController.setTurnState(otherState);
+            turnController.setTurnState(new LastTurn(turnController));
         }
     }
 

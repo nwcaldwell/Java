@@ -73,4 +73,8 @@ public class Palace extends NotWalkable {
     public boolean hasHadFestival() {
         return faceUp;
     }
+    
+    public String toString(){
+    	return "palace"+level;
+    }
 }

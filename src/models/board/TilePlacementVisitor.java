@@ -7,28 +7,35 @@ import models.board.TileComponentContents.Village;
 
 public class TilePlacementVisitor implements TileVisitor {
 
+    private int value;
+
     public TilePlacementVisitor(){
 
     }
+    
+    public void visit(Village v){
+        value = 0;
+    }
 
-    public void visit(TileComponent tcc){
+    public void visit(Rice r){
+        value = 1;
+    }
+
+    @Override
+    public void visit(TileComponent tcc) {
 
     }
 
     public void visit(Palace p){
-
-    }
-
-    public void visit(Village v){
-
-    }
-
-    public void visit(Rice r){
-
+        value = 2;
     }
 
     public void visit(Irrigation i){
-
+        value = 3;
+    }
+    
+    public int getValue() {
+    	return value;
     }
 
 }

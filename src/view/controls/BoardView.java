@@ -2,11 +2,15 @@ package view.controls;
 
 import models.board.Board;
 import models.board.Direction;
+import models.board.TileComponent;
 import view.ViewController;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.List;
 
 //TODO [Sydney Christopher] [Jorge]
 
@@ -29,11 +33,13 @@ public abstract class BoardView extends JPanel {
     public abstract void update();
     
     /**draws a hilighted space*/
-    public abstract void hilightSpace(ArrayList<Direction> path, int height);
+    public abstract void hilightSpace(List<Direction> path);
     
     /**draws a developer*/
-    public abstract void displayDev(ArrayList<Direction> path, int height);
+    public abstract void displayDev(List<Direction> path, Color c);
 
+    public abstract void addTiles(TileComponent root, List<Direction> path);
+    
     public void setFrameAsFocused(){
         controller.setFrameAsFocused();
     }

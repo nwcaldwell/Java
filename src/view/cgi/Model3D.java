@@ -12,6 +12,9 @@ public class Model3D {
 	/**Stores 3D rotation.  Uses degrees, not radians.*/
 	float pitch,yaw,roll;
 	
+	/**Stores the scale of the scene.*/
+	private float scale=1;
+	
 	/**the position of this Model relative to the origin.*/
 	Vector3D translation=new Vector3D(0, 0, 0);
 	
@@ -30,17 +33,19 @@ public class Model3D {
 	
 	/**renders this model with local transformations.*/
 	public void render(){
+		GL11.glPushMatrix();
+		GL11.glTranslatef(translation.x, translation.y, translation.z);
+		GL11.glScalef(getScale(), getScale(), getScale());
+		
+		GL11.glRotatef(yaw, 0, 1, 0);
+		GL11.glRotatef(pitch, 0, 0, 1);
+		GL11.glRotatef(roll, 1, 0, 0);
+		
 		for (Face3D f:faces){
-			GL11.glPushMatrix();
-			GL11.glTranslatef(translation.x, translation.y, translation.z);
-			
-			GL11.glRotatef(yaw, 0, 1, 0);
-			GL11.glRotatef(pitch, 0, 0, 1);
-			GL11.glRotatef(roll, 1, 0, 0);
-			
 			f.render();
-			GL11.glPopMatrix();
 		}
+		
+		GL11.glPopMatrix();
 	}
 	
 	public void setRotation(float pitch, float yaw, float roll){
@@ -74,6 +79,7 @@ public class Model3D {
 		Model3D clone=new Model3D(faces);
 		clone.setTranslation(translation);
 		clone.setRotation(pitch, yaw, roll);
+		clone.setScale(getScale());
 		return clone;
 	}
 	
@@ -89,5 +95,13 @@ public class Model3D {
 	public void setSphere(){
 		for (Face3D face:faces)
 			face.generateSphereNormals();
+	}
+
+	public float getScale() {
+		return scale;
+	}
+
+	public void setScale(float scale) {
+		this.scale = scale;
 	}
 }

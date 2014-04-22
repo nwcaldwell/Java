@@ -2,16 +2,17 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import view.ViewController;
-import view.commands.InputCommand;
 
-public class AskForTieFestivalInputCommand extends InputCommand {
+public class AskForTieFestivalInputCommand extends GameplayInputCommand {
 
     public AskForTieFestivalInputCommand(ViewController viewController) {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override
+    protected void doExecute() {
         Facade.getInstance().askForPalaceFestivalTie();
-	}
+    }
 }

@@ -1,51 +1,54 @@
 package view.cgi.test;
 
-import javax.swing.JFrame;
+import java.awt.Color;
+import java.util.ArrayList;
 
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
+import javax.swing.JFrame;
 
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
-import view.cgi.LWJGLBoardViewInputPoller;
-import view.cgi.Vector2D;
-import view.cgi.Vector3D;
 
 import models.board.Board;
+import models.board.Direction;
 import models.board.HexDirection;
+import models.board.HexTiles.RVR;
 
 public class LWJGLBoardViewTest {
 
 	JFrame frame = new JFrame();
 	Board board;
 	LWJGLBoardView view;
-	ViewController viewController;
 	
 	public LWJGLBoardViewTest() {
 		frame.setSize(600, 600);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		board=new Board(HexDirection.N, "board.txt");
-		viewController=new ViewController();
+		ViewController viewController=new ViewController();
 		view = new LWJGLBoardView(board, viewController);
 		view.setSize(512,512);
+		System.out.println(frame.isDisplayable());
 		frame.add(view);
-		LWJGLBoardViewInputPoller l=new LWJGLBoardViewInputPoller(view);
-		frame.addMouseListener(l);
-		frame.addMouseMotionListener(l);
+
+		board.getRoot().getAdjacentSpace(HexDirection.S)
+		.getAdjacentSpace(HexDirection.S)
+		.getAdjacentSpace(HexDirection.S)
+		.getAdjacentSpace(HexDirection.S)
+		.placeTile(new RVR().buildTile(HexDirection.S));
 		
-		while (true){
-			//pollInput();
-			view.update();
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		view.update();
+		ArrayList<Direction> path = new ArrayList<Direction>();
+		path.add(HexDirection.S);
+		path.add(HexDirection.S);
+		path.add(HexDirection.S);
+		view.addTiles(new RVR().buildTile(HexDirection.S),path);
+		path.add(HexDirection.S);
+		view.displayDev(path, Color.yellow);
+		path.add(HexDirection.S);
+		view.hilightSpace(path);
 	}
-	
-/*	int x=0,y=0;
+/*	
+	int x=0,y=0;
 	int pitch=90,yaw=0;
 	
 	int prevx=0;

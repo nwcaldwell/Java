@@ -1,5 +1,6 @@
 package view;
 
+import gamecontrollers.Response;
 import view.commands.JavaKeyListener;
 
 import javax.swing.*;
@@ -61,4 +62,5 @@ public abstract class View extends JPanel {
         return keyListeners;
     }
 
+    public abstract void displayResponseToConsole(Response response);
 }

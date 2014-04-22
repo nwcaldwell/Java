@@ -1,6 +1,7 @@
 package view.screens.gameplay;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import models.board.JavaGame;
 import models.palacefestival.JavaPlayer;
 import view.View;
@@ -25,7 +26,6 @@ public abstract class GameplayView extends View {
     protected BoardView boardView;
     protected SharedResourcesView sharedResourcesView;
     protected JPanel playerContainer;
-    protected JPanel toggleButtonContainer;
     private JavaGame game;
 
     protected GameplayView(ViewController viewC) {
@@ -38,7 +38,8 @@ public abstract class GameplayView extends View {
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        boardView = new LWJGLBoardView(game.getBoard(), getViewController()); //TODO get this working properly
+        boardView = new LWJGLBoardView(game.getBoard(), getViewController());
+        getViewController().setBoardview(boardView);
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
@@ -51,9 +52,7 @@ public abstract class GameplayView extends View {
         rightSide.setBackground(Color.WHITE);
 
         //the shared resources and the console are on the left panel. add them in the respective order
-        toggleButtonContainer = new JPanel();
         rightSide.add(sharedResourcesView);
-        sharedResourcesView.add(toggleButtonContainer);
         rightSide.add(consoleView);
         add(rightSide, BorderLayout.EAST);
 
@@ -81,22 +80,6 @@ public abstract class GameplayView extends View {
 
     }
 
-    protected ConsoleView getConsoleView() {
-        return consoleView;
-    }
-
-    protected ArrayList<PlayerView> getPlayerViews() {
-        return playerViews;
-    }
-
-    protected BoardView getBoardView() {
-        return boardView;
-    }
-
-    protected SharedResourcesView getSharedResourcesView() {
-        return sharedResourcesView;
-    }
-
     protected void addPlayerView(PlayerView player) {
         //add the playerview to the player array list
         playerViews.add( player );
@@ -105,15 +88,27 @@ public abstract class GameplayView extends View {
         playerContainer.add(player);
     }
 
+
+    @Override
+    public void displayResponseToConsole(Response response) {
+        consoleView.displayMessage(response);
+    }
+
     public void update(){
         boardView.update();
         sharedResourcesView.update(game.getSharedResources(), game.getDeck());
         consoleView.update();
+
         JavaPlayer[] players = game.getPlayers();
+        JavaPlayer currentPlayer = Facade.getInstance().getCurrentPlayer();
         for(int i = 0; i < players.length; i++){
-            playerViews.get(i).update(players[i]);
+            playerViews.get(i).update(players[i], players[i].equals(currentPlayer));
         }
         getViewController().setFrameAsFocused();
+    }
+
+    public BoardView getBoardView(){
+        return boardView;
     }
 
 }

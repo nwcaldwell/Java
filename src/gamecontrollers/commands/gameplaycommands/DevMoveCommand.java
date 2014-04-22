@@ -19,14 +19,18 @@ public class DevMoveCommand implements GameplayActionCommand {
         this.destination = dest;
     }
 
-	@Override	public void execute() {
-		throw new UnsupportedOperationException();
+	@Override
+    public void execute() {
+		developer.updateLocation(destination);
 	}
-    @Override	public void undo() {
-        throw new UnsupportedOperationException();
+    @Override
+    public void undo() {
+        developer.updateLocation(origin);
     }
-    @Override	public void accept(CommandSaveVisitor visitor) {
-        throw new UnsupportedOperationException();
+    @Override
+    public void accept(CommandSaveVisitor visitor) {
+        visitor.visit(this);
     }
 
+    
 }

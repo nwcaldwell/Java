@@ -6,12 +6,12 @@ import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.DropOutOfFestivalCommand;
 import gamecontrollers.commands.gameplaycommands.EndFestivalCommand;
 import gamecontrollers.commands.gameplaycommands.EndFestivalTurnCommand;
-import gamecontrollers.rules.PalaceFestivalRules.PlayerCanEndTurn;
 import gamecontrollers.rules.Rule;
+import gamecontrollers.rules.palacefestivalrules.EndFestivalIfTieRule;
+import gamecontrollers.rules.palacefestivalrules.PlayerCanEndTurn;
 import gamecontrollers.turn.HistoryChannelController;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.FestivalPlayer;
-import models.palacefestival.PalaceCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +22,10 @@ public class FestivalTurnController {
     private FestivalCardController cardController;
     private FestivalCommandCreator commandCreator;
     private HistoryChannelController historyChannelController;
-    private List<Rule> rules;
+    private List<Rule> endTurnRules;
 
 	public FestivalTurnController(HistoryChannelController hc) {
         historyChannelController = hc;
-        rules = new ArrayList<Rule>();
 	}
 
     /*
@@ -39,6 +38,8 @@ public class FestivalTurnController {
         festivalModel = model;
         turnOrder = festivalModel.getTurnOrder();
         cardController = new FestivalCardController(festivalModel.getCurrentPlayerCards(), festivalModel);
+        endTurnRules = new ArrayList<Rule>();
+        endTurnRules.add(new PlayerCanEndTurn(festivalModel));
     }
 
     /*
@@ -104,12 +105,10 @@ public class FestivalTurnController {
     ========================================================================
     */
 
-    public Response endTurn(){
+    public Response attemptToEndTurn(){
 
         Response response = new Response();
-
-        // TODO make this in a rule logicController.checkIfCanEndTurn(currentPlayer.getBid(), festivalModel.getHighestBid()
-        for(Rule r:rules){
+        for(Rule r:endTurnRules){
             if( !checkValidity(r)) {
                 response.addMessage(r.getErrorMessage());
             }
@@ -127,7 +126,7 @@ public class FestivalTurnController {
         return rule.getValidity();
     }
 
-    public void endTurnFinalization(){
+    public void endTurn(){
         // make sure the current player has been marked as "played this round"
         festivalModel.endCurrentPlayerTurn();
 
@@ -185,6 +184,10 @@ public class FestivalTurnController {
         if(!festivalModel.canStartNewRound()){
             executeCommand(new EndFestivalCommand(festivalModel, this));
         }
+    }
+
+    public void endFestival(){
+        executeCommand(new EndFestivalCommand(festivalModel, this));
     }
 
     /*

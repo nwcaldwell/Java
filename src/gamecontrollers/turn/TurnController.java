@@ -1,10 +1,18 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.BoardLogicController;
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
+import gamecontrollers.commands.gameplaycommands.DrawCardFromDeckCommand;
+import gamecontrollers.commands.gameplaycommands.DrawFestivalCardCommand;
+import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
+import gamecontrollers.commands.gameplaycommands.UseExtraActionTokenCommand;
+import models.board.SharedResources;
+import models.palacefestival.Deck;
 import models.palacefestival.JavaPlayer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * //TODO [Will][Kevin]
@@ -23,18 +31,24 @@ public class TurnController {
     private JavaPlayer currentPlayer;
     //This is the order of players in the turn
     private ArrayList<JavaPlayer> turnOrder;
+    private SharedResources resources;
+    private Deck deck;
+    private BoardLogicController board;
 
     /*
   ========================================================================
       CONSTRUCTORS
   ========================================================================
    */
-    public TurnController(GameplayCommandCreator gac, TurnState ts, ArrayList<JavaPlayer> playerOrder, CommandHandler ch){
+    public TurnController(GameplayCommandCreator gac, List<JavaPlayer> playerOrder, SharedResources resources, Deck deck, CommandHandler ch, BoardLogicController board){
         this.currentCommandCreator = gac;
-        this.turnState = ts;
-        this.turnOrder = playerOrder;
+        this.turnOrder = new ArrayList<JavaPlayer>(playerOrder);
         this.currentPlayer = turnOrder.get(0);
         this.commandHandler = ch;
+        this.resources = resources;
+        this.deck = deck;
+        this.board = board;
+        this.turnState = new NormalTurn(this);
     }
 
     /*
@@ -50,8 +64,9 @@ public class TurnController {
     //Response incase of error
     public Response commitMove(){
         //check this turns rules stuff real quick
-        Response response = turnState.checkRules();
-
+        //actually dont do that
+        //Response response = turnState.checkRules();
+        Response response = new Response();
 
         //check from CommandCreator if it is possible and add it to current response
         response.addMessages(currentCommandCreator.checkPossible().getMessages());
@@ -80,6 +95,18 @@ public class TurnController {
 
     public void setCommandBuilder(GameplayCommandCreator gameplayCommandCreator){
         currentCommandCreator = gameplayCommandCreator;
+    }
+
+    public SharedResources getSharedResources(){
+        return resources;
+    }
+
+    public BoardLogicController getBoardLogicController(){
+        return board;
+    }
+
+    public int getCurrentActionPoints(){
+        return turnState.getActionPoints();
     }
 
 
@@ -114,15 +141,50 @@ public class TurnController {
         I am unsure whether or not to delete this or route it into TurnPhase
         as it may be unnecessary now
      */
-    public boolean canEndTurn(){
+    public Response canEndTurn(){
 
         return turnState.canEndTurn();
     }
 
-    public boolean hasEnoughActionPoints(int i){
+    public Response hasEnoughActionPoints(int i){
         return turnState.hasEnoughActionPoints(i);
     }
 
+    public Response attemptToActionToken(){
+        Response response = new Response(turnState.canPlayExtraActionToken().getMessages());
+        if(!response.hasErrors()){
+            commandHandler.handleCommand(new UseExtraActionTokenCommand(currentPlayer, this));
+        }
+
+        return response;
+
+    }
+
+    public Response attemptToDrawFromDeck(){
+        Response response = turnState.canDrawCard();
+        if(!response.hasErrors()){
+            commandHandler.handleCommand(new DrawCardFromDeckCommand(currentPlayer, deck, this));
+        }
+
+        return response;
+    }
+
+    public Response attemptToDrawFestivalCard(){
+        Response response = turnState.canDrawCard();
+        if(!response.hasErrors()){
+            commandHandler.handleCommand(new DrawFestivalCardCommand(currentPlayer, deck, this));
+        }
+
+        return response;
+    }
+
+    public Response attemptToEndTurn(){
+        Response response = turnState.canEndTurn();
+        if(!response.hasErrors()){
+            commandHandler.handleCommand(new EndTurnCommand(this));
+        }
+        return response;
+    }
 
      /*
    ========================================================================
@@ -131,10 +193,10 @@ public class TurnController {
     */
 
     public void playTile(){
-        turnState.playTile();
+        turnState.playTile(currentCommandCreator.getCost());
     }
     public void removeTile(){
-        turnState.removeTile();
+        turnState.removeTile(currentCommandCreator.getCost());
     }
     public void playExtraActionToken(){
         turnState.playExtraActionToken();

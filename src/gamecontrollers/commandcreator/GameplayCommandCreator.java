@@ -2,6 +2,7 @@ package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
+import gamecontrollers.turn.TurnController;
 
 /**
  * //TODO [Kevin][Jorge]
@@ -23,4 +24,6 @@ public interface GameplayCommandCreator {
 
      */
     public Response checkPossible();
+
+    public abstract void setTurnController(TurnController controller);
 }

@@ -1,11 +1,13 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.Message;
 import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 import gamecontrollers.rules.Rule;
 import gamecontrollers.rules.turnrules.TurnRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TurnState {
@@ -19,7 +21,7 @@ public abstract class TurnState {
     private int minTilesPlaced;
     private int maxExtraActionTokensPlayed;
     //Turn rules
-    private List<TurnRule> rules;
+    private List<TurnRule> rules = new ArrayList<TurnRule>();
 
 
     /*
@@ -41,10 +43,13 @@ public abstract class TurnState {
         actionPoints -= i;
     }
 
-    //return the boolean if they can end turn
+    //return the Response if they can end turn
     //defaults to false if not set by subclass
-    public boolean canEndTurn(){
-        return canEndTurn;
+    public Response canEndTurn(){
+        if(canEndTurn)
+            return new Response( new Message("Can end turn", !canEndTurn));
+        else
+            return new Response( new Message("Cant end turn", !canEndTurn));
     }
 
 
@@ -58,16 +63,16 @@ public abstract class TurnState {
     ========================================================================
      */
 
-    public abstract void playTile();
-    public abstract void removeTile();
+    public abstract void playTile(int actionPointCost);
+    public abstract void removeTile(int actionPointCost);
     public abstract void playExtraActionToken();
     public abstract void returnExtraActionToken();
     public abstract void drawCard();
     public abstract void returnCard();
 
-    public abstract boolean canDrawCard();
-    public abstract boolean canPlayExtraActionToken();
-    public abstract boolean hasEnoughActionPoints( int i );
+    public abstract Response canDrawCard();
+    public abstract Response canPlayExtraActionToken();
+    public abstract Response hasEnoughActionPoints( int i );
 
 
 
@@ -90,28 +95,34 @@ public abstract class TurnState {
         canEndTurn = b;
     }
 
-    protected void tilePlaced(){
+    protected void tilePlaced(int points){
         numTilesPlaced++;
+        actionPoints -= points;
     }
 
-    protected void tileRemoved(){
+    protected void tileRemoved(int points){
         numTilesPlaced--;
+        actionPoints += points;
     }
 
     protected void cardDrawn(){
         numCardsDrawn++;
+        actionPoints--;
     }
 
     protected void cardPutBack(){
         numCardsDrawn--;
+        actionPoints++;
     }
 
     protected void extraActionTokenUsed(){
         numExtraActionTokensUsed++;
+        actionPoints++;
     }
 
     protected void extraActionTokenPutBack(){
         numExtraActionTokensUsed--;
+        actionPoints--;
     }
 
     protected void setMaxCardsPerTurn(int i){

@@ -27,5 +27,10 @@ local.properties
 .classpath
 .settings/
 .loadpath
+
 ### something ###
 .DS_STORE
+
+ ### production code ###
+ out/production/iteration3code
+ src/view/cgi/LWJGLBoardViewBackend.java

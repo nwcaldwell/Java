@@ -1,5 +1,6 @@
 package view.screens;
 
+import gamecontrollers.Response;
 import models.Pair;
 import view.StartGameCommand;
 import view.View;
@@ -92,6 +93,11 @@ public class NewGameView extends View {
 
     @Override
     public void update() {
-        //do nothing
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void displayResponseToConsole(Response response) {
+        throw new UnsupportedOperationException();
     }
 }

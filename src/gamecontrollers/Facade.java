@@ -1,14 +1,9 @@
 package gamecontrollers;
 
-import gamecontrollers.commandcreator.DeveloperMovementCommandCreator;
-import gamecontrollers.commandcreator.PalaceCommandCreator;
-import gamecontrollers.commandcreator.TilePlacementCommandCreator;
+import gamecontrollers.commandcreator.*;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.palacefestival.FestivalTurnController;
-import gamecontrollers.turn.HistoryChannelController;
-import gamecontrollers.turn.PlanningModeCommandHandler;
-import gamecontrollers.turn.ReplayController;
-import gamecontrollers.turn.TurnController;
+import gamecontrollers.turn.*;
 import models.Pair;
 import models.board.Direction;
 import models.board.JavaGame;
@@ -19,6 +14,7 @@ import models.palacefestival.FestivalModel;
 import models.palacefestival.JavaPlayer;
 import models.palacefestival.PalaceCard;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,6 +31,7 @@ public class Facade {
     private TurnController turnController;
     private ReplayController replayController;
     private PlanningModeCommandHandler planningModeCommandHandler;
+    private PlayModeCommandHandler playModeCommandHandler;
     private PalaceCommandCreator palaceCommandCreator;
 
     public static Facade getInstance() {
@@ -53,11 +50,28 @@ public class Facade {
         festivalController = new FestivalController(historyChannelController);
         festivalTurnController = festivalController.getTurnController();
         developerMovementCommandCreator = new DeveloperMovementCommandCreator(turnController, boardLogicController);
+        tilePlacementCommandCreator = new TilePlacementCommandCreator(turnController, game.getSharedResources());
+
+        palaceCommandCreator = new MaskPalaceCommandCreator(turnController, game.getSharedResources());
+        //this new creator for turn controller is weird
+        //gotta give him an arbitrary turnstate?
+        planningModeCommandHandler = new PlanningModeCommandHandler(historyChannelController);
+        playModeCommandHandler = new PlayModeCommandHandler(historyChannelController);
+        turnController = new TurnController(tilePlacementCommandCreator, Arrays.asList(game.getPlayers()), game.getSharedResources(), game.getDeck(), playModeCommandHandler, boardLogicController);
+
+        //lol oops
+        developerMovementCommandCreator.setTurnController(turnController);
+        tilePlacementCommandCreator.setTurnController(turnController);
+        palaceCommandCreator.setTurnController(turnController);
+
+        replayController = new ReplayController();
+
+
     }
 
     /*
     ========================================================================
-      GETTERS
+      GETTERS, pretty much for updating the views
     ========================================================================
     */
 
@@ -67,6 +81,14 @@ public class Facade {
 
     public FestivalModel getFestivalModel() {
         return festivalTurnController.getFestivalModel();
+    }
+
+    public JavaPlayer getCurrentPlayer(){
+        return turnController.getCurrentPlayer();
+    }
+
+    public int getCurrentPlayerActionPoints(){
+        return turnController.getCurrentActionPoints();
     }
 
     /*
@@ -85,9 +107,25 @@ public class Facade {
     }
 
     public void startPlacingTile(TileComponent tileComponent) {
+        //TODO throws an index out of bounds exception, run and press I, V, R, P, 2 and you'll see
+        System.out.println("Facade - beginning tile placement methods");
+        System.out.println("Setting the root");
         tilePlacementCommandCreator.setCurrentSpace(game.getBoard().getRoot());
+        System.out.println("Setting the tile component to place");
         tilePlacementCommandCreator.setCurrentTileComponent(tileComponent);
+        System.out.println("setting the command builder");
         turnController.setCommandBuilder(tilePlacementCommandCreator);
+        System.out.println("completed placing tile");
+    }
+
+    /*
+    ========================================================================
+      Turn Handlers
+    ========================================================================
+    */
+
+    public Response endTurn() {
+        return turnController.attemptToEndTurn();
     }
 
     /*
@@ -95,41 +133,66 @@ public class Facade {
       Board Communication Methods
     ========================================================================
     */
+    public List<Direction> getTilePlacementPath(){
+    	return tilePlacementCommandCreator.getPath();
+    }
+    
+    public TileComponent getCurrentTileComponent(){
+    	return tilePlacementCommandCreator.getCurrentTile();
+    }
+
     public void tabThroughDevelopers() {
         developerMovementCommandCreator.iterateThroughBoardDevelopers();
     }
 
     public void moveTile(Direction direction){
-        throw new UnsupportedOperationException();
+        tilePlacementCommandCreator.move(direction);
+    }
+
+    public void movePalace(Direction direction){
+        palaceCommandCreator.move(direction);
     }
 
     public void moveDeveloper(Direction direction){
-        throw new UnsupportedOperationException();
-    }
-
-    public void endTurn() {
-        throw new UnsupportedOperationException();
+        developerMovementCommandCreator.move(direction);
     }
 
     public void tabThroughPalace() {
         palaceCommandCreator.tabThroughPalacesRemaining();
     }
 
-    public void playExtraActionToken() {
-        turnController.playExtraActionToken();
+    public boolean validPlacement(TileComponent tile, Space space){
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return false;
     }
 
     public void rotateCurrentTileComponent() {
         tilePlacementCommandCreator.rotateCurrentTileComponent();
     }
 
+    /*
+    ========================================================================
+      Shared Resources communication
+    ========================================================================
+    */
+
+    public Response playExtraActionToken() {
+        return turnController.attemptToActionToken();
+    }
+
+    public Response drawCardFromDeck() {
+        return turnController.attemptToDrawFromDeck();
+    }
+
+    public Response drawTheFestivalCard() {
+        return turnController.attemptToDrawFestivalCard();
+    }
 
     /*
     ========================================================================
       Festival Communication Methods
     ========================================================================
     */
-
 
     public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palaceAssociated){
         festivalController.startFestival(players, festivalCard, palaceAssociated);
@@ -147,31 +210,13 @@ public class Facade {
         festivalTurnController.dropOutCommandCreator();
     }
 
-    public void endFestivalTurn(){
-        festivalTurnController.endTurnFinalization();
+    public Response endFestivalTurn(){
+        return festivalTurnController.attemptToEndTurn();
     }
 
-    public void acceptTieRequest() {
-        throw new UnsupportedOperationException();
+    public void askForPalaceFestivalTie() {
+        festivalTurnController.endFestival();
     }
-
-    public void askForPalaceFestivalTie(){
-        throw new UnsupportedOperationException();
-    }
-
-    public void drawCardFromDeck() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void drawTheFestivalCard() {}
-
-    public boolean validPlacement(TileComponent tile, Space space){
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return false;
-    }
-
-
-
 
     public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
         //need to go to the viewController, and go back to the board view
@@ -196,7 +241,19 @@ public class Facade {
         return turnController.commitMove();
     }
 
-    public void planCommand(){
+    public void startPlanningMode(){
+        turnController.setCommandHandler(planningModeCommandHandler);
+    }
+
+    public void startPlayMode(){
+        turnController.setCommandHandler(playModeCommandHandler);
+    }
+
+    public void undoCommand(){
+        planningModeCommandHandler.cancelCommand();
+    }
+
+    public void cancelCurrentCommand(){
         throw new UnsupportedOperationException();
     }
 
