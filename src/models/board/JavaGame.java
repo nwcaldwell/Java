@@ -26,7 +26,7 @@ public class JavaGame {
     private static final int PLAYERS_INITIAL_RICE_COUNT = 3;
     private static final int PLAYERS_INITIAL_VILLAGE_COUNT = 2;
     private static final int PLAYERS_INITIAL_TWO_SPACE_COUNT = 5;
-    private static final int PLAYERS_INITIAL_EXTRA_ACTION_COUNT = 4;
+    private static final int PLAYERS_INITIAL_EXTRA_ACTION_COUNT = 3;
     private static final int PLAYERS_INITIAL_CARDS_COUNT = 3;
 
     /*
