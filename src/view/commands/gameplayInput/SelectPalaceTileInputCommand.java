@@ -9,17 +9,11 @@ import view.commands.JavaKeyListener;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SelectPalaceTileInputCommand extends GameplayInputCommand {
     //this is the set of keylisteners that will do stuff when stuff happens
-    private ArrayList<JavaKeyListener> keyListeners =  new ArrayList<JavaKeyListener>(){{
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveTileInputCommand(getViewController(), HexDirection.SW)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD2, new MoveTileInputCommand(getViewController(), HexDirection.S)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD3, new MoveTileInputCommand(getViewController(), HexDirection.SE)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD7, new MoveTileInputCommand(getViewController(), HexDirection.NW)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveTileInputCommand(getViewController(), HexDirection.N)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveTileInputCommand(getViewController(), HexDirection.NE)));
-    }};
+    private List<JavaKeyListener> keySet;
 
     public SelectPalaceTileInputCommand(ViewController viewController) {
         super(viewController);
@@ -29,6 +23,10 @@ public class SelectPalaceTileInputCommand extends GameplayInputCommand {
     protected void doExecute() {
         Facade.getInstance().startPlacingTile( new P( ).buildTile(HexDirection.N) );
         getViewController().removeCurrentKeyListeners();
-        getViewController().addKeyListeners(keyListeners);
+        getViewController().addKeyListeners(keySet);
+    }
+
+    public void setKeySet(List<JavaKeyListener> newKeySet) {
+        keySet = newKeySet;
     }
 }
