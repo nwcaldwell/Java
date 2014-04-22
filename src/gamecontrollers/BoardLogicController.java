@@ -3,6 +3,7 @@ package gamecontrollers;
 import gamecontrollers.checks.*;
 import models.Pair;
 import models.board.*;
+import models.board.TileComponentContents.Palace;
 import models.palacefestival.JavaPlayer;
 
 import java.util.*;
@@ -261,7 +262,31 @@ public class BoardLogicController {
 	{
 		return devMoveController.nodeScoreToActionPointConversion(devMoveController.findOffBoardPath(p, origin, path));
 	}
-
+	
+	//The two methods below weren't in the design doc. 
+	//They are used to collect all palace spaces. 
+	public List<Space> getAllActivePalaceSpaces() {
+		List<Space> spaces = getAllSpaces();
+		int size = spaces.size();
+		
+		PalaceVisitor pv = new PalaceVisitor();
+		
+		for (int i = 0; i < size; i++) {
+			spaces.get(i).getTileComponentContent().accept(pv);
+		}
+		
+		List<Palace> activePalaces = pv.getActivePalaces();
+		List<Space> activeSpaces = new ArrayList<Space>();
+		
+		for (int i = 0; i < spaces.size(); i++) {
+			if (activePalaces.contains(spaces.get(i).getTileComponentContent())) {
+				activeSpaces.add(spaces.get(i));
+			}
+		}
+		
+		return activeSpaces;
+	}
+	
 	//Assuming the board is a connected graph...
 	List<Space> getAllSpaces()
 	{
