@@ -23,10 +23,9 @@ public abstract class GameplayView extends View {
     private static final int BORDER = 10;
     protected ConsoleView consoleView;
     protected ArrayList<PlayerView> playerViews;
-    protected BoardView boardView;
+//    protected BoardView boardView;
     protected SharedResourcesView sharedResourcesView;
     protected JPanel playerContainer;
-    protected JPanel toggleButtonContainer;
     private JavaGame game;
 
     protected GameplayView(ViewController viewC) {
@@ -39,7 +38,7 @@ public abstract class GameplayView extends View {
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-        boardView = new LWJGLBoardView(game.getBoard(), getViewController());
+//        boardView = new LWJGLBoardView(game.getBoard(), getViewController());
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
@@ -52,9 +51,7 @@ public abstract class GameplayView extends View {
         rightSide.setBackground(Color.WHITE);
 
         //the shared resources and the console are on the left panel. add them in the respective order
-        toggleButtonContainer = new JPanel();
         rightSide.add(sharedResourcesView);
-        sharedResourcesView.add(toggleButtonContainer);
         rightSide.add(consoleView);
         add(rightSide, BorderLayout.EAST);
 
@@ -71,31 +68,15 @@ public abstract class GameplayView extends View {
         JPanel leftSide = new JPanel();
         leftSide.setPreferredSize(new Dimension(3 * this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
         leftSide.setBackground(Color.WHITE);
-        int boardViewHeight = this.getScreenHeight() - 250 - BORDER*2;
-        boardView.setPreferredSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
-        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
-        boardView.setFocusable(false);
-        leftSide.add(boardView);
+//        int boardViewHeight = this.getScreenHeight() - 250 - BORDER*2;
+//        boardView.setPreferredSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
+//        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
+//        boardView.setFocusable(false);
+//        leftSide.add(boardView);
         leftSide.add(playerContainer);
 
         add(leftSide, BorderLayout.WEST);
 
-    }
-
-    protected ConsoleView getConsoleView() {
-        return consoleView;
-    }
-
-    protected ArrayList<PlayerView> getPlayerViews() {
-        return playerViews;
-    }
-
-    protected BoardView getBoardView() {
-        return boardView;
-    }
-
-    protected SharedResourcesView getSharedResourcesView() {
-        return sharedResourcesView;
     }
 
     protected void addPlayerView(PlayerView player) {
@@ -113,7 +94,7 @@ public abstract class GameplayView extends View {
     }
 
     public void update(){
-        boardView.update();
+//        boardView.update();
         sharedResourcesView.update(game.getSharedResources(), game.getDeck());
 //        consoleView.update();
         JavaPlayer[] players = game.getPlayers();

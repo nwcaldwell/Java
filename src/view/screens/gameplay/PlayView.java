@@ -14,7 +14,6 @@ import java.awt.event.KeyEvent;
 //TODO [Sydney][Jorge]
 
 public class PlayView extends GameplayView {
-    private JButton togglePlanningMode;
 
     /*
     ========================================================================
@@ -32,11 +31,6 @@ public class PlayView extends GameplayView {
     public void init() {
 
         super.init();
-        togglePlanningMode = new JButton("Planning Mode"); //TODO get from the media controller
-        togglePlanningMode.setFocusable(false);
-//        disablePlanningModeButton();
-        togglePlanningMode.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlanningView(this.getViewController()))));
-        toggleButtonContainer.add(togglePlanningMode, BorderLayout.NORTH);
     }
 
     private void initKeyListeners(ViewController viewController){
@@ -74,15 +68,4 @@ public class PlayView extends GameplayView {
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_2, new SelectTwoTileInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_V, new SelectVillageTileInputCommand(viewController)));
     }
-
-
-    public void enablePlanningModeButton(){
-        togglePlanningMode.setEnabled(true);
-    }
-
-    public void disablePlanningModeButton(){
-        togglePlanningMode.setEnabled(false);
-    }
-
-
 }

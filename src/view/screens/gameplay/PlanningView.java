@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 //TODO [Sydney][Jorge]
 
 public class PlanningView extends GameplayView {
-    private JButton togglePlayMode;
 
     public PlanningView(ViewController viewC) {
         super(viewC);
@@ -23,11 +22,6 @@ public class PlanningView extends GameplayView {
     // on the screen
     @Override
     public void init() {
-        togglePlayMode = new JButton("Play Mode");
-        togglePlayMode.setFocusable(false);
-        disablePlayModeButton();
-//        togglePlayMode.addActionListener(new JavaButtonListener(new NavCommand(this.getViewController(), new PlayView(this.getViewController()))));
-        toggleButtonContainer.add(togglePlayMode, BorderLayout.NORTH);
     }
 
     private void initKeyListeners(ViewController viewController){
@@ -65,13 +59,5 @@ public class PlanningView extends GameplayView {
 
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_DELETE, new UndoActionInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_BACK_SPACE, new UndoActionInputCommand(viewController)));
-    }
-
-    public void enablePlayModeButton(){
-        togglePlayMode.setEnabled(true);
-    }
-
-    public void disablePlayModeButton(){
-        togglePlayMode.setEnabled(false);
     }
 }

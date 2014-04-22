@@ -1,13 +1,10 @@
 package view;
 
-import gamecontrollers.Message;
 import gamecontrollers.Response;
-import org.lwjgl.Sys;
 import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +62,7 @@ public class ViewController {
 
         // Update the window
         currentView.init();
-        gameWindow.setContentPane( currentView );
+        gameWindow.setContentPane(currentView);
         gameWindow.validate();
     }
 
@@ -85,8 +82,8 @@ public class ViewController {
 
     private void removeCurrentKeyListeners() {
         KeyListener[] key = gameWindow.getKeyListeners();
-        for(int i = 0; i < key.length; i++){
-            gameWindow.removeKeyListener(key[i]);
+        for (KeyListener aKey : key) {
+            gameWindow.removeKeyListener(aKey);
         }
     }
 
