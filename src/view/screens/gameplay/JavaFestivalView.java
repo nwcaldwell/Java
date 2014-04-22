@@ -1,5 +1,6 @@
 package view.screens.gameplay;
 
+import models.palacefestival.FestivalPlayer;
 import view.ViewController;
 import view.commands.JavaButtonListener;
 import view.commands.JavaKeyListener;
@@ -32,8 +33,8 @@ public class JavaFestivalView extends FestivalView {
 
         JPanel center = new JPanel();
         //center.setPreferredSize(new Dimension(this.getScreenHeight()/2-BORDER*4, this.getScreenHeight()/2-BORDER*4));
-        center.setSize(new Dimension(500, 500));
-//        center.setPreferredSize(new Dimension(500, 500));
+//        center.setSize(new Dimension(500, 500));
+        center.setPreferredSize(new Dimension(500, 500));
         center.setBackground(new Color(5, 125, 43));
         center.setLayout(new BorderLayout());
 
@@ -41,7 +42,7 @@ public class JavaFestivalView extends FestivalView {
         getHighestBid().setPreferredSize(new Dimension(CARD_WIDTH, BORDER * 2));
         center.add(getHighestBid(), BorderLayout.CENTER);
         center.add(getFestivalCard(), BorderLayout.CENTER);
-//        center.add(getTieButton(), BorderLayout.CENTER);
+        center.add(getTieButton(), BorderLayout.CENTER);
 
         //placeholders for the cards that the user plays
         playedCardPanels = new JPanel[4];
@@ -55,25 +56,37 @@ public class JavaFestivalView extends FestivalView {
             playedCardPanels[i].setBackground(Color.DARK_GRAY);
             if(i % 2 == 1) {
                 playedCardPanels[i].setPreferredSize(new Dimension(center.getWidth() - BORDER, (center.getHeight() - CARD_HEIGHT)/2));
-                players.add(new FestivalPlayerView(CARD_WIDTH, CARD_HEIGHT, this.getScreenWidth() - BORDER * 2, CARD_HEIGHT + BORDER * 2, playedCardPanels[i]));
+                if(i == 1)
+                    add(playedCardPanels[i], BorderLayout.SOUTH);
+                else
+                    add(playedCardPanels[i], BorderLayout.NORTH);
             }
             else {
                 playedCardPanels[i].setPreferredSize(new Dimension((center.getWidth() - CARD_WIDTH)/2, center.getHeight() - BORDER));
-                players.add(new FestivalPlayerView(CARD_WIDTH, CARD_HEIGHT, CARD_HEIGHT + BORDER * 2, this.getScreenHeight() - 2 * (CARD_HEIGHT + BORDER * 2), playedCardPanels[i]));
+                if(i == 0)
+                    add(playedCardPanels[i], BorderLayout.WEST);
+                else
+                    add(playedCardPanels[i], BorderLayout.EAST);
             }
         }
-
-        add(players.get(0), BorderLayout.SOUTH);
-        add(playedCardPanels[0], BorderLayout.SOUTH);
-
-        add(players.get(1), BorderLayout.WEST);
-        add(playedCardPanels[0], BorderLayout.WEST);
-
-        add(players.get(2), BorderLayout.NORTH);
-        add(playedCardPanels[0], BorderLayout.NORTH);
-
-        add(players.get(3), BorderLayout.EAST);
-        add(playedCardPanels[0], BorderLayout.EAST);
+        for(int i = 0; i < players.size(); i++){
+            if(i == 0){
+                add(players.get(i), BorderLayout.SOUTH);
+                players.add(new FestivalPlayerView(CARD_WIDTH, CARD_HEIGHT, CARD_HEIGHT + BORDER * 2, this.getScreenHeight() - 2 * (CARD_HEIGHT + BORDER * 2), playedCardPanels[i]));
+            }
+            else if (i==1){
+                add(players.get(i), BorderLayout.WEST);
+                players.add(new FestivalPlayerView(CARD_WIDTH, CARD_HEIGHT, this.getScreenWidth() - BORDER * 2, CARD_HEIGHT + BORDER * 2, playedCardPanels[i]));
+            }
+            else if(i == 2){
+                add(players.get(i), BorderLayout.NORTH);
+                players.add(new FestivalPlayerView(CARD_WIDTH, CARD_HEIGHT, CARD_HEIGHT + BORDER * 2, this.getScreenHeight() - 2 * (CARD_HEIGHT + BORDER * 2), playedCardPanels[i]));
+            }
+            else{
+                add(players.get(i), BorderLayout.EAST);
+                players.add(new FestivalPlayerView(CARD_WIDTH, CARD_HEIGHT, this.getScreenWidth() - BORDER * 2, CARD_HEIGHT + BORDER * 2, playedCardPanels[i]));
+            }
+        }
 
         super.update();
     }

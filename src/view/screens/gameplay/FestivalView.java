@@ -83,9 +83,12 @@ public abstract class FestivalView extends View {
 
         List<FestivalPlayer> fPlayers = festivalModel.getTurnOrder();
         int indexOfCurrentPlayer = festivalModel.getIndexOfCurrentPlayer();
-        for(int i = 0; i < fPlayers.size(); i++){
-            players.get(i).update(fPlayers.get(i), (i == indexOfCurrentPlayer), festivalModel.getIndexOfCurrentCard());
-        }
+        System.out.println(fPlayers.size());
+        System.out.println(players.size());
+        if(fPlayers.size() == players.size())
+            for(int i = 0; i < fPlayers.size(); i++){
+                players.get(i).update(fPlayers.get(i), (i == indexOfCurrentPlayer), festivalModel.getIndexOfCurrentCard());
+            }
 
         getViewController().setFrameAsFocused();
     }
