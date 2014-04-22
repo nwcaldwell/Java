@@ -21,6 +21,11 @@ public class TilePlacementVisitor implements TileVisitor {
         value = 1;
     }
 
+    @Override
+    public void visit(TileComponent tcc) {
+
+    }
+
     public void visit(Palace p){
         value = 2;
     }

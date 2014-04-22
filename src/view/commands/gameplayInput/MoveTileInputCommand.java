@@ -19,6 +19,6 @@ public class MoveTileInputCommand extends GameplayInputCommand {
 
     @Override	public void doExecute() {
         Facade.getInstance().moveTile(direction);
-        Facade.getInstance().
+
 	}
 }
