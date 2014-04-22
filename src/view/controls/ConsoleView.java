@@ -1,6 +1,8 @@
 package view.controls;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Message;
+import gamecontrollers.Response;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -38,28 +40,32 @@ public class ConsoleView extends JPanel {
     private void setRedText(){
         consoleLog.setForeground(Color.RED);
     }
-    private void setGreenText(){
-        consoleLog.setForeground(Color.GREEN);
-    }
     private void setBlackText(){
         consoleLog.setForeground(Color.BLACK);
     }
 
-    public void displayErrorMessage(String message){
+    public void displayMessage(Response response){
+        if(response.hasErrors()){
+            for(Message message : response.getMessages()) {
+                displayErrorMessage(message.getMessageTemplate());
+            }
+        }
+        else{
+            for(Message message : response.getMessages()) {
+                displayNormalMessage(message.getMessageTemplate());
+            }
+        }
+    }
+
+    private void displayErrorMessage(String message){
         //set color to red
         setRedText();
         //update the text
         updateText(message);
     }
 
-    public void displaySuccessMessage(String message){
-        //set the color to green
-        setGreenText();
-        //update the text
-        updateText(message);
-    }
 
-    public void displayNormalMessage(String message){
+    private void displayNormalMessage(String message){
         //set the color to black
         setBlackText();
         //update the text

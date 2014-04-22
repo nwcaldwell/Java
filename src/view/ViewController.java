@@ -1,20 +1,15 @@
 package view;
 
 import gamecontrollers.Response;
-import org.lwjgl.Sys;
 import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ViewController {
-
-// TODO delete if we stick to using the toolkit class private static final int  WINDOW_WIDTH = 800;
-// TODO delete if we stick to using the toolkit class private static final int  WINDO_HEIGHT = 800;
     private View currentView;
     private JFrame gameWindow;
     private List<JavaKeyListener> currentListeners;
@@ -38,26 +33,6 @@ public class ViewController {
         // set the game window to the main view
         setCurrentView( new MainMenuView(this));
 
-
-//        // TODO remove this keylistener when the real quit is implemented
-//        gameWindow.addKeyListener(new KeyListener() {
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//            }
-//
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                System.out.println("GAME WINDOW "+e.getKeyChar());
-//                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-//                    System.exit(0);
-//                }
-//            }
-//        });
         gameWindow.setFocusTraversalKeysEnabled(false);
         gameWindow.setFocusable(true);
 
@@ -87,7 +62,7 @@ public class ViewController {
 
         // Update the window
         currentView.init();
-        gameWindow.setContentPane( currentView );
+        gameWindow.setContentPane(currentView);
         gameWindow.validate();
     }
 
@@ -107,8 +82,8 @@ public class ViewController {
 
     public void removeCurrentKeyListeners() {
         KeyListener[] key = gameWindow.getKeyListeners();
-        for(int i = 0; i < key.length; i++){
-            gameWindow.removeKeyListener(key[i]);
+        for (KeyListener aKey : key) {
+            gameWindow.removeKeyListener(aKey);
         }
     }
 
@@ -117,6 +92,6 @@ public class ViewController {
     }
 
     public void showError(Response response){
-
+        currentView.displayResponseToConsole(response);
     }
 }
