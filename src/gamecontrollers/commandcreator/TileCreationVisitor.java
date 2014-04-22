@@ -55,7 +55,7 @@ public class TileCreationVisitor {
 
         while(it.hasNext()) {
             Direction temp = it.next();
-            if (component.siblingExists(temp) && !visitedTiles.add(component.getConjoinedTile(direction))){
+            if (component.siblingExists(temp) && !visitedTiles.add(component.getConjoinedTile(temp))){
                 component.getConjoinedTile(temp).accept(this);
             }
         }

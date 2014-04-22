@@ -63,8 +63,9 @@ public class TurnController {
     //Response incase of error
     public Response commitMove(){
         //check this turns rules stuff real quick
-        Response response = turnState.checkRules();
-
+        //actually dont do that
+        //Response response = turnState.checkRules();
+        Response response = new Response();
 
         //check from CommandCreator if it is possible and add it to current response
         response.addMessages(currentCommandCreator.checkPossible().getMessages());

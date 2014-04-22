@@ -5,7 +5,9 @@ import gamecontrollers.checks.WouldTileComponentBeOnBoard;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import gamecontrollers.rules.Rule;
+import gamecontrollers.rules.tileplacementrules.TilePlacedDirectlyOnTwin;
 import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
+import gamecontrollers.rules.tileplacementrules.TiltedTilePlacement;
 import gamecontrollers.turn.TurnController;
 import models.board.Direction;
 import models.board.SharedResources;
@@ -35,6 +37,11 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         visitor = new TileCreationVisitor(controller, resources);
         this.resources = resources;
         onBoardChecker = new WouldTileComponentBeOnBoard();
+
+        TiltedTilePlacement tiltedRule = new TiltedTilePlacement(this);
+        TilePlacedDirectlyOnTwin twinRule = new TilePlacedDirectlyOnTwin(this);
+        rules.add(tiltedRule);
+        rules.add(twinRule);
     }
 
 
