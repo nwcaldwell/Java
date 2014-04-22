@@ -27,6 +27,7 @@ public class SelectVillageTileInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
+        System.out.println("Executing Select Village tile command");
         Facade.getInstance().startPlacingTile( new V( ).buildTile(HexDirection.N) );
 
 	}

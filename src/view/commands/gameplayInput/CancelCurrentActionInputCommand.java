@@ -1,5 +1,6 @@
 package view.commands.gameplayInput;
 
+import gamecontrollers.Facade;
 import view.ViewController;
 import view.commands.InputCommand;
 
@@ -13,6 +14,7 @@ public class CancelCurrentActionInputCommand extends InputCommand{
     }
 
     @Override	public void execute() {
+        Facade.getInstance().cancelCurrentCommand();
         throw new UnsupportedOperationException();
     }
 }

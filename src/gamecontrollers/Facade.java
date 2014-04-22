@@ -92,9 +92,15 @@ public class Facade {
     }
 
     public void startPlacingTile(TileComponent tileComponent) {
+        //TODO throws an index out of bounds exception, run and press I, V, R, P, 2, 3 and you'll see
+        System.out.println("Facade - beginning tile placement methods");
+        System.out.println("Setting the root");
         tilePlacementCommandCreator.setCurrentSpace(game.getBoard().getRoot());
+        System.out.println("Setting the tile component to place");
         tilePlacementCommandCreator.setCurrentTileComponent(tileComponent);
+        System.out.println("setting the command builder");
         turnController.setCommandBuilder(tilePlacementCommandCreator);
+        System.out.println("completed placing tile");
     }
 
     /*
@@ -175,15 +181,14 @@ public class Facade {
         throw new UnsupportedOperationException();
     }
 
-    public void drawTheFestivalCard() {}
+    public void drawTheFestivalCard() {
+        throw new UnsupportedOperationException();
+    }
 
     public boolean validPlacement(TileComponent tile, Space space){
         System.out.println("Facade.findShortestPath is not implemented yet");
         return false;
     }
-
-
-
 
     public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
         //need to go to the viewController, and go back to the board view
@@ -218,6 +223,11 @@ public class Facade {
 
     public void undoCommand(){
         planningModeCommandHandler.cancelCommand();
+    }
+
+    public void cancelCurrentCommand(){
+        throw new UnsupportedOperationException();
+        //turnController.cancelCurrentCommand();
     }
 
 }
