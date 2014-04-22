@@ -15,6 +15,6 @@ public class CommitActionInputCommand extends InputCommand {
     @Override	public void execute() {
         Response response = Facade.getInstance().commitMove();
         //TODO TO ONLY PRINT ERRORS
-        getViewController().showError(response);
+        getViewController().displayMessageToConsole(response);
 	}
 }
