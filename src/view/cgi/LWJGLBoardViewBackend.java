@@ -4,6 +4,8 @@ import models.board.Board;
 import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
+import models.board.TileComponent;
+import models.board.TileComponentContent;
 import view.MediaController;
 
 import java.awt.Canvas;
@@ -215,6 +217,26 @@ public class LWJGLBoardViewBackend implements Runnable{
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 	
+	public synchronized void addTiles( TileComponent root, ArrayList<Direction> path, int height){
+		ArrayList<TileComponent> visited=new ArrayList<TileComponent>();
+		Vector2D offset=new Vector2D(0,0);
+		for (Direction d:path){
+			offset.translate(offsets[d.getIntValue()]);
+		}
+		addTilesRecursive(root, visited, height, offset);
+	}
+	
+	protected void addTilesRecursive(TileComponent root, ArrayList<TileComponent> visited, int height, Vector2D offset){
+		updateTile(root.getTileComponentContent(), height, offset);
+		visited.add(root);
+		for (int i=0;i<HexDirection.values().length;i++){
+			TileComponent adjacent=root.getConjoinedTile(HexDirection.values()[i]);
+			if (adjacent!=null&&!visited.contains(adjacent)){
+				addTilesRecursive(adjacent, visited, height, offset.translate(offsets[i]));
+			}
+		}
+	}
+	
 	public synchronized void displayDev(ArrayList<Direction> path, int height) {
 		Vector2D offset=new Vector2D(0,0);
 		for (Direction d:path){
@@ -265,24 +287,28 @@ public class LWJGLBoardViewBackend implements Runnable{
 			spaces.add(newModel);
 		}
 		if (space.getHeight()>0){
-			//render the top tile
-			Model3D newModel=buriedSpace.clone();
-			if (space.getTile().getTileComponentContent().toString().equals("irrigation")){
-				newModel=irrigation;
-			}
-			if (space.getTile().getTileComponentContent().toString().equals("rice")){
-				newModel=rice;
-			}
-			if (space.getTile().getTileComponentContent().toString().equals("village")){
-				newModel=village;
-			}
-			if (space.getTile().getTileComponentContent().toString().startsWith("palace")){
-				int index = Integer.parseInt(space.getTileComponentContent().toString().substring(6))/2;
-				newModel=palace[index];
-			}
-			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*SPACE_HEIGHT, offset.y));
-			spaces.add(newModel);
+			updateTile(space.getTile().getTileComponentContent(), space.getHeight(), offset);
 		}
+	}
+	
+	private void updateTile(TileComponentContent component, int height, Vector2D offset){
+		//render the top tile
+		Model3D newModel=buriedSpace.clone();
+		if (component.toString().equals("irrigation")){
+			newModel=irrigation;
+		}
+		if (component.toString().equals("rice")){
+			newModel=rice;
+		}
+		if (component.toString().equals("village")){
+			newModel=village;
+		}
+		if (component.toString().startsWith("palace")){
+			int index = Integer.parseInt(component.toString().substring(6))/2;
+			newModel=palace[index];
+		}
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
+		spaces.add(newModel);
 	}
 	
 	/**maybe, if we were doing a complicated model, I would feel the need

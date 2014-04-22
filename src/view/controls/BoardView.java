@@ -2,6 +2,7 @@ package view.controls;
 
 import models.board.Board;
 import models.board.Direction;
+import models.board.TileComponent;
 import view.ViewController;
 
 import javax.swing.*;
@@ -34,6 +35,8 @@ public abstract class BoardView extends JPanel {
     /**draws a developer*/
     public abstract void displayDev(ArrayList<Direction> path, int height);
 
+    public abstract void addTiles(TileComponent root, ArrayList<Direction> path, int height);
+    
     public void setFrameAsFocused(){
         controller.setFrameAsFocused();
     }
