@@ -38,7 +38,7 @@ public class LWJGLBoardViewTest {
 		path.add(HexDirection.N);
 		path.add(HexDirection.N);
 		path.add(HexDirection.N);
-		view.addTiles(new RVR().buildTile(HexDirection.N),path,1);
+		view.addTiles(new RVR().buildTile(HexDirection.N),path,0);
 
 	}
 /*	

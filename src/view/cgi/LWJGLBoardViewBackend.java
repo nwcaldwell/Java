@@ -268,7 +268,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 			if (space.isInLowlands()){
 				terrain=lowland.clone();
 			}
-			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
+			terrain.setTranslation(new Vector3D(offset.x, 0, offset.y));
 			spaces.add(terrain);
 		}
 		
