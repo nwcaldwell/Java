@@ -2,8 +2,12 @@ package view.cgi.test;
 
 import javax.swing.JFrame;
 
+import org.lwjgl.input.Mouse;
+
 import view.ViewController;
 import view.cgi.LWJGLBoardView;
+import view.cgi.Vector2D;
+import view.cgi.Vector3D;
 
 import models.board.Board;
 import models.board.HexDirection;
@@ -35,7 +39,7 @@ public class LWJGLBoardViewTest {
 		}
 	}
 	
-/*	int x=0,y=0;
+	int x=0,y=0;
 	int pitch=90,yaw=0;
 	
 	int prevx=0;
@@ -91,7 +95,7 @@ public class LWJGLBoardViewTest {
 				));
 		view.setScenePitch(pitch);
 		view.setSceneYaw(yaw);
-	}*/
+	}
 	
 	public static void main(String[] args) {
 		LWJGLBoardViewTest tester=new LWJGLBoardViewTest();
