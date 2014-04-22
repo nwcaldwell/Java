@@ -18,7 +18,7 @@ public class Response {
     }
 
     public Response(List<Message> messages){
-        hasErrors = true;
+        hasErrors = false;
         this.messages = new ArrayList<Message>();
         addMessages(messages);
     }

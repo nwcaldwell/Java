@@ -106,4 +106,8 @@ public abstract class GameplayView extends View {
         getViewController().setFrameAsFocused();
     }
 
+    public BoardView getBoardView(){
+        return boardView;
+    }
+
 }

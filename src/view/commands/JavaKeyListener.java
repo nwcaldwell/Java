@@ -4,11 +4,11 @@ import view.commands.InputCommand;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 
 //TODO [Jorge][Sydney]
 
 public class JavaKeyListener implements KeyListener {
-
     private InputCommand command;
     private int keyCode;
 
@@ -34,4 +34,6 @@ public class JavaKeyListener implements KeyListener {
             command.execute();
         }
     }
+
+
 }
