@@ -142,8 +142,8 @@ public class Facade {
         palaceCommandCreator.tabThroughPalacesRemaining();
     }
 
-    public void playExtraActionToken() {
-        turnController.attemptToActionToken();
+    public Response playExtraActionToken() {
+        return turnController.attemptToActionToken();
     }
 
     public void rotateCurrentTileComponent() {

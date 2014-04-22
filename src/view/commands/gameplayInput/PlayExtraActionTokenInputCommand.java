@@ -2,6 +2,7 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import view.ViewController;
 
 public class PlayExtraActionTokenInputCommand extends GameplayInputCommand {
@@ -12,6 +13,7 @@ public class PlayExtraActionTokenInputCommand extends GameplayInputCommand {
 
     @Override
     protected void doExecute() {
-        Facade.getInstance().playExtraActionToken();
+        Response response = Facade.getInstance().playExtraActionToken();
+        getViewController().displayMessageToConsole(response);
     }
 }

@@ -134,19 +134,23 @@ public class TurnController {
         I am unsure whether or not to delete this or route it into TurnPhase
         as it may be unnecessary now
      */
-    public boolean canEndTurn(){
+    public Response canEndTurn(){
 
         return turnState.canEndTurn();
     }
 
-    public boolean hasEnoughActionPoints(int i){
+    public Response hasEnoughActionPoints(int i){
         return turnState.hasEnoughActionPoints(i);
     }
 
-    public void attemptToActionToken(){
-        if(turnState.canPlayExtraActionToken()){
+    public Response attemptToActionToken(){
+        Response response = new Response(turnState.canPlayExtraActionToken().getMessages());
+        if(!response.hasErrors()){
             commandHandler.handleCommand(new UseExtraActionTokenCommand(currentPlayer, this));
         }
+
+        return response;
+
     }
 
 

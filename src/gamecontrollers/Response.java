@@ -24,7 +24,8 @@ public class Response {
     }
 
     public Response(final Message message){
-        new Response(new ArrayList<Message>(){{ add(message); }});
+        messages = new ArrayList<Message>();
+        addMessage(message);
     }
 
     public List<Message> getMessages() {

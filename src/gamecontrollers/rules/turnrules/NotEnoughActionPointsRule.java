@@ -17,7 +17,7 @@ public class NotEnoughActionPointsRule extends TurnRule {
         this.controller = controller;
     }
     public void update(){
-        if(turn.hasEnoughActionPoints(controller.getCost())){
+        if(turn.getActionPoints() >= controller.getCost()){
             message = new Message("You can totally do this man", false);
             setValidity(true);
         }

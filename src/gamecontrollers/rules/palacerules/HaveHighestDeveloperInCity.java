@@ -26,7 +26,7 @@ public class HaveHighestDeveloperInCity extends PalaceRule {
     }
     @Override
     public void update() {
-        if(board.findHighestDeveloper(creator.getSpace(), controller.getCurrentPlayer())){
+        if(board.holdsHighestDeveloper(creator.getSpace(), controller.getCurrentPlayer())){
             message = new Message("You can do it", false);
             setValidity(true);
         }
