@@ -105,7 +105,7 @@ public class ViewController {
         gameWindow.addKeyListener(keyListener);
     }
 
-    private void removeCurrentKeyListeners() {
+    public void removeCurrentKeyListeners() {
         KeyListener[] key = gameWindow.getKeyListeners();
         for(int i = 0; i < key.length; i++){
             gameWindow.removeKeyListener(key[i]);

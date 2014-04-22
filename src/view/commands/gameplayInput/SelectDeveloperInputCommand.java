@@ -36,7 +36,7 @@ public class SelectDeveloperInputCommand extends GameplayInputCommand {
         }
         else {
             getViewController().removeCurrentKeyListeners();
-            getViewController().resetKeyActionListeners(keyListeners);
+            getViewController().addKeyListeners(keyListeners);
         }
 	}
 }

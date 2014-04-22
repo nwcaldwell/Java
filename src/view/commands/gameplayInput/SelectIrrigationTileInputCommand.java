@@ -29,6 +29,6 @@ public class SelectIrrigationTileInputCommand extends InputCommand {
     @Override	public void execute() {
         Facade.getInstance().startPlacingTile( new I( ).buildTile(HexDirection.N) );
         getViewController().removeCurrentKeyListeners();
-        getViewController().resetKeyActionListeners(keyListeners);
+        getViewController().addKeyListeners(keyListeners);
 	}
 }
