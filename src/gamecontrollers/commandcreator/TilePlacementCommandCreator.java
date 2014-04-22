@@ -5,6 +5,7 @@ import gamecontrollers.checks.WouldTileComponentBeOnBoard;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import gamecontrollers.rules.Rule;
+import gamecontrollers.rules.tileplacementrules.LandTypeRestrictionsRule;
 import gamecontrollers.rules.tileplacementrules.TilePlacedDirectlyOnTwin;
 import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
 import gamecontrollers.rules.tileplacementrules.TiltedTilePlacement;
@@ -50,8 +51,10 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
 
         TiltedTilePlacement tiltedRule = new TiltedTilePlacement(this);
         TilePlacedDirectlyOnTwin twinRule = new TilePlacedDirectlyOnTwin(this);
+        LandTypeRestrictionsRule landRule = new LandTypeRestrictionsRule(this);
         rules.add(tiltedRule);
         rules.add(twinRule);
+        rules.add(landRule);
         pathToTile=new ArrayList<Direction>();
     }
 

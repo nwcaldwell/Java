@@ -42,24 +42,37 @@ public class LandTypeRestrictionsRule extends TilePlacementRule {
 	public void update() {
 		TilePlacementVisitor tpvUnder = new TilePlacementVisitor();
 		TilePlacementVisitor tpvTop = new TilePlacementVisitor();
-		
-		TileComponentContent under = tpc.getCurrentSpace().getTile().getTileComponentContent();
-		TileComponentContent top = tpc.getCurrentTile().getTileComponentContent();
-		
-		under.accept(tpvUnder);
-		top.accept(tpvUnder);
+        TileComponentContent under = null;
+        TileComponentContent top = null;
+        if(tpc.getCurrentSpace().hasTile())
+		    under = tpc.getCurrentSpace().getTile().getTileComponentContent();
+        if(tpc.getCurrentTile() != null)
+		    top = tpc.getCurrentTile().getTileComponentContent();
 
-		setValidity(validityChecker[tpvUnder.getValue()][tpvTop.getValue()]);
-		
-		TileComponentContent[] tileComponentArray = {under, top};
-		
-		if (!this.getValidity()) {
-			message = new Message("Not allowed to place a %s on a &s", tileComponentArray, true);
-		}
-		
-		else {
-			message = new Message("Tile placed successfully", false);
-		}
+        if(top != null) {
+            if(under == null){
+                message = new Message("Target is empty", false);
+                setValidity(true);
+            }
+            else {
+                under.accept(tpvUnder);
+                top.accept(tpvUnder);
+
+                setValidity(validityChecker[tpvUnder.getValue()][tpvTop.getValue()]);
+
+                TileComponentContent[] tileComponentArray = {under, top};
+
+                if (!this.getValidity()) {
+                    message = new Message("Not allowed to place a %s on a &s", tileComponentArray, true);
+                } else {
+                    message = new Message("Tile placed successfully", false);
+                }
+            }
+        }
+        else{
+            message = new Message("Tile not selected", true);
+            setValidity(false);
+        }
 	}
 
 	@Override
