@@ -69,9 +69,7 @@ class HexBoardConstructionCrew extends BoardConstructionCrew{
 				{
 					int rChanged = r + rDelta[i];
 					int cChanged = c + cDelta[i];
-					if(rChanged < 0 || cChanged < 0)
-						continue;
-					if(!inBounds(rChanged, cChanged, numRows, grid.get(rChanged%2).size()))
+					if(rChanged < 0 || cChanged < 0 || rChanged >= grid.size() || cChanged >= grid.get(rChanged).size())
 						continue;
 					Space b = grid.get(rChanged).get(cChanged);
 					if(spaceExists(b))
