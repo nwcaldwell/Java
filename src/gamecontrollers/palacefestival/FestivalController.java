@@ -35,6 +35,7 @@ public class FestivalController {
             }
         }
 
+        System.out.println(festivalCard.toString());
         turnController.startNewFestival(new FestivalModel(festivalPlayers, festivalCard, palace));
     }
 

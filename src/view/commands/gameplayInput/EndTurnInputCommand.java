@@ -5,6 +5,7 @@ import gamecontrollers.Facade;
 import gamecontrollers.Message;
 import gamecontrollers.Response;
 import view.ViewController;
+import view.screens.gameplay.JavaFestivalView;
 
 import java.util.List;
 
@@ -16,9 +17,10 @@ public class EndTurnInputCommand extends GameplayInputCommand {
 
     @Override	public void doExecute() {
         Response response =  Facade.getInstance().askForFestival();
-        List<Message> messages = response.getMessages();
-        
-        if(getViewController().requireInputFromUser(messages.get(0).getMessageTemplate(), "Palace Festival", messages.get(0).isError())){
+
+        if(getViewController().requireInputFromUser("Would you like to begin a festival?", "Palace Festival", response.hasErrors())){
+            getViewController().setCurrentView( new JavaFestivalView(getViewController()));
+            Facade.getInstance().startFestival();
             response = Facade.getInstance().endTurn();
         }
         getViewController().displayMessageToConsole(response);

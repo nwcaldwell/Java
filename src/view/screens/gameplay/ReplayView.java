@@ -7,7 +7,7 @@ import view.ViewController;
 
 public class ReplayView  extends GameplayView {
 
-    public ReplayView(ViewController viewC, MediaController mediaC) {
+    public ReplayView(ViewController viewC) {
         super(viewC);
     }
 

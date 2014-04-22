@@ -176,11 +176,7 @@ public class TurnController {
     //this is called after the player has selected the palace that he'd like to play on
     public Response attemptToHoldFestival(Space palace){
         Response response = turnState.canEndTurn();
-        if(!response.hasErrors() && board.playerHasDeveloperInCity(palace, currentPlayer)){
-            //ask if would like to start a festival
-            //TODO using this for testing sake, so it has intentional flaws
-            commandHandler.handleCommand(new StartFestivalCommand(turnOrder, new Palace(6), deck.getFestivalCard()));
-        }
+//        if(!response.hasErrors() && board.playerHasDeveloperInCity(palace, currentPlayer)){
         return response;
     }
 
@@ -190,6 +186,12 @@ public class TurnController {
             commandHandler.handleCommand(new EndTurnCommand(this));
         }
         return endTurnResponse;
+    }
+
+    public void holdFestival() {
+        //ask if would like to start a festival
+        //TODO using this for testing sake, so it has intentional flaws
+        commandHandler.handleCommand(new StartFestivalCommand(turnOrder, new Palace(6), deck.getFestivalCard()));
     }
 
      /*

@@ -31,7 +31,7 @@ public class JavaFestivalView extends FestivalView {
         super.init();
 
         JPanel center = new JPanel();
-        center.setPreferredSize(new Dimension(this.getScreenHeight()-BORDER*2, this.getScreenHeight()-BORDER*2));
+        center.setPreferredSize(new Dimension(this.getScreenHeight()/2-BORDER*4, this.getScreenHeight()/2-BORDER*4));
         center.setBackground(new Color(5, 125, 43));
         center.setLayout(new BorderLayout());
 
@@ -39,7 +39,7 @@ public class JavaFestivalView extends FestivalView {
         getHighestBid().setPreferredSize(new Dimension(CARD_WIDTH, BORDER * 2));
         center.add(getHighestBid(), BorderLayout.CENTER);
         center.add(getFestivalCard(), BorderLayout.CENTER);
-        center.add(getTieButton(), BorderLayout.CENTER);
+//        center.add(getTieButton(), BorderLayout.CENTER);
 
         //placeholders for the cards that the user plays
         playedCardPanels = new JPanel[4];
@@ -72,6 +72,8 @@ public class JavaFestivalView extends FestivalView {
 
         add(players.get(3), BorderLayout.EAST);
         add(playedCardPanels[0], BorderLayout.EAST);
+
+        super.update();
     }
 
         /*
@@ -81,7 +83,7 @@ public class JavaFestivalView extends FestivalView {
     */
 
     public void initKeyListeners(ViewController viewController){
-        getTieButton().addActionListener(new JavaButtonListener(new AskForTieFestivalInputCommand(viewController)));
+//        getTieButton().addActionListener(new JavaButtonListener(new AskForTieFestivalInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_ESCAPE, new CancelCurrentActionInputCommand(viewController)));
 
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_D, new DropOutOfFestivalInputCommand(viewController)));

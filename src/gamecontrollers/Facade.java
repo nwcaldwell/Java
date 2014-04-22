@@ -43,6 +43,7 @@ public class Facade {
     // start
     public void startGame(List<Pair<String,String>> playersData, String boardFile){
         game = new JavaGame(playersData, boardFile);
+        System.out.println(game.getDeck().getFestivalCard());
         historyChannelController = new HistoryChannelController(game.getPlayers().length + 1);
 
         boardLogicController = new BoardLogicController(game.getBoard());
@@ -197,6 +198,10 @@ public class Facade {
       Festival Communication Methods
     ========================================================================
     */
+
+    public void startFestival(){
+        turnController.holdFestival();
+    }
 
     public void startFestival(List<JavaPlayer> players, PalaceCard festivalCard, Palace palaceAssociated){
         festivalController.startFestival(players, festivalCard, palaceAssociated);

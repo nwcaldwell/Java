@@ -76,6 +76,7 @@ public abstract class FestivalView extends View {
     public void update(){
         FestivalModel festivalModel = Facade.getInstance().getFestivalModel();
 
+        System.out.println(festivalModel.getFestivalCard());
         setFestivalCard(festivalModel.getFestivalCard().toString());
         setHighestBid(festivalModel.getHighestBid());
         setTieButton(festivalModel.checkForTie());

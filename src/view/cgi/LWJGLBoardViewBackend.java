@@ -392,7 +392,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		glTranslated(sceneTranslation.x, sceneTranslation.y, sceneTranslation.z);
 		
 		
-		System.out.println("model count: "+spaces.size());
+//		System.out.println("model count: "+spaces.size());
 		for (Model3D model: spaces){
 			model.render();
 		}

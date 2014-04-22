@@ -15,6 +15,7 @@ public class FestivalModel {
     private int highestBid;
 
 	public FestivalModel(List<FestivalPlayer> p, PalaceCard fest, Palace palace) {
+        System.out.println(fest.toString());
         this.players = p;
         turnOrder = new ArrayList<FestivalPlayer>(players.size());
         for(FestivalPlayer player : players){
