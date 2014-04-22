@@ -25,7 +25,8 @@ public class SelectVillageTileInputCommand extends GameplayInputCommand {
         Facade.getInstance().startPlacingTile( new V( ).buildTile(HexDirection.N) );
         getViewController().removeCurrentKeyListeners();
         getViewController().addKeyListeners(keySet);
-
+        getViewController().getBoardview().update();
+        getViewController().getBoardview().addTiles(Facade.getInstance().getCurrentTileComponent(),Facade.getInstance().getTilePlacementPath());
 	}
 
     public void setKeySet(List<JavaKeyListener> newKeySet) {

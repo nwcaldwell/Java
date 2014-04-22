@@ -59,15 +59,14 @@ public class TileComponent {
         //rotate all edges
         TileComponent last = conjoinedParts[direction.numDirections() - 1];
         Iterator<Direction> ita = direction.iterator();
-        Iterator<Direction> itb = direction.iterator(); //B should be one side ahead of A
-        if (itb.hasNext())
-            itb.next();
-        else
-            return; //rotating when there's only one side is the same is not rotating at all!
+        Iterator<Direction> itb = direction.rotate().iterator(); //B should be one side ahead of A
+        TileComponent[] newCohorts=new TileComponent[conjoinedParts.length];
 
-        while (itb.hasNext())
-            conjoinedParts[itb.next().getIntValue()] = conjoinedParts[ita.next().getIntValue()];
+        while (itb.hasNext()){
+            newCohorts[itb.next().getIntValue()] = conjoinedParts[ita.next().getIntValue()];
+        }
 
+        conjoinedParts=newCohorts;
         conjoinedParts[0] = last; //making the rotations go full circle
     }
 

@@ -129,7 +129,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
 		Display.setDisplayMode(new DisplayMode((int)800, (int)600));
-		//Display.setParent(parent);
+		Display.setParent(parent);
 		Display.create();
 		//enable all of the OpenGL stuff
 		glMatrixMode(GL_MODELVIEW);
