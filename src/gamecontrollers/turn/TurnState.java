@@ -1,5 +1,6 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.Message;
 import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
@@ -42,10 +43,13 @@ public abstract class TurnState {
         actionPoints -= i;
     }
 
-    //return the boolean if they can end turn
+    //return the Response if they can end turn
     //defaults to false if not set by subclass
-    public boolean canEndTurn(){
-        return canEndTurn;
+    public Response canEndTurn(){
+        if(canEndTurn)
+            return new Response( new Message("Can end turn", !canEndTurn));
+        else
+            return new Response( new Message("Cant end turn", !canEndTurn));
     }
 
 
@@ -66,9 +70,9 @@ public abstract class TurnState {
     public abstract void drawCard();
     public abstract void returnCard();
 
-    public abstract boolean canDrawCard();
-    public abstract boolean canPlayExtraActionToken();
-    public abstract boolean hasEnoughActionPoints( int i );
+    public abstract Response canDrawCard();
+    public abstract Response canPlayExtraActionToken();
+    public abstract Response hasEnoughActionPoints( int i );
 
 
 

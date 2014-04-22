@@ -3,8 +3,10 @@ package gamecontrollers.turn;
 import gamecontrollers.BoardLogicController;
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
+import gamecontrollers.commands.gameplaycommands.DrawCardFromDeckCommand;
 import gamecontrollers.commands.gameplaycommands.UseExtraActionTokenCommand;
 import models.board.SharedResources;
+import models.palacefestival.Deck;
 import models.palacefestival.JavaPlayer;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class TurnController {
     //This is the order of players in the turn
     private ArrayList<JavaPlayer> turnOrder;
     private SharedResources resources;
+    private Deck deck;
     private BoardLogicController board;
 
     /*
@@ -35,12 +38,13 @@ public class TurnController {
       CONSTRUCTORS
   ========================================================================
    */
-    public TurnController(GameplayCommandCreator gac, List<JavaPlayer> playerOrder, SharedResources resources, CommandHandler ch, BoardLogicController board){
+    public TurnController(GameplayCommandCreator gac, List<JavaPlayer> playerOrder, SharedResources resources, Deck deck, CommandHandler ch, BoardLogicController board){
         this.currentCommandCreator = gac;
         this.turnOrder = new ArrayList<JavaPlayer>(playerOrder);
         this.currentPlayer = turnOrder.get(0);
         this.commandHandler = ch;
         this.resources = resources;
+        this.deck = deck;
         this.board = board;
         this.turnState = new NormalTurn(this);
     }
@@ -134,19 +138,32 @@ public class TurnController {
         I am unsure whether or not to delete this or route it into TurnPhase
         as it may be unnecessary now
      */
-    public boolean canEndTurn(){
+    public Response canEndTurn(){
 
         return turnState.canEndTurn();
     }
 
-    public boolean hasEnoughActionPoints(int i){
+    public Response hasEnoughActionPoints(int i){
         return turnState.hasEnoughActionPoints(i);
     }
 
-    public void attemptToActionToken(){
-        if(turnState.canPlayExtraActionToken()){
+    public Response attemptToActionToken(){
+        Response response = new Response(turnState.canPlayExtraActionToken().getMessages());
+        if(!response.hasErrors()){
             commandHandler.handleCommand(new UseExtraActionTokenCommand(currentPlayer, this));
         }
+
+        return response;
+
+    }
+
+    public Response attemptToDrawFromDeck(){
+        Response response = turnState.canDrawCard();
+        if(!response.hasErrors()){
+            commandHandler.handleCommand(new DrawCardFromDeckCommand(currentPlayer, deck, this));
+        }
+
+        return response;
     }
 
 

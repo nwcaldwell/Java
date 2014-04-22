@@ -1,5 +1,6 @@
 package gamecontrollers.turn;
 
+import gamecontrollers.Response;
 import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 import gamecontrollers.rules.turnrules.CardsDrawnPerTurnRule;
 import gamecontrollers.rules.turnrules.ExtraActionTokensPlayedPerTurn;
@@ -106,16 +107,20 @@ public class NormalTurn extends TurnState{
   ========================================================================
    */
 
-    public boolean canDrawCard(){
-        return cardRule.getValidity();
+    public Response canDrawCard(){
+        return new Response(cardRule.getErrorMessage());
     }
 
-    public boolean canPlayExtraActionToken(){
-        return extraTokens.getValidity();
+    public Response canPlayExtraActionToken(){
+        return new Response(extraTokens.getErrorMessage());
     }
 
-    public boolean hasEnoughActionPoints(int i){
-        return actionPointsRule.getValidity() && canEndTurn();
+    public Response hasEnoughActionPoints(int i){
+        Response response = new Response( actionPointsRule.getErrorMessage());
+
+        response.addMessages(canEndTurn().getMessages());
+
+        return response;
     }
 
 
