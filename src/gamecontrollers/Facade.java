@@ -56,7 +56,7 @@ public class Facade {
         //gotta give him an arbitrary turnstate?
         planningModeCommandHandler = new PlanningModeCommandHandler(historyChannelController);
         playModeCommandHandler = new PlayModeCommandHandler(historyChannelController);
-        turnController = new TurnController(tilePlacementCommandCreator, Arrays.asList(game.getPlayers()), game.getSharedResources(), playModeCommandHandler, boardLogicController);
+        turnController = new TurnController(tilePlacementCommandCreator, Arrays.asList(game.getPlayers()), game.getSharedResources(), game.getDeck(), playModeCommandHandler, boardLogicController);
         replayController = new ReplayController();
 
         palaceCommandCreator = new MaskPalaceCommandCreator(turnController, game.getSharedResources());
@@ -101,7 +101,7 @@ public class Facade {
     }
 
     public void startPlacingTile(TileComponent tileComponent) {
-        //TODO throws an index out of bounds exception, run and press I, V, R, P, 2, 3 and you'll see
+        //TODO throws an index out of bounds exception, run and press I, V, R, P, 2 and you'll see
         System.out.println("Facade - beginning tile placement methods");
         System.out.println("Setting the root");
         tilePlacementCommandCreator.setCurrentSpace(game.getBoard().getRoot());
@@ -187,7 +187,7 @@ public class Facade {
     }
 
     public void drawCardFromDeck() {
-        throw new UnsupportedOperationException();
+        turnController.attemptToDrawFromDeck();
     }
 
     public void drawTheFestivalCard() {

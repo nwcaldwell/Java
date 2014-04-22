@@ -12,6 +12,7 @@ public class DrawCardFromDeckInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
+
         Facade.getInstance().drawCardFromDeck();
 	}
 }
