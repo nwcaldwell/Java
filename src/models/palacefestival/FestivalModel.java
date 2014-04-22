@@ -62,7 +62,7 @@ public class FestivalModel {
         return (numberOfPlayersLeft() == 1);
     }
 
-    private boolean isTie(){
+    public boolean checkForTie(){
         if(numberOfPlayersLeft() == 1)
             return false;
         return true;

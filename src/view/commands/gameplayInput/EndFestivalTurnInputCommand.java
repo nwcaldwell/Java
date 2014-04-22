@@ -2,6 +2,7 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import view.ViewController;
 import view.commands.InputCommand;
 
@@ -12,7 +13,8 @@ public class EndFestivalTurnInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-        Facade.getInstance().endFestivalTurn();
-        this.getViewController().update();
+        Response response = Facade.getInstance().endFestivalTurn();
+        getViewController().update();
+        getViewController().displayMessageToConsole(response);
     }
 }

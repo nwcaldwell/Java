@@ -30,6 +30,7 @@ public abstract class FestivalView extends View {
     private ArrayList<FestivalPlayerView> players;
     private JLabel festivalCard;
     private JLabel highestBid;
+    private JButton endFestivalFromTieButton;
 
     protected abstract void initKeyListeners(ViewController viewC);
 
@@ -46,6 +47,7 @@ public abstract class FestivalView extends View {
         players = new ArrayList<FestivalPlayerView>(4);
         festivalCard = new JLabel();
         highestBid = new JLabel();
+        endFestivalFromTieButton = new JButton();
 
         //setup view
         setBackground(Color.WHITE);
@@ -66,12 +68,17 @@ public abstract class FestivalView extends View {
         highestBid.setText("Highest bid: "+bid);
     }
 
+    public void setTieButton(boolean display){
+        endFestivalFromTieButton.setVisible(display);
+    }
+
     //TODO test this to make sure it works
     public void update(){
         FestivalModel festivalModel = Facade.getInstance().getFestivalModel();
 
         setFestivalCard(festivalModel.getFestivalCard().toString());
         setHighestBid(festivalModel.getHighestBid());
+        setTieButton(festivalModel.checkForTie());
 
         List<FestivalPlayer> fPlayers = festivalModel.getTurnOrder();
         int indexOfCurrentPlayer = festivalModel.getIndexOfCurrentPlayer();
@@ -93,18 +100,6 @@ public abstract class FestivalView extends View {
         consoleView.displayMessage(response);
     }
 
-    //TODO does this go here or the view controller?
-    public boolean alertUserThatNeedToPlayMoreCards(){
-        int response = JOptionPane.showConfirmDialog(this, "You have not bid enough points, would you like to drop out?", "Cannot End Turn", JOptionPane.YES_NO_OPTION);
-        if (response == 0) return true;
-        return false;
-    }
-
-    //TODO does this go here or the view controller?
-    public void displayWinners(String winners, int points){
-
-    }
-
     /*
     ========================================================================
       Getters
@@ -117,6 +112,10 @@ public abstract class FestivalView extends View {
 
     public JLabel getFestivalCard() {
         return festivalCard;
+    }
+
+    public JButton getTieButton(){
+        return endFestivalFromTieButton;
     }
 
     public List<FestivalPlayerView> getPlayers() {

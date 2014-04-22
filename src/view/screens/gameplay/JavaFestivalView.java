@@ -1,6 +1,7 @@
 package view.screens.gameplay;
 
 import view.ViewController;
+import view.commands.JavaButtonListener;
 import view.commands.JavaKeyListener;
 import view.commands.gameplayInput.*;
 import view.controls.FestivalPlayerView;
@@ -8,6 +9,8 @@ import view.controls.FestivalPlayerView;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.KeyEvent;
 
@@ -36,6 +39,7 @@ public class JavaFestivalView extends FestivalView {
         getHighestBid().setPreferredSize(new Dimension(CARD_WIDTH, BORDER * 2));
         center.add(getHighestBid(), BorderLayout.CENTER);
         center.add(getFestivalCard(), BorderLayout.CENTER);
+        center.add(getTieButton(), BorderLayout.CENTER);
 
         //placeholders for the cards that the user plays
         playedCardPanels = new JPanel[4];
@@ -73,12 +77,11 @@ public class JavaFestivalView extends FestivalView {
         /*
     ========================================================================
       Key Listeners
-      //TODO are these changing? Kevin?
     ========================================================================
     */
 
     public void initKeyListeners(ViewController viewController){
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_ENTER, new AcceptTieRequestCommand(viewController))); //TODO how we do this?
+        getTieButton().addActionListener(new JavaButtonListener(new AskForTieFestivalInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_ESCAPE, new CancelCurrentActionInputCommand(viewController)));
 
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_D, new DropOutOfFestivalInputCommand(viewController)));

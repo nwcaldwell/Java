@@ -1,5 +1,6 @@
 package view;
 
+import gamecontrollers.Message;
 import gamecontrollers.Response;
 import view.commands.JavaKeyListener;
 import view.screens.MainMenuView;
@@ -93,5 +94,13 @@ public class ViewController {
 
     public void displayMessageToConsole(Response response){
         currentView.displayResponseToConsole(response);
+    }
+
+    public boolean requireInputFromUser(String question, String title){
+        int response = JOptionPane.showConfirmDialog(currentView, question, title, JOptionPane.YES_NO_OPTION);
+        if(response == 0){
+            return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import view.ViewController;
 
 public class EndTurnInputCommand extends GameplayInputCommand {
@@ -11,6 +12,7 @@ public class EndTurnInputCommand extends GameplayInputCommand {
     }
 
     @Override	public void doExecute() {
-        Facade.getInstance().endTurn();
+        Response response =  Facade.getInstance().endTurn();
+        getViewController().displayMessageToConsole(response);
 	}
 }
