@@ -144,7 +144,7 @@ public class TurnController {
     }
 
     public Response attemptToActionToken(){
-        Response response = turnState.canPlayExtraActionToken();
+        Response response = new Response(turnState.canPlayExtraActionToken().getMessages());
         if(!response.hasErrors()){
             commandHandler.handleCommand(new UseExtraActionTokenCommand(currentPlayer, this));
         }
