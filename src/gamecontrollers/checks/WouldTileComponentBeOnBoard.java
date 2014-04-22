@@ -18,7 +18,6 @@ public class WouldTileComponentBeOnBoard {
         visitedTiles = new ArrayList<TileComponent>();
     }
 
-
     public boolean check(Space space, TileComponent tile){
         //clear any old calculations
         visitedTiles.clear();
