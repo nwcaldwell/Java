@@ -216,6 +216,8 @@ public class LWJGLBoardViewBackend implements Runnable{
 		devBlue=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
 				TextureFactory.getTexture("3Dobjects/DevBlue.png"));
 		devBlue.setScale(2);
+		hilight=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/hilight.obj"), 
+				TextureFactory.getTexture("3Dobjects/DevBlue.png"));
 	}
 	
 	public synchronized void hilightSpace(ArrayList<Direction> path) {

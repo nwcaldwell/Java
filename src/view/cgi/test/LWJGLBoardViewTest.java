@@ -33,6 +33,7 @@ public class LWJGLBoardViewTest {
 		board.getRoot().getAdjacentSpace(HexDirection.S)
 		.getAdjacentSpace(HexDirection.S)
 		.getAdjacentSpace(HexDirection.S)
+		.getAdjacentSpace(HexDirection.S)
 		.placeTile(new RVR().buildTile(HexDirection.S));
 		
 		view.update();
@@ -42,8 +43,9 @@ public class LWJGLBoardViewTest {
 		path.add(HexDirection.S);
 		view.addTiles(new RVR().buildTile(HexDirection.S),path);
 		path.add(HexDirection.S);
-		path.add(HexDirection.S);
 		view.displayDev(path, Color.yellow);
+		path.add(HexDirection.S);
+		view.hilightSpace(path);
 	}
 /*	
 	int x=0,y=0;
