@@ -4,6 +4,8 @@ import models.board.Board;
 import models.board.HexDirection;
 import models.board.Direction;
 import models.board.Space;
+import models.board.TileComponent;
+import models.board.TileComponentContent;
 import view.MediaController;
 
 import java.awt.Canvas;
@@ -39,7 +41,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	
 	//initialize offsets
 	static{
-		Vector2D north = new Vector2D(HEX_DISTANCE,0);
+		Vector2D north = new Vector2D(0,HEX_DISTANCE);
 		offsets[HexDirection.N.getIntValue()]=north;
 		offsets[HexDirection.NE.getIntValue()]=north.rotate(HEX_ANGLE);
 		offsets[HexDirection.SE.getIntValue()]=north.rotate(HEX_ANGLE*2);
@@ -156,23 +158,18 @@ public class LWJGLBoardViewBackend implements Runnable{
 		Model3D riceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/rice_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/rice_hex_texture.png"));
 		this.rice=new Model3D(riceHex);
-		this.rice.setRotation(0, 30, 0);
 		this.buriedSpace=new Model3D(riceHex);
-		this.buriedSpace.setRotation(0, 30, 0);
 		this.buriedSpace.setFlat();
 		this.ground=new Model3D(riceHex);
-		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
 		Model3D villageHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/village_hex_texture.png"));
 		Model3D village=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village.obj"), 
 				TextureFactory.getTexture("3Dobjects/village_texture.png"));
 		this.village=new Model3D(village,villageHex);
-		this.village.setRotation(0, 30, 0);
 		Model3D irrigationHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/irrigation_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/irrigation_hex_texture.png"));
 		this.irrigation=new Model3D(irrigationHex);
-		this.irrigation.setRotation(0, 30, 0);
 		this.irrigation.setFlat();
 
 		Model3D palaceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/hex.obj"), 
@@ -183,26 +180,22 @@ public class LWJGLBoardViewBackend implements Runnable{
 //			Model3D number=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/"+((i+1)*2)+".obj"), 
 //					TextureFactory.getTexture("3Dobjects/number_texture.png"));
 			palace[i]=new Model3D(palaceHex,model);//,number);
-			palace[i].setRotation(0, 30, 0);
 			palace[i].setFlat();
 		}
 		
 		Model3D highlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/highlands_empty_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/highlands_empty_hex.png"));
 		this.highland=new Model3D(highlandHex);
-		this.highland.setRotation(0, 30, 0);
 		this.highland.setFlat();
 
 		Model3D lowlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/lowlands_empty_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/lowlands_empty_hex.png"));
 		this.lowland=new Model3D(lowlandHex);
-		this.lowland.setRotation(0, 30, 0);
 		this.lowland.setFlat();
 		
 		Model3D empty=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/empty_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		this.ground=new Model3D(empty);
-		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
 	}
 	
@@ -213,6 +206,26 @@ public class LWJGLBoardViewBackend implements Runnable{
 		}
 		Model3D newModel=hilight.clone();
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
+	}
+	
+	public synchronized void addTiles( TileComponent root, ArrayList<Direction> path, int height){
+		ArrayList<TileComponent> visited=new ArrayList<TileComponent>();
+		Vector2D offset=new Vector2D(0,0);
+		for (Direction d:path){
+			offset=offset.translate(offsets[d.getIntValue()]);
+		}
+		addTilesRecursive(root, visited, height, offset);
+	}
+	
+	protected void addTilesRecursive(TileComponent root, ArrayList<TileComponent> visited, int height, Vector2D offset){
+		updateTile(root.getTileComponentContent(), height, offset);
+		visited.add(root);
+		for (int i=0;i<HexDirection.values().length;i++){
+			TileComponent adjacent=root.getConjoinedTile(HexDirection.values()[i]);
+			if (adjacent!=null&&!visited.contains(adjacent)){
+				addTilesRecursive(adjacent, visited, height, offset.translate(offsets[i]));
+			}
+		}
 	}
 	
 	public synchronized void displayDev(ArrayList<Direction> path, int height) {
@@ -248,14 +261,14 @@ public class LWJGLBoardViewBackend implements Runnable{
 	private void updateSpace(Space space, Vector2D offset){
 
 		if (space.getHeight()==0){
-			Model3D terrain=rice.clone();
+			Model3D terrain=ground.clone();
 			if (space.isInHighlands()){
 				terrain=highland.clone();
 			}
 			if (space.isInLowlands()){
 				terrain=lowland.clone();
 			}
-			terrain.setTranslation(new Vector3D(offset.x, -SPACE_HEIGHT, offset.y));
+			terrain.setTranslation(new Vector3D(offset.x, 0, offset.y));
 			spaces.add(terrain);
 		}
 		
@@ -265,11 +278,30 @@ public class LWJGLBoardViewBackend implements Runnable{
 			spaces.add(newModel);
 		}
 		if (space.getHeight()>0){
-			//render the top tile
-			Model3D newModel=buriedSpace.clone();
-			newModel.setTranslation(new Vector3D(offset.x, space.getHeight()*SPACE_HEIGHT, offset.y));
-			spaces.add(newModel);
+			updateTile(space.getTile().getTileComponentContent(), space.getHeight(), offset);
 		}
+	}
+	
+	private void updateTile(TileComponentContent component, int height, Vector2D offset){
+		//render the top tile
+		
+		Model3D newModel=village.clone();
+		if (component.toString().equals("irrigation")){
+			newModel=irrigation.clone();
+		}
+		if (component.toString().equals("rice")){
+			newModel=rice.clone();
+		}
+		if (component.toString().equals("village")){
+			newModel=village.clone();
+		}
+		if (component.toString().startsWith("palace")){
+			int index = Integer.parseInt(component.toString().substring(6))/2;
+			newModel=palace[index].clone();
+		}
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, -offset.y));
+		System.out.println("adding a tile "+newModel.getTranslation());
+		spaces.add(newModel);
 	}
 	
 	/**maybe, if we were doing a complicated model, I would feel the need
