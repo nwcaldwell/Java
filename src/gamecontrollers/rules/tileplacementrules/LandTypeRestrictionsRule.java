@@ -27,9 +27,9 @@ public class LandTypeRestrictionsRule extends TilePlacementRule {
 	 * (in the case of TilePlacement), or the second TileComponent in the case of Developer movement */
 	
 	public final boolean[][] validityChecker = {{true, true, true, false},
-                      												{true, true, false, false},
-                      												{false, false, true, false},
-                      										   	{false, false, false, false}};
+	      					    {true, true, false, false},
+	      					    {false, false, true, false},
+	      				   	    {false, false, false, false}};
                       	
 	private TilePlacementCommandCreator tpc;
 	private Message message;
