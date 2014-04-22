@@ -45,12 +45,13 @@ public class TiltedTilePlacement extends TilePlacementRule {
 
         //boolean to know if tilting was detected
         boolean isTilted = false;
-        for(Space space : spacesToBeTouched){
-            if(referenceHeight != space.getHeight()){
-                isTilted = true;
-                break;
+        if(visitedTiles.size() > 0)
+            for(Space space : spacesToBeTouched){
+                if(referenceHeight != space.getHeight()){
+                    isTilted = true;
+                    break;
+                }
             }
-        }
 
         if(isTilted){
             message = new Message("TILTED TILE", true);
@@ -66,32 +67,37 @@ public class TiltedTilePlacement extends TilePlacementRule {
 
 	@Override
 	public Message getErrorMessage() {
-		return null;
+		return message;
 	}
 
     //populate the list of affected spaces
     private void populateList(TileComponent tile, Space space){
         //get the directions iterator from the target tile
-        spacesToBeTouched.add(space);
-        Iterator<Direction> iterator = tile.getDirection().iterator();
+        if(tile != null)
+            visitedTiles.add(tile);
 
-        //check the spaces under the target tile for the same height
-        while(iterator.hasNext()){
-            Direction direction = iterator.next();
-            if(tile.siblingExists(direction)){
-                //tile is joined in this direction so the space in this direction will be touched
-                //add it if it hasnt already been added
-                if(!spacesToBeTouched.contains(space))
-                    spacesToBeTouched.add(space.getAdjacentSpace(direction));
+        if(tile != null && space != null) {
+            spacesToBeTouched.add(space);
+            Iterator<Direction> iterator = tile.getDirection().iterator();
+
+            //check the spaces under the target tile for the same height
+            while (iterator.hasNext()) {
+                Direction direction = iterator.next();
+                if (tile.siblingExists(direction)) {
+                    //tile is joined in this direction so the space in this direction will be touched
+                    //add it if it hasnt already been added
+                    if (!spacesToBeTouched.contains(space))
+                        spacesToBeTouched.add(space.getAdjacentSpace(direction));
 
 
-                //if that tile hasnt been visited then visit it
-                if(!visitedTiles.contains(tile))
-                    populateList(tile.getConjoinedTile(direction), space.getAdjacentSpace(direction));
+                    //if that tile hasnt been visited then visit it
+                    if (!visitedTiles.contains(tile.getConjoinedTile(direction)))
+                        populateList(tile.getConjoinedTile(direction), space.getAdjacentSpace(direction));
+                }
+
             }
-
         }
-        visitedTiles.add(tile);
+
 
 
     }

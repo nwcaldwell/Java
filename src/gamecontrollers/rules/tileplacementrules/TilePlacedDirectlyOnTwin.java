@@ -61,9 +61,9 @@ public class TilePlacedDirectlyOnTwin extends TilePlacementRule {
 
         }
         else{
-            //Space has no tile so no good
-            message = new Message("Target Space has no tile on top", true);
-            setValidity(false);
+            //Space has no tile so  good
+            message = new Message("Target Space has no tile on top", false);
+            setValidity(true);
         }
 	}
 

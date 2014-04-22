@@ -90,7 +90,6 @@ public class NormalTurn extends TurnState{
     }
 
 
-
     public void clear(){
             setActionPoints(defaultActionPoints);
             setCanEndTurn(false);

@@ -5,7 +5,9 @@ import gamecontrollers.checks.WouldTileComponentBeOnBoard;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import gamecontrollers.rules.Rule;
+import gamecontrollers.rules.tileplacementrules.TilePlacedDirectlyOnTwin;
 import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
+import gamecontrollers.rules.tileplacementrules.TiltedTilePlacement;
 import gamecontrollers.turn.TurnController;
 import models.board.Direction;
 import models.board.SharedResources;
@@ -15,6 +17,7 @@ import models.board.TileComponent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 
 public class TilePlacementCommandCreator extends TileCommandCreator {
 	private Space currentSpace;
@@ -28,6 +31,8 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
     private List<Space> targetSpaces;
     private List<Space> visited;
 
+    private List<Direction> pathToTile;
+    
     /*
   ========================================================================
      CONSTRUCTORS
@@ -41,6 +46,13 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         this.onBoardChecker = new WouldTileComponentBeOnBoard();
         this.targetSpaces = new ArrayList<Space>();
         this.visited = new ArrayList<Space>();
+        onBoardChecker = new WouldTileComponentBeOnBoard();
+
+        TiltedTilePlacement tiltedRule = new TiltedTilePlacement(this);
+        TilePlacedDirectlyOnTwin twinRule = new TilePlacedDirectlyOnTwin(this);
+        rules.add(tiltedRule);
+        rules.add(twinRule);
+        pathToTile=new ArrayList<Direction>();
     }
 
 
@@ -61,7 +73,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
 
 	public void setCurrentSpace(Space currentSpace) {
         this.currentSpace = currentSpace;
-        //update rules
+        pathToTile.clear();
         notifyRules();
 	}
 
@@ -87,6 +99,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         if(onBoardChecker.check(currentSpace.getAdjacentSpace(direction), currentTile)){
             //its all good so do the moving
             //traverse in the space direction
+        	pathToTile.add(direction);
             currentSpace = currentSpace.getAdjacentSpace(direction);
             notifyRules();
         }
@@ -179,7 +192,10 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         return response;
     }
 
-
+    public List<Direction> getPath() {
+    	return pathToTile;
+    }
+    
    /*
   ========================================================================
      PRIVATE METHODS

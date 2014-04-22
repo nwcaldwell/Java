@@ -52,12 +52,13 @@ public class PlayView extends GameplayView {
 
         // Move Tile
         JavaKeyListener rotateTileInputCommand = new JavaKeyListener(KeyEvent.VK_SPACE, new RotateTileInputCommand(viewController));
-        JavaKeyListener moveTileInputCommandSW = new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveTileInputCommand(viewController, HexDirection.SW));
-        JavaKeyListener moveTileInputCommandS = new JavaKeyListener(KeyEvent.VK_NUMPAD2, new MoveTileInputCommand(viewController, HexDirection.S));
-        JavaKeyListener moveTileInputCommandSE = new JavaKeyListener(KeyEvent.VK_NUMPAD3, new MoveTileInputCommand(viewController, HexDirection.SE));
-        JavaKeyListener moveTileInputCommandNW = new JavaKeyListener(KeyEvent.VK_NUMPAD7, new MoveTileInputCommand(viewController, HexDirection.NW));
-        JavaKeyListener moveTileInputCommandN = new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveTileInputCommand(viewController, HexDirection.N));
-        JavaKeyListener moveTileInputCommandNE = new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveTileInputCommand(viewController, HexDirection.NE));
+        JavaKeyListener moveTileInputCommandSW = new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.SW));
+        JavaKeyListener moveTileInputCommandS = new JavaKeyListener(KeyEvent.VK_NUMPAD2, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.S));
+        JavaKeyListener moveTileInputCommandSE = new JavaKeyListener(KeyEvent.VK_NUMPAD3, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.SE));
+        JavaKeyListener moveTileInputCommandNW = new JavaKeyListener(KeyEvent.VK_NUMPAD7, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.NW));
+        JavaKeyListener moveTileInputCommandN = new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.N));
+        JavaKeyListener moveTileInputCommandNE = new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.NE));
+
 
         // Festival input
         JavaKeyListener tabPalaceInputCommand = new JavaKeyListener(KeyEvent.VK_TAB, new TabPalaceInputCommand(viewController));
