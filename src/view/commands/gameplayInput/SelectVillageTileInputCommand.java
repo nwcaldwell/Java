@@ -3,9 +3,8 @@ package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
 import models.board.HexDirection;
-import models.board.TileComponent;
+import models.board.HexTiles.V;
 import view.ViewController;
-import models.board.TileComponentContents.Village;
 import view.commands.InputCommand;
 
 public class SelectVillageTileInputCommand extends InputCommand {
@@ -15,6 +14,6 @@ public class SelectVillageTileInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-        Facade.getInstance().startPlacingTile( new TileComponent(HexDirection.N, new Village() ) );
+        Facade.getInstance().startPlacingTile( new V( ).buildTile(HexDirection.N) );
 	}
 }

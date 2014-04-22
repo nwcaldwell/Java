@@ -1,6 +1,9 @@
 // TODO developer [ Jorge ], test [ Sydney ]
 package view.commands.gameplayInput;
 
+import gamecontrollers.Facade;
+import models.board.HexDirection;
+import models.board.HexTiles.RVR;
 import view.ViewController;
 import view.commands.InputCommand;
 
@@ -11,6 +14,6 @@ public class SelectThreeTileInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-		throw new UnsupportedOperationException();
+        Facade.getInstance().startPlacingTile( new RVR( ).buildTile(HexDirection.N) );
 	}
 }

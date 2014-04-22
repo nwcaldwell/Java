@@ -16,8 +16,7 @@ public class SharedResourcesView extends JPanel {
     private final String source = "layout_%s.png";
 
     private JLabel threeTiles, irrigationTiles;
-    private JLabel palace2Tiles, palace4Tiles, palace6Tiles, palace8Tiles, palace10Tiles;
-    private JButton palaceDeck, festivalCard;
+    private JLabel palace2Tiles, palace4Tiles, palace6Tiles, palace8Tiles, palace10Tiles, palaceDeck, festivalCard;
     private JLabel actionSummaryCard;
 
     public SharedResourcesView(){
@@ -32,11 +31,11 @@ public class SharedResourcesView extends JPanel {
         palace6Tiles = new JLabel();
         palace8Tiles = new JLabel();
         palace10Tiles = new JLabel();
-        palaceDeck = new JButton();
-        festivalCard = new JButton();
+        palaceDeck = new JLabel();
+        festivalCard = new JLabel();
         actionSummaryCard = new JLabel(); //tODo
 
-        //setBackground(Color.WHITE);
+        setBackground(Color.WHITE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         initializeLayout();
@@ -73,14 +72,6 @@ public class SharedResourcesView extends JPanel {
 
     private void setLayout(JLabel comp, int height, String imageName){
         comp.setPreferredSize(new Dimension(WIDTH/5 - BORDER, height));
-        comp.setHorizontalTextPosition(SwingConstants.CENTER);
-        comp.setVerticalTextPosition(SwingConstants.BOTTOM);
-        comp.setVerticalAlignment(SwingConstants.BOTTOM);
-        comp.setIcon(new ImageIcon(MediaController.getInstance().getImage(String.format(source, imageName))));
-    }
-
-    private void setLayout(JButton comp, int height, String imageName){
-        comp.setPreferredSize(new Dimension(WIDTH/4 - BORDER, height));
         comp.setHorizontalTextPosition(SwingConstants.CENTER);
         comp.setVerticalTextPosition(SwingConstants.BOTTOM);
         comp.setVerticalAlignment(SwingConstants.BOTTOM);

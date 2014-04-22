@@ -15,9 +15,11 @@ public abstract class BoardView extends JPanel {
     private final int WIDTH = (int)(3*Toolkit.getDefaultToolkit().getScreenSize().getWidth()/4 - BORDER/2);
     private final int HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 300 - BORDER); //see PlayerView for Height
 	protected Board board;
+    private ViewController controller;
 
-    public BoardView(Board board){
+    public BoardView(Board board, ViewController vc){
         this.board = board;
+        this.controller = vc;
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.DARK_GRAY);
@@ -31,4 +33,8 @@ public abstract class BoardView extends JPanel {
     
     /**draws a developer*/
     public abstract void displayDev(ArrayList<Direction> path, int height);
+
+    public void setFrameAsFocused(){
+        controller.setFrameAsFocused();
+    }
 }

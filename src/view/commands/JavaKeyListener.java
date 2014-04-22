@@ -7,7 +7,8 @@ import java.awt.event.KeyListener;
 
 //TODO [Jorge][Sydney]
 
-public class JavaKeyListener implements KeyListener {
+//public class JavaKeyListener implements KeyListener {
+public class JavaKeyListener {
 
     private InputCommand command;
     private int keyCode;
@@ -17,17 +18,10 @@ public class JavaKeyListener implements KeyListener {
         this.keyCode = key;
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent e) { }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-        if ( e.getKeyCode() == keyCode ) {
+    public void respondToKeyEvent(KeyEvent e) {
+        if(e.getKeyCode() == keyCode){
             command.execute();
         }
+
     }
 }
