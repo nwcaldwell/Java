@@ -4,6 +4,9 @@ package view.commands.gameplayInput;
 import gamecontrollers.Facade;
 import models.board.Direction;
 import view.ViewController;
+import view.commands.JavaKeyListener;
+
+import java.util.ArrayList;
 
 public class MoveDeveloperInputCommand extends GameplayInputCommand {
 
@@ -17,5 +20,6 @@ public class MoveDeveloperInputCommand extends GameplayInputCommand {
     @Override
     public void doExecute() {
         Facade.getInstance().moveDeveloper(direction);
+
 	}
 }

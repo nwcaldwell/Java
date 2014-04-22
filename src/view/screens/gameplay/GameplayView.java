@@ -23,7 +23,7 @@ public abstract class GameplayView extends View {
     private static final int BORDER = 10;
     protected ConsoleView consoleView;
     protected ArrayList<PlayerView> playerViews;
-//    protected BoardView boardView;
+    protected BoardView boardView;
     protected SharedResourcesView sharedResourcesView;
     protected JPanel playerContainer;
     private JavaGame game;
@@ -38,7 +38,7 @@ public abstract class GameplayView extends View {
         //create the attributes
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
-//        boardView = new LWJGLBoardView(game.getBoard(), getViewController());
+        boardView = new LWJGLBoardView(game.getBoard(), getViewController());
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
@@ -68,11 +68,11 @@ public abstract class GameplayView extends View {
         JPanel leftSide = new JPanel();
         leftSide.setPreferredSize(new Dimension(3 * this.getScreenWidth() / 4 - BORDER / 2, this.getScreenHeight() - BORDER * 2));
         leftSide.setBackground(Color.WHITE);
-//        int boardViewHeight = this.getScreenHeight() - 250 - BORDER*2;
-//        boardView.setPreferredSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
-//        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
-//        boardView.setFocusable(false);
-//        leftSide.add(boardView);
+        int boardViewHeight = this.getScreenHeight() - 250 - BORDER*2;
+        boardView.setPreferredSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
+        boardView.setSize(new Dimension(3*this.getScreenWidth()/4 - BORDER/2, boardViewHeight));
+        boardView.setFocusable(false);
+        leftSide.add(boardView);
         leftSide.add(playerContainer);
 
         add(leftSide, BorderLayout.WEST);
@@ -94,7 +94,7 @@ public abstract class GameplayView extends View {
     }
 
     public void update(){
-//        boardView.update();
+        boardView.update();
         sharedResourcesView.update(game.getSharedResources(), game.getDeck());
 //        consoleView.update();
         JavaPlayer[] players = game.getPlayers();

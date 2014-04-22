@@ -17,6 +17,7 @@ public class UseExtraActionTokenCommand implements GameplayActionCommand {
     }
 
 	@Override	public void execute() {
+		System.out.println("Playing token");
 		player.playExtraActionToken();
         controller.playExtraActionToken();
 	}

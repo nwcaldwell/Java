@@ -1,5 +1,6 @@
 package view.commands.gameplayInput;
 
+import gamecontrollers.Facade;
 import view.ViewController;
 import view.commands.InputCommand;
 
@@ -13,6 +14,6 @@ public class UndoActionInputCommand extends InputCommand {
     }
 
     @Override	public void execute() {
-        throw new UnsupportedOperationException();
+        Facade.getInstance().undoCommand();
     }
 }

@@ -23,7 +23,7 @@ public class ReplayController {
 
     public void goBackward(){
         if(iterator.hasPrevious()){
-            iterator.previous().execute();
+            iterator.previous().undo();
         }
     }
 

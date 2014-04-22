@@ -80,7 +80,7 @@ public class ViewController {
         gameWindow.addKeyListener(keyListener);
     }
 
-    private void removeCurrentKeyListeners() {
+    public void removeCurrentKeyListeners() {
         KeyListener[] key = gameWindow.getKeyListeners();
         for (KeyListener aKey : key) {
             gameWindow.removeKeyListener(aKey);
@@ -91,7 +91,7 @@ public class ViewController {
         gameWindow.requestFocus();
     }
 
-    public void displayMessageToConsole(Response response){
+    public void showError(Response response){
         currentView.displayResponseToConsole(response);
     }
 }

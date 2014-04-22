@@ -1,6 +1,7 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.commands.GameplayActionCommand;
+import models.board.Direction;
 import models.board.Space;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 public abstract class DeveloperCommandCreator implements GameplayCommandCreator{
 
     public abstract GameplayActionCommand getCommand();
+
+    public abstract void move(Direction direction);
 
     public abstract int getCost();
 

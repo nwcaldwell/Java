@@ -1,6 +1,7 @@
 package gamecontrollers.commandcreator;
 
 import gamecontrollers.Response;
+import gamecontrollers.checks.WouldTileComponentBeOnBoard;
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.PlaceTileCommand;
 import gamecontrollers.rules.Rule;
@@ -21,6 +22,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
     private int cost;
     private TileCreationVisitor visitor;
     private SharedResources resources;
+    private WouldTileComponentBeOnBoard onBoardChecker;
 
     /*
   ========================================================================
@@ -32,6 +34,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         this.controller = controller;
         visitor = new TileCreationVisitor(controller, resources);
         this.resources = resources;
+        onBoardChecker = new WouldTileComponentBeOnBoard();
     }
 
 
@@ -69,14 +72,31 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
    */
 
 	public void move(Direction direction) {
-		//traverse in the space direction
-        currentSpace = currentSpace.getAdjacentSpace(direction);
-        notifyRules();
+        //check for if we are moving off board
+        if(onBoardChecker.check(currentSpace.getAdjacentSpace(direction), currentTile)){
+            //its all good so do the moving
+            //traverse in the space direction
+            currentSpace = currentSpace.getAdjacentSpace(direction);
+            notifyRules();
+        }
+
 	}
 	
 	public void rotateCurrentTileComponent() {
-		currentTile.rotateAround(currentTile);
-        notifyRules();
+        //rotate this guy momentarily and run the onboard check
+        currentTile.rotateAround(currentTile);
+        if(onBoardChecker.check(currentSpace, currentTile)) {
+            //its okay to do
+            //keep the change and notify the rules
+            notifyRules();
+        }
+        else{
+            //rotate was bad and you cant do that
+            //need to rotate back to original position
+            for(int i = 0; i < currentTile.getDirection().numDirections() - 1; i ++){
+                currentTile.rotateAround(currentTile);
+            }
+        }
 	}
 
 
