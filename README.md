@@ -11,11 +11,17 @@ Software Implementation of the Board Game Java
 ## Installation Instructions<a name = "Instructions"/>
 	
 	From the folder : 
-	Run the following command to compile: 
-		javac src/*/*.java
-	To run it, cd into the src folder and run: 
-		java Java.RunGame
-		
+	Run the following command to compile and run:
+	
+            ./RunGame.sh
+
+	The following instruction was used for running test files:
+
+	    ./runTest.sh
+	
+
+	Due to a known LWJGL bug, this program works best on Linux.  In Mac, the LWJGL display will not be embedded in the window.  This appears to have been fixed by commit 211b14c8d517967af85ce521f5906cb9f63d824d, but the stable builds were too old, Jenkins nightlies were broken, the compilation scripts had unresolved dependencies.
+	
 ## Running the Game<a name="Running"/>
 
 	From the ready-executable:
