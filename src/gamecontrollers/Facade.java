@@ -121,9 +121,20 @@ public class Facade {
 
     /*
     ========================================================================
+      Turn Handlers
+    ========================================================================
+    */
+
+    public Response endTurn() {
+        return turnController.attemptToEndTurn();
+    }
+
+    /*
+    ========================================================================
       Board Communication Methods
     ========================================================================
     */
+
     public void tabThroughDevelopers() {
         developerMovementCommandCreator.iterateThroughBoardDevelopers();
     }
@@ -140,30 +151,42 @@ public class Facade {
         developerMovementCommandCreator.move(direction);
     }
 
-    public void endTurn() {
-        turnController.endTurn();
-
-    }
-
     public void tabThroughPalace() {
         palaceCommandCreator.tabThroughPalacesRemaining();
     }
 
-    public Response playExtraActionToken() {
-        return turnController.attemptToActionToken();
+    public boolean validPlacement(TileComponent tile, Space space){
+        System.out.println("Facade.findShortestPath is not implemented yet");
+        return false;
     }
 
     public void rotateCurrentTileComponent() {
         tilePlacementCommandCreator.rotateCurrentTileComponent();
     }
 
+    /*
+    ========================================================================
+      Shared Resources communication
+    ========================================================================
+    */
+
+    public Response playExtraActionToken() {
+        return turnController.attemptToActionToken();
+    }
+
+    public Response drawCardFromDeck() {
+        return turnController.attemptToDrawFromDeck();
+    }
+
+    public Response drawTheFestivalCard() {
+        return turnController.attemptToDrawFestivalCard();
+    }
 
     /*
     ========================================================================
       Festival Communication Methods
     ========================================================================
     */
-
 
     public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palaceAssociated){
         festivalController.startFestival(players, festivalCard, palaceAssociated);
@@ -181,29 +204,12 @@ public class Facade {
         festivalTurnController.dropOutCommandCreator();
     }
 
-    public void endFestivalTurn(){
-        festivalTurnController.endTurnFinalization();
+    public Response endFestivalTurn(){
+        return festivalTurnController.attemptToEndTurn();
     }
 
-    public void acceptTieRequest() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void askForPalaceFestivalTie(){
-        throw new UnsupportedOperationException();
-    }
-
-    public Response drawCardFromDeck() {
-        return turnController.attemptToDrawFromDeck();
-    }
-
-    public Response drawTheFestivalCard() {
-        return turnController.attemptToDrawFestivalCard();
-    }
-
-    public boolean validPlacement(TileComponent tile, Space space){
-        System.out.println("Facade.findShortestPath is not implemented yet");
-        return false;
+    public void askForPalaceFestivalTie() {
+        festivalTurnController.endFestival();
     }
 
     public void endFestival(List<PalaceCard> discardedCards, List<JavaPlayer> playersFromFestival, int pointsEarned) {
@@ -243,7 +249,6 @@ public class Facade {
 
     public void cancelCurrentCommand(){
         throw new UnsupportedOperationException();
-        //turnController.cancelCurrentCommand();
     }
 
 }
