@@ -117,6 +117,15 @@ public class Facade {
       Board Communication Methods
     ========================================================================
     */
+    
+    public List<Direction> getTilePlacementPath(){
+    	return tilePlacementCommandCreator.getPath();
+    }
+    
+    public TileComponent getCurrentTileComponent(){
+    	return tilePlacementCommandCreator.getCurrentTile();
+    }
+    
     public void tabThroughDevelopers() {
         developerMovementCommandCreator.iterateThroughBoardDevelopers();
     }

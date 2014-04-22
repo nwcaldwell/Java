@@ -13,6 +13,9 @@ import models.board.Space;
 import models.board.TileComponent;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import view.ViewController;
 
 public class TilePlacementCommandCreator extends TileCommandCreator {
 	private Space currentSpace;
@@ -24,6 +27,8 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
     private SharedResources resources;
     private WouldTileComponentBeOnBoard onBoardChecker;
 
+    private List<Direction> pathToTile;
+    
     /*
   ========================================================================
      CONSTRUCTORS
@@ -50,7 +55,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
 
 	public void setCurrentSpace(Space currentSpace) {
         this.currentSpace = currentSpace;
-        //update rules
+        pathToTile.clear();
         notifyRules();
 	}
 
@@ -76,6 +81,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         if(onBoardChecker.check(currentSpace.getAdjacentSpace(direction), currentTile)){
             //its all good so do the moving
             //traverse in the space direction
+        	pathToTile.add(direction);
             currentSpace = currentSpace.getAdjacentSpace(direction);
             notifyRules();
         }
@@ -132,7 +138,10 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         return response;
     }
 
-
+    public List<Direction> getPath() {
+    	return pathToTile;
+    }
+    
    /*
   ========================================================================
      PRIVATE METHODS
