@@ -76,7 +76,7 @@ public class ViewController {
         }
     }
 
-    private void addKeyListener(KeyListener keyListener){
+    public void addKeyListener(KeyListener keyListener){
         gameWindow.addKeyListener(keyListener);
     }
 

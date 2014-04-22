@@ -12,12 +12,12 @@ public class Irrigation extends NotWalkable {
 
     @Override
     public void accept(TileVisitor v) {
-        throw new UnsupportedOperationException();
+        v.visit(this);
     }
 
     @Override
     public boolean canAcceptPalace(Palace p) {
-        throw new UnsupportedOperationException();
+        return getCanAcceptPalace();
     }
     
     public String toString(){

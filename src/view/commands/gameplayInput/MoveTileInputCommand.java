@@ -13,10 +13,10 @@ public class MoveTileInputCommand extends GameplayInputCommand {
     private Direction direction;
     private BoardView boardView;
 
-    public MoveTileInputCommand(ViewController viewController, BoardView boardview, Direction direction) {
+    public MoveTileInputCommand(ViewController viewController, BoardView bv, Direction direction) {
         super(viewController);
         this.direction = direction;
-        this.boardView=boardView;
+        this.boardView=bv;
     }
 
     @Override	public void doExecute() {

@@ -9,21 +9,16 @@ import view.commands.JavaKeyListener;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SelectDeveloperInputCommand extends GameplayInputCommand {
 
     //this is the set of keylisteners that will do stuff when stuff happens
-    private ArrayList<JavaKeyListener> keyListeners =  new ArrayList<JavaKeyListener>(){{
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveDeveloperInputCommand(getViewController(), HexDirection.SW)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD2, new MoveDeveloperInputCommand(getViewController(), HexDirection.S)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD3, new MoveDeveloperInputCommand(getViewController(), HexDirection.SE)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD7, new MoveDeveloperInputCommand(getViewController(), HexDirection.NW)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveDeveloperInputCommand(getViewController(), HexDirection.N)));
-        add(new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveDeveloperInputCommand(getViewController(), HexDirection.NE)));
-    }};
+    private List<JavaKeyListener> keySet;
 
     public SelectDeveloperInputCommand(ViewController viewController) {
         super(viewController);
+        keySet = null;
     }
 
 
@@ -36,7 +31,15 @@ public class SelectDeveloperInputCommand extends GameplayInputCommand {
         }
         else {
             getViewController().removeCurrentKeyListeners();
-            getViewController().addKeyListeners(keyListeners);
+            getViewController().addKeyListeners(keySet);
         }
 	}
+
+    public void setKeySet(List<JavaKeyListener> newKeySet) {
+        keySet = newKeySet;
+    }
+
+    public List<JavaKeyListener> getKeySet(){
+        return keySet;
+    }
 }

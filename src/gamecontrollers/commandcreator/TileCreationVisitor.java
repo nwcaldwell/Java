@@ -2,6 +2,7 @@ package gamecontrollers.commandcreator;
 
 import gamecontrollers.commands.GameplayActionCommand;
 import gamecontrollers.commands.gameplaycommands.*;
+import gamecontrollers.rules.tileplacementrules.TilePlacementRule;
 import gamecontrollers.turn.TurnController;
 import models.board.*;
 import models.board.TileComponentContents.Irrigation;
@@ -9,6 +10,7 @@ import models.board.TileComponentContents.Palace;
 import models.board.TileComponentContents.Rice;
 import models.board.TileComponentContents.Village;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -20,7 +22,7 @@ public class TileCreationVisitor {
     private GameplayActionCommand command;
     //things needed to create command
     private TurnController controller;
-    private HashSet<TileComponent> visitedTiles;
+    private HashSet<TileComponent> visitedTiles = new HashSet<TileComponent>();
     private Space space;
     private SharedResources resources;
 
@@ -53,7 +55,7 @@ public class TileCreationVisitor {
 
         while(it.hasNext()) {
             Direction temp = it.next();
-            if (component.siblingExists(temp)){
+            if (component.siblingExists(temp) && !visitedTiles.add(component.getConjoinedTile(temp))){
                 component.getConjoinedTile(temp).accept(this);
             }
         }

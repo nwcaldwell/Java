@@ -4,6 +4,7 @@ import gamecontrollers.BoardLogicController;
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
 import gamecontrollers.commands.gameplaycommands.DrawCardFromDeckCommand;
+import gamecontrollers.commands.gameplaycommands.DrawFestivalCardCommand;
 import gamecontrollers.commands.gameplaycommands.UseExtraActionTokenCommand;
 import models.board.SharedResources;
 import models.palacefestival.Deck;
@@ -62,8 +63,9 @@ public class TurnController {
     //Response incase of error
     public Response commitMove(){
         //check this turns rules stuff real quick
-        Response response = turnState.checkRules();
-
+        //actually dont do that
+        //Response response = turnState.checkRules();
+        Response response = new Response();
 
         //check from CommandCreator if it is possible and add it to current response
         response.addMessages(currentCommandCreator.checkPossible().getMessages());
@@ -166,6 +168,14 @@ public class TurnController {
         return response;
     }
 
+    public Response attemptToDrawFestivalCard(){
+        Response response = turnState.canDrawCard();
+        if(!response.hasErrors()){
+            commandHandler.handleCommand(new DrawFestivalCardCommand(currentPlayer, deck, this));
+        }
+
+        return response;
+    }
 
      /*
    ========================================================================

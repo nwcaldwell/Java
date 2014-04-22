@@ -2,6 +2,7 @@
 package view.commands.gameplayInput;
 
 import gamecontrollers.Facade;
+import gamecontrollers.Response;
 import view.ViewController;
 
 public class DrawFestivalCardInputCommand extends GameplayInputCommand {
@@ -11,6 +12,7 @@ public class DrawFestivalCardInputCommand extends GameplayInputCommand {
     }
 
     @Override	public void doExecute() {
-        Facade.getInstance().drawTheFestivalCard();
+        Response response = Facade.getInstance().drawTheFestivalCard();
+        getViewController().displayMessageToConsole(response);
 	}
 }
