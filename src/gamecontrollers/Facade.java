@@ -6,6 +6,7 @@ import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.*;
 import models.Pair;
 import models.board.Direction;
+import models.board.HexDirection;
 import models.board.JavaGame;
 import models.board.Space;
 import models.board.TileComponent;
@@ -117,6 +118,18 @@ public class Facade {
         turnController.setCommandBuilder(tilePlacementCommandCreator);
         System.out.println("completed placing tile");
     }
+    
+    public void startPlacingPalace(Palace tileComponent) {
+        //TODO throws an index out of bounds exception, run and press I, V, R, P, 2 and you'll see
+        System.out.println("Facade - beginning tile placement methods");
+        System.out.println("Setting the root");
+        palaceCommandCreator.setCurrentSpace(game.getBoard().getRoot());
+        System.out.println("Setting the tile component to place");
+        palaceCommandCreator.setCurrentLevel(tileComponent.getLevel());
+        System.out.println("setting the command builder");
+        turnController.setCommandBuilder(palaceCommandCreator);
+        System.out.println("completed placing tile");
+    }
 
     /*
     ========================================================================
@@ -134,11 +147,19 @@ public class Facade {
     ========================================================================
     */
     public List<Direction> getTilePlacementPath(){
-    	return tilePlacementCommandCreator.getPath();
+    	if (tilePlacementCommandCreator.getCurrentTile()!=null){
+    		return tilePlacementCommandCreator.getPath();
+    	}else{
+    		return palaceCommandCreator.getPath();
+    	}
     }
     
     public TileComponent getCurrentTileComponent(){
-    	return tilePlacementCommandCreator.getCurrentTile();
+    	if (tilePlacementCommandCreator.getCurrentTile()!=null){
+    		return tilePlacementCommandCreator.getCurrentTile();
+    	}else{
+    		return new TileComponent(HexDirection.N, new Palace(palaceCommandCreator.getCurrentLevel()));
+    	}
     }
 
     public void tabThroughDevelopers() {
@@ -146,7 +167,11 @@ public class Facade {
     }
 
     public void moveTile(Direction direction){
-        tilePlacementCommandCreator.move(direction);
+    	if (tilePlacementCommandCreator.getCurrentTile()!=null){
+    		tilePlacementCommandCreator.move(direction);
+    	}else{
+    		palaceCommandCreator.move(direction);
+    	}
     }
 
     public void movePalace(Direction direction){

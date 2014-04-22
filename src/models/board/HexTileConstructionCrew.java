@@ -102,6 +102,8 @@ public class HexTileConstructionCrew extends TileConstructionCrew {
 					grid.get(lineNum).add(new TileComponent(dir, new Village()));
 				else if(line.charAt(j) == 'R')
 					grid.get(lineNum).add(new TileComponent(dir, new Rice()));
+				else if(line.charAt(j) == 'P')
+					grid.get(lineNum).add(new TileComponent(dir, new Palace(2)));
 				else
 					throw new IllegalStateException("Input wasn't expected!");
 			}

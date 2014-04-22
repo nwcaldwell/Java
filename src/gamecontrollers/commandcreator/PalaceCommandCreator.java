@@ -1,6 +1,8 @@
 package gamecontrollers.commandcreator;
 
 
+import java.util.List;
+
 import gamecontrollers.Response;
 import gamecontrollers.commands.GameplayActionCommand;
 import models.board.Direction;
@@ -21,6 +23,9 @@ public abstract class PalaceCommandCreator implements GameplayCommandCreator {
 
 
     public abstract void tabThroughPalacesRemaining();
+	public abstract void setCurrentSpace(Space root);
+	public abstract void setCurrentLevel(int level);
+	public abstract List<Direction> getPath();
 
 }
 

@@ -4,6 +4,7 @@ package view.commands.gameplayInput;
 import gamecontrollers.Facade;
 import models.board.HexDirection;
 import models.board.HexTiles.P;
+import models.board.TileComponentContents.Palace;
 import view.ViewController;
 import view.commands.JavaKeyListener;
 
@@ -21,7 +22,7 @@ public class SelectPalaceTileInputCommand extends GameplayInputCommand {
 
     @Override
     protected void doExecute() {
-        Facade.getInstance().startPlacingTile( new P( ).buildTile(HexDirection.N) );
+        Facade.getInstance().startPlacingPalace( new Palace(2) );
         getViewController().removeCurrentKeyListeners();
         getViewController().addKeyListeners(keySet);
         getViewController().getBoardview().update();
