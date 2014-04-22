@@ -21,17 +21,17 @@ public class FestivalController {
         return turnController;
     }
 
-    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palace){
+    public void startFestival(List<JavaPlayer> players, PalaceCard festivalCard, Palace palace){
         //convert the players into FestivalPlayers
         //the players passed in are the ones in the city
         //so need to check if their cards match the festival card
 
         List<FestivalPlayer> festivalPlayers = new ArrayList<FestivalPlayer>();
 
-        for(int i = 0; i < players.length; i++){
-            if(canParticipateInFestival(players[i].getPalaceCards(), festivalCard)){
+        for(int i = 0; i < players.size(); i++){
+            if(canParticipateInFestival(players.get(i).getPalaceCards(), festivalCard)){
                 //they can participate in the festival
-                festivalPlayers.add(new FestivalPlayer(players[i], getEligibleCards(players[i].getPalaceCards(), festivalCard)));
+                festivalPlayers.add(new FestivalPlayer(players.get(i), getEligibleCards(players.get(i).getPalaceCards(), festivalCard)));
             }
         }
 

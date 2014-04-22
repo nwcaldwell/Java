@@ -6,10 +6,7 @@ import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.*;
 import models.Pair;
-import models.board.Direction;
-import models.board.JavaGame;
-import models.board.Space;
-import models.board.TileComponent;
+import models.board.*;
 import models.board.TileComponentContents.Palace;
 import models.palacefestival.FestivalModel;
 import models.palacefestival.JavaPlayer;
@@ -130,6 +127,11 @@ public class Facade {
         return turnController.attemptToEndTurn();
     }
 
+    public Response askForFestival(){
+        //TODO fix this, placeholder for functionality example
+        return turnController.attemptToHoldFestival(null);
+    }
+
     /*
     ========================================================================
       Board Communication Methods
@@ -196,7 +198,7 @@ public class Facade {
     ========================================================================
     */
 
-    public void startFestival(JavaPlayer[] players, PalaceCard festivalCard, Palace palaceAssociated){
+    public void startFestival(List<JavaPlayer> players, PalaceCard festivalCard, Palace palaceAssociated){
         festivalController.startFestival(players, festivalCard, palaceAssociated);
     }
 

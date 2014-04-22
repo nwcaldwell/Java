@@ -96,10 +96,12 @@ public class ViewController {
         currentView.displayResponseToConsole(response);
     }
 
-    public boolean requireInputFromUser(String question, String title){
-        int response = JOptionPane.showConfirmDialog(currentView, question, title, JOptionPane.YES_NO_OPTION);
-        if(response == 0){
-            return true;
+    public boolean requireInputFromUser(String question, String title, boolean ask){
+        if(ask) {
+            int response = JOptionPane.showConfirmDialog(currentView, question, title, JOptionPane.YES_NO_OPTION);
+            if (response == 0) {
+                return true;
+            }
         }
         return false;
     }

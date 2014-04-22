@@ -5,6 +5,8 @@ import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
 import gamecontrollers.commands.gameplaycommands.*;
 import models.board.SharedResources;
+import models.board.Space;
+import models.board.TileComponentContents.Palace;
 import models.palacefestival.Deck;
 import models.palacefestival.JavaPlayer;
 
@@ -171,12 +173,23 @@ public class TurnController {
         return response;
     }
 
-    public Response attemptToEndTurn(){
+    //this is called after the player has selected the palace that he'd like to play on
+    public Response attemptToHoldFestival(Space palace){
         Response response = turnState.canEndTurn();
-        if(!response.hasErrors()){
-            commandHandler.handleCommand(new EndTurnCommand(this));
+        if(!response.hasErrors() && board.playerHasDeveloperInCity(palace, currentPlayer)){
+            //ask if would like to start a festival
+            //TODO using this for testing sake, so it has intentional flaws
+            commandHandler.handleCommand(new StartFestivalCommand(turnOrder, new Palace(6), deck.getFestivalCard()));
         }
         return response;
+    }
+
+    public Response attemptToEndTurn(){
+        Response endTurnResponse = turnState.canEndTurn();
+        if(!endTurnResponse.hasErrors()){
+            commandHandler.handleCommand(new EndTurnCommand(this));
+        }
+        return endTurnResponse;
     }
 
      /*
