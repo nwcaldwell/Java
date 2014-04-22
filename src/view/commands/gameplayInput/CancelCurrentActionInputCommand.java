@@ -14,6 +14,8 @@ public class CancelCurrentActionInputCommand extends GameplayInputCommand {
     }
 
     @Override	public void doExecute() {
+
         Facade.getInstance().cancelCurrentCommand();
+
     }
 }

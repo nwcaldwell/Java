@@ -87,7 +87,7 @@ public class ModelFactory {
 						String[] indicies=tokens[i].split("/");
 						fv[tokens.length-(i+1)]=vertices.get(Integer.parseInt(indicies[0])-1);
 						
-						if (indicies[1].length()>0){
+						if (indicies.length>1&&indicies[1].length()>0){
 							fc[tokens.length-(i+1)]=coords.get(Integer.parseInt(indicies[1])-1);
 						}else{
 							fullTextureData=false;

@@ -9,6 +9,7 @@ import view.controls.BoardView;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 
 /**an implementation of BoardView that uses an LWJGL canvas*/
 public class LWJGLBoardView extends BoardView {
@@ -49,28 +50,28 @@ public class LWJGLBoardView extends BoardView {
 			}
 		}
 	}
-	
-	@Override
-	public synchronized void hilightSpace(ArrayList<Direction> path) {
-		backend.hilightSpace(path);
-	}
-	
-	@Override
-	public synchronized void displayDev(ArrayList<Direction> path, Color c) {
-		backend.displayDev(path, c);
-	}
 
 	@Override
-	public void addTiles(TileComponent root, ArrayList<Direction> path) {
-		backend.addTiles(root, path);
-	}
-	
-	@Override
-	public synchronized void update() {
+	public void update() {
 		backend.update();
 	}
-	
-	////////////////getters and setters////////////////
+
+    @Override
+    public void hilightSpace(List<Direction> path) {
+        backend.hilightSpace(path);
+    }
+
+    @Override
+    public void displayDev(List<Direction> path, Color c) {
+        backend.displayDev(path, c);
+    }
+
+    @Override
+    public void addTiles(TileComponent root, List<Direction> path) {
+        backend.addTiles(root, path);
+    }
+
+    ////////////////getters and setters////////////////
 	
 	public synchronized Vector3D getSceneTranslation() {
 		return backend.getSceneTranslation();

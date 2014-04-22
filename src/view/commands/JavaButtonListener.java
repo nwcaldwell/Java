@@ -11,6 +11,7 @@ public class JavaButtonListener implements ActionListener {
     public JavaButtonListener(InputCommand command){
         inputCommand = command;
     }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         inputCommand.execute();

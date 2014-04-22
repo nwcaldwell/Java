@@ -36,7 +36,7 @@ public abstract class BoardView extends JPanel {
     public abstract void hilightSpace(List<Direction> path);
     
     /**draws a developer*/
-    public abstract void displayDev(List<Direction> path);
+    public abstract void displayDev(List<Direction> path, Color c);
 
     public abstract void addTiles(TileComponent root, List<Direction> path);
     

@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -216,9 +217,11 @@ public class LWJGLBoardViewBackend implements Runnable{
 		devBlue=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/dev.obj"), 
 				TextureFactory.getTexture("3Dobjects/DevBlue.png"));
 		devBlue.setScale(2);
+		hilight=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/hilight.obj"), 
+				TextureFactory.getTexture("3Dobjects/DevBlue.png"));
 	}
 	
-	public synchronized void hilightSpace(ArrayList<Direction> path) {
+	public synchronized void hilightSpace(List<Direction> path) {
 		Vector2D offset=new Vector2D(0,0);
 		Space spaceRoot=board.getRoot();
 		int height = 0;
@@ -234,7 +237,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
 	}
 	
-	public synchronized void addTiles( TileComponent root, ArrayList<Direction> path){
+	public synchronized void addTiles( TileComponent root, List<Direction> path){
 		ArrayList<TileComponent> visited=new ArrayList<TileComponent>();
 		Vector2D offset=new Vector2D(0,0);
 		Space spaceRoot=board.getRoot();
@@ -250,7 +253,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		addTilesRecursive(root, visited, height, offset);
 	}
 	
-	protected void addTilesRecursive(TileComponent root, ArrayList<TileComponent> visited, int height, Vector2D offset){
+	protected void addTilesRecursive(TileComponent root, List<TileComponent> visited, int height, Vector2D offset){
 		updateTile(root.getTileComponentContent(), height, offset);
 		visited.add(root);
 		for (int i=0;i<HexDirection.values().length;i++){
@@ -261,7 +264,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		}
 	}
 	
-	public synchronized void displayDev(ArrayList<Direction> path, Color c) {
+	public synchronized void displayDev(List<Direction> path, Color c) {
 		Vector2D offset=new Vector2D(0,0);
 		Space spaceRoot=board.getRoot();
 		int height = 0;

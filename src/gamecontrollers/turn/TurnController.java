@@ -5,6 +5,7 @@ import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
 import gamecontrollers.commands.gameplaycommands.DrawCardFromDeckCommand;
 import gamecontrollers.commands.gameplaycommands.DrawFestivalCardCommand;
+import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 import gamecontrollers.commands.gameplaycommands.UseExtraActionTokenCommand;
 import models.board.SharedResources;
 import models.palacefestival.Deck;
@@ -174,6 +175,14 @@ public class TurnController {
             commandHandler.handleCommand(new DrawFestivalCardCommand(currentPlayer, deck, this));
         }
 
+        return response;
+    }
+
+    public Response attemptToEndTurn(){
+        Response response = turnState.canEndTurn();
+        if(!response.hasErrors()){
+            commandHandler.handleCommand(new EndTurnCommand(this));
+        }
         return response;
     }
 

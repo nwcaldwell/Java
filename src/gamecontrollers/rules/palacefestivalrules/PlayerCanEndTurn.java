@@ -1,4 +1,4 @@
-package gamecontrollers.rules.PalaceFestivalRules;
+package gamecontrollers.rules.palacefestivalrules;
 
 import gamecontrollers.Message;
 import gamecontrollers.rules.Rule;
