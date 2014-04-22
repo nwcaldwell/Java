@@ -92,32 +92,32 @@ public class PlayView extends GameplayView {
                                                             cancelCurrentActionInputCommand, commitActionInputCommand, tabDeveloperInputCommand, moveTileInputCommandN,
                                                             moveTileInputCommandNE, moveTileInputCommandNW, moveTileInputCommandS, moveTileInputCommandSE, rotateTileInputCommand,
                                                             moveTileInputCommandSW, selectDeveloperKeyListener, selectVillageTileInputCommand, selectPalaceTileInputCommand,
-                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectTwoTileInputCommand));
+                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand));
         sptc.setKeySet(getKeySet(endTurnInputCommand, playExtraActionTokenInputCommand, drawCardFromDeckInputCommand, drawFestivalCardInputCommand,
                                                             cancelCurrentActionInputCommand, commitActionInputCommand, tabDeveloperInputCommand, moveTileInputCommandN,
                                                             moveTileInputCommandNE, moveTileInputCommandNW, moveTileInputCommandS, moveTileInputCommandSE, rotateTileInputCommand,
                                                             moveTileInputCommandSW, selectDeveloperKeyListener, selectVillageTileInputCommand,
-                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand));
+                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand, selectPalaceTileInputCommand));
         srtc.setKeySet(getKeySet(endTurnInputCommand, playExtraActionTokenInputCommand, drawCardFromDeckInputCommand, drawFestivalCardInputCommand,
                                                             cancelCurrentActionInputCommand, commitActionInputCommand, tabDeveloperInputCommand, moveTileInputCommandN,
                                                             moveTileInputCommandNE, moveTileInputCommandNW, moveTileInputCommandS, moveTileInputCommandSE, rotateTileInputCommand,
                                                             moveTileInputCommandSW, selectDeveloperKeyListener, selectVillageTileInputCommand, selectPalaceTileInputCommand,
-                                                            selectThreeTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand));
+                                                            selectThreeTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand, selectRiceTileInputCommand));
         s3tc.setKeySet(getKeySet(endTurnInputCommand, playExtraActionTokenInputCommand, drawCardFromDeckInputCommand, drawFestivalCardInputCommand,
                                                             cancelCurrentActionInputCommand, commitActionInputCommand, tabDeveloperInputCommand, moveTileInputCommandN,
                                                             moveTileInputCommandNE, moveTileInputCommandNW, moveTileInputCommandS, moveTileInputCommandSE, rotateTileInputCommand,
                                                             moveTileInputCommandSW, selectDeveloperKeyListener, selectVillageTileInputCommand, selectPalaceTileInputCommand,
-                                                            selectRiceTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand));
+                                                            selectRiceTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand, selectThreeTileInputCommand));
         s2tc.setKeySet(getKeySet(endTurnInputCommand, playExtraActionTokenInputCommand, drawCardFromDeckInputCommand, drawFestivalCardInputCommand,
                                                             cancelCurrentActionInputCommand, commitActionInputCommand, tabDeveloperInputCommand, moveTileInputCommandN,
                                                             moveTileInputCommandNE, moveTileInputCommandNW, moveTileInputCommandS, moveTileInputCommandSE, rotateTileInputCommand,
                                                             moveTileInputCommandSW, selectDeveloperKeyListener, selectVillageTileInputCommand, selectPalaceTileInputCommand,
-                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectIrrigationTileInputCommand));
+                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectIrrigationTileInputCommand, selectTwoTileInputCommand));
         svtc.setKeySet(getKeySet(endTurnInputCommand, playExtraActionTokenInputCommand, drawCardFromDeckInputCommand, drawFestivalCardInputCommand,
                                                             cancelCurrentActionInputCommand, commitActionInputCommand, tabDeveloperInputCommand, moveTileInputCommandN,
                                                             moveTileInputCommandNE, moveTileInputCommandNW, moveTileInputCommandS, moveTileInputCommandSE, rotateTileInputCommand,
                                                             moveTileInputCommandSW, selectDeveloperKeyListener, selectPalaceTileInputCommand,
-                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand));
+                                                            selectRiceTileInputCommand, selectThreeTileInputCommand, selectTwoTileInputCommand, selectIrrigationTileInputCommand, selectVillageTileInputCommand));
 
         keyListeners.addAll(selectDeveloperInputCommand.getKeySet());
     }

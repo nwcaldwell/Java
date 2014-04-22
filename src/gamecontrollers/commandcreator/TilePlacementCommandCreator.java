@@ -126,7 +126,8 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         //check the visitor which type to return
         //set the current space right now and then ask
         visitor.setSpace(currentSpace);
-        return visitor.getCommand(currentTile);
+        GameplayActionCommand command = visitor.getCommand(currentTile);
+        return command;
 
     }
 
@@ -144,6 +145,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
      */
     public Response checkPossible(){
         Response response = new Response();
+        notifyRules();
 
         for(Rule rool : rules) {
             response.addMessage(rool.getErrorMessage());
