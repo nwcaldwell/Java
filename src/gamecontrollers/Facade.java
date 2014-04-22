@@ -14,7 +14,6 @@ import models.palacefestival.FestivalModel;
 import models.palacefestival.JavaPlayer;
 import models.palacefestival.PalaceCard;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -134,6 +133,13 @@ public class Facade {
       Board Communication Methods
     ========================================================================
     */
+    public List<Direction> getTilePlacementPath(){
+    	return tilePlacementCommandCreator.getPath();
+    }
+    
+    public TileComponent getCurrentTileComponent(){
+    	return tilePlacementCommandCreator.getCurrentTile();
+    }
 
     public void tabThroughDevelopers() {
         developerMovementCommandCreator.iterateThroughBoardDevelopers();

@@ -38,12 +38,13 @@ public class PlanningView extends GameplayView {
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveDeveloperInputCommand(viewController, HexDirection.N)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveDeveloperInputCommand(viewController, HexDirection.NE)));
 
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.SW)));
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD2, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.S)));
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD3, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.SE)));
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD7, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.NW)));
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.N)));
-        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.NE)));
+
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveTileInputCommand(viewController,  getBoardView(), HexDirection.SW)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD2, new MoveTileInputCommand(viewController,  getBoardView(), HexDirection.S)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD3, new MoveTileInputCommand(viewController,  getBoardView(), HexDirection.SE)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD7, new MoveTileInputCommand(viewController,  getBoardView(), HexDirection.NW)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveTileInputCommand(viewController,  getBoardView(), HexDirection.N)));
+        keyListeners.add(new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveTileInputCommand(viewController,  getBoardView(), HexDirection.NE)));
 
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_T, new PlayExtraActionTokenInputCommand(viewController)));
         keyListeners.add(new JavaKeyListener(KeyEvent.VK_SPACE, new RotateTileInputCommand(viewController)));

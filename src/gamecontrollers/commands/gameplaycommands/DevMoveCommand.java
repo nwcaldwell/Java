@@ -32,5 +32,5 @@ public class DevMoveCommand implements GameplayActionCommand {
         visitor.visit(this);
     }
 
-
+    
 }

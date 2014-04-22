@@ -59,6 +59,7 @@ public class PlayView extends GameplayView {
         JavaKeyListener moveTileInputCommandN = new JavaKeyListener(KeyEvent.VK_NUMPAD8, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.N));
         JavaKeyListener moveTileInputCommandNE = new JavaKeyListener(KeyEvent.VK_NUMPAD9, new MoveTileInputCommand(viewController, getBoardView(), HexDirection.NE));
 
+
         // Festival input
         JavaKeyListener tabPalaceInputCommand = new JavaKeyListener(KeyEvent.VK_TAB, new TabPalaceInputCommand(viewController));
 

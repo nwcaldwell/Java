@@ -5,8 +5,10 @@ import gamecontrollers.commands.gameplaycommands.*;
 
 public class CommandSaveVisitor implements CommandVisitor {
 
+	private String jsonString;
+	
     public CommandSaveVisitor(){
-
+    	
     }
 
     @Override
@@ -92,5 +94,9 @@ public class CommandSaveVisitor implements CommandVisitor {
     @Override
     public void visit(UseExtraActionTokenCommand c) {
 
+    }
+    
+    public String getJsonString(){
+    	return jsonString;
     }
 }

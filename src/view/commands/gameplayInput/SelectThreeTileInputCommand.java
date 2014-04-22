@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectThreeTileInputCommand extends GameplayInputCommand {
+public class SelectThreeTileInputCommand extends InputCommand {
     //this is the set of keylisteners that will do stuff when stuff happens
     private List<JavaKeyListener> keySet;
 
@@ -20,8 +20,8 @@ public class SelectThreeTileInputCommand extends GameplayInputCommand {
         super(viewController);
     }
 
-    @Override	public void doExecute() {
-        Facade.getInstance().startPlacingTile(new RVR().buildTile(HexDirection.N));
+    @Override	public void execute() {
+        Facade.getInstance().startPlacingTile( new RVR( ).buildTile(HexDirection.N) );
         getViewController().removeCurrentKeyListeners();
         getViewController().addKeyListeners(keySet);
 	}
