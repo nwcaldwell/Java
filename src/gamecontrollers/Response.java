@@ -45,7 +45,11 @@ public class Response {
 
 
     public void addMessage(Message message){
-        hasErrors = ( hasErrors && message.isError() );
-        messages.add( message );
+        if(!hasErrors) {
+            hasErrors = message.isError();
+            messages.add( message );
+        } else if (message.isError()) {
+            messages.add( message );
+        }
     }
 }

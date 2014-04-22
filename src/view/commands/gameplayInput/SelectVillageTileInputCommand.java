@@ -11,7 +11,7 @@ import view.commands.JavaKeyListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class SelectVillageTileInputCommand extends InputCommand {
+public class SelectVillageTileInputCommand extends GameplayInputCommand {
     //this is the set of keylisteners that will do stuff when stuff happens
     private ArrayList<JavaKeyListener> keyListeners =  new ArrayList<JavaKeyListener>(){{
         add(new JavaKeyListener(KeyEvent.VK_NUMPAD1, new MoveTileInputCommand(getViewController(), HexDirection.SW)));
@@ -26,7 +26,7 @@ public class SelectVillageTileInputCommand extends InputCommand {
         super(viewController);
     }
 
-    @Override	public void execute() {
+    @Override	public void doExecute() {
         System.out.println("Executing Select Village tile command");
         Facade.getInstance().startPlacingTile( new V( ).buildTile(HexDirection.N) );
 

@@ -159,6 +159,7 @@ public class TurnController {
 
     public Response attemptToDrawFromDeck(){
         Response response = turnState.canDrawCard();
+        System.out.println("Has Errors: "+response.hasErrors());
         if(!response.hasErrors()){
             commandHandler.handleCommand(new DrawCardFromDeckCommand(currentPlayer, deck, this));
         }
