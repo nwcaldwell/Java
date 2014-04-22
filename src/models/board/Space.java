@@ -1,6 +1,7 @@
 package models.board;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Stack;
 
 //TODO [Kevin][Jorge, Kevin]
@@ -41,7 +42,16 @@ public class Space {
 	/**places a tile on this space.  As tile is a graph, this
 	 * method will probably be implemented recursively.*/
 	public void placeTile(TileComponent tile){
-        tileStack.push(tile);
+		if (getHeight()==0||tile!=getTile()){
+	        tileStack.push(tile);
+	        Iterator<Direction> i =tile.getDirection().iterator();
+	        while (i.hasNext()){
+	        	Direction d = i.next();
+	        	if (tile.getConjoinedTile(d)!=null&&getAdjacentSpace(d)!=null){
+	        		getAdjacentSpace(d).placeTile(tile.getConjoinedTile(d));
+	        	}
+	        }
+		}
     }
 
     public TileComponent getTile(){
