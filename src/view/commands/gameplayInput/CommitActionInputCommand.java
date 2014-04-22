@@ -14,7 +14,7 @@ public class CommitActionInputCommand extends GameplayInputCommand {
     @Override
     protected void doExecute() {
         Response response = Facade.getInstance().commitMove();
-
+        getViewController().update();
         getViewController().displayMessageToConsole(response);
     }
 }
