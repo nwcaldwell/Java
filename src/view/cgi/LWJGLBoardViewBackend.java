@@ -41,7 +41,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	
 	//initialize offsets
 	static{
-		Vector2D north = new Vector2D(HEX_DISTANCE,0);
+		Vector2D north = new Vector2D(0,HEX_DISTANCE);
 		offsets[HexDirection.N.getIntValue()]=north;
 		offsets[HexDirection.NE.getIntValue()]=north.rotate(HEX_ANGLE);
 		offsets[HexDirection.SE.getIntValue()]=north.rotate(HEX_ANGLE*2);
@@ -158,23 +158,18 @@ public class LWJGLBoardViewBackend implements Runnable{
 		Model3D riceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/rice_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/rice_hex_texture.png"));
 		this.rice=new Model3D(riceHex);
-		this.rice.setRotation(0, 30, 0);
 		this.buriedSpace=new Model3D(riceHex);
-		this.buriedSpace.setRotation(0, 30, 0);
 		this.buriedSpace.setFlat();
 		this.ground=new Model3D(riceHex);
-		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
 		Model3D villageHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/village_hex_texture.png"));
 		Model3D village=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/village.obj"), 
 				TextureFactory.getTexture("3Dobjects/village_texture.png"));
 		this.village=new Model3D(village,villageHex);
-		this.village.setRotation(0, 30, 0);
 		Model3D irrigationHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/irrigation_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/irrigation_hex_texture.png"));
 		this.irrigation=new Model3D(irrigationHex);
-		this.irrigation.setRotation(0, 30, 0);
 		this.irrigation.setFlat();
 
 		Model3D palaceHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/hex.obj"), 
@@ -185,26 +180,22 @@ public class LWJGLBoardViewBackend implements Runnable{
 //			Model3D number=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/"+((i+1)*2)+".obj"), 
 //					TextureFactory.getTexture("3Dobjects/number_texture.png"));
 			palace[i]=new Model3D(palaceHex,model);//,number);
-			palace[i].setRotation(0, 30, 0);
 			palace[i].setFlat();
 		}
 		
 		Model3D highlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/highlands_empty_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/highlands_empty_hex.png"));
 		this.highland=new Model3D(highlandHex);
-		this.highland.setRotation(0, 30, 0);
 		this.highland.setFlat();
 
 		Model3D lowlandHex=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/lowlands_empty_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/lowlands_empty_hex.png"));
 		this.lowland=new Model3D(lowlandHex);
-		this.lowland.setRotation(0, 30, 0);
 		this.lowland.setFlat();
 		
 		Model3D empty=ModelFactory.makeFromObj(MediaController.getInstance().getFile("3Dobjects/empty_hex.obj"), 
 				TextureFactory.getTexture("3Dobjects/default_hex_texture.png"));
 		this.ground=new Model3D(empty);
-		this.ground.setRotation(0, 30, 0);
 		this.ground.setFlat();
 	}
 	
@@ -221,7 +212,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 		ArrayList<TileComponent> visited=new ArrayList<TileComponent>();
 		Vector2D offset=new Vector2D(0,0);
 		for (Direction d:path){
-			offset.translate(offsets[d.getIntValue()]);
+			offset=offset.translate(offsets[d.getIntValue()]);
 		}
 		addTilesRecursive(root, visited, height, offset);
 	}
@@ -270,7 +261,7 @@ public class LWJGLBoardViewBackend implements Runnable{
 	private void updateSpace(Space space, Vector2D offset){
 
 		if (space.getHeight()==0){
-			Model3D terrain=rice.clone();
+			Model3D terrain=ground.clone();
 			if (space.isInHighlands()){
 				terrain=highland.clone();
 			}
@@ -293,21 +284,23 @@ public class LWJGLBoardViewBackend implements Runnable{
 	
 	private void updateTile(TileComponentContent component, int height, Vector2D offset){
 		//render the top tile
-		Model3D newModel=buriedSpace.clone();
+		
+		Model3D newModel=village.clone();
 		if (component.toString().equals("irrigation")){
-			newModel=irrigation;
+			newModel=irrigation.clone();
 		}
 		if (component.toString().equals("rice")){
-			newModel=rice;
+			newModel=rice.clone();
 		}
 		if (component.toString().equals("village")){
-			newModel=village;
+			newModel=village.clone();
 		}
 		if (component.toString().startsWith("palace")){
 			int index = Integer.parseInt(component.toString().substring(6))/2;
-			newModel=palace[index];
+			newModel=palace[index].clone();
 		}
-		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, offset.y));
+		newModel.setTranslation(new Vector3D(offset.x, height*SPACE_HEIGHT, -offset.y));
+		System.out.println("adding a tile "+newModel.getTranslation());
 		spaces.add(newModel);
 	}
 	
