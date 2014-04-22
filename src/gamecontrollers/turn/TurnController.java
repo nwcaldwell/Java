@@ -98,6 +98,10 @@ public class TurnController {
         return board;
     }
 
+    public int getCurrentActionPoints(){
+        return turnState.getActionPoints();
+    }
+
 
      /*
    ========================================================================

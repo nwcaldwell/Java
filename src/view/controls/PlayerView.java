@@ -156,8 +156,9 @@ public class PlayerView extends JPanel{
         actionPoints.setVisible(false);
     }
 
-    public void update(JavaPlayer player) {
+    public void update(JavaPlayer player, boolean isCurrentPlayer) {
         setPlayerName(player.getName());
+        setNotPlayerTurn();
         setNumFamePoints(player.getFamePoints());
         setNumDevelopers(player.getNumDevelopers());
         setNumTwoTiles(player.getNumTwoSpaceTiles());
@@ -165,5 +166,11 @@ public class PlayerView extends JPanel{
         setNumVillageTiles(player.getNumVillageTiles());
         setNumActionTokens(player.getNumVillageTiles());
         setNumPalaceCards(player.getPalaceCards().size());
+
+        if(isCurrentPlayer) {
+            setPlayerTurn();
+            enableActionPointLabel();
+            setNumActionPoints(Facade.getInstance().getCurrentPlayerActionPoints());
+        }
     }
 }

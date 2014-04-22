@@ -96,10 +96,12 @@ public abstract class GameplayView extends View {
     public void update(){
         boardView.update();
         sharedResourcesView.update(game.getSharedResources(), game.getDeck());
-//        consoleView.update();
+        consoleView.update();
+
         JavaPlayer[] players = game.getPlayers();
+        JavaPlayer currentPlayer = Facade.getInstance().getCurrentPlayer();
         for(int i = 0; i < players.length; i++){
-            playerViews.get(i).update(players[i]);
+            playerViews.get(i).update(players[i], players[i].equals(currentPlayer));
         }
         getViewController().setFrameAsFocused();
     }
