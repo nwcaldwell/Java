@@ -77,6 +77,10 @@ public class Facade {
         return festivalTurnController.getFestivalModel();
     }
 
+    public JavaPlayer getCurrentPlayer(){
+        return turnController.getCurrentPlayer();
+    }
+
     /*
     ========================================================================
       Setup for command builders methods
