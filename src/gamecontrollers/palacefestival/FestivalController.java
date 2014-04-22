@@ -29,13 +29,15 @@ public class FestivalController {
         List<FestivalPlayer> festivalPlayers = new ArrayList<FestivalPlayer>();
 
         for(int i = 0; i < players.size(); i++){
+            System.out.println("traversing through the players");
             if(canParticipateInFestival(players.get(i).getPalaceCards(), festivalCard)){
                 //they can participate in the festival
+                System.out.println("adding the player to the festival");
                 festivalPlayers.add(new FestivalPlayer(players.get(i), getEligibleCards(players.get(i).getPalaceCards(), festivalCard)));
             }
         }
 
-        System.out.println(festivalCard.toString());
+        System.out.println("Players: "+festivalPlayers.size());
         turnController.startNewFestival(new FestivalModel(festivalPlayers, festivalCard, palace));
     }
 

@@ -38,7 +38,21 @@ public class PlacePalaceCommand implements GameplayActionCommand {
         //place that tile boiiiii
         space.placeTile(tile);
         //update resource counter
-        resources.decNumThreeTiles();
+        if (level==2){
+        	resources.decNum2PalaceTiles();
+        }else
+        if (level==4){
+        	resources.decNum4PalaceTiles();
+        }else
+        if (level==6){
+        	resources.decNum6PalaceTiles();
+        }else
+        if (level==8){
+        	resources.decNum8PalaceTiles();
+        }else
+        if (level==10){
+        	resources.decNum10PalaceTiles();
+        }
         //update dat turn counter
         controller.playTile();
 
@@ -50,6 +64,10 @@ public class PlacePalaceCommand implements GameplayActionCommand {
             comp.setCanAcceptPalace(false);
         }
 
+    }
+    
+    public void setCurrentSpace(Space s){
+    	this.space=s;
     }
 
     @Override

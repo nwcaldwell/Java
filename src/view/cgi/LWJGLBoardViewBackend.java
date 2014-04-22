@@ -32,8 +32,8 @@ import static org.lwjgl.opengl.GL11.*;
  * that LWJGL's input doesn't play well with swing.*/
 public class LWJGLBoardViewBackend implements Runnable{
 	
-	public static final float CANVAS_WIDTH=10;
-	public static final float CANVAS_HEIGHT=10;
+	public static final float CANVAS_WIDTH=16;
+	public static final float CANVAS_HEIGHT=9;
 	public static final float CANVAS_FAR=101;
 	public static final float CANVAS_NEAR=1;
 	final float CLOSE=0.01f;
@@ -131,7 +131,11 @@ public class LWJGLBoardViewBackend implements Runnable{
 		//attach the LWJGL Display to its canvas
 		//for the record, I think the width and height don't matter.
 		Display.setDisplayMode(new DisplayMode((int)800, (int)600));
-		Display.setParent(parent);
+		String OS = System.getProperty("os.name");
+		//check for linux OS.  Display embedding will work there.
+		if (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 ){
+			Display.setParent(parent);
+		}
 		Display.create();
 		//enable all of the OpenGL stuff
 		glMatrixMode(GL_MODELVIEW);
@@ -554,6 +558,9 @@ public class LWJGLBoardViewBackend implements Runnable{
 				0,
 				sceneTranslation.y
 				));
+		
+		pitch = Math.max(pitch, 0);
+		pitch = Math.min(pitch, 90);
 		setScenePitch(pitch);
 		setSceneYaw(yaw);
 		vc.setFrameAsFocused();

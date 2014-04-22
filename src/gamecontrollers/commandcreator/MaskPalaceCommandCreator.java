@@ -14,6 +14,8 @@ import models.palacefestival.JavaPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import view.ViewController;
+
 
      /*
    ========================================================================
@@ -34,7 +36,7 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
 
     //currentLevel is an index in the palceLevel list
     private int currentLevel;
-    private List<PalaceRule> rules;
+    private List<PalaceRule> rules=new ArrayList<PalaceRule>();
     private Space desiredSpace;
     private SharedResources resources;
     private TurnController controller;
@@ -46,6 +48,7 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
     //private list of the city surrounding the tile
     private List<TileComponentContent> cityAroundTile;
 
+    private List<Direction> pathToTile;
       /*
     ========================================================================
        CONSTRUCTORS
@@ -72,6 +75,7 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
         palaceLevel.add(10);
         //implement the current level
         currentLevel = 0;
+        pathToTile=new ArrayList<Direction>();
     }
 
      /*
@@ -91,8 +95,15 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
     }
 
     public void move(Direction direction){
-        desiredSpace = desiredSpace.getAdjacentSpace(direction);
-        updateState();
+    	if (desiredSpace.hasAdjacentSpace(direction)){
+    		desiredSpace = desiredSpace.getAdjacentSpace(direction);
+    		pathToTile.add(direction);
+    		updateState();
+    	}
+    }
+    
+    public List<Direction> getPath() {
+    	return pathToTile;
     }
 
     //Tab through only the remaining types of palaces
@@ -146,6 +157,11 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
         return desiredSpace;
     }
 
+    public void setCurrentSpace(Space space){
+    	desiredSpace=space;
+        pathToTile.clear();
+    }
+    
     public int getCurrentLevel(){
         return palaceLevel.get(currentLevel);
     }
@@ -176,4 +192,9 @@ public class MaskPalaceCommandCreator extends PalaceCommandCreator{
         //build the city and change the local list
         //TODO Will consruct the city around a tilecomponentcontent
     }
+
+	@Override
+	public void setCurrentLevel(int level) {
+		currentLevel=level;
+	}
 }

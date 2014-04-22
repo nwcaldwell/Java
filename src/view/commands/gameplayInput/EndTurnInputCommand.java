@@ -19,8 +19,8 @@ public class EndTurnInputCommand extends GameplayInputCommand {
         Response response =  Facade.getInstance().askForFestival();
 
         if(getViewController().requireInputFromUser("Would you like to begin a festival?", "Palace Festival", response.hasErrors())){
-            getViewController().setCurrentView( new JavaFestivalView(getViewController()));
             Facade.getInstance().startFestival();
+            getViewController().setCurrentView( new JavaFestivalView(getViewController()));
             response = Facade.getInstance().endTurn();
         }
         getViewController().displayMessageToConsole(response);

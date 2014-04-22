@@ -83,7 +83,8 @@ public class FestivalPlayerView extends JPanel {
     }
 
     private void highlightCard(int index){
-        palaceCards.get(index).setBorder(new LineBorder(Color.CYAN, 2));
+        if(index > -1 && palaceCards.size() != 0        )
+            palaceCards.get(index).setBorder(new LineBorder(Color.CYAN, 2));
     }
 
     private void hideAllCards(){
@@ -146,7 +147,7 @@ public class FestivalPlayerView extends JPanel {
         //convert the palacecards to view jlabels
         List<JLabel> cardsLabels = new ArrayList<JLabel>(cards.size());
         for(PalaceCard card : cards){
-            add(new JLabel(new ImageIcon(MediaController.getInstance().getImage(card.toString()))));
+            add(new JLabel(new ImageIcon(MediaController.getInstance().getImage(card.toString()+".png"))));
         }
         return cardsLabels;
     }

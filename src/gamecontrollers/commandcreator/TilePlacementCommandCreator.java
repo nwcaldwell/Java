@@ -132,6 +132,7 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         //set the current space right now and then ask
         visitor.setSpace(currentSpace);
         GameplayActionCommand command = visitor.getCommand(currentTile);
+        currentTile=null;
         return command;
 
     }

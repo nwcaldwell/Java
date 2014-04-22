@@ -31,7 +31,9 @@ public class JavaFestivalView extends FestivalView {
         super.init();
 
         JPanel center = new JPanel();
-        center.setPreferredSize(new Dimension(this.getScreenHeight()/2-BORDER*4, this.getScreenHeight()/2-BORDER*4));
+        //center.setPreferredSize(new Dimension(this.getScreenHeight()/2-BORDER*4, this.getScreenHeight()/2-BORDER*4));
+        center.setSize(new Dimension(500, 500));
+//        center.setPreferredSize(new Dimension(500, 500));
         center.setBackground(new Color(5, 125, 43));
         center.setLayout(new BorderLayout());
 
@@ -50,7 +52,7 @@ public class JavaFestivalView extends FestivalView {
         List<FestivalPlayerView> players = getPlayers();
         for(int i = 0; i < playedCardPanels.length; i++) {
             playedCardPanels[i] = new JPanel();
-            playedCardPanels[i].setBackground(new Color(5, 125, 43));
+            playedCardPanels[i].setBackground(Color.DARK_GRAY);
             if(i % 2 == 1) {
                 playedCardPanels[i].setPreferredSize(new Dimension(center.getWidth() - BORDER, (center.getHeight() - CARD_HEIGHT)/2));
                 players.add(new FestivalPlayerView(CARD_WIDTH, CARD_HEIGHT, this.getScreenWidth() - BORDER * 2, CARD_HEIGHT + BORDER * 2, playedCardPanels[i]));
