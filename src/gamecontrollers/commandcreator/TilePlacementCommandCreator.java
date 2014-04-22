@@ -13,6 +13,8 @@ import models.board.Space;
 import models.board.TileComponent;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TilePlacementCommandCreator extends TileCommandCreator {
 	private Space currentSpace;
@@ -23,6 +25,8 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
     private TileCreationVisitor visitor;
     private SharedResources resources;
     private WouldTileComponentBeOnBoard onBoardChecker;
+    private List<Space> targetSpaces;
+    private List<Space> visited;
 
     /*
   ========================================================================
@@ -32,9 +36,11 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
 
 	public TilePlacementCommandCreator(TurnController controller, SharedResources resources) {
         this.controller = controller;
-        visitor = new TileCreationVisitor(controller, resources);
+        this.visitor = new TileCreationVisitor(controller, resources);
         this.resources = resources;
-        onBoardChecker = new WouldTileComponentBeOnBoard();
+        this.onBoardChecker = new WouldTileComponentBeOnBoard();
+        this.targetSpaces = new ArrayList<Space>();
+        this.visited = new ArrayList<Space>();
     }
 
 
@@ -121,7 +127,43 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         be required to perform the command
      */
     public int getCost(){
+        calculateCost();
         return cost;
+    }
+
+    public void calculateCost(){
+        visited.clear();
+        targetSpaces.clear();
+        cost = 1;
+        fillMeSomeMaps(currentSpace, currentTile);
+
+        for(Space space : targetSpaces){
+            if(space.isInHighlands()) cost += 2;
+            else if(space.isInLowlands()) cost++;
+        }
+    }
+
+    private void fillMeSomeMaps(Space space, TileComponent tile){
+
+        if(!targetSpaces.contains(currentSpace)){
+            targetSpaces.add(currentSpace);
+        }
+        //add this space to visited
+        visited.add(space);
+
+        Iterator<Direction> iterator = tile.iterator();
+        while (iterator.hasNext()) {
+            //get the direction from the current Tile
+            Direction direction = iterator.next();
+            //check if that current tile has a sibling there
+            if (tile.siblingExists(direction) && space.hasAdjacentSpace(direction)) {
+                if(!visited.contains(space.getAdjacentSpace(direction))) {
+                    //theres a guy here so add him and do more visit
+                    targetSpaces.add(space.getAdjacentSpace(direction));
+                    fillMeSomeMaps(space.getAdjacentSpace(direction), tile.getConjoinedTile(direction));
+                }
+            }
+        }
     }
 
     /*

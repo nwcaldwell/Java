@@ -63,8 +63,8 @@ public abstract class TurnState {
     ========================================================================
      */
 
-    public abstract void playTile();
-    public abstract void removeTile();
+    public abstract void playTile(int actionPointCost);
+    public abstract void removeTile(int actionPointCost);
     public abstract void playExtraActionToken();
     public abstract void returnExtraActionToken();
     public abstract void drawCard();
@@ -95,20 +95,24 @@ public abstract class TurnState {
         canEndTurn = b;
     }
 
-    protected void tilePlaced(){
+    protected void tilePlaced(int points){
         numTilesPlaced++;
+        actionPoints -= points;
     }
 
-    protected void tileRemoved(){
+    protected void tileRemoved(int points){
         numTilesPlaced--;
+        actionPoints += points;
     }
 
     protected void cardDrawn(){
         numCardsDrawn++;
+        actionPoints--;
     }
 
     protected void cardPutBack(){
         numCardsDrawn--;
+        actionPoints++;
     }
 
     protected void extraActionTokenUsed(){

@@ -16,7 +16,6 @@ public class CardsDrawnPerTurnRule extends TurnRule{
     }
 
     public void update(){
-//        System.out.println()
         if(turn.getNumCardsDrawn() >= turn.getMaxCardsPerTurn()){
             message = new Message("Cant draw anymore cards this turn", true);
             setValidity(false);

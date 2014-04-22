@@ -192,10 +192,10 @@ public class TurnController {
     */
 
     public void playTile(){
-        turnState.playTile();
+        turnState.playTile(currentCommandCreator.getCost());
     }
     public void removeTile(){
-        turnState.removeTile();
+        turnState.removeTile(currentCommandCreator.getCost());
     }
     public void playExtraActionToken(){
         turnState.playExtraActionToken();
