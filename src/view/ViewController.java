@@ -1,8 +1,8 @@
 package view;
 
-import gamecontrollers.Message;
 import gamecontrollers.Response;
 import view.commands.JavaKeyListener;
+import view.controls.BoardView;
 import view.screens.MainMenuView;
 import javax.swing.*;
 import java.awt.*;
@@ -14,14 +14,15 @@ public class ViewController {
     private View currentView;
     private JFrame gameWindow;
     private List<JavaKeyListener> currentListeners;
-
+    private BoardView boardview;
+    
     public ViewController() {
 
         currentView = null;
         currentListeners = new ArrayList<JavaKeyListener>();
         gameWindow = new JFrame();
     }
-
+    
     public void start() {
         // This toolkit class allow us to get the size of the screen to go fullscreen
         Toolkit tk = Toolkit.getDefaultToolkit();
@@ -103,4 +104,12 @@ public class ViewController {
         }
         return false;
     }
+
+	public BoardView getBoardview() {
+		return boardview;
+	}
+
+	public void setBoardview(BoardView boardview) {
+		this.boardview = boardview;
+	}
 }
