@@ -67,6 +67,13 @@ public class Board  {
 
         return false;
     }
+	public Developer getDeveloperOn(Space s)
+	{
+		for(Developer dev : developers)
+			if(dev.getSpace() == s)
+				return dev;
+		throw new IllegalArgumentException();
+	}
 
 
 }

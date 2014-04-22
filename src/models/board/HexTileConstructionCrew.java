@@ -61,9 +61,7 @@ public class HexTileConstructionCrew extends TileConstructionCrew {
 				{
 					int rChanged = r + rDelta[i];
 					int cChanged = c + cDelta[i];
-					if(rChanged < 0 || cChanged < 0)
-						continue;
-					if(!inBounds(rChanged, cChanged, numRows, grid.get(rChanged%2).size()))
+					if(rChanged < 0 || cChanged < 0 || rChanged >= grid.size() || cChanged >= grid.get(rChanged).size())
 						continue;
 					TileComponent b = grid.get(rChanged).get(cChanged);
 					if(tileComponentExists(b))
@@ -102,8 +100,6 @@ public class HexTileConstructionCrew extends TileConstructionCrew {
 					grid.get(lineNum).add(new TileComponent(dir, new Irrigation()));
 				else if(line.charAt(j) == 'V')
 					grid.get(lineNum).add(new TileComponent(dir, new Village()));
-//				else if(line.charAt(j) == 'P')
-//					grid.get(lineNum).add(new TileComponent(dir, new Palace()));
 				else if(line.charAt(j) == 'R')
 					grid.get(lineNum).add(new TileComponent(dir, new Rice()));
 				else
