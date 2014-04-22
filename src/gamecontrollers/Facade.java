@@ -1,6 +1,7 @@
 package gamecontrollers;
 
 import gamecontrollers.commandcreator.*;
+import gamecontrollers.commands.gameplaycommands.DealCardsCommand;
 import gamecontrollers.palacefestival.FestivalController;
 import gamecontrollers.palacefestival.FestivalTurnController;
 import gamecontrollers.turn.*;
@@ -46,6 +47,7 @@ public class Facade {
     public void startGame(List<Pair<String,String>> playersData, String boardFile){
         game = new JavaGame(playersData, boardFile);
         historyChannelController = new HistoryChannelController(game.getPlayers().length + 1);
+
         boardLogicController = new BoardLogicController(game.getBoard());
         festivalController = new FestivalController(historyChannelController);
         festivalTurnController = festivalController.getTurnController();
@@ -66,7 +68,7 @@ public class Facade {
 
         replayController = new ReplayController();
 
-
+        turnController.startGame();
     }
 
     /*

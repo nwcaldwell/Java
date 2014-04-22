@@ -3,10 +3,7 @@ package gamecontrollers.turn;
 import gamecontrollers.BoardLogicController;
 import gamecontrollers.Response;
 import gamecontrollers.commandcreator.GameplayCommandCreator;
-import gamecontrollers.commands.gameplaycommands.DrawCardFromDeckCommand;
-import gamecontrollers.commands.gameplaycommands.DrawFestivalCardCommand;
-import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
-import gamecontrollers.commands.gameplaycommands.UseExtraActionTokenCommand;
+import gamecontrollers.commands.gameplaycommands.*;
 import models.board.SharedResources;
 import models.palacefestival.Deck;
 import models.palacefestival.JavaPlayer;
@@ -116,6 +113,12 @@ public class TurnController {
    ========================================================================
     */
 
+    public void startGame(){
+        //deal the cards
+        for(JavaPlayer player : turnOrder){
+            commandHandler.handleCommand(new DealCardsCommand(player, deck));
+        }
+    }
 
     /*
         End this players turn, make the currentPlayer the next player in the list
@@ -134,16 +137,6 @@ public class TurnController {
         int index = turnOrder.indexOf(currentPlayer);
 
         currentPlayer = turnOrder.get( (index-1) % turnOrder.size() );
-    }
-
-    /*
-        This functionality has been redirected to TurnPhase
-        I am unsure whether or not to delete this or route it into TurnPhase
-        as it may be unnecessary now
-     */
-    public Response canEndTurn(){
-
-        return turnState.canEndTurn();
     }
 
     public Response hasEnoughActionPoints(int i){

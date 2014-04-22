@@ -149,11 +149,14 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         visited.clear();
         targetSpaces.clear();
         cost = 1;
-        fillMeSomeMaps(currentSpace, currentTile);
 
-        for(Space space : targetSpaces){
-            if(space.isInHighlands()) cost += 2;
-            else if(space.isInLowlands()) cost++;
+        if(currentTile != null) {
+            fillMeSomeMaps(currentSpace, currentTile);
+
+            for (Space space : targetSpaces) {
+                if (space.isInHighlands()) cost += 2;
+                else if (space.isInLowlands()) cost++;
+            }
         }
     }
 
@@ -165,16 +168,18 @@ public class TilePlacementCommandCreator extends TileCommandCreator {
         //add this space to visited
         visited.add(space);
 
-        Iterator<Direction> iterator = tile.iterator();
-        while (iterator.hasNext()) {
-            //get the direction from the current Tile
-            Direction direction = iterator.next();
-            //check if that current tile has a sibling there
-            if (tile.siblingExists(direction) && space.hasAdjacentSpace(direction)) {
-                if(!visited.contains(space.getAdjacentSpace(direction))) {
-                    //theres a guy here so add him and do more visit
-                    targetSpaces.add(space.getAdjacentSpace(direction));
-                    fillMeSomeMaps(space.getAdjacentSpace(direction), tile.getConjoinedTile(direction));
+        if(tile != null) {
+            Iterator<Direction> iterator = tile.iterator();
+            while (iterator.hasNext()) {
+                //get the direction from the current Tile
+                Direction direction = iterator.next();
+                //check if that current tile has a sibling there
+                if (tile.siblingExists(direction) && space.hasAdjacentSpace(direction)) {
+                    if (!visited.contains(space.getAdjacentSpace(direction))) {
+                        //theres a guy here so add him and do more visit
+                        targetSpaces.add(space.getAdjacentSpace(direction));
+                        fillMeSomeMaps(space.getAdjacentSpace(direction), tile.getConjoinedTile(direction));
+                    }
                 }
             }
         }

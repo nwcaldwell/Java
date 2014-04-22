@@ -58,8 +58,6 @@ public class JavaGame {
                 LEVEL_6_PALACES_COUNT,
                 LEVEL_8_PALACES_COUNT,
                 LEVEL_10_PALACES_COUNT);
-        // TODO DETERMINE HOW TO MAKE THE PLAYERS DRAW INITIAL CARDS
-        // TODO SO THAT IT CAN BE DUPLICATED BY THE LOAD
         deck = new Deck();
     }
 

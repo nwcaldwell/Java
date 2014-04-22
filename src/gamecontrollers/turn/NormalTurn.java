@@ -107,10 +107,12 @@ public class NormalTurn extends TurnState{
    */
 
     public Response canDrawCard(){
+        cardRule.update();
         return new Response(cardRule.getErrorMessage());
     }
 
     public Response canPlayExtraActionToken(){
+
         return new Response(extraTokens.getErrorMessage());
     }
 
