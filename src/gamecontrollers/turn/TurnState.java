@@ -6,6 +6,7 @@ import gamecontrollers.commands.gameplaycommands.EndTurnCommand;
 import gamecontrollers.rules.Rule;
 import gamecontrollers.rules.turnrules.TurnRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TurnState {
@@ -19,7 +20,7 @@ public abstract class TurnState {
     private int minTilesPlaced;
     private int maxExtraActionTokensPlayed;
     //Turn rules
-    private List<TurnRule> rules;
+    private List<TurnRule> rules = new ArrayList<TurnRule>();
 
 
     /*
