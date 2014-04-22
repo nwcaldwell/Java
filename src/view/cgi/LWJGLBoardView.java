@@ -8,7 +8,6 @@ import view.controls.BoardView;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 /**an implementation of BoardView that uses an LWJGL canvas*/

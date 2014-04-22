@@ -39,6 +39,7 @@ public abstract class GameplayView extends View {
         consoleView = new ConsoleView();
         playerViews = new ArrayList<PlayerView>();
         boardView = new LWJGLBoardView(game.getBoard(), getViewController());
+        getViewController().setBoardview(boardView);
         sharedResourcesView = new SharedResourcesView();
 
         //setup view
