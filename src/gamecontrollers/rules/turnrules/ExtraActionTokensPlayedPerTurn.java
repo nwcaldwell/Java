@@ -26,6 +26,7 @@ public class ExtraActionTokensPlayedPerTurn extends TurnRule {
     }
 
     public Message getErrorMessage(){
+        update();
         return message;
     }
 }

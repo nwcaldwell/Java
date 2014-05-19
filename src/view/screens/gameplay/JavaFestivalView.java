@@ -32,9 +32,8 @@ public class JavaFestivalView extends FestivalView {
         super.init();
 
         JPanel center = new JPanel();
-        //center.setPreferredSize(new Dimension(this.getScreenHeight()/2-BORDER*4, this.getScreenHeight()/2-BORDER*4));
+        center.setPreferredSize(new Dimension(this.getScreenHeight()/2-BORDER*4, this.getScreenHeight()/2-BORDER*4));
 //        center.setSize(new Dimension(500, 500));
-        center.setPreferredSize(new Dimension(500, 500));
         center.setBackground(new Color(5, 125, 43));
         center.setLayout(new BorderLayout());
 

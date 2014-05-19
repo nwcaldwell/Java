@@ -34,6 +34,7 @@ public class FestivalController {
                 //they can participate in the festival
                 System.out.println("adding the player to the festival");
                 festivalPlayers.add(new FestivalPlayer(players.get(i), getEligibleCards(players.get(i).getPalaceCards(), festivalCard)));
+                System.out.println("Number cards: "+festivalPlayers.get(i).getCards().size());
             }
         }
 
